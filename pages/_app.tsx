@@ -5,15 +5,22 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyle from '../src/styles/GlobalStyle'
 import theme from '../src/styles/theme'
 import { useStore } from '../store'
+import { Page } from '../types/page'
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+type Props = AppProps & {
+  Component: Page
+}
+
+const MyApp = ({ Component, pageProps }: Props) => {
   const store = useStore(pageProps.initialState)
+
+  const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <StoreProvider store={store}>
       <ThemeProvider theme={theme.light}>
         <GlobalStyle />
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>
     </StoreProvider>
   )
