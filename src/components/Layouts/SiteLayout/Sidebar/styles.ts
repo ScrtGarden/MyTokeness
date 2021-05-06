@@ -7,6 +7,7 @@ const Container = styled.div`
   position: sticky;
   top: 62px;
   height: calc(100vh - 62px);
+  padding: ${(props) => props.theme.space.sm} 0;
 `
 
 export { Container }
