@@ -1,7 +1,7 @@
 const theme = {
   dark: {
-    bg: '#121d25',
-    fg: '#1d2c38',
+    bg: '#0e191f',
+    fg: '#182835',
     border: {
       color: '#293c48',
     },
@@ -19,9 +19,9 @@ const theme = {
         xxxl: '3.6rem',
       },
       colors: {
-        brand: '#6b6af9',
+        brand: '#e3a92a',
         primary: '#fff',
-        secondary: '#889aa7',
+        secondary: '#a5d9ff',
         disabled: '#404a50',
         error: '#de5f5f',
         warn: '#de5f5f',
