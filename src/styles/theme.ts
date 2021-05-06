@@ -46,6 +46,16 @@ const theme = {
         xxxl: '4.4rem',
       },
     },
+    icon: {
+      colors: {
+        brand: '#6b6af9',
+        primary: '#fff',
+        secondary: '#889aa7',
+        disabled: '#404a50',
+        error: '#de5f5f',
+        warn: '#de5f5f',
+      },
+    },
     space: {
       base: 4,
       xxs: '4px',
@@ -66,6 +76,15 @@ const theme = {
             hover: '#ca9624',
             active: '#b18421',
           },
+        },
+      },
+    },
+
+    // sidebar
+    sidebar: {
+      tab: {
+        bg: {
+          hover: '',
         },
       },
     },
