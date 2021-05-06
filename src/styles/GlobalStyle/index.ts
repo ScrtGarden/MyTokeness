@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
+    background-color: ${(props) => props.theme.bg};
     font-size: 62.5%;
     min-height: 100vh;
   }
