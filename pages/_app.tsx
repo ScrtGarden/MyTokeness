@@ -18,7 +18,7 @@ const MyApp = ({ Component, pageProps }: Props) => {
 
   return (
     <StoreProvider store={store}>
-      <ThemeProvider theme={theme.light}>
+      <ThemeProvider theme={theme.dark}>
         <GlobalStyle />
         {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>
