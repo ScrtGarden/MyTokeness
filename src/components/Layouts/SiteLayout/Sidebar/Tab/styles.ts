@@ -30,7 +30,7 @@ const Header = styled.div<HeaderProps>`
   ::before {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    background-color: #e3a92a;
+    background-color: #33ced8;
     content: '';
     ${(props) => !props.selected && `display: none`};
     position: absolute;

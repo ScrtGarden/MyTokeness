@@ -12,7 +12,7 @@ const Button = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.buttons.button.bg.default.base};
   border: none;
   border-radius: 500px;
-  color: ${(props) => props.theme.font.colors.primary};
+  color: ${(props) => props.theme.buttons.button.color};
   cursor: pointer;
   font-size: ${(props) => props.theme.font.sizes.md};
   font-weight: ${(props) => props.theme.font.weights.semibold};
