@@ -24,12 +24,18 @@ type Props = {
   id: string
 }
 
+const isMatch = (path: string, id: string) => {
+  const arr = path.split('/')
+  const checkId = id === '/' ? '' : id
+  return arr[1] === checkId
+}
+
 const Tab: FC<Props> = (props) => {
   const { item, id } = props
   const { icon, label, menu, route } = item
 
   const router = useRouter()
-  const selected = useMemo(() => router.asPath.includes(id), [router])
+  const selected = useMemo(() => isMatch(router.asPath, id), [router])
 
   const [ref, dimensions] = useDimensions()
 
