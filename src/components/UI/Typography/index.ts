@@ -5,7 +5,7 @@ interface PageTitleProps {
 }
 
 const PageTitle = styled.h1<PageTitleProps>`
-  color: ${(props) => props.theme.font.colors.brand};
+  color: ${(props) => props.theme.font.colors.primary};
   font-size: 4rem;
   font-weight: ${(props) => props.theme.font.weights.semibold};
   margin-bottom: ${(props) => props.theme.space.lg};
