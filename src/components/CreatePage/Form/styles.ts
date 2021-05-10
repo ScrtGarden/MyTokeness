@@ -4,7 +4,7 @@ interface HeaderProps {
   readonly margin?: boolean
 }
 
-const Form = styled.div`
+const Form = styled.form`
   background-color: ${(props) => props.theme.fg};
   border: 2px solid ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radii.md};

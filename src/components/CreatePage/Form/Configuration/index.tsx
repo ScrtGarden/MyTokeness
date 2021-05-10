@@ -1,22 +1,64 @@
 import { memo } from 'react'
 
-import { Field, Hint, Label } from '../../../UI/Forms'
+import { Field, Hint, Input, Label } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
+import Store from '../../Store'
 import { Header, ToggleField, Wrapper } from '../styles'
 
 const Configuration = () => {
+  // context store state
+  const adminAddress = Store.useStoreState((state) => state.adminAddress)
+  const enablePublicTokenSupply = Store.useStoreState(
+    (state) => state.enablePublicTokenSupply
+  )
+  const enableDeposit = Store.useStoreState((state) => state.enableDeposit)
+  const enableRedeem = Store.useStoreState((state) => state.enableRedeem)
+  const enableMint = Store.useStoreState((state) => state.enableMint)
+  const enableBurn = Store.useStoreState((state) => state.enableBurn)
+
+  // context store actions
+  const setState = Store.useStoreActions((actions) => actions.setState)
+
   return (
     <>
       <Header margin>Configuration</Header>
       <Wrapper>
+        <Field>
+          <Label>Admin wallet address (optional)</Label>
+          <Hint>If left empty, will default to creator address.</Hint>
+          <Input
+            value={adminAddress}
+            onChange={(e) =>
+              setState({ key: 'adminAddress', data: e.currentTarget.value })
+            }
+          />
+        </Field>
         <ToggleField>
           <Label>Enable public token supply</Label>
-          <Toggle />
+          <Toggle
+            id="enablePublicTokenSupply"
+            checked={enablePublicTokenSupply}
+            onChange={() =>
+              setState({
+                key: 'enablePublicTokenSupply',
+                data: !enablePublicTokenSupply,
+              })
+            }
+          />
         </ToggleField>
         <Field>
           <ToggleField>
             <Label>Enable deposit</Label>
-            <Toggle />
+            <Toggle
+              id="enableDeposit"
+              checked={enableDeposit}
+              onChange={() =>
+                setState({
+                  key: 'enableDeposit',
+                  data: !enableDeposit,
+                })
+              }
+            />
           </ToggleField>
           <Hint>
             If you enable this, you will be able to convert from SCRT to the
@@ -26,7 +68,16 @@ const Configuration = () => {
         <Field>
           <ToggleField>
             <Label>Enable redeem</Label>
-            <Toggle />
+            <Toggle
+              id="enableRedeem"
+              checked={enableRedeem}
+              onChange={() =>
+                setState({
+                  key: 'enableRedeem',
+                  data: !enableRedeem,
+                })
+              }
+            />
           </ToggleField>
           <Hint>
             If you enable this, you will be able to redeem your token for SCRT.
@@ -34,11 +85,29 @@ const Configuration = () => {
         </Field>
         <ToggleField>
           <Label>Enable mint</Label>
-          <Toggle />
+          <Toggle
+            id="enableMint"
+            checked={enableMint}
+            onChange={() =>
+              setState({
+                key: 'enableMint',
+                data: !enableMint,
+              })
+            }
+          />
         </ToggleField>
         <ToggleField>
           <Label>Enable burn</Label>
-          <Toggle />
+          <Toggle
+            id="enableBurn"
+            checked={enableBurn}
+            onChange={() =>
+              setState({
+                key: 'enableBurn',
+                data: !enableBurn,
+              })
+            }
+          />
         </ToggleField>
       </Wrapper>
     </>
