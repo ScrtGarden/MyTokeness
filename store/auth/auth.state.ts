@@ -1,7 +1,8 @@
-import { AuthState } from "./auth.models"
+import { AuthState } from './auth.models'
 
 const initialState: AuthState = {
-  count: 0
+  accounts: [],
+  viewingKeys: {},
 }
 
 export default initialState
