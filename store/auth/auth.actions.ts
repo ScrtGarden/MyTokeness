@@ -1,6 +1,6 @@
 import { action } from 'easy-peasy'
 
-import { AuthActions } from './auth.models'
+import { AuthActions } from './auth.model'
 
 const actions: AuthActions = {
   setAccounts: action((state, payload) => {

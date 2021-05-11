@@ -1,4 +1,4 @@
-import { AuthState } from './auth.models'
+import { AuthState } from './auth.model'
 
 const initialState: AuthState = {
   accounts: [],

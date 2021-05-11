@@ -1,6 +1,6 @@
 import { computed } from 'easy-peasy'
 
-import { AuthComputators } from './auth.models'
+import { AuthComputators } from './auth.model'
 
 const computators: AuthComputators = {
   isWalletConnected: computed(
