@@ -1,5 +1,6 @@
 import { StoreProvider } from 'easy-peasy'
 import { AppProps } from 'next/app'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
 
 import GlobalStyle from '../src/styles/GlobalStyle'
@@ -13,15 +14,18 @@ type Props = AppProps & {
 
 const MyApp = ({ Component, pageProps }: Props) => {
   const store = useStore(pageProps.initialState)
+  const queryClient = new QueryClient()
 
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <StoreProvider store={store}>
-      <ThemeProvider theme={theme.dark}>
-        <GlobalStyle />
-        {getLayout(<Component {...pageProps} />)}
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme.dark}>
+          <GlobalStyle />
+          {getLayout(<Component {...pageProps} />)}
+        </ThemeProvider>
+      </QueryClientProvider>
     </StoreProvider>
   )
 }
