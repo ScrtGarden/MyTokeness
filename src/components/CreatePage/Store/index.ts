@@ -5,7 +5,7 @@ import {
   decimalsPattern,
   symbolPattern,
 } from '../../../../utils/regexPatterns'
-import { totalBalanceAmount } from './lib'
+import { totalBalanceAmount, validation } from './lib'
 import { Actions, Balance, Computators, State } from './model'
 
 const state: State = {
@@ -19,6 +19,7 @@ const state: State = {
   enableMint: false,
   enableBurn: false,
   initialBalances: [{ address: '', amount: '' }],
+  hasTriedSubmitting: false,
 }
 
 const actions: Actions = {
@@ -64,6 +65,17 @@ const computators: Computators = {
   totalBalanceAmount: computed(
     [(state) => state.initialBalances],
     totalBalanceAmount
+  ),
+  validation: computed(
+    [
+      (state) => state.name,
+      (state) => state.symbol,
+      (state) => state.decimals,
+      (state) => state.adminAddress,
+      (state) => state.initialBalances,
+      (state) => state.hasTriedSubmitting,
+    ],
+    validation
   ),
 }
 

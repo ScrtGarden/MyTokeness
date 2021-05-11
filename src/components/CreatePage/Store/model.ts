@@ -15,6 +15,15 @@ export interface SetBalancePayload {
   data: Partial<Balance>
 }
 
+export interface ValidationResult {
+  hasErrors: boolean
+  name: string
+  symbol: string
+  decimals: string
+  adminAddress: string
+  initialBalances: Balance[]
+}
+
 export interface State {
   name: string
   symbol: string
@@ -26,6 +35,7 @@ export interface State {
   enableMint: boolean
   enableBurn: boolean
   initialBalances: Balance[]
+  hasTriedSubmitting: boolean
 }
 
 export interface Actions {
@@ -37,6 +47,7 @@ export interface Actions {
 
 export interface Computators {
   totalBalanceAmount: Computed<StoreModel, string>
+  validation: Computed<StoreModel, ValidationResult>
 }
 
 export interface StoreModel extends State, Actions, Computators {}

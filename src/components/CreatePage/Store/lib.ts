@@ -1,5 +1,6 @@
 import Big from 'big.js'
 
+import isSecretAddress from '../../../../utils/isSecretAddress'
 import { Balance } from './model'
 
 const totalBalanceAmount = (balances: Balance[]) => {
@@ -12,4 +13,80 @@ const totalBalanceAmount = (balances: Balance[]) => {
   return sum
 }
 
-export { totalBalanceAmount }
+const validation = (
+  name: string,
+  symbol: string,
+  decimals: string,
+  adminAddress: string,
+  initialBalances: Balance[],
+  hasTriedSubmitting: boolean
+) => {
+  const errors = {
+    hasErrors: false,
+    name: '',
+    symbol: '',
+    decimals: '',
+    adminAddress: '',
+    initialBalances: [{ address: '', amount: '' }],
+  }
+
+  if (!name) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.name = 'Please enter a valid name.'
+    }
+  }
+
+  if (!symbol) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.symbol = 'Please enter a valid symbol.'
+    }
+  } else if (symbol.length <= 2) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.symbol = 'Please enter a symbol at least 3 chars long.'
+    }
+  }
+
+  if (!decimals) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.decimals = 'Please enter a valid decimal.'
+    }
+  }
+
+  if (adminAddress && !isSecretAddress(adminAddress)) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.adminAddress = 'Please enter a valid address.'
+    }
+  }
+
+  errors.initialBalances = initialBalances.map(({ address, amount }) => {
+    const balanceError = {
+      address: '',
+      amount: '',
+    }
+
+    if (!isSecretAddress(address)) {
+      errors.hasErrors = true
+      if (hasTriedSubmitting) {
+        balanceError.address = 'Please enter a valid address.'
+      }
+    }
+
+    if (!amount) {
+      errors.hasErrors = true
+      if (hasTriedSubmitting) {
+        balanceError.amount = 'Please enter a valid amount.'
+      }
+    }
+
+    return balanceError
+  })
+
+  return errors
+}
+
+export { totalBalanceAmount, validation }
