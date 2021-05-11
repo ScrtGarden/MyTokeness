@@ -1,8 +1,10 @@
 import { StoreProvider } from 'easy-peasy'
 import { AppProps } from 'next/app'
+import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
 
+import LoadingOverlay from '../src/components/LoadingOverlay'
 import GlobalStyle from '../src/styles/GlobalStyle'
 import theme from '../src/styles/theme'
 import { useStore } from '../store'
@@ -12,9 +14,12 @@ type Props = AppProps & {
   Component: Page
 }
 
+const queryClient = new QueryClient()
+
 const MyApp = ({ Component, pageProps }: Props) => {
   const store = useStore(pageProps.initialState)
-  const queryClient = new QueryClient()
+
+  const [ready, setReady] = useState(false)
 
   const getLayout = Component.getLayout || ((page) => page)
 
@@ -23,7 +28,11 @@ const MyApp = ({ Component, pageProps }: Props) => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme.dark}>
           <GlobalStyle />
-          {getLayout(<Component {...pageProps} />)}
+          {ready ? (
+            getLayout(<Component {...pageProps} />)
+          ) : (
+            <LoadingOverlay onLoaded={(value) => setReady(value)} />
+          )}
         </ThemeProvider>
       </QueryClientProvider>
     </StoreProvider>
