@@ -7,6 +7,7 @@ type Validation = 'error' | 'success' | 'warning'
 interface InputProps {
   readonly validation?: Validation
   readonly isCompact?: boolean
+  readonly uppercase?: boolean
 }
 
 interface FileUploadProps {
@@ -115,10 +116,10 @@ const Input = styled.input<InputProps>`
   box-sizing: border-box;
   color: ${(props) => props.theme.font.colors.primary};
   font-size: ${(props) => props.theme.font.sizes.md};
-
   height: ${(props) => (props.isCompact ? '34px' : '40px')};
   padding: ${(props) => `0 ${props.theme.space.sm}`};
   outline: none;
+  ${(props) => props.uppercase && 'text-transform: uppercase'};
   transition: border-color 0.25s ease-in-out 0s, box-shadow 0.1s ease-in-out 0s,
     background-color 0.25s ease-in-out 0s, color 0.25s ease-in-out 0s;
   width: 100%;
