@@ -35,6 +35,8 @@ export interface Actions {
   setBalance: Action<StoreModel, SetBalancePayload>
 }
 
-export interface Computators {}
+export interface Computators {
+  totalBalanceAmount: Computed<StoreModel, string>
+}
 
 export interface StoreModel extends State, Actions, Computators {}

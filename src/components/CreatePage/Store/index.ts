@@ -5,6 +5,7 @@ import {
   decimalsPattern,
   symbolPattern,
 } from '../../../../utils/regexPatterns'
+import { totalBalanceAmount } from './lib'
 import { Actions, Balance, Computators, State } from './model'
 
 const state: State = {
@@ -59,7 +60,12 @@ const actions: Actions = {
   }),
 }
 
-const computators: Computators = {}
+const computators: Computators = {
+  totalBalanceAmount: computed(
+    [(state) => state.initialBalances],
+    totalBalanceAmount
+  ),
+}
 
 const Store = createContextStore({
   ...state,

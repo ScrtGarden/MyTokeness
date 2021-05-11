@@ -1,10 +1,15 @@
-import { ActionTypes, StateMapper } from 'easy-peasy'
+import Big from 'big.js'
 
-import { StoreModel } from './model'
+import { Balance } from './model'
 
-const setInitialBalances = (state: any, payload: any) => {
-  const { index, data } = payload
-  console.log(payload)
+const totalBalanceAmount = (balances: Balance[]) => {
+  const sum = balances.reduce((acc: string, balance): string => {
+    const accBig = new Big(acc)
+
+    return accBig.plus(balance.amount || '0').toString()
+  }, '0')
+
+  return sum
 }
 
-export { setInitialBalances }
+export { totalBalanceAmount }
