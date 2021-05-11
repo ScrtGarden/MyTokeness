@@ -27,8 +27,8 @@ const theme = {
         primary: '#fff',
         secondary: '#a0b3c6',
         disabled: '#404a50',
-        error: '#de5f5f',
-        warn: '#de5f5f',
+        error: '#d95468',
+        warn: '#d95468',
       },
       weights: {
         thin: 100,
@@ -56,8 +56,8 @@ const theme = {
         primary: '#fff',
         secondary: '#889aa7',
         disabled: '#404a50',
-        error: '#de5f5f',
-        warn: '#de5f5f',
+        error: '#d95468',
+        warn: '#d95468',
       },
     },
     space: {
