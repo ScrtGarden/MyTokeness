@@ -30,8 +30,8 @@ export interface State {
 
 export interface Actions {
   setState: Action<StoreModel, SetStatePayload>
-  // setBalanceAddress: Action<StoreModel, SetBalancePayload>
-  // setBalanceAmount: Action<StoreModel, SetBalancePayload>
+  setSymbol: Action<StoreModel, string>
+  setDecimals: Action<StoreModel, string>
   setBalance: Action<StoreModel, SetBalancePayload>
 }
 

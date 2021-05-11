@@ -1,5 +1,10 @@
 import { action, computed, createContextStore } from 'easy-peasy'
 
+import {
+  amountPattern,
+  decimalsPattern,
+  symbolPattern,
+} from '../../../../utils/regexPatterns'
 import { Actions, Balance, Computators, State } from './model'
 
 const state: State = {
@@ -20,9 +25,26 @@ const actions: Actions = {
     const { data, key } = payload
     state[key] = data
   }),
+  setSymbol: action((state, payload) => {
+    if (!payload || payload.match(symbolPattern)) {
+      state.symbol = payload
+    }
+  }),
+  setDecimals: action((state, payload) => {
+    if (!payload || payload.match(decimalsPattern)) {
+      state.decimals = payload
+    }
+  }),
   setBalance: action((state, payload) => {
     const { index, data } = payload
     const balances = state.initialBalances
+
+    if (data.amount) {
+      const { amount } = data
+      if (amount && !amount.match(amountPattern(state.decimals))) {
+        return
+      }
+    }
 
     const newBalances: Balance[] = balances
       .map((balance, idx) =>

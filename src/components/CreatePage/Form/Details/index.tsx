@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Field, Input, Label } from '../../../UI/Forms'
+import { Field, Hint, Input, Label } from '../../../UI/Forms'
 import Store from '../../Store'
 import { Header, Wrapper } from '../styles'
 
@@ -12,6 +12,8 @@ const Details = () => {
 
   // context store actions
   const setState = Store.useStoreActions((actions) => actions.setState)
+  const setSymbol = Store.useStoreActions((actions) => actions.setSymbol)
+  const setDecimals = Store.useStoreActions((actions) => actions.setDecimals)
 
   return (
     <>
@@ -28,20 +30,21 @@ const Details = () => {
         </Field>
         <Field>
           <Label>Symbol</Label>
+          <Hint>May contain digits. 3-6 characters long.</Hint>
           <Input
             value={symbol}
-            onChange={(e) =>
-              setState({ key: 'symbol', data: e.currentTarget.value })
-            }
+            onChange={(e) => setSymbol(e.currentTarget.value)}
+            uppercase
           />
         </Field>
         <Field>
           <Label>Decimals</Label>
+          <Hint>
+            Decimal precision of your token. E.g. SCRT uses 6, ETH uses 18.
+          </Hint>
           <Input
             value={decimals}
-            onChange={(e) =>
-              setState({ key: 'decimals', data: e.currentTarget.value })
-            }
+            onChange={(e) => setDecimals(e.currentTarget.value)}
           />
         </Field>
       </Wrapper>
