@@ -24,4 +24,6 @@ const Wrapper = styled.div`
   row-gap: ${(props) => props.theme.space.sm};
 `
 
-export { Container, Wrapper, Position }
+const Field = styled.div``
+
+export { Container, Wrapper, Position, Field }

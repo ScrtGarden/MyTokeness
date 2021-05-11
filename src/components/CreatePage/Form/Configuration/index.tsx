@@ -1,5 +1,6 @@
 import { memo } from 'react'
 
+import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Field, Hint, Input, Label } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
 import Store from '../../Store'
@@ -15,6 +16,7 @@ const Configuration = () => {
   const enableRedeem = Store.useStoreState((state) => state.enableRedeem)
   const enableMint = Store.useStoreState((state) => state.enableMint)
   const enableBurn = Store.useStoreState((state) => state.enableBurn)
+  const error = Store.useStoreState((state) => state.validation.adminAddress)
 
   // context store actions
   const setState = Store.useStoreActions((actions) => actions.setState)
@@ -32,6 +34,7 @@ const Configuration = () => {
               setState({ key: 'adminAddress', data: e.currentTarget.value })
             }
           />
+          {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
         <ToggleField>
           <Label>Enable public token supply</Label>
