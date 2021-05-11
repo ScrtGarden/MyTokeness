@@ -7,7 +7,7 @@ import { StyledDots } from './styles'
 type OwnProps = {
   text?: string
   loading?: boolean
-  className?: string
+  onClick?: () => void
 }
 
 type Props = ButtonProps & OwnProps
