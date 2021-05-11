@@ -63,10 +63,19 @@ const validation = (
     }
   }
 
-  errors.initialBalances = initialBalances.map(({ address, amount }) => {
+  errors.initialBalances = initialBalances.map(({ address, amount }, index) => {
     const balanceError = {
       address: '',
       amount: '',
+    }
+
+    if (
+      initialBalances.length > 1 &&
+      index === initialBalances.length - 1 &&
+      !address &&
+      !amount
+    ) {
+      return balanceError
     }
 
     if (!isSecretAddress(address)) {
