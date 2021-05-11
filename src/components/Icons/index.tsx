@@ -29,6 +29,7 @@ import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
 import Times from './Times'
 import UserCircleDuo from './UserCircleDuo'
+import UserCrownDuo from './UserCrownDuo'
 
 type Props = {
   name?: string
@@ -41,6 +42,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'user-crown-duo':
+      SelectedIcon = UserCrownDuo
+      break
     case 'industry-duo':
       SelectedIcon = IndustryDuo
       break
