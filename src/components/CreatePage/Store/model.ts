@@ -21,7 +21,7 @@ export interface ValidationResult {
   symbol: string
   decimals: string
   adminAddress: string
-  initialBalances: Balance[]
+  initialBalances: { address: string; amount: string }[]
 }
 
 export interface State {
