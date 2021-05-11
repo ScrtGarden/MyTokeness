@@ -1,4 +1,7 @@
-import Footer from '../../Footer'
+import { useEffect, useMemo } from 'react'
+
+import { useStoreState } from '../../../hooks/storeHooks'
+import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { Container } from './styles'
@@ -8,6 +11,15 @@ type Props = {
 }
 
 const SiteLayout = ({ children }: Props) => {
+  const store = useStoreState((state) => state)
+  useMemo(() => console.log(store), [store])
+
+  const { mutate } = useMutationGetAccounts()
+
+  useEffect(() => {
+    mutate()
+  }, [])
+
   return (
     <>
       <Header />
