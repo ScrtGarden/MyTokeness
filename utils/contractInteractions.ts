@@ -3,7 +3,7 @@ import { InstantiateResult } from 'secretjs'
 import { InitMsg as Snip20InitMsg } from '../interface/snip20'
 import keplr from './keplr'
 
-type Params = {
+export type Params = {
   initMsg: Snip20InitMsg
   label: string
   codeId: number
