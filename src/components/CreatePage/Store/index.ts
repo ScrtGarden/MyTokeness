@@ -59,6 +59,11 @@ const actions: Actions = {
       ? newBalances
       : newBalances.concat([{ address: '', amount: '' }])
   }),
+  resetState: action((currentState: any) => {
+    Object.entries(state).forEach(([key, value]) => {
+      currentState[key] = value
+    })
+  }),
 }
 
 const computators: Computators = {

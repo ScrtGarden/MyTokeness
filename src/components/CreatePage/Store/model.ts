@@ -43,6 +43,7 @@ export interface Actions {
   setSymbol: Action<StoreModel, string>
   setDecimals: Action<StoreModel, string>
   setBalance: Action<StoreModel, SetBalancePayload>
+  resetState: Action<StoreModel>
 }
 
 export interface Computators {
