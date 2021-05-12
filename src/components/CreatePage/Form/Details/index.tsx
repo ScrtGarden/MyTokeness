@@ -23,11 +23,13 @@ const Details = () => {
       <Wrapper>
         <Field>
           <Label>Name</Label>
+          <Hint>Must be 3-30 characters long.</Hint>
           <Input
             value={name}
             onChange={(e) =>
               setState({ key: 'name', data: e.currentTarget.value })
             }
+            maxLength={30}
           />
           {errors.name && (
             <MessageWithIcon validation="error" message={errors.name} />
