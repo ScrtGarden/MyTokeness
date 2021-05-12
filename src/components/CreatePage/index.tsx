@@ -1,8 +1,9 @@
 import cryptoRandomString from 'crypto-random-string'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../utils/constants'
+import parseErrorMsg from '../../../utils/parseErrorMsg'
 import { useStoreState } from '../../hooks/storeHooks'
 import useMutationConnectWallet from '../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../hooks/useMutationGetAccounts'
@@ -41,6 +42,7 @@ const CreatePage = () => {
 
   // context store actions
   const setState = Store.useStoreActions((actions) => actions.setState)
+  const reset = Store.useStoreActions((actions) => actions.resetState)
 
   // custom hooks
   const {
@@ -54,7 +56,8 @@ const CreatePage = () => {
   const { mutate, isLoading } = useMutationInitContract()
 
   // component state
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [contractAddress, setContractAddress] = useState('')
 
   const onClickCreate = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -69,8 +72,7 @@ const CreatePage = () => {
         await connectWallet()
         await getAccounts()
       } catch (error) {
-        console.log(error)
-        return
+        throw error
       }
     }
 
@@ -87,12 +89,24 @@ const CreatePage = () => {
       initialBalances,
     })
 
-    mutate({
-      codeId: CONTRACT_CODE_ID.SNIP20,
-      initMsg,
-      label: `${name} ${cryptoRandomString({ length: 15 })}`,
-      maxGas: MAX_GAS.SNIP20_INIT_MSG,
-    })
+    mutate(
+      {
+        codeId: CONTRACT_CODE_ID.SNIP20,
+        initMsg,
+        label: `${name} snip20-${cryptoRandomString({ length: 15 })}`,
+        maxGas: MAX_GAS.SNIP20_INIT_MSG,
+      },
+      {
+        onError: (error) => {
+          toast.error(parseErrorMsg(error as Error))
+        },
+        onSuccess: ({ contractAddress }) => {
+          setContractAddress(contractAddress)
+          setShowModal(true)
+          reset()
+        },
+      }
+    )
   }
 
   return (
@@ -122,6 +136,7 @@ const CreatePage = () => {
       <CreatedTokenModal
         isOpen={showModal}
         toggle={() => setShowModal(!showModal)}
+        contractAddress={contractAddress}
       />
     </>
   )
