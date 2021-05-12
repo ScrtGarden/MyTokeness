@@ -76,13 +76,22 @@ const theme = {
       button: {
         bg: {
           default: {
+            base: 'transparent',
+            hover: '#60af7310',
+            active: '#60af7326',
+          },
+          primary: {
             base: '#60af73',
             hover: '#509461',
             active: '#468255',
           },
-          disabled: '#79838a',
+          disabled: '#30373e',
         },
-        color: '#181e24',
+        color: {
+          default: { base: '#60af73', hover: '#6dc783', active: '#7bdc93' },
+          primary: '#181e24',
+          disabled: '#181e24',
+        },
       },
     },
 
