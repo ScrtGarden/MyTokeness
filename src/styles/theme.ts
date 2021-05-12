@@ -198,6 +198,25 @@ const theme = {
         },
       },
     },
+
+    // modal
+    modal: {
+      overlay: {
+        bg: '#13181cab',
+      },
+      card: {
+        bg: '#181e24',
+        border: '2px solid #212a31',
+      },
+      header: {
+        border: {
+          color: '#212a31',
+        },
+      },
+      border: {
+        color: '#212a31',
+      },
+    },
   },
   light: {
     //
