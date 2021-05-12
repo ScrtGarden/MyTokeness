@@ -104,12 +104,14 @@ const getAccounts = async () => {
   }
 }
 
-const createSigningClient = async ({ maxGas = '300000' } = {}) => {
+const createSigningClient = async ({
+  maxGas = '300000',
+} = {}): Promise<SigningCosmWasmClient> => {
   const { accounts, signer } = await getAccounts()
 
   try {
     const utils = getGetEnigmaUtils(process.env.NEXT_PUBLIC_CHAIN_ID)
-    const secretjs = new SigningCosmWasmClient(
+    return new SigningCosmWasmClient(
       process.env.NEXT_PUBLIC_REST_URL || '',
       accounts[0].address,
       signer,
@@ -127,10 +129,8 @@ const createSigningClient = async ({ maxGas = '300000' } = {}) => {
         },
       }
     )
-
-    return { secretjs }
   } catch (error) {
-    return { error: { message: error.message } }
+    throw error
   }
 }
 
