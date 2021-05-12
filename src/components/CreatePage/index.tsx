@@ -1,6 +1,6 @@
 import cryptoRandomString from 'crypto-random-string'
-import { format } from 'date-fns'
 import { MouseEvent } from 'react'
+import { toast } from 'react-toastify'
 
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../utils/constants'
 import { useStoreState } from '../../hooks/storeHooks'

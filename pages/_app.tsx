@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.min.css'
+
 import { StoreProvider } from 'easy-peasy'
 import { AppProps } from 'next/app'
 import { useState } from 'react'
@@ -5,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
 
 import LoadingOverlay from '../src/components/LoadingOverlay'
+import { StyledToastContainer } from '../src/components/UI/Notification'
 import GlobalStyle from '../src/styles/GlobalStyle'
 import theme from '../src/styles/theme'
 import { useStore } from '../store'
@@ -33,6 +36,7 @@ const MyApp = ({ Component, pageProps }: Props) => {
           ) : (
             <LoadingOverlay onLoaded={(value) => setReady(value)} />
           )}
+          <StyledToastContainer autoClose={8000} />
         </ThemeProvider>
       </QueryClientProvider>
     </StoreProvider>
