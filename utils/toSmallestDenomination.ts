@@ -7,7 +7,7 @@ const toSmallestDenomination = (amount: string, decimals: number = 0) => {
   const parsedAmount = Big(amount)
   const multipleAmount = Big(10).pow(decimals)
 
-  return parsedAmount.times(multipleAmount).toString()
+  return parsedAmount.times(multipleAmount).toFixed()
 }
 
 export default toSmallestDenomination
