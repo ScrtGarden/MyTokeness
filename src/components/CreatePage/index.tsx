@@ -1,5 +1,5 @@
 import cryptoRandomString from 'crypto-random-string'
-import { MouseEvent, useEffect, useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../utils/constants'
@@ -98,7 +98,7 @@ const CreatePage = () => {
       },
       {
         onError: (error) => {
-          toast.error(parseErrorMsg(error as Error))
+          toast.error(parseErrorMsg(error))
         },
         onSuccess: ({ contractAddress }) => {
           setContractAddress(contractAddress)
