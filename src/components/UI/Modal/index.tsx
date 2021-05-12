@@ -52,7 +52,7 @@ const Header = styled.div`
   column-gap: ${(props) => props.theme.space.sm};
   display: flex;
   justify-content: space-between;
-  padding: ${(props) => props.theme.space.md};
+  padding: ${(props) => props.theme.space.lg};
 `
 
 const StyledIcon = styled(Icon)<IconProps>`
@@ -74,7 +74,7 @@ const Title = styled.h1<TitleProps>`
 `
 
 const Content = styled.div`
-  padding: ${(props) => props.theme.space.md};
+  padding: ${(props) => props.theme.space.lg};
 `
 
 const Text = styled.p`
@@ -86,9 +86,9 @@ const Text = styled.p`
 
 const Buttons = styled.div<ButtonsProps>`
   column-gap: ${(props) => props.theme.space.md};
-  display: grid;
-  grid-template-columns: ${(props) => (props.single ? '1fr' : '1fr 1fr')};
-  padding: ${(props) => props.theme.space.md};
+  display: flex;
+  justify-content: flex-end;
+  padding: ${(props) => props.theme.space.lg};
 `
 
 export {
