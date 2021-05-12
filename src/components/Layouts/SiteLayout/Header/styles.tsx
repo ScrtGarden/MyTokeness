@@ -14,7 +14,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 2;
 `
 
 const Brand = styled.div`
