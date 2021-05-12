@@ -35,6 +35,11 @@ const validation = (
     if (hasTriedSubmitting) {
       errors.name = 'Please enter a valid name.'
     }
+  } else if (name.length < 3) {
+    errors.hasErrors = true
+    if (hasTriedSubmitting) {
+      errors.name = 'Please enter a name at least 3 chars long.'
+    }
   }
 
   if (!symbol) {
