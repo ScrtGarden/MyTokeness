@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, MouseEvent, memo } from 'react'
 
 import { ButtonProps } from '../../UI/Buttons'
 import { Button } from '../../UI/Buttons'
@@ -7,7 +7,7 @@ import { StyledDots } from './styles'
 type OwnProps = {
   text?: string
   loading?: boolean
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
 type Props = ButtonProps & OwnProps
