@@ -1,5 +1,5 @@
 import cryptoRandomString from 'crypto-random-string'
-import { MouseEvent } from 'react'
+import { MouseEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../utils/constants'
@@ -8,6 +8,7 @@ import useMutationConnectWallet from '../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../hooks/useMutationGetAccounts'
 import useMutationInitContract from '../../hooks/useMutationInitContract'
 import ButtonWithLoading from '../Common/ButtonWithLoading'
+import CreatedTokenModal from '../Modals/CreatedToken'
 import { Container, InnerContainer } from '../UI/Containers'
 import { PageTitle } from '../UI/Typography'
 import Configuration from './Form/Configuration'
@@ -52,6 +53,9 @@ const CreatePage = () => {
   } = useMutationGetAccounts()
   const { mutate, isLoading } = useMutationInitContract()
 
+  // component state
+  const [showModal, setShowModal] = useState(false)
+
   const onClickCreate = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setState({ key: 'hasTriedSubmitting', data: true })
@@ -86,33 +90,36 @@ const CreatePage = () => {
     mutate({
       codeId: CONTRACT_CODE_ID.SNIP20,
       initMsg,
-      label: `${name} Snip20 ${cryptoRandomString({ length: 15 })}`,
+      label: `${name} ${cryptoRandomString({ length: 15 })}`,
       maxGas: MAX_GAS.SNIP20_INIT_MSG,
     })
   }
 
   return (
-    <Container>
-      <InnerContainer>
-        <PageTitle>Create your token</PageTitle>
-        <Content>
-          <Form>
-            <Details />
-            <Configuration />
-          </Form>
-          <Form>
-            <InitialBalances />
-            <Review />
-            <ButtonWithLoading
-              text="Create"
-              isStretched
-              onClick={onClickCreate}
-              loading={connecting || gettingAccounts || isLoading}
-            />
-          </Form>
-        </Content>
-      </InnerContainer>
-    </Container>
+    <>
+      <Container>
+        <InnerContainer>
+          <PageTitle>Create your token</PageTitle>
+          <Content>
+            <Form>
+              <Details />
+              <Configuration />
+            </Form>
+            <Form>
+              <InitialBalances />
+              <Review />
+              <ButtonWithLoading
+                text="Create"
+                isStretched
+                onClick={onClickCreate}
+                loading={connecting || gettingAccounts || isLoading}
+              />
+            </Form>
+          </Content>
+        </InnerContainer>
+      </Container>
+      <CreatedTokenModal isOpen />
+    </>
   )
 }
 

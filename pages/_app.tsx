@@ -5,8 +5,10 @@ import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
+import { ModalProvider } from 'styled-react-modal'
 
 import LoadingOverlay from '../src/components/LoadingOverlay'
+import { ModalBackground } from '../src/components/UI/Modal'
 import { StyledToastContainer } from '../src/components/UI/Notification'
 import GlobalStyle from '../src/styles/GlobalStyle'
 import theme from '../src/styles/theme'
@@ -30,13 +32,15 @@ const MyApp = ({ Component, pageProps }: Props) => {
     <StoreProvider store={store}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme.dark}>
-          <GlobalStyle />
-          {ready ? (
-            getLayout(<Component {...pageProps} />)
-          ) : (
-            <LoadingOverlay onLoaded={(value) => setReady(value)} />
-          )}
-          <StyledToastContainer autoClose={8000} />
+          <ModalProvider backgroundComponent={ModalBackground}>
+            <GlobalStyle />
+            {ready ? (
+              getLayout(<Component {...pageProps} />)
+            ) : (
+              <LoadingOverlay onLoaded={(value) => setReady(value)} />
+            )}
+            <StyledToastContainer autoClose={8000} />
+          </ModalProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </StoreProvider>
