@@ -54,7 +54,7 @@ const CreatePage = () => {
   const { mutate, isLoading } = useMutationInitContract()
 
   // component state
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(true)
 
   const onClickCreate = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -111,6 +111,7 @@ const CreatePage = () => {
               <ButtonWithLoading
                 text="Create"
                 isStretched
+                isPrimary
                 onClick={onClickCreate}
                 loading={connecting || gettingAccounts || isLoading}
               />
@@ -118,7 +119,10 @@ const CreatePage = () => {
           </Content>
         </InnerContainer>
       </Container>
-      <CreatedTokenModal isOpen />
+      <CreatedTokenModal
+        isOpen={showModal}
+        toggle={() => setShowModal(!showModal)}
+      />
     </>
   )
 }
