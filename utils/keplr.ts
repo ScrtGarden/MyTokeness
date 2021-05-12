@@ -134,9 +134,34 @@ const createSigningClient = async ({
   }
 }
 
+const getSnip20ViewingKey = async (contractAddress: string) => {
+  const keplr = getKeplr()
+
+  try {
+    await keplr.getSecret20ViewingKey(
+      process.env.NEXT_PUBLIC_CHAIN_ID,
+      contractAddress
+    )
+  } catch (error) {
+    throw error
+  }
+}
+
+const suggestToken = async (contractAddress: string) => {
+  const keplr = getKeplr()
+
+  try {
+    await keplr.suggestToken(process.env.NEXT_PUBLIC_CHAIN_ID, contractAddress)
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
   getKeplr,
   connect,
   getAccounts,
   createSigningClient,
+  getSnip20ViewingKey,
+  suggestToken,
 }
