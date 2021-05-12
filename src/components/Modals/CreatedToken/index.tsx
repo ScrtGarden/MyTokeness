@@ -1,6 +1,9 @@
 import { FC, memo } from 'react'
+import { toast } from 'react-toastify'
 import { ModalProps } from 'styled-react-modal'
 
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
+import useMutationSuggestToken from '../../../hooks/useMutationSuggestToken'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import { Button, StyledIcon } from '../../UI/Buttons'
 import { Buttons, Content, Header, Text, Title } from '../../UI/Modal'
@@ -8,10 +11,26 @@ import { StyledIconButton, StyledModal } from './styles'
 
 type Props = {
   toggle?: () => void
+  contractAddress: string
 } & ModalProps
 
 const CreatedTokenModal: FC<Props> = (props) => {
-  const { toggle, ...rest } = props
+  const { toggle = () => null, contractAddress, ...rest } = props
+
+  // custom hooks
+  const { mutate, isLoading } = useMutationSuggestToken()
+
+  const onClickGetViewingKey = () => {
+    mutate(contractAddress, {
+      onSuccess: () => {
+        toast.success('Created viewing key.')
+        toggle()
+      },
+      onError: (error) => {
+        toast.error(parseErrorMsg(error))
+      },
+    })
+  }
 
   return (
     <StyledModal {...rest}>
@@ -29,8 +48,16 @@ const CreatedTokenModal: FC<Props> = (props) => {
         </Text>
       </Content>
       <Buttons>
-        <Button onClick={toggle}>Not Now</Button>
-        <ButtonWithLoading text="Lets Go" isPrimary width={75} />
+        <Button onClick={toggle} disabled={isLoading}>
+          Not Now
+        </Button>
+        <ButtonWithLoading
+          text="Lets Go"
+          isPrimary
+          width={75}
+          loading={isLoading}
+          onClick={onClickGetViewingKey}
+        />
       </Buttons>
     </StyledModal>
   )
