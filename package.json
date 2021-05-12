@@ -11,6 +11,8 @@
     "bech32": "^2.0.0",
     "big.js": "^6.1.1",
     "comma-number": "^2.1.0",
+    "crypto-random-string": "3.3.1",
+    "date-fns": "^2.21.3",
     "easy-peasy": "^5.0.3",
     "next": "10.2.0",
     "react": "17.0.2",
