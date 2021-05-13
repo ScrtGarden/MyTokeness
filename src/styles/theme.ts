@@ -178,8 +178,10 @@ const theme = {
     sidebar: {
       tab: {
         bg: {
-          hover: '',
+          hover: '#232b33',
         },
+        indicator: '#60af73',
+        color: '#fff',
       },
     },
 
