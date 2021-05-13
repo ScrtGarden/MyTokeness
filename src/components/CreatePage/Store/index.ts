@@ -1,4 +1,4 @@
-import { action, computed, createContextStore } from 'easy-peasy'
+import { action, actionOn, computed, createContextStore } from 'easy-peasy'
 
 import {
   amountPattern,
@@ -6,7 +6,7 @@ import {
   symbolPattern,
 } from '../../../../utils/regexPatterns'
 import { totalBalanceAmount, validation } from './lib'
-import { Actions, Balance, Computators, State } from './model'
+import { Actions, Balance, Computators, Listeners, State } from './model'
 
 const state: State = {
   name: '',
@@ -84,10 +84,25 @@ const computators: Computators = {
   ),
 }
 
+const listners: Listeners = {
+  onDecimalsChange: actionOn(
+    (actions) => actions.setDecimals,
+    (state, target) => {
+      if (target) {
+        state.initialBalances = state.initialBalances.map(({ address }) => ({
+          address,
+          amount: '',
+        }))
+      }
+    }
+  ),
+}
+
 const Store = createContextStore({
   ...state,
   ...actions,
   ...computators,
+  ...listners,
 })
 
 export default Store

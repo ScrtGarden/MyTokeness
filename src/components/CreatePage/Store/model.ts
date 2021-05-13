@@ -1,4 +1,4 @@
-import { Action, Computed } from 'easy-peasy'
+import { Action, ActionOn, Computed } from 'easy-peasy'
 
 export interface Balance {
   address: string
@@ -51,4 +51,8 @@ export interface Computators {
   validation: Computed<StoreModel, ValidationResult>
 }
 
-export interface StoreModel extends State, Actions, Computators {}
+export interface Listeners {
+  onDecimalsChange: ActionOn<StoreModel>
+}
+
+export interface StoreModel extends State, Actions, Computators, Listeners {}
