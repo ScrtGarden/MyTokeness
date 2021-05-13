@@ -1,4 +1,5 @@
 import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
+import Head from 'next/head'
 import { ServerStyleSheet } from 'styled-components'
 
 class MyDocument extends Document {
@@ -12,7 +13,18 @@ class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props: any) =>
-            sheet.collectStyles(<App {...props} />),
+            sheet.collectStyles(
+              <>
+                <Head>
+                  <link rel="preconnect" href="https://fonts.gstatic.com" />
+                  <link
+                    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+                    rel="stylesheet"
+                  />
+                </Head>
+                <App {...props} />
+              </>
+            ),
         })
 
       const initialProps = await Document.getInitialProps(ctx)
