@@ -12,9 +12,29 @@ const TABS = {
     icon: 'industry-duo',
     route: '/create',
   },
-  'transaction-history': {
-    label: 'Transaction History',
-    icon: 'receipt-duo',
+  manage: {
+    label: 'Manage',
+    icon: 'tasks-alt-duo',
+    menu: [
+      {
+        label: 'Mint',
+        icon: 'hand-holding-usd',
+        route: '/manage/mint',
+        as: undefined,
+      },
+      {
+        label: 'Minters',
+        icon: 'users-duo',
+        route: '/manage/minters',
+        as: undefined,
+      },
+      {
+        label: 'Admin',
+        icon: 'user-crown-duo',
+        route: '/manage/admin',
+        as: undefined,
+      },
+    ],
   },
 }
 
