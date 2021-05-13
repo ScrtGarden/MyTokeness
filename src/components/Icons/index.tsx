@@ -16,6 +16,7 @@ import FireDuo from './FireDuo'
 import Flower from './Flower'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
+import HandHoldingUSD from './HandHoldingUSD'
 import HomeDuo from './HomeDuo'
 import HorizontalRule from './HorizontalRule'
 import IndustryDuo from './IndustryDuo'
@@ -27,9 +28,11 @@ import PencilPaintbrushDuo from './PencilPaintbrushDuo'
 import PhotoVideoDuo from './PhotoVideoDuo'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
+import TasksAltDuo from './TasksAltDuo'
 import Times from './Times'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
+import UsersDuo from './UsersDuo'
 
 type Props = {
   name?: string
@@ -42,6 +45,15 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'users-duo':
+      SelectedIcon = UsersDuo
+      break
+    case 'hand-holding-usd':
+      SelectedIcon = HandHoldingUSD
+      break
+    case 'tasks-alt-duo':
+      SelectedIcon = TasksAltDuo
+      break
     case 'user-crown-duo':
       SelectedIcon = UserCrownDuo
       break
