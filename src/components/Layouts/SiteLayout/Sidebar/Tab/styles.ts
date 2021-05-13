@@ -30,7 +30,7 @@ const Header = styled.div<HeaderProps>`
   ::before {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    background-color: #33ced8;
+    background-color: ${(props) => props.theme.sidebar.tab.indicator};
     content: '';
     ${(props) => !props.selected && `display: none`};
     position: absolute;
@@ -52,13 +52,13 @@ const Wrapper = styled.div`
 `
 
 const Label = styled.div`
-  color: ${(props) => props.theme.font.colors.primary};
+  color: ${(props) => props.theme.sidebar.tab.color};
   font-size: ${(props) => props.theme.font.sizes.md};
   font-weight: ${(props) => props.theme.font.weights.semibold};
 `
 
 const StyledIcon = styled(Icon)<IconProps>`
-  fill: ${(props) => props.theme.icon.colors.primary};
+  fill: ${(props) => props.theme.sidebar.tab.color};
   height: ${(props) => (props.small === 'true' ? '1.5rem' : '2rem')};
   width: ${(props) => (props.small === 'true' ? '1.5rem' : '2rem')};
 `
