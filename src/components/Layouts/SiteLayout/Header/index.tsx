@@ -10,10 +10,8 @@ const Header = () => {
 
   // custom hooks
   const { mutateAsync: connectWallet, isLoading } = useMutationConnectWallet()
-  const {
-    mutate: getAccounts,
-    isLoading: loadingAccounts,
-  } = useMutationGetAccounts()
+  const { mutate: getAccounts, isLoading: loadingAccounts } =
+    useMutationGetAccounts()
 
   const onClickConnect = async () => {
     try {
@@ -37,6 +35,7 @@ const Header = () => {
           width={80}
           onClick={onClickConnect}
           loading={isLoading || loadingAccounts}
+          isPrimary
         />
       )}
     </Container>
