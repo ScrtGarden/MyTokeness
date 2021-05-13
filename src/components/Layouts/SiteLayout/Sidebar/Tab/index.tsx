@@ -15,7 +15,7 @@ interface Item {
     label: string
     icon: string
     route: string
-    as: string
+    as?: string
   }[]
 }
 
