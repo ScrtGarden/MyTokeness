@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
+import { Header } from '../../../UI/Card'
 import Store from '../../Store'
-import { Header, Wrapper } from '../styles'
 import Item from './Item'
 
 const InitialBalances = () => {

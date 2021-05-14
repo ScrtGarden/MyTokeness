@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
 import MessageWithIcon from '../../../Common/MessageWithIcon'
+import { Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label } from '../../../UI/Forms'
 import Store from '../../Store'
-import { Header, Wrapper } from '../styles'
 
 const Details = () => {
   // context store state

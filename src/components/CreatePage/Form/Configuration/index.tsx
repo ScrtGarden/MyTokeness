@@ -1,10 +1,11 @@
 import { memo } from 'react'
 
 import MessageWithIcon from '../../../Common/MessageWithIcon'
+import { Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
 import Store from '../../Store'
-import { Header, ToggleField, Wrapper } from '../styles'
+import { ToggleField } from '../styles'
 
 const Configuration = () => {
   // context store state

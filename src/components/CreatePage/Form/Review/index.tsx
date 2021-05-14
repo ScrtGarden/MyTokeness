@@ -1,10 +1,10 @@
 import commaNumber from 'comma-number'
 import { memo } from 'react'
 
+import { Header } from '../../../UI/Card'
 import { Label } from '../../../UI/Forms'
 import { Text } from '../../../UI/Typography'
 import Store from '../../Store'
-import { Header } from '../styles'
 import { Content, Field } from './styles'
 
 const Review = () => {

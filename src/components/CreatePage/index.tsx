@@ -10,13 +10,13 @@ import useMutationGetAccounts from '../../hooks/useMutationGetAccounts'
 import useMutationInitContract from '../../hooks/useMutationInitContract'
 import ButtonWithLoading from '../Common/ButtonWithLoading'
 import CreatedTokenModal from '../Modals/CreatedToken'
+import { Card } from '../UI/Card'
 import { Container, InnerContainer } from '../UI/Containers'
 import { PageTitle } from '../UI/Typography'
 import Configuration from './Form/Configuration'
 import Details from './Form/Details'
 import InitialBalances from './Form/InitialBalances'
 import Review from './Form/Review'
-import { Form } from './Form/styles'
 import { formatter } from './lib'
 import Store from './Store'
 import { Content } from './styles'
@@ -45,14 +45,10 @@ const CreatePage = () => {
   const reset = Store.useStoreActions((actions) => actions.resetState)
 
   // custom hooks
-  const {
-    mutateAsync: connectWallet,
-    isLoading: connecting,
-  } = useMutationConnectWallet()
-  const {
-    mutateAsync: getAccounts,
-    isLoading: gettingAccounts,
-  } = useMutationGetAccounts()
+  const { mutateAsync: connectWallet, isLoading: connecting } =
+    useMutationConnectWallet()
+  const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
+    useMutationGetAccounts()
   const { mutate, isLoading } = useMutationInitContract()
 
   // component state
@@ -115,11 +111,11 @@ const CreatePage = () => {
         <InnerContainer>
           <PageTitle>Create your token</PageTitle>
           <Content>
-            <Form>
+            <Card>
               <Details />
               <Configuration />
-            </Form>
-            <Form>
+            </Card>
+            <Card>
               <InitialBalances />
               <Review />
               <ButtonWithLoading
@@ -129,7 +125,7 @@ const CreatePage = () => {
                 onClick={onClickCreate}
                 loading={connecting || gettingAccounts || isLoading}
               />
-            </Form>
+            </Card>
           </Content>
         </InnerContainer>
       </Container>
