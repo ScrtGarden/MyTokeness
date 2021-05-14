@@ -82,7 +82,7 @@ const Tab: FC<Props> = (props) => {
                     <Item
                       label={item.label}
                       icon={item.icon}
-                      selected={router.asPath === item.as}
+                      selected={router.asPath === (item.as || item.route)}
                     />
                   </Link>
                 ))}
