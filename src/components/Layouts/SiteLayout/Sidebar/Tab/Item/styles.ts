@@ -20,7 +20,7 @@ const Container = styled.div<ContainerProps>`
   ::before {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    background: linear-gradient(to bottom, #517490, #517490);
+    background-color: ${(props) => props.theme.sidebar.tab.indicator};
     content: '';
     ${(props) => !props.selected && `display: none`};
     position: absolute;
@@ -35,13 +35,13 @@ const Container = styled.div<ContainerProps>`
 `
 
 const Label = styled.div`
-  color: ${(props) => props.theme.font.colors.secondary};
+  color: ${(props) => props.theme.sidebar.tab.color};
   font-size: ${(props) => props.theme.font.sizes.md};
   font-weight: ${(props) => props.theme.font.weights.semibold};
 `
 
 const StyledIcon = styled(Icon)`
-  fill: ${(props) => props.theme.icon.colors.secondary};
+  fill: ${(props) => props.theme.sidebar.tab.color};
   height: 1.8rem;
   width: 1.8rem;
 `
