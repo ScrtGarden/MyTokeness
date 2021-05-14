@@ -108,6 +108,30 @@ const Textarea = styled.textarea<InputProps>`
   }
 `
 
+const InputGroup = styled.div`
+  display: inline-flex;
+  position: relative;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  z-index: 0;
+  width: 100%;
+
+  ${Field}:not([hidden]) & {
+    margin-top: 10px;
+  }
+
+  & > *:first-child:not(:last-child) {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  & > *:last-child:not(:first-child) {
+    border-left: none;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+`
+
 const Input = styled.input<InputProps>`
   appearance: none;
   background-color: ${(props) => props.theme.forms.input.bg.default};
@@ -156,6 +180,15 @@ const Input = styled.input<InputProps>`
 
   ${Field}:not([hidden]) & {
     margin-top: 10px;
+  }
+
+  ${InputGroup}:not([hidden]) & {
+    margin-top: 0px;
+
+    :focus {
+      box-shadow: inset ${(props) => props.theme.forms.input.shadow.color.focus}
+        0px 0px 0px 3px;
+    }
   }
 `
 
@@ -220,4 +253,5 @@ export {
   Message,
   MessageIcon,
   MessageWrapper,
+  InputGroup,
 }
