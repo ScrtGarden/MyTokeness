@@ -1,4 +1,4 @@
-import { InstantiateResult } from 'secretjs'
+import { ExecuteResult, InstantiateResult } from 'secretjs'
 
 import { InitMsg as Snip20InitMsg } from '../interface/snip20'
 import keplr from './keplr'
@@ -26,34 +26,25 @@ const instantiateContract = async (
   }
 }
 
-// export type ExecuteContractParams = {
-//   maxGas: string
-//   contractAddress: string
-//   handleMsg: HandleMsg
-// }
+export type ExecuteContractParams<T> = {
+  maxGas: string
+  contractAddress: string
+  handleMsg: T
+}
 
-// interface ExecuteContractResponse extends Partial<ExecuteResult> {
-//   error?: Error
-// }
+const executeContract = async <T extends object>(
+  params: ExecuteContractParams<T>
+): Promise<ExecuteResult> => {
+  const { handleMsg, contractAddress, maxGas } = params
+  const signingClient = await keplr.createSigningClient({
+    maxGas,
+  })
 
-// /**
-//  * contract execution function
-//  */
+  try {
+    return await signingClient.execute(contractAddress, handleMsg)
+  } catch (error) {
+    throw error
+  }
+}
 
-// const executeContract = async (
-//   params: ExecuteContractParams
-// ): Promise<ExecuteContractResponse> => {
-//   const { handleMsg, contractAddress, maxGas } = params
-//   const { secretjs } = await keplr.createSigningClient({
-//     maxGas,
-//   })
-
-//   try {
-//     const response = await secretjs?.execute(contractAddress, handleMsg)
-//     return { ...response }
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-export { instantiateContract }
+export { instantiateContract, executeContract }
