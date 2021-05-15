@@ -243,6 +243,22 @@ const MessageWrapper = styled.div`
   margin-top: ${(props) => props.theme.space.xs};
 `
 
+const Symbol = styled.div`
+  align-items: center;
+  background-color: #776344;
+  border: 1px solid #776344;
+  border-radius: 4px;
+  color: #181e24;
+  display: flex;
+  font-size: ${(props) => props.theme.font.sizes.md};
+  font-weight: ${(props) => props.theme.font.weights.semibold};
+  height: 40px;
+  justify-content: center;
+  padding: 0 ${(props) => props.theme.space.sm};
+  position: relative;
+  min-width: 40px;
+`
+
 export {
   Field,
   Hint,
@@ -254,4 +270,5 @@ export {
   MessageIcon,
   MessageWrapper,
   InputGroup,
+  Symbol,
 }
