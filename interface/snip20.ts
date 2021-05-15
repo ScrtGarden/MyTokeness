@@ -20,3 +20,67 @@ export interface InitMsg {
   prng_seed: string
   config: Config
 }
+
+export interface TokenConfig {
+  public_total_supply: boolean
+  deposit_enabled: boolean
+  redeem_enabled: boolean
+  mint_enabled: boolean
+  burn_enabled: boolean
+}
+
+export interface TokenInfo {
+  name: string
+  symbol: string
+  decimals: number
+  total_supply?: string
+}
+
+type ResponseStatus = 'success' | 'failure'
+
+/**
+ *  Queries
+ */
+
+export interface QueryTokenConfig {
+  token_config: {}
+}
+
+export interface QueryTokenInfo {
+  token_info: {}
+}
+
+/**
+ *  Query Results
+ */
+
+export interface ResultTokenConfig {
+  token_config: TokenConfig
+}
+
+export interface ResultTokenInfo {
+  token_info: TokenInfo
+}
+
+/**
+ *  Handle Msg
+ */
+
+export interface HandleMsgMint {
+  mint: {
+    recipient: string
+    amount: string
+    memo?: string
+    padding?: string
+  }
+}
+
+/**
+ *  Handle Msg Results
+ */
+
+export interface ResultMint {
+  mint: {
+    status: ResponseStatus
+  }
+}
