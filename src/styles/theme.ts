@@ -180,8 +180,8 @@ const theme = {
         bg: {
           hover: '#232b33',
         },
-        indicator: '#60af73',
-        color: '#fff',
+        indicator: '#8bd49c',
+        color: '#f7ca85',
       },
     },
 
