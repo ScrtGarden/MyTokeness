@@ -11,7 +11,7 @@ import useMutationInitContract from '../../hooks/useMutationInitContract'
 import ButtonWithLoading from '../Common/ButtonWithLoading'
 import CreatedTokenModal from '../Modals/CreatedToken'
 import { Card } from '../UI/Card'
-import { Container, InnerContainer } from '../UI/Containers'
+import { Container, Content, InnerContainer } from '../UI/Containers'
 import { PageTitle } from '../UI/Typography'
 import Configuration from './Form/Configuration'
 import Details from './Form/Details'
@@ -19,7 +19,6 @@ import InitialBalances from './Form/InitialBalances'
 import Review from './Form/Review'
 import { formatter } from './lib'
 import Store from './Store'
-import { Content } from './styles'
 
 const CreatePage = () => {
   // store state
@@ -90,7 +89,7 @@ const CreatePage = () => {
         codeId: CONTRACT_CODE_ID.SNIP20,
         initMsg,
         label: `${name} snip20-${cryptoRandomString({ length: 15 })}`,
-        maxGas: MAX_GAS.SNIP20_INIT_MSG,
+        maxGas: MAX_GAS.SNIP20.INIT_MSG,
       },
       {
         onError: (error) => {
