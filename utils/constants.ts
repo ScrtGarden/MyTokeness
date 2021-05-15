@@ -1,5 +1,8 @@
 const MAX_GAS = {
-  SNIP20_INIT_MSG: '180000',
+  SNIP20: {
+    INIT_MSG: '180000',
+    MINT: '180000',
+  },
 }
 
 const CONTRACT_CODE_ID = {
