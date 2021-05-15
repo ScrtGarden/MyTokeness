@@ -9,7 +9,7 @@ const Card = styled.div`
   border: 2px solid ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radii.md};
   height: fit-content;
-  max-width: 400px;
+  max-width: 475px;
   padding: ${(props) => props.theme.space.lg};
   width: 90%;
 `
