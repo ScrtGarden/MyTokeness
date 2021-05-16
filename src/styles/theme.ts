@@ -172,6 +172,9 @@ const theme = {
           },
         },
       },
+      symbol: {
+        bg: '#f0be72',
+      },
     },
 
     // sidebar
