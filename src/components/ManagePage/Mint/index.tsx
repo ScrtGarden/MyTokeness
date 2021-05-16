@@ -9,6 +9,7 @@ import {
   ResultTokenInfo,
 } from '../../../../interface/snip20'
 import { MAX_GAS } from '../../../../utils/constants'
+import decoder from '../../../../utils/decoder'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { amountPattern } from '../../../../utils/regexPatterns'
 import { useStoreState } from '../../../hooks/storeHooks'
@@ -103,10 +104,11 @@ const Mint = () => {
     mutate(
       { contractAddress, maxGas: MAX_GAS.SNIP20.MINT, handleMsg },
       {
-        onSuccess: () => {
+        onSuccess: (test) => {
           toast.success(`Minted ${amount} ${data?.token_info.symbol}`)
           setAmount('')
           setRecipient('')
+          console.log('From mint', decoder(test.data))
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))
