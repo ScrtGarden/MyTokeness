@@ -245,8 +245,7 @@ const MessageWrapper = styled.div`
 
 const Symbol = styled.div`
   align-items: center;
-  background-color: #776344;
-  border: 1px solid #776344;
+  background-color: ${(props) => props.theme.forms.symbol.bg};
   border-radius: 4px;
   color: #181e24;
   display: flex;
