@@ -3,6 +3,7 @@ const MAX_GAS = {
     INIT_MSG: '180000',
     MINT: '180000',
     BURN: '160000',
+    SET_MINTERS: '150000',
   },
 }
 
