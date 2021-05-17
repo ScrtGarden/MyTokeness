@@ -50,6 +50,10 @@ export interface QueryTokenInfo {
   token_info: {}
 }
 
+export interface QueryMinters {
+  minters: {}
+}
+
 /**
  *  Query Results
  */
@@ -60,6 +64,12 @@ export interface ResultTokenConfig {
 
 export interface ResultTokenInfo {
   token_info: TokenInfo
+}
+
+export interface ResultMinters {
+  minters: {
+    minters: string[]
+  }
 }
 
 /**
@@ -92,6 +102,13 @@ export interface HandleMsgBurnFrom {
   }
 }
 
+export interface HandleMsgSetMinters {
+  set_minters: {
+    minters: string[]
+    padding?: string
+  }
+}
+
 /**
  *  Handle Msg Results
  */
@@ -110,6 +127,12 @@ export interface ResultBurn {
 
 export interface ResultBurnFrom {
   burn_from: {
+    status: ResponseStatus
+  }
+}
+
+export interface ResultSetMinters {
+  set_minters: {
     status: ResponseStatus
   }
 }
