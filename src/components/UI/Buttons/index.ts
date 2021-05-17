@@ -75,6 +75,7 @@ const IconButton = styled.button`
   border-radius: 50%;
   cursor: pointer;
   height: 40px;
+  flex-shrink: 0;
   font-size: 0px;
   overflow: hidden;
   padding: 0px;
