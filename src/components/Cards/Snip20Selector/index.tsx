@@ -14,9 +14,15 @@ type Props = {
   value: string
   debouncedValue: string
   onChange?: (e: FormEvent<HTMLInputElement>) => void
+  checkFor?: 'mint' | 'burn'
 }
 
-const Snip20Selector: FC<Props> = ({ value, debouncedValue, onChange }) => {
+const Snip20Selector: FC<Props> = ({
+  value,
+  debouncedValue,
+  onChange,
+  checkFor,
+}) => {
   const queryClient = useQueryClient()
 
   // component state
@@ -32,9 +38,14 @@ const Snip20Selector: FC<Props> = ({ value, debouncedValue, onChange }) => {
       refetchOnWindowFocus: false,
       retry: 1,
       onSuccess: (data) => {
+        console.log(data)
         queryClient.setQueryData('selectedContractAddress', debouncedValue)
-        if (!data.token_config.mint_enabled) {
-          setError('Mint function is disabled.')
+        if (checkFor) {
+          if (checkFor === 'mint' && !data.token_config.mint_enabled) {
+            setError('Mint function is disabled.')
+          } else if (checkFor === 'burn' && !data.token_config.burn_enabled) {
+            setError('Burn function is disabled.')
+          }
         }
       },
       onError: (error) => {
