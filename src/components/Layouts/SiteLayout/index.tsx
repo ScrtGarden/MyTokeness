@@ -17,6 +17,13 @@ const SiteLayout = ({ children }: Props) => {
   const { mutate } = useMutationGetAccounts()
 
   useEffect(() => {
+    window.addEventListener('keplr_keystorechange', () => mutate())
+
+    return () =>
+      window.removeEventListener('keplr_keystorechange', () => mutate())
+  }, [])
+
+  useEffect(() => {
     mutate()
   }, [])
 
