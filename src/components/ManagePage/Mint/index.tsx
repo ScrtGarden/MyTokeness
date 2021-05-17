@@ -126,6 +126,7 @@ const Mint = () => {
             value={contractAddress}
             debouncedValue={debouncedAddy}
             onChange={(e) => setContractAddress(e.currentTarget.value)}
+            checkFor="mint"
           />
           <MintCard
             amount={amount}
