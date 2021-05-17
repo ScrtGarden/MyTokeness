@@ -23,9 +23,11 @@ import IndustryDuo from './IndustryDuo'
 import Keplr from './Kelpr'
 import KeySkeleton from './KeySkeleton'
 import ListDuo from './ListDuo'
+import Minus from './Minus'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
 import PhotoVideoDuo from './PhotoVideoDuo'
+import Plus from './Plus'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
 import TasksAltDuo from './TasksAltDuo'
@@ -45,6 +47,12 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'plus':
+      SelectedIcon = Plus
+      break
+    case 'minus':
+      SelectedIcon = Minus
+      break
     case 'users-duo':
       SelectedIcon = UsersDuo
       break
