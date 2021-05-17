@@ -148,7 +148,7 @@ const MintersCard: FC<Props> = ({ contractAddress }) => {
               value={address}
               onChange={(e) => setAddress(e.currentTarget.value)}
             />
-            <IconButton onClick={onAdd}>
+            <IconButton onClick={onAdd} disabled={!enableButton}>
               <StyledIcon name="plus" />
             </IconButton>
           </Field>
