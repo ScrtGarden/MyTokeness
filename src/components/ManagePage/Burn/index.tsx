@@ -126,7 +126,7 @@ const Burn = () => {
     <Container>
       <InnerContainer>
         <PageTitle>Burn Baby Burn</PageTitle>
-        <Content>
+        <Content single>
           <Snip20Selector
             value={contractAddress}
             debouncedValue={debouncedAddy}

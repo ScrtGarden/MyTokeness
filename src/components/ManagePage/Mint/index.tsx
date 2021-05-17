@@ -121,7 +121,7 @@ const Mint = () => {
     <Container>
       <InnerContainer>
         <PageTitle>Mint</PageTitle>
-        <Content>
+        <Content single>
           <Snip20Selector
             value={contractAddress}
             debouncedValue={debouncedAddy}
