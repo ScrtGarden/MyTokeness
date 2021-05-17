@@ -38,7 +38,6 @@ const Snip20Selector: FC<Props> = ({
       refetchOnWindowFocus: false,
       retry: 1,
       onSuccess: (data) => {
-        console.log(data)
         queryClient.setQueryData('selectedContractAddress', debouncedValue)
         if (checkFor) {
           if (checkFor === 'mint' && !data.token_config.mint_enabled) {
