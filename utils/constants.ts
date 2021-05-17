@@ -2,6 +2,7 @@ const MAX_GAS = {
   SNIP20: {
     INIT_MSG: '180000',
     MINT: '180000',
+    BURN: '160000',
   },
 }
 
