@@ -17,7 +17,6 @@ const validate = (amount: string) => {
 }
 
 const format = (
-  walletAddress: string,
   memo: string,
   amount: string,
   decimals: number = 0
@@ -26,7 +25,7 @@ const format = (
   return {
     burn: {
       amount: amountInSmallestDenom,
-      memo: '',
+      memo,
       padding: addPadding(amountInSmallestDenom),
     },
   }

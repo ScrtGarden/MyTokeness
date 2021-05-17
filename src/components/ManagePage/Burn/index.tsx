@@ -99,12 +99,7 @@ const Burn = () => {
       }
     }
 
-    const handleMsg = format(
-      walletAddress,
-      memo,
-      amount,
-      data?.token_info.decimals
-    )
+    const handleMsg = format(memo, amount, data?.token_info.decimals)
 
     mutate(
       { contractAddress, maxGas: MAX_GAS.SNIP20.BURN, handleMsg },
