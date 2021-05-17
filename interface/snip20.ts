@@ -75,12 +75,41 @@ export interface HandleMsgMint {
   }
 }
 
+export interface HandleMsgBurn {
+  burn: {
+    amount: string
+    memo?: string
+    padding?: string
+  }
+}
+
+export interface HandleMsgBurnFrom {
+  burn_from: {
+    owner: string
+    amount: string
+    memo?: string
+    padding?: string
+  }
+}
+
 /**
  *  Handle Msg Results
  */
 
 export interface ResultMint {
   mint: {
+    status: ResponseStatus
+  }
+}
+
+export interface ResultBurn {
+  burn: {
+    status: ResponseStatus
+  }
+}
+
+export interface ResultBurnFrom {
+  burn_from: {
     status: ResponseStatus
   }
 }
