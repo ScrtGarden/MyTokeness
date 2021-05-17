@@ -30,6 +30,7 @@ const Details = () => {
               setState({ key: 'name', data: e.currentTarget.value })
             }
             maxLength={30}
+            placeholder="MyTokeness"
           />
           {errors.name && (
             <MessageWithIcon validation="error" message={errors.name} />
@@ -42,6 +43,7 @@ const Details = () => {
             value={symbol}
             onChange={(e) => setSymbol(e.currentTarget.value)}
             uppercase
+            placeholder="MYTOKN"
           />
           {errors.symbol && (
             <MessageWithIcon validation="error" message={errors.symbol} />
@@ -55,6 +57,7 @@ const Details = () => {
           <Input
             value={decimals}
             onChange={(e) => setDecimals(e.currentTarget.value)}
+            placeholder="6"
           />
           {errors.decimals && (
             <MessageWithIcon validation="error" message={errors.decimals} />

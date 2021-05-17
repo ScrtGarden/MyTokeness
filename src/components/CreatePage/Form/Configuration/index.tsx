@@ -34,6 +34,7 @@ const Configuration = () => {
             onChange={(e) =>
               setState({ key: 'adminAddress', data: e.currentTarget.value })
             }
+            placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
           />
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
