@@ -123,6 +123,7 @@ const theme = {
             hoverError: '#f56464',
             focusError: '#e83939',
           },
+          radius: '4px',
         },
         shadow: {
           color: {
@@ -173,7 +174,7 @@ const theme = {
         },
       },
       symbol: {
-        bg: '#f0be72',
+        bg: 'linear-gradient(0deg,#f0be72 0,#f7ca85 100%)',
       },
     },
 
