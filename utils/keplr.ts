@@ -3,7 +3,7 @@ import { SigningCosmWasmClient } from 'secretjs'
 
 declare global {
   interface Window {
-    keplr: any
+    keplr: IKeplr
     getOfflineSigner: any
     getEnigmaUtils: any
   }
@@ -18,7 +18,7 @@ interface Response {
   error?: ErrorResponse
 }
 
-const getKeplr = (): any => {
+const getKeplr = () => {
   return window.keplr
 }
 
@@ -31,7 +31,7 @@ const getGetEnigmaUtils = (id: string | undefined) => {
 }
 
 const connect = async (): Promise<Response> => {
-  const keplr: IKeplr = getKeplr()
+  const keplr = getKeplr()
 
   if (!keplr) {
     throw new Error('Kelpr not installed.')
@@ -139,7 +139,7 @@ const getSnip20ViewingKey = async (contractAddress: string) => {
 
   try {
     await keplr.getSecret20ViewingKey(
-      process.env.NEXT_PUBLIC_CHAIN_ID,
+      process.env.NEXT_PUBLIC_CHAIN_ID as string,
       contractAddress
     )
   } catch (error) {
@@ -151,7 +151,10 @@ const suggestToken = async (contractAddress: string) => {
   const keplr = getKeplr()
 
   try {
-    await keplr.suggestToken(process.env.NEXT_PUBLIC_CHAIN_ID, contractAddress)
+    await keplr.suggestToken(
+      process.env.NEXT_PUBLIC_CHAIN_ID as string,
+      contractAddress
+    )
   } catch (error) {
     throw error
   }
