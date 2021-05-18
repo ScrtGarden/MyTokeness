@@ -5,7 +5,7 @@ import {
   useQuery,
 } from 'react-query'
 
-import { queryClient } from '../../utils/secretjs'
+import { queryChain } from '../../utils/secretjs'
 
 const useQueryContract = <T extends object, K extends object>(
   key: QueryKey,
@@ -15,7 +15,7 @@ const useQueryContract = <T extends object, K extends object>(
 ): UseQueryResult<K, Error> =>
   useQuery(
     key,
-    () => queryClient.queryContractSmart(contractAddress, queryMsg),
+    () => queryChain.queryContractSmart(contractAddress, queryMsg),
     options
   )
 
