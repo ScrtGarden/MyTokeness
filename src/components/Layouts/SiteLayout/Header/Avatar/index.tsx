@@ -19,8 +19,10 @@ import {
 const Avatar = () => {
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
-  const { data, isLoading } = useQuery(['nativeBalance', walletAddress], () =>
-    queryChain.getAccount(walletAddress)
+  const { data, isLoading } = useQuery(
+    ['nativeBalance', walletAddress],
+    () => queryChain.getAccount(walletAddress),
+    { enabled: !!walletAddress }
   )
 
   return (
