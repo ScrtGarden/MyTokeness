@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import Icon from '../../../Icons'
-
 const Container = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.fg};
@@ -23,21 +21,4 @@ const Brand = styled.div`
   font-weight: ${(props) => props.theme.font.weights.bold};
 `
 
-const Circle = styled.div`
-  align-items: center;
-  border: 2px solid #f0be72;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  height: 3.8rem;
-  justify-content: center;
-  width: 3.8rem;
-`
-
-const StyledIcon = styled(Icon)`
-  fill: #f0be72;
-  height: 50%;
-  width: 50%;
-`
-
-export { Container, Brand, StyledIcon, Circle }
+export { Container, Brand }

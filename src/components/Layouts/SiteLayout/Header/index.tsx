@@ -2,7 +2,8 @@ import { useStoreState } from '../../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
-import { Brand, Circle, Container, StyledIcon } from './styles'
+import Avatar from './Avatar'
+import { Brand, Container } from './styles'
 
 const Header = () => {
   // store state
@@ -26,9 +27,7 @@ const Header = () => {
     <Container>
       <Brand>MyTokeness</Brand>
       {isConnected ? (
-        <Circle>
-          <StyledIcon name="user-crown-duo" />
-        </Circle>
+        <Avatar />
       ) : (
         <ButtonWithLoading
           text="Connect"
