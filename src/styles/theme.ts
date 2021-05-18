@@ -232,6 +232,14 @@ const theme = {
         color: '#212a31',
       },
     },
+
+    // loaders
+    loaders: {
+      skeleton: {
+        color: '#3c454e',
+        highlightColor: 'linear-gradient(90deg, #3c454e, #626c77, #3c454e)',
+      },
+    },
   },
   light: {
     //
