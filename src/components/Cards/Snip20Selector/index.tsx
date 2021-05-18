@@ -6,9 +6,10 @@ import {
   ResultTokenConfig,
 } from '../../../../interface/snip20'
 import useQueryContract from '../../../hooks/useQueryContract'
+import InputWithLoading from '../../Common/InputWithLoading'
 import MessageWithIcon from '../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../UI/Card'
-import { Field, Input, Label } from '../../UI/Forms'
+import { Field, Label } from '../../UI/Forms'
 
 type Props = {
   value: string
@@ -29,7 +30,7 @@ const Snip20Selector: FC<Props> = ({
   const [error, setError] = useState('')
 
   // custom hook
-  useQueryContract<QueryTokenConfig, ResultTokenConfig>(
+  const { isLoading } = useQueryContract<QueryTokenConfig, ResultTokenConfig>(
     ['tokenConfig', debouncedValue],
     debouncedValue,
     { token_config: {} },
@@ -64,7 +65,11 @@ const Snip20Selector: FC<Props> = ({
       <Wrapper>
         <Field>
           <Label>Contract address</Label>
-          <Input value={value} onChange={onChange} />
+          <InputWithLoading
+            value={value}
+            onChange={onChange}
+            loading={isLoading}
+          />
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
       </Wrapper>
