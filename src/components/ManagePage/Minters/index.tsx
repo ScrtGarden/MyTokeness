@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import { useStoreState } from '../../../hooks/storeHooks'
 import useDebounce from '../../../hooks/useDebounce'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, Content, InnerContainer } from '../../UI/Containers'
