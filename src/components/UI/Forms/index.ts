@@ -4,7 +4,7 @@ import Icon from '../../Icons'
 
 type Validation = 'error' | 'success' | 'warning'
 
-interface InputProps {
+export interface InputProps {
   readonly validation?: Validation
   readonly isCompact?: boolean
   readonly uppercase?: boolean
@@ -245,7 +245,7 @@ const MessageWrapper = styled.div`
 
 const Symbol = styled.div`
   align-items: center;
-  background-color: ${(props) => props.theme.forms.symbol.bg};
+  background: ${(props) => props.theme.forms.symbol.bg};
   border-radius: 4px;
   color: #181e24;
   display: flex;
