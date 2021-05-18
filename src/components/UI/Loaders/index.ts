@@ -1,3 +1,4 @@
+import ReactSkeleton from 'react-loading-skeleton'
 import styled from 'styled-components'
 
 import Dots from './Dots'
@@ -13,4 +14,11 @@ const StyledDots = styled(Dots)`
   height: 100%;
 `
 
-export { StyledDots }
+const Skeleton = styled(ReactSkeleton)`
+  && {
+    background-color: ${(props) => props.theme.loaders.skeleton.color};
+    background-image: ${(props) => props.theme.loaders.skeleton.highlightColor};
+  }
+`
+
+export { StyledDots, Skeleton }
