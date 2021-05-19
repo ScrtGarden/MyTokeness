@@ -1,7 +1,7 @@
-import { HandleMsgMint } from '../../../../interface/snip20'
-import addPadding from '../../../../utils/addPadding'
-import isSecretAddress from '../../../../utils/isSecretAddress'
-import toSmallestDenomination from '../../../../utils/toSmallestDenomination'
+import { HandleMsgMint } from '../../../../../interface/snip20'
+import addPadding from '../../../../../utils/addPadding'
+import isSecretAddress from '../../../../../utils/isSecretAddress'
+import toSmallestDenomination from '../../../../../utils/toSmallestDenomination'
 
 const validate = (recipient: string, amount: string) => {
   const errors = {
@@ -25,6 +25,7 @@ const validate = (recipient: string, amount: string) => {
 
 const format = (
   recipient: string,
+  memo: string,
   amount: string,
   decimals: number = 0
 ): HandleMsgMint => {
@@ -33,7 +34,7 @@ const format = (
     mint: {
       recipient,
       amount: amountInSmallestDenom,
-      memo: '',
+      memo,
       padding: addPadding(amountInSmallestDenom),
     },
   }

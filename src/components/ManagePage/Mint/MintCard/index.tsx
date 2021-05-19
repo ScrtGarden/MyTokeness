@@ -1,36 +1,126 @@
-import { FC, FormEvent, memo } from 'react'
+import { FC, FormEvent, memo, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
+import {
+  HandleMsgMint,
+  QueryTokenInfo,
+  ResultTokenInfo,
+} from '../../../../../interface/snip20'
+import { MAX_GAS } from '../../../../../utils/constants'
+import parseErrorMsg from '../../../../../utils/parseErrorMsg'
+import { amountPattern } from '../../../../../utils/regexPatterns'
+import { useStoreState } from '../../../../hooks/storeHooks'
+import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
+import useMutationExeContract from '../../../../hooks/useMutationExeContract'
+import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
+import useQueryContract from '../../../../hooks/useQueryContract'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Field, Input, InputGroup, Label, Symbol } from '../../../UI/Forms'
 import { StyledDots } from '../../../UI/Loaders'
+import { format, validate } from './lib'
 
 type Props = {
-  symbol?: string
-  amount: string
-  onChangeAmount: (e: FormEvent<HTMLInputElement>) => void
-  recipient: string
-  onChangeRecipient: (e: FormEvent<HTMLInputElement>) => void
-  errors?: { amount: string; recipient: string }
-  isLoading?: boolean
+  contractAddress: string
   enableButton?: boolean
-  onSubmit?: () => void
-  isMinting?: boolean
+  success?: boolean
 }
 
-const MintCard: FC<Props> = ({
-  symbol,
-  amount,
-  onChangeAmount,
-  recipient,
-  onChangeRecipient,
-  errors,
-  isLoading,
-  enableButton,
-  onSubmit,
-  isMinting,
-}) => {
+const MintCard: FC<Props> = ({ success, enableButton, contractAddress }) => {
+  // store state
+  const isConnected = useStoreState((state) => state.auth.isWalletConnected)
+
+  // component state
+  const [amount, setAmount] = useState('')
+  const [recipient, setRecipient] = useState('')
+  const [memo, setMemo] = useState('')
+  const [errors, setErrors] = useState({ amount: '', recipient: '' })
+
+  // custom hooks
+  const { mutateAsync: connect, isLoading: connecting } =
+    useMutationConnectWallet()
+  const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
+    useMutationGetAccounts()
+  const { mutate, isLoading: minting } = useMutationExeContract<HandleMsgMint>()
+
+  const { data, isLoading: fetchingInfo } = useQueryContract<
+    QueryTokenInfo,
+    ResultTokenInfo
+  >(
+    ['snip20', 'tokenInfo', contractAddress],
+    contractAddress,
+    { token_info: {} },
+    {
+      enabled: success,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    }
+  )
+
+  // lifecycles
+  useEffect(() => {
+    setAmount('')
+  }, [data])
+
+  useEffect(() => {
+    if (errors.recipient) {
+      setErrors({ ...errors, recipient: '' })
+    }
+  }, [recipient])
+
+  useEffect(() => {
+    if (errors.amount) {
+      setErrors({ ...errors, amount: '' })
+    }
+  }, [amount])
+
+  const onChangeAmount = (e: FormEvent<HTMLInputElement>) => {
+    const amount = e.currentTarget.value
+    if (
+      !amount ||
+      amount.match(amountPattern(data?.token_info.decimals as number))
+    ) {
+      setAmount(amount)
+    }
+  }
+
+  const onMint = async () => {
+    const { hasErrors, ...rest } = validate(recipient, amount)
+
+    setErrors(rest)
+
+    if (hasErrors) {
+      return
+    }
+
+    if (!isConnected) {
+      try {
+        await connect()
+        await getAccounts()
+      } catch (error) {
+        throw error
+      }
+    }
+
+    const handleMsg = format(recipient, memo, amount, data?.token_info.decimals)
+
+    mutate(
+      { contractAddress, maxGas: MAX_GAS.SNIP20.MINT, handleMsg },
+      {
+        onSuccess: () => {
+          toast.success(`Minted ${amount} ${data?.token_info.symbol}`)
+          setAmount('')
+          setRecipient('')
+          setMemo('')
+        },
+        onError: (error) => {
+          toast.error(parseErrorMsg(error))
+        },
+      }
+    )
+  }
+
   return (
     <Card>
       <Header>Mint</Header>
@@ -39,7 +129,7 @@ const MintCard: FC<Props> = ({
           <Label>Recipient</Label>
           <Input
             value={recipient}
-            onChange={onChangeRecipient}
+            onChange={(e) => setRecipient(e.currentTarget.value)}
             placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
           />
           {errors?.recipient && (
@@ -51,21 +141,29 @@ const MintCard: FC<Props> = ({
           <InputGroup>
             <Input value={amount} onChange={onChangeAmount} placeholder="0.0" />
             <Symbol>
-              {isLoading && <StyledDots />}
-              {!isLoading && !symbol && '--'}
-              {!isLoading && symbol}
+              {fetchingInfo && <StyledDots />}
+              {!fetchingInfo && !data && '--'}
+              {!fetchingInfo && data?.token_info.symbol}
             </Symbol>
           </InputGroup>
           {errors?.amount && (
             <MessageWithIcon validation="error" message={errors.amount} />
           )}
         </Field>
+        <Field>
+          <Label>Memo (optional)</Label>
+          <Input
+            value={memo}
+            onChange={(e) => setMemo(e.currentTarget.value)}
+            placeholder="It was mint to be."
+          />
+        </Field>
         <ButtonWithLoading
           text="Mint"
           isPrimary
           disabled={!enableButton}
-          onClick={onSubmit}
-          loading={isMinting}
+          onClick={onMint}
+          loading={connecting || gettingAccounts || minting}
         />
       </Wrapper>
     </Card>

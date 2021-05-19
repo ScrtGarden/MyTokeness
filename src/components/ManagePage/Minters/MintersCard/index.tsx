@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
@@ -6,7 +6,6 @@ import {
   HandleMsgSetMinters,
   QueryMinters,
   ResultMinters,
-  ResultTokenConfig,
 } from '../../../../../interface/snip20'
 import { MAX_GAS } from '../../../../../utils/constants'
 import isSecretAddress from '../../../../../utils/isSecretAddress'
@@ -21,19 +20,20 @@ import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { IconButton, StyledIcon } from '../../../UI/Buttons'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Input } from '../../../UI/Forms'
+import { Skeleton } from '../../../UI/Loaders'
 import { Text } from '../../../UI/Typography'
-import { AddBar, Field } from './styles'
+import { AddBar, Field, SkeletonWrapper } from './styles'
+
+const DUMMY_ARRAY = Array.from(Array(2).keys())
 
 type Props = {
   contractAddress: string
+  enableButton?: boolean
+  success?: boolean
 }
 
-const MintersCard: FC<Props> = ({ contractAddress }) => {
+const MintersCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
   const queryClient = useQueryClient()
-  const tokenConfig = queryClient.getQueryData<ResultTokenConfig>([
-    'tokenConfig',
-    contractAddress,
-  ])
 
   // store state
   const isConnected = useStoreState((state) => state.auth.isWalletConnected)
@@ -45,24 +45,18 @@ const MintersCard: FC<Props> = ({ contractAddress }) => {
     useMutationGetAccounts()
   const { mutate, isLoading: updating } =
     useMutationExeContract<HandleMsgSetMinters>()
-  const { data, isLoading, error } = useQueryContract<
-    QueryMinters,
-    ResultMinters
-  >(
-    ['minters', contractAddress],
+
+  const { data, isLoading } = useQueryContract<QueryMinters, ResultMinters>(
+    ['snip20', 'minters', contractAddress],
     contractAddress,
     { minters: {} },
-    { enabled: !!contractAddress, refetchOnWindowFocus: false }
+    { enabled: success, refetchOnWindowFocus: false }
   )
 
   // component state
   const [minters, setMinters] = useState<string[]>([])
   const [address, setAddress] = useState('')
   const [addError, setAddError] = useState('')
-  const enableButton = useMemo(
-    () => tokenConfig && tokenConfig.token_config.mint_enabled,
-    [tokenConfig]
-  )
 
   // lifecycle
   useEffect(() => {
@@ -114,7 +108,7 @@ const MintersCard: FC<Props> = ({ contractAddress }) => {
         onSuccess: () => {
           toast.success('Updated minters.')
           queryClient.setQueryData<ResultMinters>(
-            ['minters', contractAddress],
+            ['snip20', 'minters', contractAddress],
             { minters: { minters } }
           )
         },
@@ -129,9 +123,18 @@ const MintersCard: FC<Props> = ({ contractAddress }) => {
     <Card>
       <Header>Edit Minters</Header>
       <Wrapper>
-        {minters.length === 0 ? (
+        {isLoading &&
+          DUMMY_ARRAY.map((item) => (
+            <Field key={item}>
+              <Skeleton />
+              <Skeleton height="40px" width="40px" circle />
+            </Field>
+          ))}
+        {!isLoading && minters.length === 0 && (
           <Text>Add an address to get started.</Text>
-        ) : (
+        )}
+        {!isLoading &&
+          minters.length !== 0 &&
           minters.map((address) => (
             <Field key={address}>
               <Text>{address}</Text>
@@ -139,8 +142,7 @@ const MintersCard: FC<Props> = ({ contractAddress }) => {
                 <StyledIcon name="minus" />
               </IconButton>
             </Field>
-          ))
-        )}
+          ))}
         <AddBar>
           <Field>
             <Input
