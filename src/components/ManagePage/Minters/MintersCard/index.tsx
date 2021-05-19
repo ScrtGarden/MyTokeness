@@ -22,7 +22,7 @@ import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Input } from '../../../UI/Forms'
 import { Skeleton } from '../../../UI/Loaders'
 import { Text } from '../../../UI/Typography'
-import { AddBar, Field, SkeletonWrapper } from './styles'
+import { AddBar, Field } from './styles'
 
 const DUMMY_ARRAY = Array.from(Array(2).keys())
 

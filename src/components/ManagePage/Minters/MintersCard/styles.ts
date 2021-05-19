@@ -10,9 +10,4 @@ const Field = styled.div`
   justify-content: space-between;
 `
 
-const SkeletonWrapper = styled.div`
-  display: flex;
-  font-size: ${(props) => props.theme.font.sizes.md};
-`
-
-export { AddBar, Field, SkeletonWrapper }
+export { AddBar, Field }
