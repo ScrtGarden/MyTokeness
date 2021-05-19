@@ -8,4 +8,6 @@ const decimalsPattern = /^([1-9][0-9]*)$/
 const amountPattern = (decimals: number | string) =>
   `^\\d{1,}(\\.\\d{0,${decimals}})?$`
 
-export { symbolPattern, decimalsPattern, amountPattern }
+const getErrorMsgPattern = /{"generic_err"\s*(.*?)\s*}}/g
+
+export { symbolPattern, decimalsPattern, amountPattern, getErrorMsgPattern }
