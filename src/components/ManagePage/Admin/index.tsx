@@ -54,7 +54,10 @@ const Admin = () => {
             contractAddress={debouncedAddy}
             enableButton={enableButton}
           />
-          <ChangeStatusCard contractAddress={debouncedAddy} />
+          <ChangeStatusCard
+            contractAddress={debouncedAddy}
+            enableButton={enableButton}
+          />
         </Content>
       </InnerContainer>
     </Container>
