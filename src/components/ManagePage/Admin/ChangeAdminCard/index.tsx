@@ -84,6 +84,7 @@ const ChangeAdminCard: FC<Props> = ({ contractAddress, enableButton }) => {
           <Input
             value={address}
             onChange={(e) => setAddress(e.currentTarget.value)}
+            placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
           />
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
