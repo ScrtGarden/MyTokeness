@@ -11,8 +11,8 @@ type Props = {
 }
 
 const SiteLayout = ({ children }: Props) => {
-  const store = useStoreState((state) => state)
-  useMemo(() => console.log(store), [store])
+  // const store = useStoreState((state) => state)
+  // useMemo(() => console.log(store), [store])
 
   const { mutate } = useMutationGetAccounts()
 
