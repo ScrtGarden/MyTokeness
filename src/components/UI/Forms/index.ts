@@ -258,6 +258,24 @@ const Symbol = styled.div`
   min-width: 40px;
 `
 
+const Select = styled.select`
+  appearance: none;
+  background-color: ${(props) => props.theme.forms.input.bg.default};
+  border: 1px solid ${(props) => props.theme.forms.input.border.color.default};
+  border-radius: ${(props) => props.theme.forms.input.border.radius};
+  color: ${(props) => props.theme.font.colors.primary};
+  font-size: ${(props) => props.theme.font.sizes.md};
+  font-weight: ${(props) => props.theme.font.weights.semibold};
+  height: 40px;
+  padding: ${(props) => `0 ${props.theme.space.sm}`};
+
+  :focus {
+    outline: none;
+  }
+`
+
+const Option = styled.option``
+
 export {
   Field,
   Hint,
@@ -270,4 +288,6 @@ export {
   MessageWrapper,
   InputGroup,
   Symbol,
+  Select,
+  Option,
 }
