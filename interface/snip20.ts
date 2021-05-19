@@ -109,6 +109,13 @@ export interface HandleMsgSetMinters {
   }
 }
 
+export interface HandleMsgChangeAdmin {
+  change_admin: {
+    address: string
+    padding?: string
+  }
+}
+
 /**
  *  Handle Msg Results
  */
@@ -133,6 +140,12 @@ export interface ResultBurnFrom {
 
 export interface ResultSetMinters {
   set_minters: {
+    status: ResponseStatus
+  }
+}
+
+export interface ResultChangeAdmin {
+  change_admin: {
     status: ResponseStatus
   }
 }
