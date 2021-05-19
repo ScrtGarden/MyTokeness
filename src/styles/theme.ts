@@ -237,7 +237,7 @@ const theme = {
     loaders: {
       skeleton: {
         color: '#3c454e',
-        highlightColor: 'linear-gradient(90deg, #3c454e, #626c77, #3c454e)',
+        highlightColor: 'linear-gradient(to right, #3c454e, #535e69, #3c454e)',
       },
     },
   },

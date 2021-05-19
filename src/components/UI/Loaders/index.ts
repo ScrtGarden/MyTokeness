@@ -1,7 +1,12 @@
-import ReactSkeleton from 'react-loading-skeleton'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import Dots from './Dots'
+
+interface SkeletonProps {
+  readonly height?: string
+  readonly width?: string
+  readonly circle?: boolean
+}
 
 const StyledDots = styled(Dots)`
   bottom: 0;
@@ -14,11 +19,29 @@ const StyledDots = styled(Dots)`
   height: 100%;
 `
 
-const Skeleton = styled(ReactSkeleton)`
-  && {
-    background-color: ${(props) => props.theme.loaders.skeleton.color};
-    background-image: ${(props) => props.theme.loaders.skeleton.highlightColor};
+const shimmer = keyframes`
+  0% {
+    background-position: -1000px 0;
+  }  
+  100% {
+    background-position: 1000px 0; 
   }
+`
+
+const Skeleton = styled.div.attrs<SkeletonProps>(({ height, width }) => ({
+  style: {
+    height: height || '14px',
+    width: width || '100%',
+  },
+}))<SkeletonProps>`
+  animation: 1.7s linear infinite forwards ${shimmer};
+  background: ${(props) => props.theme.loaders.skeleton.color};
+  background-image: ${(props) => props.theme.loaders.skeleton.highlightColor};
+  background-repeat: no-repeat;
+  background-size: 300px 100%;
+  border-radius: ${(props) => (props.circle ? '50%' : '4px')};
+  flex-shrink: 0;
+  ${(props) => !props.circle && 'flex: 1'};
 `
 
 export { StyledDots, Skeleton }
