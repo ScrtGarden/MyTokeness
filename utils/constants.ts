@@ -4,12 +4,13 @@ const MAX_GAS = {
     MINT: '180000',
     BURN: '160000',
     SET_MINTERS: '150000',
+    CHANGE_ADMIN: '140000',
+    SET_CONTRACT_STATUS: '130000',
   },
 }
 
 const CONTRACT_CODE_ID = {
   SNIP20: 28966,
-  // SNIP20: 0,
 }
 
 const SIDEBAR_TABS = {
