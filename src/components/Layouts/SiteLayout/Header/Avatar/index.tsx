@@ -37,7 +37,7 @@ const Avatar = () => {
       <InfoPill right>
         {isLoading ? (
           <>
-            <Skeleton width={50} /> &nbsp;&nbsp;SCRT
+            <Skeleton width="50px" /> &nbsp;&nbsp;SCRT
           </>
         ) : (
           `${commaNumber(
