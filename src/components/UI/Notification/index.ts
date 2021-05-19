@@ -15,7 +15,6 @@ const StyledToastContainer = styled(ToastContainer).attrs({
   .body {
     font-size: ${(props) => props.theme.font.sizes.md};
     line-height: ${(props) => props.theme.font.lineHeights.md};
-    word-break: break-all;
   }
 
   .progress {
