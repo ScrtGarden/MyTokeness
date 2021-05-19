@@ -38,6 +38,8 @@ export interface TokenInfo {
 
 type ResponseStatus = 'success' | 'failure'
 
+type ContractStatusLevel = 'normal_run' | 'stop_all_but_redeems' | 'stop_all'
+
 /**
  *  Queries
  */
@@ -116,6 +118,13 @@ export interface HandleMsgChangeAdmin {
   }
 }
 
+export interface HandleMsgSetContractStatus {
+  set_contract_status: {
+    level: ContractStatusLevel
+    padding?: string
+  }
+}
+
 /**
  *  Handle Msg Results
  */
@@ -146,6 +155,12 @@ export interface ResultSetMinters {
 
 export interface ResultChangeAdmin {
   change_admin: {
+    status: ResponseStatus
+  }
+}
+
+export interface ResultSetContractStatus {
+  set_contract_status: {
     status: ResponseStatus
   }
 }
