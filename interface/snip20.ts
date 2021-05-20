@@ -57,6 +57,53 @@ export interface LegacyTx {
   coins: Coin
 }
 
+export interface TransactionHistory {
+  address: string
+  key: string
+  page?: number
+  page_size?: number
+}
+
+export interface Tx {
+  id: number
+  action: TxAction
+  coins: Coin
+  memo?: string
+}
+
+export interface TxAction {
+  mint?: TxActionMint
+  transfer?: TxActionTransfer
+  burn?: TxActionBurn
+  deposit?: TxActionDeposit
+  redeem?: TxActionRedeem
+}
+
+export interface TxActionMint {
+  minter: string
+  recipient: string
+}
+
+export interface TxActionTransfer {
+  from: string
+  sender?: string
+  recipient: string
+}
+
+export interface TxActionBurn {
+  owner: string
+  burner?: string
+}
+
+export interface TxActionDeposit {
+  recipient: string
+}
+
+export interface TxActionRedeem {
+  owner: string
+  recipient?: string
+}
+
 /**
  *  Queries
  */
@@ -75,6 +122,10 @@ export interface QueryMinters {
 
 export interface QueryTransferHistory {
   transfer_history: TransferHistory
+}
+
+export interface QueryTransactionHistory {
+  transaction_history: TransactionHistory
 }
 
 /**
@@ -98,6 +149,12 @@ export interface ResultMinters {
 export interface ResultTransferHistory {
   transfer_history: {
     txs: LegacyTx[]
+  }
+}
+
+export interface ResultTransactionHistory {
+  transaction_history: {
+    txs: Tx[]
   }
 }
 
