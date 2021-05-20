@@ -1,6 +1,7 @@
 import { FC, forwardRef } from 'react'
 
 import AlbumCollectionDuo from './AlbumCollectionDuo'
+import AnalyticsDuo from './AnalyticsDuo'
 import BoxDuo from './BoxDuo'
 import BoxOpenDuo from './BoxOpenDuo'
 import CaretDown from './CaretDown'
@@ -10,6 +11,7 @@ import ChevronLeft from './ChevronLeft'
 import ChevronUp from './ChevronUp'
 import Dizzy from './Dizzy'
 import EllipsisH from './EllipsisH'
+import ExchangeDuo from './ExchangeDuo'
 import ExclamationCircle from './ExclamationCircle'
 import ExclamationCircleDuo from './ExclamationCircleDuo'
 import FireDuo from './FireDuo'
@@ -22,7 +24,7 @@ import HorizontalRule from './HorizontalRule'
 import IndustryDuo from './IndustryDuo'
 import Keplr from './Kelpr'
 import KeySkeleton from './KeySkeleton'
-import ListDuo from './ListDuo'
+import ListUlDuo from './ListUlDuo'
 import Minus from './Minus'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
@@ -47,6 +49,15 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'list-ul-duo':
+      SelectedIcon = ListUlDuo
+      break
+    case 'analytics-duo':
+      SelectedIcon = AnalyticsDuo
+      break
+    case 'exchange-duo':
+      SelectedIcon = ExchangeDuo
+      break
     case 'plus':
       SelectedIcon = Plus
       break
@@ -86,9 +97,7 @@ const Icon: FC<Props> = forwardRef((props, _) => {
     case 'exclamation-circle-duo':
       SelectedIcon = ExclamationCircleDuo
       break
-    case 'list-duo':
-      SelectedIcon = ListDuo
-      break
+
     case 'horizontal-rule':
       SelectedIcon = HorizontalRule
       break
