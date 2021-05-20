@@ -2,11 +2,11 @@ import { QueryKey, UseQueryOptions, useQuery } from 'react-query'
 
 import { queryChain } from '../../utils/secretjs'
 
-const useQueryContract = <T extends object, K extends object>(
+const useQueryContract = <T extends object, K extends object, A = unknown>(
   key: QueryKey,
   contractAddress: string,
   queryMsg: T,
-  options?: UseQueryOptions<K, Error>
+  options?: UseQueryOptions<K, Error, A>
 ) =>
   useQuery(
     key,
