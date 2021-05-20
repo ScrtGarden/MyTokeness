@@ -54,6 +54,24 @@ const SIDEBAR_TABS = {
       },
     ],
   },
+  track: {
+    label: 'Track',
+    icon: 'analytics-duo',
+    menu: [
+      {
+        label: 'Transfers',
+        icon: 'exchange-duo',
+        route: '/track/transfers',
+        as: undefined,
+      },
+      {
+        label: 'Transactions',
+        icon: 'list-ul-duo',
+        route: '/track/transfers',
+        as: undefined,
+      },
+    ],
+  },
 }
 
 export { MAX_GAS, CONTRACT_CODE_ID, SIDEBAR_TABS }
