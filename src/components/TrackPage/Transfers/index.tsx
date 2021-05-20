@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
+import { useStoreState } from '../../../hooks/storeHooks'
 import useDebounce from '../../../hooks/useDebounce'
 import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
+import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, InnerContainer } from '../../UI/Containers'
 import { PageTitle } from '../../UI/Typography'
+import Table from './Table'
 
 const Transfers = () => {
   const queryClient = useQueryClient()
+
+  // store state
+  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
   // component state
   const [contractAddress, setContractAddress] = useState(
@@ -18,21 +24,36 @@ const Transfers = () => {
   const [error, setError] = useState('')
 
   // custom hooks
-  const { data, isLoading } = useQuerySnip20Config(debouncedAddy, {
+  const { isLoading, isSuccess } = useQuerySnip20Config(debouncedAddy, {
     onSuccess: () => {
       queryClient.setQueryData('selectedContractAddress', debouncedAddy)
     },
-    onError: (error) => {
+    onError: () => {
       setError('Unable to fetch token information.')
     },
   })
+  const enabled = useMemo(
+    () => !!(walletAddress && contractAddress && isSuccess),
+    [walletAddress, contractAddress, isSuccess]
+  )
+  const { data: viewingKey, isLoading: gettingKey } = useQuerySnip20ViewingKey(
+    { walletAddress, contractAddress: debouncedAddy },
+    {
+      enabled,
+      onError: () => {
+        setError("Can't find viewing key from Keplr Wallet.")
+      },
+    }
+  )
 
   // lifecycle
   useEffect(() => {
     if (error) {
       setError('')
     }
-  }, [debouncedAddy])
+  }, [debouncedAddy, viewingKey])
+
+  console.log({ viewingKey })
 
   return (
     <Container>
@@ -42,9 +63,10 @@ const Transfers = () => {
           value={contractAddress}
           debouncedValue={debouncedAddy}
           onChange={(e) => setContractAddress(e.currentTarget.value)}
-          loading={isLoading}
+          loading={isLoading || gettingKey}
           error={error}
         />
+        {/* <Table columns={columns} data={data} /> */}
       </InnerContainer>
     </Container>
   )
