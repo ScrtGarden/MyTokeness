@@ -69,9 +69,9 @@ const Tab: FC<Props> = (props) => {
       </Header>
       {menu &&
         transitions(
-          ({ opacity }, item) =>
+          (_, item) =>
             item && (
-              <Menu style={{ opacity }} ref={ref}>
+              <Menu ref={ref}>
                 {menu.map((item, index) => (
                   <Link
                     key={index}
