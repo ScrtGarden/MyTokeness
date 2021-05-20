@@ -1,3 +1,5 @@
+import { Coin } from 'secretjs/types/types'
+
 export interface Balance {
   address: string
   amount: string
@@ -40,6 +42,21 @@ type ResponseStatus = 'success' | 'failure'
 
 type ContractStatusLevel = 'normal_run' | 'stop_all_but_redeems' | 'stop_all'
 
+export interface TransferHistory {
+  address: string
+  key: string
+  page?: number
+  page_size?: number
+}
+
+export interface LegacyTx {
+  id: number
+  from: string
+  sender: string
+  receiver: string
+  coins: Coin
+}
+
 /**
  *  Queries
  */
@@ -54,6 +71,10 @@ export interface QueryTokenInfo {
 
 export interface QueryMinters {
   minters: {}
+}
+
+export interface QueryTransferHistory {
+  transfer_history: TransferHistory
 }
 
 /**
@@ -71,6 +92,12 @@ export interface ResultTokenInfo {
 export interface ResultMinters {
   minters: {
     minters: string[]
+  }
+}
+
+export interface ResultTransferHistory {
+  transfer_history: {
+    txs: LegacyTx[]
   }
 }
 
