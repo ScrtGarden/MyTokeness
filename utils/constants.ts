@@ -67,7 +67,7 @@ const SIDEBAR_TABS = {
       {
         label: 'Transactions',
         icon: 'list-ul-duo',
-        route: '/track/transfers',
+        route: '/track/transactions',
         as: undefined,
       },
     ],
