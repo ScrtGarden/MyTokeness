@@ -25,6 +25,11 @@ interface MessageIconProps {
 
 interface LabelProps {
   readonly isRegular?: boolean
+  readonly disabled?: boolean
+}
+
+interface HintProps {
+  disabled?: boolean
 }
 
 const Field = styled.div`
@@ -34,17 +39,16 @@ const Field = styled.div`
 `
 
 const Label = styled.label<LabelProps>`
-  color: ${(props) => props.theme.font.colors.primary};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.font.colors.disabled
+      : props.theme.font.colors.primary};
   font-size: ${(props) => props.theme.font.sizes.md};
   font-weight: ${(props) =>
     props.isRegular
       ? props.theme.font.weights.regular
       : props.theme.font.weights.semibold};
 `
-
-interface HintProps {
-  disabled?: boolean
-}
 
 const Hint = styled.p<HintProps>`
   color: ${(props) =>

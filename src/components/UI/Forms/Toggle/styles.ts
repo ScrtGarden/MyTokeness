@@ -1,10 +1,14 @@
 import styled from 'styled-components'
 
+interface CheckBoxLabelProps {
+  readonly disabled?: boolean
+}
+
 const CheckBoxWrapper = styled.div`
   position: relative;
 `
 
-const CheckBoxLabel = styled.label`
+const CheckBoxLabel = styled.label<CheckBoxLabelProps>`
   position: absolute;
   top: 0;
   left: 0;
@@ -35,6 +39,13 @@ const CheckBoxLabel = styled.label`
     box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
     transition: 0.2s;
   }
+
+  ${(props) =>
+    props.disabled &&
+    `
+      background-color: ${props.theme.forms.toggle.bg.unchecked.disabled};
+      pointer-events: none;
+  `}
 `
 
 const CheckBox = styled.input`

@@ -146,6 +146,7 @@ const theme = {
             default: '#79838a',
             hover: '#59646b',
             active: '#404a50',
+            disabled: '#404a50',
           },
         },
       },
