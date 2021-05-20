@@ -138,7 +138,7 @@ const getSnip20ViewingKey = async (contractAddress: string) => {
   const keplr = getKeplr()
 
   try {
-    await keplr.getSecret20ViewingKey(
+    return await keplr.getSecret20ViewingKey(
       process.env.NEXT_PUBLIC_CHAIN_ID as string,
       contractAddress
     )
