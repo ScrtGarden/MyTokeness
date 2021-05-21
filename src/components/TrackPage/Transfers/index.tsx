@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
+import {
+  QueryTransferHistory,
+  ResultTransferHistory,
+} from '../../../../interface/snip20'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useDebounce from '../../../hooks/useDebounce'
+import useQueryContract from '../../../hooks/useQueryContract'
 import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
 import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
@@ -46,6 +51,23 @@ const Transfers = () => {
     }
   )
 
+  const { data } = useQueryContract<
+    QueryTransferHistory,
+    ResultTransferHistory
+  >(
+    ['transferHistory', walletAddress, contractAddress],
+    contractAddress,
+    {
+      transfer_history: {
+        address: walletAddress,
+        key: viewingKey as string,
+        page: 0,
+        page_size: 10,
+      },
+    },
+    { enabled: !!viewingKey, refetchOnWindowFocus: false }
+  )
+
   // lifecycle
   useEffect(() => {
     if (error) {
@@ -53,7 +75,7 @@ const Transfers = () => {
     }
   }, [debouncedAddy, viewingKey])
 
-  console.log({ viewingKey })
+  console.log({ data })
 
   return (
     <Container>
