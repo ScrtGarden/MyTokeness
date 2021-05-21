@@ -1,10 +1,6 @@
 import { FC, FormEvent, memo, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  QueryTokenInfo,
-  ResultTokenInfo,
-} from '../../../../../interface/snip20'
 import { MAX_GAS } from '../../../../../utils/constants'
 import parseErrorMsg from '../../../../../utils/parseErrorMsg'
 import { amountPattern } from '../../../../../utils/regexPatterns'
@@ -12,7 +8,7 @@ import { useStoreState } from '../../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
 import useMutationExeContract from '../../../../hooks/useMutationExeContract'
 import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
-import useQueryContract from '../../../../hooks/useQueryContract'
+import useQuerySnip20Info from '../../../../hooks/useQuerySnip20Info'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
@@ -42,18 +38,9 @@ const BurnCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
     useMutationGetAccounts()
   const { mutate, isLoading: burning } = useMutationExeContract()
 
-  const { data, isLoading: fetchingInfo } = useQueryContract<
-    QueryTokenInfo,
-    ResultTokenInfo
-  >(
-    ['tokenInfo', contractAddress],
+  const { data, isLoading: fetchingInfo } = useQuerySnip20Info(
     contractAddress,
-    { token_info: {} },
-    {
-      enabled: success,
-      refetchOnWindowFocus: false,
-      retry: 1,
-    }
+    { enabled: success }
   )
 
   // lifecycles
