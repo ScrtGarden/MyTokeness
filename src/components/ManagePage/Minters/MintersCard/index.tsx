@@ -47,7 +47,7 @@ const MintersCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
     useMutationExeContract<HandleMsgSetMinters>()
 
   const { data, isLoading } = useQueryContract<QueryMinters, ResultMinters>(
-    ['snip20', 'minters', contractAddress],
+    ['minters', contractAddress],
     contractAddress,
     { minters: {} },
     { enabled: success, refetchOnWindowFocus: false }
@@ -108,7 +108,7 @@ const MintersCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
         onSuccess: () => {
           toast.success('Updated minters.')
           queryClient.setQueryData<ResultMinters>(
-            ['snip20', 'minters', contractAddress],
+            ['minters', contractAddress],
             { minters: { minters } }
           )
         },

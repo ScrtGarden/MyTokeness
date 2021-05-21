@@ -8,7 +8,7 @@ const useQuerySnip20Config = (
   options?: UseQueryOptions<ResultTokenConfig, Error>
 ) =>
   useQuery(
-    ['snip20', 'tokenConfig', contractAddress],
+    ['tokenConfig', contractAddress],
     () => queryChain.queryContractSmart(contractAddress, { token_config: {} }),
     {
       enabled: !!contractAddress,

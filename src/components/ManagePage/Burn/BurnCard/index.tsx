@@ -46,7 +46,7 @@ const BurnCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
     QueryTokenInfo,
     ResultTokenInfo
   >(
-    ['snip20', 'tokenInfo', contractAddress],
+    ['tokenInfo', contractAddress],
     contractAddress,
     { token_info: {} },
     {

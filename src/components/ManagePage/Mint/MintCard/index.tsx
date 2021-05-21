@@ -48,7 +48,7 @@ const MintCard: FC<Props> = ({ success, enableButton, contractAddress }) => {
     QueryTokenInfo,
     ResultTokenInfo
   >(
-    ['snip20', 'tokenInfo', contractAddress],
+    ['tokenInfo', contractAddress],
     contractAddress,
     { token_info: {} },
     {
