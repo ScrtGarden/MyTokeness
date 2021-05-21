@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
+import { Column } from 'react-table'
 
 import {
   QueryTransactionHistory,
@@ -13,8 +14,11 @@ import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
 import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, InnerContainer } from '../../UI/Containers'
+import { CustomCell } from '../../UI/Table'
 import { PageTitle } from '../../UI/Typography'
+import { Content } from '../styles'
 import Table from './Table'
+import ActionCell from './Table/ActionCell'
 
 const Transactions = () => {
   const queryClient = useQueryClient()
@@ -28,7 +32,7 @@ const Transactions = () => {
   )
   const debouncedAddy = useDebounce(contractAddress, 300)
   const [error, setError] = useState('')
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
 
   // custom hook - query snip20 config's
   const { isLoading, isSuccess } = useQuerySnip20Config(debouncedAddy, {
@@ -87,41 +91,26 @@ const Transactions = () => {
     }
   }, [debouncedAddy, viewingKey])
 
-  const columns = useMemo(
+  const columns: Column<Tx>[] = useMemo(
     () => [
       {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName',
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName',
-          },
-        ],
+        Header: 'ID',
+        accessor: 'id',
+        width: 40,
+        Cell: ({ value }) => (
+          <CustomCell bold center>
+            {value}
+          </CustomCell>
+        ),
       },
       {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age',
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits',
-          },
-          {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
-          },
-        ],
+        Header: () => <CustomCell left>Action</CustomCell>,
+        accessor: 'action',
+        Cell: ({ row: { original } }) => <ActionCell tx={original} />,
+      },
+      {
+        Header: 'Memo',
+        accessor: 'memo',
       },
     ],
     []
@@ -130,15 +119,17 @@ const Transactions = () => {
   return (
     <Container>
       <InnerContainer>
-        <PageTitle>Transfers</PageTitle>
-        <Snip20Selector
-          value={contractAddress}
-          debouncedValue={debouncedAddy}
-          onChange={(e) => setContractAddress(e.currentTarget.value)}
-          loading={isLoading || gettingKey}
-          error={error}
-        />
-        <Table columns={columns} data={data} />
+        <PageTitle>Transactions</PageTitle>
+        <Content>
+          <Snip20Selector
+            value={contractAddress}
+            debouncedValue={debouncedAddy}
+            onChange={(e) => setContractAddress(e.currentTarget.value)}
+            loading={isLoading || gettingKey}
+            error={error}
+          />
+          <Table columns={columns} data={data} />
+        </Content>
       </InnerContainer>
     </Container>
   )
