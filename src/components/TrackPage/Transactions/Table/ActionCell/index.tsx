@@ -1,17 +1,25 @@
-import { FC, memo } from 'react'
+import commaNumber from 'comma-number'
+import { FC, memo, useMemo } from 'react'
 
 import { Tx } from '../../../../../../interface/snip20'
+import toBiggestDenomination from '../../../../../../utils/toBiggestDenomination'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {
   tx: Tx
+  decimals?: number
 }
 
-const ActionCell: FC<Props> = ({ tx }) => {
+const ActionCell: FC<Props> = ({ tx, decimals }) => {
   const {
     action,
     coins: { amount, denom },
   } = tx
+
+  const parsedAmount = useMemo(
+    () => commaNumber(toBiggestDenomination(amount, decimals)),
+    [decimals, amount]
+  )
 
   return (
     <Container>
@@ -20,7 +28,7 @@ const ActionCell: FC<Props> = ({ tx }) => {
           <Title green>Mint</Title>
           <Field>
             <Label>Amount:</Label>
-            <Text>{`${amount} ${denom}`}</Text>
+            <Text>{`${parsedAmount} ${denom}`}</Text>
           </Field>
           <Field>
             <Label>Minter:</Label>
@@ -38,7 +46,7 @@ const ActionCell: FC<Props> = ({ tx }) => {
           <Title red>Burn</Title>
           <Field>
             <Label>Amount:</Label>
-            <Text>{`${amount} ${denom}`}</Text>
+            <Text>{`${parsedAmount} ${denom}`}</Text>
           </Field>
           <Field>
             <Label>From:</Label>
@@ -58,7 +66,7 @@ const ActionCell: FC<Props> = ({ tx }) => {
           <Title yellow>Transfer</Title>
           <Field>
             <Label>Amount:</Label>
-            <Text>{`${amount} ${denom}`}</Text>
+            <Text>{`${parsedAmount} ${denom}`}</Text>
           </Field>
           <Field>
             <Label>From:</Label>

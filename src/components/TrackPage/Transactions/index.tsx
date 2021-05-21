@@ -11,6 +11,7 @@ import { useStoreState } from '../../../hooks/storeHooks'
 import useDebounce from '../../../hooks/useDebounce'
 import useQueryContract from '../../../hooks/useQueryContract'
 import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
+import useQuerySnip20Info from '../../../hooks/useQuerySnip20Info'
 import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, InnerContainer } from '../../UI/Containers'
@@ -43,6 +44,12 @@ const Transactions = () => {
       setError('Unable to fetch token information.')
     },
   })
+
+  // custom hook - query snip20 info if config is valid
+  const { data: tokenInfo, isLoading: fetchingInfo } = useQuerySnip20Info(
+    contractAddress,
+    { enabled: isSuccess }
+  )
 
   // custom hook - only query viewing key if connected to keplr and snip20
   // config is valid
@@ -106,14 +113,16 @@ const Transactions = () => {
       {
         Header: () => <CustomCell left>Action</CustomCell>,
         accessor: 'action',
-        Cell: ({ row: { original } }) => <ActionCell tx={original} />,
+        Cell: ({ row: { original } }) => (
+          <ActionCell tx={original} decimals={tokenInfo?.token_info.decimals} />
+        ),
       },
       {
         Header: 'Memo',
         accessor: 'memo',
       },
     ],
-    []
+    [tokenInfo]
   )
 
   return (
