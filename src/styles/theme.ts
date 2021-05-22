@@ -241,7 +241,20 @@ const theme = {
         highlightColor: 'linear-gradient(to right, #3c454e, #535e69, #3c454e)',
       },
     },
+
+    // pagination
+    pagination: {
+      button: {
+        bg: {
+          selected: '#60af732b',
+          hover: '#60af734f',
+          active: '#60af7369',
+        },
+      },
+    },
   },
+
+  // light mode
   light: {
     //
   },
