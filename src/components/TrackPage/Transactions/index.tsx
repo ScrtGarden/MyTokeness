@@ -15,6 +15,7 @@ import useQuerySnip20Info from '../../../hooks/useQuerySnip20Info'
 import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, InnerContainer } from '../../UI/Containers'
+import Pagination from '../../UI/Pagination'
 import { CustomCell } from '../../UI/Table'
 import { PageTitle } from '../../UI/Typography'
 import { Content } from '../styles'
@@ -33,7 +34,7 @@ const Transactions = () => {
   )
   const debouncedAddy = useDebounce(contractAddress, 300)
   const [error, setError] = useState('')
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
 
   // custom hook - query snip20 config's
   const { isLoading, isSuccess } = useQuerySnip20Config(debouncedAddy, {
@@ -73,13 +74,13 @@ const Transactions = () => {
     ResultTransactionHistory,
     Tx[]
   >(
-    ['transactionHistory', walletAddress, contractAddress, page],
+    ['transactionHistory', walletAddress, contractAddress, page - 1],
     contractAddress,
     {
       transaction_history: {
         address: walletAddress,
         key: viewingKey as string,
-        page: page,
+        page: page - 1,
         page_size: 10,
       },
     },
@@ -137,6 +138,7 @@ const Transactions = () => {
             loading={isLoading || gettingKey}
             error={error}
           />
+          <Pagination currentPage={page} totalPages={5} onChange={setPage} />
           <Table columns={columns} data={data} />
         </Content>
       </InnerContainer>
