@@ -8,6 +8,7 @@ import CaretDown from './CaretDown'
 import CaretUp from './CaretUp'
 import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
+import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
 import Dizzy from './Dizzy'
 import EllipsisH from './EllipsisH'
@@ -49,6 +50,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'chevron-right':
+      SelectedIcon = ChevronRight
+      break
     case 'list-ul-duo':
       SelectedIcon = ListUlDuo
       break
