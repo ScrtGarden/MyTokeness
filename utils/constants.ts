@@ -14,63 +14,74 @@ const CONTRACT_CODE_ID = {
 }
 
 const SIDEBAR_TABS = {
-  '/': {
+  HOME: {
     label: 'Home',
     icon: 'home-duo',
     route: '/',
   },
-  create: {
-    label: 'Create',
-    icon: 'industry-duo',
-    route: '/create',
+  TOKEN: {
+    create: {
+      label: 'Create',
+      icon: 'industry-duo',
+      route: '/create',
+    },
+    manage: {
+      label: 'Manage',
+      icon: 'tasks-alt-duo',
+      route: '/manage',
+      menu: [
+        {
+          label: 'Mint',
+          icon: 'hand-holding-usd',
+          route: '/manage/mint',
+          as: undefined,
+        },
+        {
+          label: 'Burn',
+          icon: 'fire-duo',
+          route: '/manage/burn',
+          as: undefined,
+        },
+        {
+          label: 'Minters',
+          icon: 'users-duo',
+          route: '/manage/minters',
+          as: undefined,
+        },
+        {
+          label: 'Admin',
+          icon: 'user-crown-duo',
+          route: '/manage/admin',
+          as: undefined,
+        },
+      ],
+    },
+    track: {
+      label: 'Track',
+      icon: 'analytics-duo',
+      route: '/track',
+      menu: [
+        {
+          label: 'Transfers',
+          icon: 'exchange-duo',
+          route: '/track/transfers',
+          as: undefined,
+        },
+        {
+          label: 'Transactions',
+          icon: 'list-ul-duo',
+          route: '/track/transactions',
+          as: undefined,
+        },
+      ],
+    },
   },
-  manage: {
-    label: 'Manage',
-    icon: 'tasks-alt-duo',
-    menu: [
-      {
-        label: 'Mint',
-        icon: 'hand-holding-usd',
-        route: '/manage/mint',
-        as: undefined,
-      },
-      {
-        label: 'Burn',
-        icon: 'fire-duo',
-        route: '/manage/burn',
-        as: undefined,
-      },
-      {
-        label: 'Minters',
-        icon: 'users-duo',
-        route: '/manage/minters',
-        as: undefined,
-      },
-      {
-        label: 'Admin',
-        icon: 'user-crown-duo',
-        route: '/manage/admin',
-        as: undefined,
-      },
-    ],
-  },
-  track: {
-    label: 'Track',
-    icon: 'analytics-duo',
-    menu: [
-      {
-        label: 'Transfers',
-        icon: 'exchange-duo',
-        route: '/track/transfers',
-        as: undefined,
-      },
-      {
-        label: 'Transactions',
-        icon: 'list-ul-duo',
-        route: '/track/transactions',
-        as: undefined,
-      },
-    ],
+  NFT: {
+    collections: {
+      label: 'Collections',
+      icon: 'album-collection-duo',
+      route: '/nft/collections',
+    },
   },
 }
 
