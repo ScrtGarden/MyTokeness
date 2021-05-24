@@ -16,6 +16,7 @@ const SectionHeader = styled.div`
   color: ${(props) => props.theme.font.colors.secondary};
   font-size: ${(props) => props.theme.font.sizes.sm};
   font-weight: ${(props) => props.theme.font.weights.bold};
+  margin-top: ${(props) => props.theme.space.xs};
   padding: ${(props) => `${props.theme.space.xs} ${props.theme.space.md}`};
 `
 
