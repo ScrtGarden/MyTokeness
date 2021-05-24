@@ -10,7 +10,7 @@ import { Container, Header, Label, Menu, StyledIcon, Wrapper } from './styles'
 interface Item {
   label: string
   icon: string
-  route?: string
+  route: string
   menu?: {
     label: string
     icon: string
@@ -21,21 +21,18 @@ interface Item {
 
 type Props = {
   item: Item
-  id: string
-}
-
-const isMatch = (path: string, id: string) => {
-  const arr = path.split('/')
-  const checkId = id === '/' ? '' : id
-  return arr[1] === checkId
 }
 
 const Tab: FC<Props> = (props) => {
-  const { item, id } = props
+  const { item } = props
   const { icon, label, menu, route } = item
 
   const router = useRouter()
-  const selected = useMemo(() => isMatch(router.asPath, id), [router])
+  const selected = useMemo(
+    () =>
+      route === '/' ? router.asPath === route : !!router.asPath.match(route),
+    [router]
+  )
 
   const [ref, dimensions] = useDimensions()
 
@@ -53,7 +50,7 @@ const Tab: FC<Props> = (props) => {
   })
 
   const onClickHeader = () => {
-    route ? router.push(route, undefined, { shallow: true }) : setOpen(!open)
+    !menu ? router.push(route, undefined, { shallow: true }) : setOpen(!open)
   }
 
   return (
