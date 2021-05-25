@@ -7,10 +7,14 @@ const MAX_GAS = {
     CHANGE_ADMIN: '140000',
     SET_CONTRACT_STATUS: '130000',
   },
+  NFT: {
+    INIT_MSG: '180000',
+  },
 }
 
 const CONTRACT_CODE_ID = {
   SNIP20: 28966,
+  NFT: 29176,
 }
 
 const SIDEBAR_TABS = {
@@ -85,4 +89,17 @@ const SIDEBAR_TABS = {
   },
 }
 
-export { MAX_GAS, CONTRACT_CODE_ID, SIDEBAR_TABS }
+const MYTOKENESS_NFT_CONTRACTS = {
+  secret1zf4f60zr0lepc3339knvtp0aawgfnrfj8dshru: {
+    name: 'Sealed Private Collection',
+    symbol: '',
+    icon: 'stamp-duo',
+  },
+  secret1wet30m6zw35uxw0n6tz07ehdegjeygaw3zrvr2: {
+    name: 'Private Collection',
+    symbol: '',
+    icon: 'palette',
+  },
+}
+
+export { MAX_GAS, CONTRACT_CODE_ID, SIDEBAR_TABS, MYTOKENESS_NFT_CONTRACTS }
