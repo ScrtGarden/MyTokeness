@@ -4,23 +4,33 @@ import { useMemo } from 'react'
 import { AuthModel, AuthState } from './auth/auth.model'
 import authState from './auth/auth.state'
 import authStore from './auth/auth.store'
+import {
+  Model as CollectionsModel,
+  State as CollectionsState,
+} from './collections/collections.model'
+import collectionsState from './collections/collections.state'
+import collectionsStore from './collections/collections.store'
 
 export interface StoreModel {
   auth: AuthModel
+  collections: CollectionsModel
 }
 
 export interface StoreState {
   auth: AuthState
+  collections: CollectionsState
 }
 
 let store: Store | undefined
 
 const initialStoreState: StoreState = {
   auth: authState,
+  collections: collectionsState,
 }
 
 const storeModel: StoreModel = {
   auth: authStore,
+  collections: collectionsStore,
 }
 
 const storeConfig: PersistConfig<StoreModel> = {
