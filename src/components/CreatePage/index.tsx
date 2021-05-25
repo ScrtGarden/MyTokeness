@@ -2,6 +2,7 @@ import cryptoRandomString from 'crypto-random-string'
 import { MouseEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { InitMsg } from '../../../interface/snip20'
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../utils/constants'
 import parseErrorMsg from '../../../utils/parseErrorMsg'
 import { useStoreState } from '../../hooks/storeHooks'
@@ -48,7 +49,7 @@ const CreatePage = () => {
     useMutationConnectWallet()
   const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
     useMutationGetAccounts()
-  const { mutate, isLoading } = useMutationInitContract()
+  const { mutate, isLoading } = useMutationInitContract<InitMsg>()
 
   // component state
   const [showModal, setShowModal] = useState(false)
