@@ -1,17 +1,16 @@
 import { ExecuteResult, InstantiateResult } from 'secretjs'
 
-import { InitMsg as Snip20InitMsg } from '../interface/snip20'
 import keplr from './keplr'
 
-export type Params = {
-  initMsg: Snip20InitMsg
+export type Params<T> = {
+  initMsg: T
   label: string
   codeId: number
   maxGas: string
 }
 
-const instantiateContract = async (
-  data: Params
+const instantiateContract = async <T extends object>(
+  data: Params<T>
 ): Promise<InstantiateResult> => {
   const { initMsg, label, codeId, maxGas } = data
 
