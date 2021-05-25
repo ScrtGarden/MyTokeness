@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ReactModal, { ModalProps } from 'styled-react-modal'
 
 import Icon from '../../Icons'
+import { IconButton } from '../Buttons'
 
 interface TitleProps {
   readonly isDanger?: boolean
@@ -74,6 +75,8 @@ const Title = styled.h1<TitleProps>`
 `
 
 const Content = styled.div`
+  max-height: 600px;
+  overflow: scroll;
   padding: ${(props) => props.theme.space.lg};
 `
 
@@ -91,6 +94,11 @@ const Buttons = styled.div<ButtonsProps>`
   padding: ${(props) => props.theme.space.lg};
 `
 
+const CloseButton = styled(IconButton)`
+  position: absolute;
+  right: 20px;
+`
+
 export {
   ModalBackground,
   Modal,
@@ -100,4 +108,5 @@ export {
   Text,
   StyledIcon,
   Buttons,
+  CloseButton,
 }
