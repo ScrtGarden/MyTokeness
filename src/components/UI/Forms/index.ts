@@ -280,6 +280,12 @@ const Select = styled.select`
 
 const Option = styled.option``
 
+const ToggleField = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`
+
 export {
   Field,
   Hint,
@@ -294,4 +300,5 @@ export {
   Symbol,
   Select,
   Option,
+  ToggleField,
 }
