@@ -6,8 +6,15 @@ import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import useMutationSuggestToken from '../../../hooks/useMutationSuggestToken'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import { Button, StyledIcon } from '../../UI/Buttons'
-import { Buttons, Content, Header, Text, Title } from '../../UI/Modal'
-import { StyledIconButton, StyledModal } from './styles'
+import {
+  Buttons,
+  CloseButton,
+  Content,
+  Header,
+  Text,
+  Title,
+} from '../../UI/Modal'
+import { StyledModal } from './styles'
 
 type Props = {
   toggle?: () => void
@@ -36,9 +43,9 @@ const CreatedTokenModal: FC<Props> = (props) => {
     <StyledModal {...rest}>
       <Header>
         <Title>Congratulation!</Title>
-        <StyledIconButton onClick={toggle}>
+        <CloseButton onClick={toggle}>
           <StyledIcon name="times" />
-        </StyledIconButton>
+        </CloseButton>
       </Header>
       <Content>
         <Text>
