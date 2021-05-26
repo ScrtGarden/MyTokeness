@@ -39,6 +39,10 @@ export interface Computators {
     Model,
     (address: string) => DraftCollectionConfig[]
   >
+  collectionById: Computed<
+    Model,
+    (walletAddress: string, id: string) => DraftCollectionConfig | undefined
+  >
 }
 
 export interface Model extends State, Actions, Computators {}

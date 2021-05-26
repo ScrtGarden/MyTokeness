@@ -7,6 +7,12 @@ const computators: Computators = {
     (state) => (contractAddress: string) =>
       state.draftCollectionConfigs[contractAddress] || []
   ),
+  collectionById: computed(
+    (state) => (walletAddress: string, id: string) =>
+      state
+        .draftCollectionsByAddress(walletAddress)
+        .find((collection) => collection.id === id)
+  ),
 }
 
 export default computators
