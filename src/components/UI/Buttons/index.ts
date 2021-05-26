@@ -35,6 +35,13 @@ const Button = styled.button<ButtonProps>`
     color: ${props.theme.buttons.button.color.primary};
   `}
 
+  ${(props) =>
+    props.isDanger &&
+    `
+    background-color: ${props.theme.buttons.button.bg.danger.base};
+    color: ${props.theme.buttons.button.color.primary};
+  `}
+
   :hover {
     background-color: ${(props) => props.theme.buttons.button.bg.default.hover};
     color: ${(props) => props.theme.buttons.button.color.default.hover};
@@ -42,9 +49,16 @@ const Button = styled.button<ButtonProps>`
     ${(props) =>
       props.isPrimary &&
       `
-        background-color: ${props.theme.buttons.button.bg.primary.hover};
-        color: ${props.theme.buttons.button.color.primary};
-      `}
+      background-color: ${props.theme.buttons.button.bg.primary.hover};
+      color: ${props.theme.buttons.button.color.primary};
+    `}
+
+    ${(props) =>
+      props.isDanger &&
+      `
+      background-color: ${props.theme.buttons.button.bg.danger.hover};
+      color: ${props.theme.buttons.button.color.primary};
+    `}
   }
 
   :active {
@@ -55,9 +69,16 @@ const Button = styled.button<ButtonProps>`
     ${(props) =>
       props.isPrimary &&
       `
-        background-color: ${props.theme.buttons.button.bg.primary.active};
-        color: ${props.theme.buttons.button.color.primary};
-      `}
+      background-color: ${props.theme.buttons.button.bg.primary.active};
+      color: ${props.theme.buttons.button.color.primary};
+    `}
+
+    ${(props) =>
+      props.isDanger &&
+      `
+      background-color: ${props.theme.buttons.button.bg.danger.active};
+      color: ${props.theme.buttons.button.color.primary};
+    `}
   }
 
   ${(props) =>
