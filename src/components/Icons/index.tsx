@@ -11,6 +11,7 @@ import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
 import Dizzy from './Dizzy'
+import DraftingCompassDuo from './DraftingCompassDuo'
 import EllipsisH from './EllipsisH'
 import ExchangeDuo from './ExchangeDuo'
 import ExclamationCircle from './ExclamationCircle'
@@ -37,6 +38,7 @@ import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
 import TasksAltDuo from './TasksAltDuo'
 import Times from './Times'
+import TrashDuo from './TrashDuo'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
 import UsersDuo from './UsersDuo'
@@ -52,6 +54,12 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'drafting-compass-duo':
+      SelectedIcon = DraftingCompassDuo
+      break
+    case 'trash-duo':
+      SelectedIcon = TrashDuo
+      break
     case 'store-duo':
       SelectedIcon = StoreDuo
       break
