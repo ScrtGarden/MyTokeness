@@ -1,21 +1,14 @@
+import cryptoRandomString from 'crypto-random-string'
+import Router from 'next/router'
 import { FC, memo, useEffect, useReducer, useState } from 'react'
 
+import { Config } from '../../../../interface/nft-ui'
 import reducer from '../../../../utils/reducer'
+import { useStoreActions, useStoreState } from '../../../hooks/storeHooks'
 import { StyledIcon } from '../../UI/Buttons'
 import { CloseButton, Content, Header, Title } from '../../UI/Modal'
 import Form from './Form'
 import { validate } from './lib'
-
-export interface Config {
-  publicTokenSupply: boolean
-  publicOwner: boolean
-  enableSealedMetadata: boolean
-  unwrappedMetadataIsPrivate: boolean
-  minterMayUpdateMetadata: boolean
-  ownerMayUpdateMetadata: boolean
-  enableBurn: boolean
-  [key: string]: boolean
-}
 
 export interface Errors {
   name: string
@@ -42,6 +35,14 @@ type Props = {
 }
 
 const CreateCollectionModal: FC<Props> = ({ toggle }) => {
+  // store actions
+  const addConfig = useStoreActions(
+    (actions) => actions.collections.addCollection
+  )
+
+  // store state
+  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
+
   // component state
   const [name, setName] = useState('')
   const [symbol, setSymbol] = useState('')
@@ -68,6 +69,16 @@ const CreateCollectionModal: FC<Props> = ({ toggle }) => {
     if (hasErrors) {
       return
     }
+
+    const id = cryptoRandomString({ length: 10 })
+
+    addConfig({ name, symbol, ...config, id, walletAddress })
+
+    Router.push(
+      '/nft/collections/[contractAddress]',
+      `/nft/collections/${id}`,
+      { shallow: true }
+    )
   }
 
   return (
