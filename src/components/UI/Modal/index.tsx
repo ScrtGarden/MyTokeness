@@ -52,7 +52,6 @@ const Header = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.modal.header.border.color};
   column-gap: ${(props) => props.theme.space.sm};
   display: flex;
-  justify-content: space-between;
   padding: ${(props) => props.theme.space.lg};
 `
 
@@ -97,6 +96,12 @@ const Buttons = styled.div<ButtonsProps>`
 const CloseButton = styled(IconButton)`
   position: absolute;
   right: 20px;
+
+  svg {
+    fill: ${(props) => props.theme.icon.colors.secondary};
+    height: 16px;
+    width: 16px;
+  }
 `
 
 export {
