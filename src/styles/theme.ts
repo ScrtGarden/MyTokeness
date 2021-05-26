@@ -1,6 +1,7 @@
 const theme = {
   dark: {
     bg: '#13181c',
+    // bg: '#111519',
     fg: '#181e24',
     border: {
       color: '#212a31',
@@ -59,6 +60,9 @@ const theme = {
         error: '#d95468',
         warn: '#d95468',
       },
+      sizes: {
+        md: '16px',
+      },
     },
     space: {
       base: 4,
@@ -69,6 +73,23 @@ const theme = {
       lg: '32px',
       xl: '40px',
       xxl: '48px',
+    },
+    palette: {
+      red: {
+        600: '#d95468',
+      },
+      green: {
+        600: '#60af73',
+      },
+      teal: {
+        600: '#33ced8',
+      },
+      blue: {
+        600: '#499bfc',
+      },
+      yellow: {
+        600: '#f0be72',
+      },
     },
 
     // buttons
@@ -84,6 +105,11 @@ const theme = {
             base: '#60af73',
             hover: '#509461',
             active: '#468255',
+          },
+          danger: {
+            base: '#d95468',
+            hover: '#b34646',
+            active: '#883131',
           },
           disabled: '#30373e',
         },
@@ -112,16 +138,16 @@ const theme = {
       },
       input: {
         bg: {
-          default: '#11181d',
+          default: '#13181c',
         },
         border: {
           color: {
             default: '#5e707d',
             hover: '#849eb1',
             focus: '#399ee8',
-            defaultError: '#de5f5f',
-            hoverError: '#f56464',
-            focusError: '#e83939',
+            defaultError: '#d95468',
+            hoverError: '#e65a6f',
+            focusError: '#ef5d73',
           },
           radius: '4px',
         },
@@ -250,6 +276,14 @@ const theme = {
           hover: '#60af734f',
           active: '#60af7369',
         },
+      },
+    },
+
+    // tags
+    tags: {
+      color: '#181e24',
+      bg: {
+        default: '#e9ebed',
       },
     },
   },
