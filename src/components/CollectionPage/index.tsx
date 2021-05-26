@@ -1,7 +1,7 @@
 import { ParsedUrlQuery } from 'querystring'
 
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { QueryContractInfo, ResultContractInfo } from '../../../interface/nft'
 import isSecretAddress from '../../../utils/isSecretAddress'
@@ -22,14 +22,14 @@ const tabs = {
 
 export interface CollectionRouterQuery extends ParsedUrlQuery {
   contractAddress: string
+  tab?: string
 }
 
 const CollectionPage = () => {
   const router = useRouter()
-  const { contractAddress } = router.query as CollectionRouterQuery
+  const { contractAddress, tab } = router.query as CollectionRouterQuery
 
   // component state
-  const [tab, setTab] = useState('assets')
   const isDraft = useMemo(
     () => !isSecretAddress(contractAddress),
     [contractAddress]
@@ -49,7 +49,21 @@ const CollectionPage = () => {
     { enabled: !isDraft }
   )
 
-  console.log({ draftCollection, data })
+  const onClickTab = (route: string) => {
+    if (route === 'assets') {
+      router.push(
+        '/nft/collections/[contractAddress]',
+        `/nft/collections/${contractAddress}`,
+        { shallow: true }
+      )
+    } else {
+      router.push(
+        '/nft/collections/[contractAddress]/[tab]',
+        `/nft/collections/${contractAddress}/${route}`,
+        { shallow: true }
+      )
+    }
+  }
 
   return (
     <Container>
@@ -57,7 +71,7 @@ const CollectionPage = () => {
         <PageTitle>
           {draftCollection?.name || data?.contract_info.name}
         </PageTitle>
-        <Tabs tabs={tabs} tab={tab} onClick={setTab} />
+        <Tabs tabs={tabs} tab={tab ? tab : 'assets'} onClick={onClickTab} />
       </InnerContainer>
     </Container>
   )
