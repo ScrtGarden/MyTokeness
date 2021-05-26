@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
+import { Config } from '../../../../../interface/nft-ui'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label, ToggleField } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
 import { StyledButton } from './styles'
-import { Config, Errors } from '..'
+import { Errors } from '..'
 
 type Props = {
   name: string
@@ -84,7 +85,7 @@ const Form: FC<Props> = ({
     <Header margin>Configuration</Header>
     <Wrapper>
       {Object.entries(CONFIGURATION_OPTIONS).map(([key, value]) => (
-        <Field>
+        <Field key={key}>
           <ToggleField>
             <Label>{value.label}</Label>
             <Toggle
