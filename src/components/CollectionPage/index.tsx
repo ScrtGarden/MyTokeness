@@ -10,6 +10,7 @@ import useQueryContract from '../../hooks/useQueryContract'
 import { Container, InnerContainer } from '../UI/Containers'
 import Tabs from '../UI/Tabs'
 import { PageTitle } from '../UI/Typography'
+import Assets from './Assets'
 
 const tabs = {
   assets: { label: 'Assets' },
@@ -72,6 +73,7 @@ const CollectionPage = () => {
           {draftCollection?.name || data?.contract_info.name}
         </PageTitle>
         <Tabs tabs={tabs} tab={tab ? tab : 'assets'} onClick={onClickTab} />
+        {!tab && <Assets />}
       </InnerContainer>
     </Container>
   )
