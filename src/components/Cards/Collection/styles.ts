@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 import Icon from '../../Icons'
+import { IconButton } from '../../UI/Buttons'
+import { Tag } from '../../UI/Tags'
 
 const Container = styled.div`
   align-items: center;
@@ -12,6 +14,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: ${(props) => props.theme.space.lg};
+  position: relative;
 `
 
 const Label = styled.div`
@@ -35,4 +38,16 @@ const StyledIcon = styled(Icon)`
   width: 6rem;
 `
 
-export { Container, Label, StyledIcon }
+const StyledTag = styled(Tag)`
+  bottom: 10px;
+  position: absolute;
+  right: 10px;
+`
+
+const StyledIconButton = styled(IconButton)`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+`
+
+export { Container, Label, StyledIcon, StyledTag, StyledIconButton }
