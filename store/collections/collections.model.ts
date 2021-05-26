@@ -8,16 +8,37 @@ interface DraftCollectionConfig {
   minterMayUpdateMetadata: boolean
   ownerMayUpdateMetadata: boolean
   enableBurn: boolean
+  name: string
+  symbol: string
+}
+
+interface ConfigsByAddress {
+  [walletAddress: string]: DraftCollectionConfig[]
+}
+
+interface AddConfigPayload extends DraftCollectionConfig {
+  walletAddress: string
+}
+
+interface RemoveCollectionPayload {
+  id: string
+  walletAddress: string
 }
 
 export interface State {
-  draftCollectionConfigs: DraftCollectionConfig[]
+  draftCollectionConfigs: ConfigsByAddress
 }
 
 export interface Actions {
-  addCollectionConfig: Action<Model, DraftCollectionConfig>
+  addCollection: Action<Model, AddConfigPayload>
+  removeCollection: Action<Model, RemoveCollectionPayload>
 }
 
-export interface Computators {}
+export interface Computators {
+  draftCollectionsByAddress: Computed<
+    Model,
+    (address: string) => DraftCollectionConfig[]
+  >
+}
 
 export interface Model extends State, Actions, Computators {}

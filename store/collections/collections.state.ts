@@ -1,7 +1,7 @@
 import { State } from './collections.model'
 
 const initialState: State = {
-  draftCollectionConfigs: [],
+  draftCollectionConfigs: {},
 }
 
 export default initialState
