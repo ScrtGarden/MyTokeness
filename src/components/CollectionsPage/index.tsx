@@ -113,7 +113,7 @@ const Collections = () => {
       </StyledModal>
       <WarningModal
         title="Remove draft collection"
-        text="This collection is only a draft and can be recreated anytime. Just in case, are you sure you want to remove this collection?"
+        text="Are you sure you want to remove this collection?"
         isOpen={showWarn}
         toggle={() => setShowWarn(!showWarn)}
         onBackgroundClick={() => setShowWarn(!showWarn)}
