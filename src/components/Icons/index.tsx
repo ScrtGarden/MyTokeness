@@ -2,6 +2,7 @@ import { FC, forwardRef } from 'react'
 
 import AlbumCollectionDuo from './AlbumCollectionDuo'
 import AnalyticsDuo from './AnalyticsDuo'
+import ArrowLeft from './ArrowLeft'
 import BoxDuo from './BoxDuo'
 import BoxOpenDuo from './BoxOpenDuo'
 import CaretDown from './CaretDown'
@@ -54,6 +55,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'arrow-left':
+      SelectedIcon = ArrowLeft
+      break
     case 'drafting-compass-duo':
       SelectedIcon = DraftingCompassDuo
       break
