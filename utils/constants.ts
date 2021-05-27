@@ -96,10 +96,28 @@ const MYTOKENESS_NFT_CONTRACTS = {
     icon: 'stamp-duo',
   },
   secret1wet30m6zw35uxw0n6tz07ehdegjeygaw3zrvr2: {
-    name: 'Private Collection',
+    name: 'Private Collection Long Title To See what',
     symbol: '',
     icon: 'palette',
   },
 }
 
-export { MAX_GAS, CONTRACT_CODE_ID, SIDEBAR_TABS, MYTOKENESS_NFT_CONTRACTS }
+const FILE_UPLOADER = {
+  ACCEPTS: [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'audio/mp3',
+    'audio/mpeg',
+    'video/mp4',
+  ],
+  MAX_SIZE: 50000000, // 20mb
+}
+
+export {
+  MAX_GAS,
+  CONTRACT_CODE_ID,
+  SIDEBAR_TABS,
+  MYTOKENESS_NFT_CONTRACTS,
+  FILE_UPLOADER,
+}
