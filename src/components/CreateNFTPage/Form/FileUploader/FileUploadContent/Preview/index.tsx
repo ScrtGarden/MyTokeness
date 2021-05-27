@@ -14,7 +14,7 @@ const Preview: FC<Props> = (props) => {
 
   return (
     <Container>
-      {type === ('image/gif' || 'image/png' || 'image/jpg') ? (
+      {type.includes('image/') ? (
         <Image src={src} />
       ) : (
         <StyledPlayer>
