@@ -9,7 +9,6 @@ import FileUploader from '../FileUploader'
 
 const Public = () => {
   // context store state
-  const file = ContextStore.useStoreState((state) => state.publicFile)
   const name = ContextStore.useStoreState((state) => state.publicMetadata.name)
   const description = ContextStore.useStoreState(
     (state) => state.publicMetadata.description
@@ -43,10 +42,11 @@ const Public = () => {
     <Card>
       <Header>Public Data</Header>
       <Wrapper>
-        <FileUploader file={file} setFile={setFile} />
+        <FileUploader setFile={setFile} />
         <Field>
           <Label>Name</Label>
           <Input
+            placeholder="Charmander"
             value={name}
             onChange={(e) => setData({ name: e.currentTarget.value })}
           />
@@ -55,6 +55,7 @@ const Public = () => {
           <Label>Description (optional)</Label>
           <Hint>Markdown syntax is supported.</Hint>
           <Textarea
+            placeholder="Charmander is a bipedal, reptilian Pokémon with a primarily orange body and blue eyes."
             rows={5}
             value={description}
             onChange={(e) => setData({ description: e.currentTarget.value })}

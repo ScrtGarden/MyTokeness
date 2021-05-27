@@ -28,7 +28,7 @@ const Item: FC<Props> = (props) => {
     <Container>
       <Wrapper>
         <Input
-          placeholder="ability"
+          placeholder="type"
           value={key}
           onChange={(e) =>
             onChange({ index, data: { key: e.currentTarget.value, value } })
@@ -36,7 +36,7 @@ const Item: FC<Props> = (props) => {
           validation={error ? 'error' : undefined}
         />
         <Input
-          placeholder="cyborg"
+          placeholder="fire"
           value={value}
           onChange={(e) =>
             onChange({ index, data: { value: e.currentTarget.value, key } })
