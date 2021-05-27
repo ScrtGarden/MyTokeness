@@ -1,3 +1,4 @@
+import ReactPlayer from 'react-player'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -12,4 +13,15 @@ const Image = styled.img`
   width: 100%;
 `
 
-export { Container, Image }
+const StyledPlayer = styled.div`
+  position: relative;
+  height: 100%;
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+`
+
+export { Container, Image, StyledPlayer }

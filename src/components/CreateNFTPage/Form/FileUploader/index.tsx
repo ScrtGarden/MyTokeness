@@ -17,13 +17,14 @@ type Props = {
 
 const FileUploader: FC<Props> = ({ file, setFile, error }) => {
   // component state
-  const [preview, setPreview] = useState<string | undefined>()
+  const [preview, setPreview] =
+    useState<{ src: string; type: string } | undefined>()
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0]
       setFile(file)
-      setPreview(URL.createObjectURL(file))
+      setPreview({ src: URL.createObjectURL(file), type: file.type })
     }
   }, [])
 
@@ -48,7 +49,7 @@ const FileUploader: FC<Props> = ({ file, setFile, error }) => {
   return (
     <Field>
       <Label>Image, Video or Audio</Label>
-      <Hint>Acceptable formats are JPG, PNG, and GIF. Max 1MB.</Hint>
+      <Hint>Acceptable formats are JPG, PNG, GIF, MP3 and MP4. Max 50MB.</Hint>
       <Wrapper>
         {preview && (
           <CloseButton onClick={removeFile} isDanger>
@@ -67,7 +68,7 @@ const FileUploader: FC<Props> = ({ file, setFile, error }) => {
               isDragReject={isDragReject}
             />
           ) : (
-            <Preview src={preview} />
+            <Preview src={preview.src} type={preview.type} />
           )}
           <Input {...getInputProps()} />
         </StyledFileUpload>
