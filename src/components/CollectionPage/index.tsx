@@ -11,6 +11,7 @@ import { Container, InnerContainer } from '../UI/Containers'
 import Tabs from '../UI/Tabs'
 import { PageTitle } from '../UI/Typography'
 import Assets from './Assets'
+import { StyledButton } from './styles'
 
 const tabs = {
   assets: { label: 'Assets' },
@@ -66,9 +67,20 @@ const CollectionPage = () => {
     }
   }
 
+  const onClickCreate = () => {
+    router.push(
+      '/nft/collections/[contractAddress]/create',
+      `/nft/collections/${contractAddress}/create`,
+      { shallow: true }
+    )
+  }
+
   return (
     <Container>
       <InnerContainer>
+        <StyledButton isPrimary onClick={onClickCreate}>
+          Create
+        </StyledButton>
         <PageTitle>
           {draftCollection?.name || data?.contract_info.name}
         </PageTitle>
