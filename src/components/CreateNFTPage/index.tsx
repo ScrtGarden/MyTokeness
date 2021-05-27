@@ -11,6 +11,7 @@ import { Container, InnerContainer } from '../UI/Containers'
 import { PageTitle } from '../UI/Typography'
 import BackLink from './BackLink'
 import Form from './Form'
+import ContextStore from './Store'
 
 export interface CreateRouterQuery extends ParsedUrlQuery {
   contractAddress: string
@@ -46,7 +47,9 @@ const CreateNFTPage = () => {
       <InnerContainer>
         <BackLink label={draftCollection?.name || data?.contract_info.name} />
         <PageTitle>Create your collectible</PageTitle>
-        <Form />
+        <ContextStore.Provider>
+          <Form />
+        </ContextStore.Provider>
       </InnerContainer>
     </Container>
   )
