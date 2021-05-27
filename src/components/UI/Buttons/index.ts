@@ -90,7 +90,7 @@ const Button = styled.button<ButtonProps>`
   `}
 `
 
-const IconButton = styled.button`
+const IconButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.buttons.button.bg.default.base};
   border: none;
   border-radius: 50%;
@@ -104,13 +104,39 @@ const IconButton = styled.button`
   transition: background-color 0.25s ease-in-out 0s;
   width: 40px;
 
+  ${(props) =>
+    props.isDanger &&
+    `
+    background-color: ${props.theme.buttons.button.bg.danger.base};
+  `}
+
   :hover {
     background-color: ${(props) => props.theme.buttons.button.bg.default.hover};
+
+    ${(props) =>
+      props.isDanger &&
+      `
+      background-color: ${props.theme.buttons.button.bg.danger.hover};
+    `}
   }
 
   :active {
     background-color: ${(props) =>
       props.theme.buttons.button.bg.default.active};
+
+    ${(props) =>
+      props.isDanger &&
+      `
+      background-color: ${props.theme.buttons.button.bg.danger.active};
+    `}
+  }
+
+  svg {
+    ${(props) =>
+      props.isDanger &&
+      `
+      fill: ${props.theme.buttons.button.color.default};
+    `}
   }
 `
 
