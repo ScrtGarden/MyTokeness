@@ -10,12 +10,12 @@ import Preview from './FileUploadContent/Preview'
 import { CloseButton, StyledFileUpload, Wrapper } from './styles'
 
 type Props = {
-  file?: File
+  label?: string
   setFile: (file?: File) => void
   error?: string
 }
 
-const FileUploader: FC<Props> = ({ file, setFile, error }) => {
+const FileUploader: FC<Props> = ({ label, setFile, error }) => {
   // component state
   const [preview, setPreview] =
     useState<{ src: string; type: string } | undefined>()
@@ -48,7 +48,7 @@ const FileUploader: FC<Props> = ({ file, setFile, error }) => {
 
   return (
     <Field>
-      <Label>Image, Video or Audio</Label>
+      <Label>{label || 'Image, Video or Audio'}</Label>
       <Hint>Acceptable formats are JPG, PNG, GIF, MP3 and MP4. Max 50MB.</Hint>
       <Wrapper>
         {preview && (
