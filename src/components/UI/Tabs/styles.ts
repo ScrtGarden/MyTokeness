@@ -22,15 +22,15 @@ const Tab = styled.div<TabProps>`
   padding: ${(props) => props.theme.space.sm} 0;
   position: relative;
   transition: color 0.3s ease;
-  ${(props) => props.selected && `color: ${props.theme.palette.green[600]}`};
+  ${(props) => props.selected && `color: ${props.theme.palette.yellow[600]}`};
 
   :hover {
-    color: ${(props) => props.theme.palette.green[600]};
+    color: ${(props) => props.theme.palette.yellow[600]};
   }
 
   ::after {
     display: ${(props) => (props.selected ? 'block' : 'none')};
-    border-bottom: 2px solid ${(props) => props.theme.palette.green[600]};
+    border-bottom: 2px solid ${(props) => props.theme.palette.yellow[600]};
     bottom: 0;
     content: '';
     left: 0;
