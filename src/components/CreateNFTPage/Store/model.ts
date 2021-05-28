@@ -21,6 +21,15 @@ export type SetAttributePayload = {
   data: Attribute
 }
 
+export interface ValidationResult {
+  errors: {
+    name: string
+    publicFile: string
+    attributes: string[]
+  }
+  hasError: boolean
+}
+
 export interface State {
   publicMetadata: PublicMetadata
   privateMetadata: PrivateMetadata
@@ -35,8 +44,11 @@ export interface Actions {
   setPublicFile: Action<Model, File | undefined>
   setPrivateFile: Action<Model, File | undefined>
   setAttributes: Action<Model, SetAttributePayload>
+  setHasSubmitted: Action<Model, boolean>
 }
 
-export interface Computators {}
+export interface Computators {
+  validation: Computed<Model, ValidationResult>
+}
 
 export interface Model extends State, Actions, Computators {}

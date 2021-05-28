@@ -1,5 +1,6 @@
 import { action, computed, createContextStore } from 'easy-peasy'
 
+import { validate } from './lib'
 import { Actions, Computators, State } from './model'
 
 const state: State = {
@@ -41,9 +42,22 @@ const actions: Actions = {
       ? newAttrs
       : newAttrs.concat([{ key: '', value: '' }])
   }),
+  setHasSubmitted: action((state, payload) => {
+    state.hasSubmitted = payload
+  }),
 }
 
-const computators: Computators = {}
+const computators: Computators = {
+  validation: computed(
+    [
+      (state) => state.hasSubmitted,
+      (state) => state.publicMetadata.name,
+      (state) => state.publicMetadata.attributes,
+      (state) => state.publicFile,
+    ],
+    validate
+  ),
+}
 
 const ContextStore = createContextStore({
   ...state,

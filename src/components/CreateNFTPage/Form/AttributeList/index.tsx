@@ -8,7 +8,7 @@ import { Container, List } from './styles'
 type Props = {
   data: Attribute[]
   onChange: (params: { index: number; data: Attribute }) => void
-  errors?: string[]
+  errors: string[]
 }
 
 const AttributeList: FC<Props> = (props) => {
@@ -24,7 +24,7 @@ const AttributeList: FC<Props> = (props) => {
             attribute={attribute}
             index={index}
             onChange={onChange}
-            // error={errors[index]}
+            error={errors[index]}
           />
         ))}
       </List>

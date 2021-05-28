@@ -9,11 +9,13 @@ import Public from './Public'
 const Form = () => {
   // context store state
   const publicData = ContextStore.useStoreState((state) => state.publicMetadata)
-  const publicFile = ContextStore.useStoreState((state) => state.publicFile)
   const privateData = ContextStore.useStoreState(
     (state) => state.privateMetadata
   )
-  const privateFile = ContextStore.useStoreState((state) => state.privateFile)
+  const hasError = ContextStore.useStoreState(
+    (state) => state.validation.hasError
+  )
+  const errors = ContextStore.useStoreState((state) => state.validation.errors)
 
   // context store actions
   const setPublicFile = ContextStore.useStoreActions(
@@ -31,6 +33,17 @@ const Form = () => {
   const setPrivateData = ContextStore.useStoreActions(
     (actions) => actions.setPrivateMetadata
   )
+  const setSubmitted = ContextStore.useStoreActions(
+    (actions) => actions.setHasSubmitted
+  )
+
+  const onSubmit = () => {
+    setSubmitted(true)
+
+    if (hasError) {
+      return
+    }
+  }
 
   return (
     <Content>
@@ -39,12 +52,13 @@ const Form = () => {
         setFile={setPublicFile}
         setData={setPublicData}
         setAttributes={setAttributes}
+        errors={errors}
       />
       <Private
         data={privateData}
         setData={setPrivateData}
         setFile={setPrivateFile}
-        // onSubmit={onSubmit}
+        onSubmit={onSubmit}
       />
     </Content>
   )

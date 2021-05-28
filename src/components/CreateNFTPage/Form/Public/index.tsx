@@ -1,6 +1,7 @@
 import { FC, FormEvent, memo } from 'react'
 
 import { decimalsPattern } from '../../../../../utils/regexPatterns'
+import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
 import { PublicMetadata, SetAttributePayload } from '../../Store/model'
@@ -12,9 +13,16 @@ type Props = {
   setData: (data: Partial<PublicMetadata>) => void
   setFile: (file: File | undefined) => void
   setAttributes: (data: SetAttributePayload) => void
+  errors: { name: string; publicFile: string; attributes: string[] }
 }
 
-const Public: FC<Props> = ({ data, setAttributes, setData, setFile }) => {
+const Public: FC<Props> = ({
+  data,
+  setAttributes,
+  setData,
+  setFile,
+  errors,
+}) => {
   const { name, description, supply, attributes } = data
 
   const onChangeSupply = (e: FormEvent<HTMLInputElement>) => {
@@ -28,14 +36,18 @@ const Public: FC<Props> = ({ data, setAttributes, setData, setFile }) => {
     <Card>
       <Header>Public Data</Header>
       <Wrapper>
-        <FileUploader setFile={setFile} />
+        <FileUploader setFile={setFile} error={errors.publicFile} />
         <Field>
           <Label>Name</Label>
           <Input
             placeholder="Charmander"
             value={name}
             onChange={(e) => setData({ name: e.currentTarget.value })}
+            validation={errors.name ? 'error' : undefined}
           />
+          {errors.name && (
+            <MessageWithIcon validation="error" message={errors.name} />
+          )}
         </Field>
         <Field>
           <Label>Description (optional)</Label>
@@ -55,7 +67,11 @@ const Public: FC<Props> = ({ data, setAttributes, setData, setFile }) => {
             onBlur={() => !supply && setData({ supply: '1' })}
           />
         </Field>
-        <AttributeList data={attributes} onChange={setAttributes} />
+        <AttributeList
+          data={attributes}
+          onChange={setAttributes}
+          errors={errors.attributes}
+        />
       </Wrapper>
     </Card>
   )
