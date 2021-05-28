@@ -1,35 +1,21 @@
-import { FormEvent, memo } from 'react'
+import { FC, FormEvent, memo } from 'react'
 
 import { decimalsPattern } from '../../../../../utils/regexPatterns'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
-import ContextStore from '../../Store'
+import { PublicMetadata, SetAttributePayload } from '../../Store/model'
 import AttributeList from '../AttributeList'
 import FileUploader from '../FileUploader'
 
-const Public = () => {
-  // context store state
-  const name = ContextStore.useStoreState((state) => state.publicMetadata.name)
-  const description = ContextStore.useStoreState(
-    (state) => state.publicMetadata.description
-  )
-  const supply = ContextStore.useStoreState(
-    (state) => state.publicMetadata.supply
-  )
-  const attributes = ContextStore.useStoreState(
-    (state) => state.publicMetadata.attributes
-  )
+type Props = {
+  data: PublicMetadata
+  setData: (data: Partial<PublicMetadata>) => void
+  setFile: (file: File | undefined) => void
+  setAttributes: (data: SetAttributePayload) => void
+}
 
-  // context store actions
-  const setFile = ContextStore.useStoreActions(
-    (actions) => actions.setPublicFile
-  )
-  const setData = ContextStore.useStoreActions(
-    (actions) => actions.setPublicMetadata
-  )
-  const setAttributes = ContextStore.useStoreActions(
-    (actions) => actions.setAttributes
-  )
+const Public: FC<Props> = ({ data, setAttributes, setData, setFile }) => {
+  const { name, description, supply, attributes } = data
 
   const onChangeSupply = (e: FormEvent<HTMLInputElement>) => {
     const amount = e.currentTarget.value
