@@ -1,6 +1,5 @@
 import { FC, memo } from 'react'
 import { toast } from 'react-toastify'
-import { ModalProps } from 'styled-react-modal'
 
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import useMutationSuggestToken from '../../../hooks/useMutationSuggestToken'
@@ -14,15 +13,14 @@ import {
   Text,
   Title,
 } from '../../UI/Modal'
-import { StyledModal } from './styles'
 
 type Props = {
   toggle?: () => void
   contractAddress: string
-} & ModalProps
+}
 
-const CreatedTokenModal: FC<Props> = (props) => {
-  const { toggle = () => null, contractAddress, ...rest } = props
+const CreatedToken: FC<Props> = (props) => {
+  const { toggle = () => null, contractAddress } = props
 
   // custom hooks
   const { mutate, isLoading } = useMutationSuggestToken()
@@ -40,7 +38,7 @@ const CreatedTokenModal: FC<Props> = (props) => {
   }
 
   return (
-    <StyledModal {...rest}>
+    <>
       <Header>
         <Title>Congratulation!</Title>
         <CloseButton onClick={toggle}>
@@ -66,8 +64,8 @@ const CreatedTokenModal: FC<Props> = (props) => {
           onClick={onClickGetViewingKey}
         />
       </Buttons>
-    </StyledModal>
+    </>
   )
 }
 
-export default memo(CreatedTokenModal)
+export default memo(CreatedToken)

@@ -10,9 +10,10 @@ import useMutationConnectWallet from '../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../hooks/useMutationGetAccounts'
 import useMutationInitContract from '../../hooks/useMutationInitContract'
 import ButtonWithLoading from '../Common/ButtonWithLoading'
-import CreatedTokenModal from '../Modals/CreatedToken'
+import CreatedToken from '../Modals/CreatedToken'
 import { Card } from '../UI/Card'
 import { Container, Content, InnerContainer } from '../UI/Containers'
+import { Modal } from '../UI/Modal'
 import { PageTitle } from '../UI/Typography'
 import Configuration from './Form/Configuration'
 import Details from './Form/Details'
@@ -129,11 +130,12 @@ const CreatePage = () => {
           </Content>
         </InnerContainer>
       </Container>
-      <CreatedTokenModal
-        isOpen={showModal}
-        toggle={() => setShowModal(!showModal)}
-        contractAddress={contractAddress}
-      />
+      <Modal isOpen={showModal}>
+        <CreatedToken
+          toggle={() => setShowModal(!showModal)}
+          contractAddress={contractAddress}
+        />
+      </Modal>
     </>
   )
 }

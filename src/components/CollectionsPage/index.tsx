@@ -11,9 +11,9 @@ import { queryChain } from '../../../utils/secretjs'
 import { useStoreActions, useStoreState } from '../../hooks/storeHooks'
 import CollectionCard from '../Cards/Collection'
 import CreateCollection from '../Modals/ConfigureCollection'
-import { StyledModal } from '../Modals/ConfigureCollection/styles'
-import WarningModal from '../Modals/Warning'
+import Warning from '../Modals/Warning'
 import { Container, InnerContainer } from '../UI/Containers'
+import { Modal } from '../UI/Modal'
 import { PageTitle } from '../UI/Typography'
 import { Grid } from './styles'
 
@@ -108,17 +108,17 @@ const Collections = () => {
           </Grid>
         </InnerContainer>
       </Container>
-      <StyledModal isOpen={show}>
+      <Modal isOpen={show}>
         <CreateCollection toggle={() => setShow(!show)} />
-      </StyledModal>
-      <WarningModal
-        title="Remove draft collection"
-        text="Are you sure you want to remove this collection?"
-        isOpen={showWarn}
-        toggle={() => setShowWarn(!showWarn)}
-        onBackgroundClick={() => setShowWarn(!showWarn)}
-        onClickPrimary={onRemove}
-      />
+      </Modal>
+      <Modal isOpen={showWarn} onBackgroundClick={() => setShowWarn(!showWarn)}>
+        <Warning
+          title="Remove draft collection"
+          text="Are you sure you want to remove this collection?"
+          toggle={() => setShowWarn(!showWarn)}
+          onClickPrimary={onRemove}
+        />
+      </Modal>
     </>
   )
 }
