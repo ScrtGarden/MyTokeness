@@ -45,6 +45,8 @@ const StyledModal = styled.div`
   border-radius: ${(props) => props.theme.border.radii.md};
   border: ${(props) => props.theme.modal.card.border};
   position: relative;
+  max-width: 450px;
+  width: 90%;
 `
 
 const Header = styled.div`
