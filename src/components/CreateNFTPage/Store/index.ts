@@ -20,7 +20,7 @@ const actions: Actions = {
     state.publicMetadata = { ...state.publicMetadata, ...payload }
   }),
   setPrivateMetadata: action((state, payload) => {
-    state.privateMetadata.content = payload
+    state.privateMetadata = { ...state.privateMetadata, ...payload }
   }),
   setPublicFile: action((state, payload) => {
     state.publicFile = payload

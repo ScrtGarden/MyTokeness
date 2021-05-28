@@ -31,7 +31,7 @@ export interface State {
 
 export interface Actions {
   setPublicMetadata: Action<Model, Partial<PublicMetadata>>
-  setPrivateMetadata: Action<Model, string>
+  setPrivateMetadata: Action<Model, Partial<PrivateMetadata>>
   setPublicFile: Action<Model, File | undefined>
   setPrivateFile: Action<Model, File | undefined>
   setAttributes: Action<Model, SetAttributePayload>
