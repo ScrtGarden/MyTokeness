@@ -119,8 +119,8 @@ const createSigningClient = async ({
       {
         // 300k - Max gas units we're willing to use for init
         init: {
-          amount: [{ amount: '300000', denom: 'uscrt' }],
-          gas: '300000',
+          amount: [{ amount: maxGas, denom: 'uscrt' }],
+          gas: maxGas,
         },
         // 300k - Max gas units we're willing to use for exec
         exec: {
