@@ -11,9 +11,10 @@ type Props = {
   setData: (data: Partial<PrivateMetadata>) => void
   setFile: (file: File | undefined) => void
   onSubmit: () => void
+  loading?: boolean
 }
 
-const Private: FC<Props> = ({ data, setData, setFile, onSubmit }) => (
+const Private: FC<Props> = ({ data, setData, setFile, onSubmit, loading }) => (
   <Card>
     <Header>Owner's Eyes Only</Header>
     <Wrapper>
@@ -30,7 +31,12 @@ const Private: FC<Props> = ({ data, setData, setFile, onSubmit }) => (
           onChange={(e) => setData({ content: e.currentTarget.value })}
         />
       </Field>
-      <ButtonWithLoading text="Create" isPrimary onClick={onSubmit} />
+      <ButtonWithLoading
+        text="Create"
+        isPrimary
+        onClick={onSubmit}
+        loading={loading}
+      />
     </Wrapper>
   </Card>
 )
