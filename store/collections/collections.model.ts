@@ -1,6 +1,6 @@
 import { Action, Computed } from 'easy-peasy'
 
-interface DraftCollectionConfig {
+export interface DraftCollectionConfig {
   id: string
   publicOwner: boolean
   enableSealedMetadata: boolean
@@ -8,6 +8,7 @@ interface DraftCollectionConfig {
   minterMayUpdateMetadata: boolean
   ownerMayUpdateMetadata: boolean
   enableBurn: boolean
+  publicTokenSupply: boolean
   name: string
   symbol: string
 }
