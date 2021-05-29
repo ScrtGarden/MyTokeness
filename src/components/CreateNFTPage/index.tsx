@@ -48,7 +48,7 @@ const CreateNFTPage = () => {
         <BackLink label={draftCollection?.name || data?.contract_info.name} />
         <PageTitle>Create your collectible</PageTitle>
         <ContextStore.Provider>
-          <Form />
+          <Form isDraft={isDraft} contractAddress={contractAddress} />
         </ContextStore.Provider>
       </InnerContainer>
     </Container>
