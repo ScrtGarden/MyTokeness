@@ -8,6 +8,7 @@ import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import reducer from '../../../../utils/reducer'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useMutationInitContract from '../../../hooks/useMutationInitContract'
+import useMutationUploadFile from '../../../hooks/useMutationUploadFile'
 import ContextStore from '../../CreateNFTPage/Store'
 import Icon from '../../Icons'
 import { CloseButton, Header, Title } from '../../UI/Modal'
@@ -43,9 +44,8 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   )
 
   // custom hook
-  const { mutate: init, isLoading: initLoading } =
-    useMutationInitContract<InitMsg>()
-  // const { mutateAsync: uploadFile } = useMutationUploadFile()
+  const { mutate: init } = useMutationInitContract<InitMsg>()
+  const { mutateAsync: uploadFile } = useMutationUploadFile()
   // const { mutate: mintNFT } = useMutationMintNFT()
 
   // component state
@@ -62,7 +62,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   const privateFile = ContextStore.useStoreState((state) => state.privateFile)
 
   useEffect(() => {
-    isDraft ? instantiate() : uploadAndMint()
+    isDraft ? instantiate() : uploadAndMint(contractAddress)
   }, [])
 
   const instantiate = () => {
@@ -82,9 +82,9 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
         maxGas: MAX_GAS.NFT.INIT_MSG,
       },
       {
-        onSuccess: ({ contractAddress }) => {
+        onSuccess: ({ contractAddress: newAddress }) => {
           setStatus({ 1: 'completed' })
-          uploadAndMint()
+          uploadAndMint(newAddress)
         },
         onError: (error) => {
           setStatus({ 1: 'failed' })
@@ -94,7 +94,25 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
     )
   }
 
-  const uploadAndMint = async () => {}
+  const uploadAndMint = async (newAddress: string) => {
+    setStatus({ 1: 'in-progress' })
+
+    // upload files and create link
+    let publicFileLink = ''
+    let privateFileLink = ''
+    try {
+      const publicResult = await uploadFile({ file: publicFile as File })
+      publicFileLink = `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
+      if (privateFile) {
+        const privateResult = await uploadFile({ file: privateFile })
+        privateFileLink = `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
+      }
+    } catch (error) {
+      toast.error('Uploading file.')
+      setStatus({ 1: 'failed' })
+      throw error
+    }
+  }
 
   return (
     <Container>
