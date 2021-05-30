@@ -26,6 +26,23 @@ export interface InitMsg {
   post_init_callback?: PostInitCallback
 }
 
+export interface Metadata {
+  name: string
+  description?: string
+  image: string
+  properties?: string
+  attributes?: string
+}
+
+export interface MintNFT {
+  token_id?: string
+  owner?: string
+  public_metadata?: Metadata
+  private_metadata?: Partial<Metadata>
+  memo?: string
+  padding?: string
+}
+
 /**
  *  Queries
  */
@@ -35,10 +52,24 @@ export interface QueryContractInfo {
 }
 
 /**
+ *  HandleMsg
+ */
+
+export interface HandleMintNFT {
+  mint_nft: MintNFT
+}
+
+export interface HandleBatchMintNFT {
+  batch_mint_nft: {
+    mints: MintNFT[]
+  }
+}
+
+/**
  *  Results
  */
 
-export interface ResultContractInfo {
+interface ResultContractInfo {
   contract_info: {
     name: string
     symbol: string
