@@ -1,18 +1,24 @@
 import cryptoRandomString from 'crypto-random-string'
-import { FC, memo, useEffect, useReducer } from 'react'
+import { FC, memo, useEffect, useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { InitMsg } from '../../../../interface/nft'
+import {
+  HandleBatchMintNFT,
+  HandleMintNFT,
+  InitMsg,
+} from '../../../../interface/nft'
 import { CONTRACT_CODE_ID, MAX_GAS } from '../../../../utils/constants'
+import decoder from '../../../../utils/decoder'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import reducer from '../../../../utils/reducer'
 import { useStoreState } from '../../../hooks/storeHooks'
+import useMutationExeContract from '../../../hooks/useMutationExeContract'
 import useMutationInitContract from '../../../hooks/useMutationInitContract'
 import useMutationUploadFile from '../../../hooks/useMutationUploadFile'
 import ContextStore from '../../CreateNFTPage/Store'
 import Icon from '../../Icons'
 import { CloseButton, Header, Title } from '../../UI/Modal'
-import { formatForInstantiateMsg } from './lib'
+import { formatForHandleMsg, formatForInstantiateMsg } from './lib'
 import Step from './Step'
 import { Container, Steps } from './styles'
 
@@ -46,10 +52,12 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   // custom hook
   const { mutate: init } = useMutationInitContract<InitMsg>()
   const { mutateAsync: uploadFile } = useMutationUploadFile()
-  // const { mutate: mintNFT } = useMutationMintNFT()
+  const { mutate: mintNFT } =
+    useMutationExeContract<HandleMintNFT | HandleBatchMintNFT>()
 
   // component state
   const [status, setStatus] = useReducer<Reducer>(reducer, STATUS)
+  const [newAddress, setNewAddress] = useState(isDraft ? '' : contractAddress)
 
   // context store state
   const publicMetadata = ContextStore.useStoreState(
@@ -62,7 +70,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   const privateFile = ContextStore.useStoreState((state) => state.privateFile)
 
   useEffect(() => {
-    isDraft ? instantiate() : uploadAndMint(contractAddress)
+    isDraft ? instantiate() : uploadAndMint()
   }, [])
 
   const instantiate = () => {
@@ -84,7 +92,8 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
       {
         onSuccess: ({ contractAddress: newAddress }) => {
           setStatus({ 1: 'completed' })
-          uploadAndMint(newAddress)
+          setNewAddress(newAddress)
+          uploadAndMint()
         },
         onError: (error) => {
           setStatus({ 1: 'failed' })
@@ -94,7 +103,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
     )
   }
 
-  const uploadAndMint = async (newAddress: string) => {
+  const uploadAndMint = async () => {
     setStatus({ 1: 'in-progress' })
 
     // upload files and create link
@@ -112,6 +121,37 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
       setStatus({ 1: 'failed' })
       throw error
     }
+
+    const handleMsg = formatForHandleMsg({
+      publicMetadata,
+      publicFileLink,
+      privateMetadata,
+      privateFileLink,
+    })
+
+    console.log({ handleMsg })
+
+    mintNFT(
+      {
+        contractAddress: newAddress,
+        handleMsg,
+        maxGas:
+          publicMetadata.supply === '1'
+            ? MAX_GAS.NFT.MINT
+            : MAX_GAS.NFT.BATCH_MINT,
+      },
+      {
+        onSuccess: ({ data }) => {
+          toast.success(`Minting collectible/s`)
+          console.log(decoder(data))
+          setStatus({ 1: 'completed' })
+        },
+        onError: (error) => {
+          toast.error(parseErrorMsg(error))
+          setStatus({ 1: 'failed' })
+        },
+      }
+    )
   }
 
   return (
