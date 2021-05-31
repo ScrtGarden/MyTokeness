@@ -1,3 +1,24 @@
+const calcBatchMint = (amount: string) => {
+  switch (amount) {
+    case '2':
+      return String(parseInt(amount) * 150000)
+    case '3':
+      return String(parseInt(amount) * 140000)
+    case '4':
+      return String(parseInt(amount) * 130000)
+    case '5':
+    case '6':
+    case '7':
+      return String(parseInt(amount) * 120000)
+    case '8':
+    case '9':
+    case '10':
+      return String(parseInt(amount) * 110000)
+    default:
+      return String(parseInt(amount) * 100000)
+  }
+}
+
 const MAX_GAS = {
   SNIP20: {
     INIT_MSG: '180000',
@@ -9,6 +30,8 @@ const MAX_GAS = {
   },
   NFT: {
     INIT_MSG: '180000',
+    MINT: '210000',
+    BATCH_MINT: calcBatchMint,
   },
 }
 
