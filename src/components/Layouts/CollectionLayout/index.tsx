@@ -27,10 +27,10 @@ type Props = {
 
 const tabs = {
   assets: { label: 'Assets' },
-  settings: { label: 'Settings' },
   'transaction-history': {
     label: 'Transaction History',
   },
+  settings: { label: 'Settings' },
 }
 
 const CollectionLayout = ({ children }: Props) => {

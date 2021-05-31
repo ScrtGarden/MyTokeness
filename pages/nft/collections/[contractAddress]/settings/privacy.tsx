@@ -1,7 +1,7 @@
-import ViewingKey from '../../../../../src/components/CollectionPage/Settings/ViewingKey'
+import Privacy from '../../../../../src/components/CollectionPage/Settings/Privacy'
 import { getLayout } from '../../../../../src/components/Layouts/SettingsLayout'
 
-const Page = () => <ViewingKey />
+const Page = () => <Privacy />
 
 Page.getLayout = getLayout
 

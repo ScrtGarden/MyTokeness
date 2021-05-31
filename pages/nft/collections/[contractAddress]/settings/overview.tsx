@@ -1,7 +1,7 @@
-import ViewingKey from '../../../../../src/components/CollectionPage/Settings/ViewingKey'
+import Overview from '../../../../../src/components/CollectionPage/Settings/Overview'
 import { getLayout } from '../../../../../src/components/Layouts/SettingsLayout'
 
-const Page = () => <ViewingKey />
+const Page = () => <Overview />
 
 Page.getLayout = getLayout
 
