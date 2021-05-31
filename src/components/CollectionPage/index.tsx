@@ -25,11 +25,12 @@ const tabs = {
 export interface CollectionRouterQuery extends ParsedUrlQuery {
   contractAddress: string
   tab?: string
+  title?: string
 }
 
 const CollectionPage = () => {
   const router = useRouter()
-  const { contractAddress, tab } = router.query as CollectionRouterQuery
+  const { contractAddress, tab, title } = router.query as CollectionRouterQuery
 
   // component state
   const isDraft = useMemo(
@@ -82,7 +83,7 @@ const CollectionPage = () => {
           Create
         </StyledButton>
         <PageTitle>
-          {draftCollection?.name || data?.contract_info.name}
+          {title || draftCollection?.name || data?.contract_info.name}
         </PageTitle>
         <Tabs tabs={tabs} tab={tab ? tab : 'assets'} onClick={onClickTab} />
         {!tab && <Assets />}
