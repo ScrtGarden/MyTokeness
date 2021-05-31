@@ -28,7 +28,7 @@ const Private: FC<Props> = ({ onSubmit, loading }) => {
 
   return (
     <Card>
-      <Header>Owner's Eyes Only</Header>
+      <Header>Private Data</Header>
       <Wrapper>
         <FileUploader
           file={file}
