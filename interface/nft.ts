@@ -69,7 +69,7 @@ export interface HandleBatchMintNFT {
  *  Results
  */
 
-interface ResultContractInfo {
+export interface ResultContractInfo {
   contract_info: {
     name: string
     symbol: string
