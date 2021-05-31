@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 
-import { Button } from '../../UI/Buttons'
+import { InnerContainer } from '../../UI/Containers'
 
-const StyledButton = styled(Button)`
-  align-self: flex-end;
-  margin-bottom: ${(props) => props.theme.space.md};
+const StyledInnerContainer = styled(InnerContainer)`
+  align-items: flex-start;
 `
 
-export { StyledButton }
+export { StyledInnerContainer }

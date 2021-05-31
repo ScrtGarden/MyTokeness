@@ -7,13 +7,12 @@ import {
   QueryContractInfo,
   ResultContractInfo,
 } from '../../../../interface/nft'
-import { useStoreState } from '../../../hooks/storeHooks'
 import useQueryContract from '../../../hooks/useQueryContract'
-import { Container, InnerContainer } from '../../UI/Containers'
+import { Container } from '../../UI/Containers'
 import Tabs from '../../UI/Tabs'
-import { PageTitle } from '../../UI/Typography'
 import { getLayout as getSiteLayout } from '../SiteLayout'
-import { StyledButton } from './styles'
+import Header from './Header'
+import { StyledInnerContainer } from './styles'
 
 export interface CollectionRouterQuery extends ParsedUrlQuery {
   contractAddress: string
@@ -37,20 +36,33 @@ const CollectionLayout = ({ children }: Props) => {
   const router = useRouter()
   const { contractAddress, title } = router.query as CollectionRouterQuery
 
-  const activeTab = useMemo(
-    () => router.asPath.split('/')[4] || 'assets',
-    [router.asPath]
-  )
-
-  // store state
-  const isConnected = useStoreState((state) => state.auth.isWalletConnected)
-
   // custom hooks
   const { data } = useQueryContract<QueryContractInfo, ResultContractInfo>(
     ['contractInfo', contractAddress],
     contractAddress,
     { contract_info: {} }
   )
+
+  // component state
+  const activeTab = useMemo(
+    () => router.asPath.split('/')[4] || 'assets',
+    [router.asPath]
+  )
+  const headerProps = useMemo(() => {
+    if (activeTab === 'assets') {
+      return { title: title || data?.contract_info.name }
+    } else if (activeTab === 'transaction-history') {
+      return {
+        title: 'Transaction History',
+        subtext: 'A list of transactions made on this contract.',
+      }
+    } else {
+      return {
+        title: 'Contract Settings',
+        subtext: 'Update the settings of this contract.',
+      }
+    }
+  }, [data, router])
 
   const onClickTab = (route: string) => {
     const isAssets = route === 'assets'
@@ -61,24 +73,13 @@ const CollectionLayout = ({ children }: Props) => {
     )
   }
 
-  const onClickCreate = () => {
-    router.push(
-      '/nft/collections/[contractAddress]/create',
-      `/nft/collections/${contractAddress}/create`,
-      { shallow: true }
-    )
-  }
-
   return (
     <Container>
-      <InnerContainer>
-        <StyledButton isPrimary onClick={onClickCreate}>
-          Create
-        </StyledButton>
-        <PageTitle>{title || data?.contract_info.name}</PageTitle>
+      <StyledInnerContainer>
         <Tabs tabs={tabs} tab={activeTab} onClick={onClickTab} />
+        <Header {...headerProps} contractAddress={contractAddress} />
         {children}
-      </InnerContainer>
+      </StyledInnerContainer>
     </Container>
   )
 }
