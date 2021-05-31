@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 import { FILE_UPLOADER } from '../../../../../utils/constants'
@@ -10,21 +10,23 @@ import Preview from './FileUploadContent/Preview'
 import { CloseButton, StyledFileUpload, Wrapper } from './styles'
 
 type Props = {
+  file?: File
   label?: string
   setFile: (file?: File) => void
   error?: string
 }
 
-const FileUploader: FC<Props> = ({ label, setFile, error }) => {
-  // component state
-  const [preview, setPreview] =
-    useState<{ src: string; type: string } | undefined>()
+const FileUploader: FC<Props> = ({ file, label, setFile, error }) => {
+  const preview = useMemo(
+    () =>
+      file ? { src: URL.createObjectURL(file), type: file.type } : undefined,
+    [file]
+  )
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0]
       setFile(file)
-      setPreview({ src: URL.createObjectURL(file), type: file.type })
     }
   }, [])
 
@@ -43,7 +45,6 @@ const FileUploader: FC<Props> = ({ label, setFile, error }) => {
 
   const removeFile = () => {
     setFile()
-    setPreview(undefined)
   }
 
   return (
@@ -52,7 +53,7 @@ const FileUploader: FC<Props> = ({ label, setFile, error }) => {
       <Hint>Acceptable formats are JPG, PNG, GIF, MP3 and MP4. Max 50MB.</Hint>
       <Wrapper>
         {preview && (
-          <CloseButton onClick={removeFile} isDanger>
+          <CloseButton onClick={() => setFile()} isDanger>
             <Icon name="times" />
           </CloseButton>
         )}
