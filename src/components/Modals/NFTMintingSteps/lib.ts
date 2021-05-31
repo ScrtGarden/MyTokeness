@@ -1,11 +1,6 @@
 import cryptoRandomString from 'crypto-random-string'
 
-import {
-  HandleBatchMintNFT,
-  HandleMintNFT,
-  InitMsg,
-} from '../../../../interface/nft'
-import { DraftCollectionConfig } from '../../../../store/collections/collections.model'
+import { HandleBatchMintNFT, HandleMintNFT } from '../../../../interface/nft'
 import {
   Attribute,
   PrivateMetadata,
@@ -17,35 +12,6 @@ interface FormatForHandleMsgParams {
   publicFileLink: string
   privateMetadata: PrivateMetadata
   privateFileLink: string
-}
-
-const formatForInstantiateMsg = (data: DraftCollectionConfig): InitMsg => {
-  const {
-    name,
-    symbol,
-    enableBurn,
-    enableSealedMetadata,
-    minterMayUpdateMetadata,
-    ownerMayUpdateMetadata,
-    publicOwner,
-    publicTokenSupply,
-    unwrappedMetadataIsPrivate,
-  } = data
-
-  return {
-    name,
-    symbol,
-    entropy: cryptoRandomString({ length: 40, type: 'base64' }),
-    config: {
-      enable_burn: enableBurn,
-      enable_sealed_metadata: enableSealedMetadata,
-      minter_may_update_metadata: minterMayUpdateMetadata,
-      owner_may_update_metadata: ownerMayUpdateMetadata,
-      public_owner: publicOwner,
-      public_token_supply: publicTokenSupply,
-      unwrapped_metadata_is_private: unwrappedMetadataIsPrivate,
-    },
-  }
 }
 
 const formatAttrs = (attrs: Attribute[]) =>
@@ -72,7 +38,7 @@ const formatSingleMint = ({
     mint_nft: {
       token_id: cryptoRandomString({ length: 21 }),
       public_metadata: {
-        name: publicMetadata.name,
+        name: publicMetadata.name.trim(),
         description: publicMetadata.description,
         image: publicFileLink,
         properties: JSON.stringify(publicProperties),
@@ -112,7 +78,7 @@ const formatBatchMint = ({
     mints.push({
       token_id: cryptoRandomString({ length: 21 }),
       public_metadata: {
-        name: publicMetadata.name,
+        name: publicMetadata.name.trim(),
         description: publicMetadata.description,
         image: publicFileLink,
         properties: JSON.stringify(publicProperties),
@@ -139,4 +105,4 @@ const formatForHandleMsg = (
     ? formatSingleMint(data)
     : formatBatchMint(data)
 
-export { formatAttrs, formatForInstantiateMsg, formatForHandleMsg }
+export { formatAttrs, formatForHandleMsg }
