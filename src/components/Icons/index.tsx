@@ -11,12 +11,14 @@ import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
+import CopyDuo from './CopyDuo'
 import Dizzy from './Dizzy'
 import DraftingCompassDuo from './DraftingCompassDuo'
 import EllipsisH from './EllipsisH'
 import ExchangeDuo from './ExchangeDuo'
 import ExclamationCircle from './ExclamationCircle'
 import ExclamationCircleDuo from './ExclamationCircleDuo'
+import ExternalLinkDuo from './ExternalLinkDuo'
 import FireDuo from './FireDuo'
 import Flower from './Flower'
 import GiftCardDuo from './GiftCardDuo'
@@ -55,6 +57,12 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'external-link-duo':
+      SelectedIcon = ExternalLinkDuo
+      break
+    case 'copy-duo':
+      SelectedIcon = CopyDuo
+      break
     case 'arrow-left':
       SelectedIcon = ArrowLeft
       break
