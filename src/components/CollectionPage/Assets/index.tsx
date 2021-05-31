@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-import { Container } from '../styles'
+import { Container } from './styles'
 
 const Assets = () => {
-  return <Container>Hello</Container>
+  return <Container>Assets</Container>
 }
 
-export default memo(Assets)
+export default Assets

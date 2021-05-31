@@ -1,7 +1,7 @@
-import CollectionPage from '../../../../src/components/CollectionPage'
-import { getLayout } from '../../../../src/components/Layouts/SiteLayout'
+import Assets from '../../../../src/components/CollectionPage/Assets'
+import { getLayout } from '../../../../src/components/Layouts/CollectionLayout'
 
-const Page = () => <CollectionPage />
+const Page = () => <Assets />
 
 Page.getLayout = getLayout
 
