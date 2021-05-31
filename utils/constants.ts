@@ -137,10 +137,13 @@ const FILE_UPLOADER = {
   MAX_SIZE: 50000000, // 20mb
 }
 
+const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
+
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
   SIDEBAR_TABS,
   MYTOKENESS_NFT_CONTRACTS,
   FILE_UPLOADER,
+  CHAIN_EXPLORER,
 }
