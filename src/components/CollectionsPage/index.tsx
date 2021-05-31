@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { MouseEvent, useState } from 'react'
+import { useState } from 'react'
 import { UseQueryResult, useQueries, useQuery } from 'react-query'
 
 import { ResultContractInfo } from '../../../interface/nft'
@@ -8,10 +8,9 @@ import {
   MYTOKENESS_NFT_CONTRACTS,
 } from '../../../utils/constants'
 import { queryChain } from '../../../utils/secretjs'
-import { useStoreActions, useStoreState } from '../../hooks/storeHooks'
+import { useStoreState } from '../../hooks/storeHooks'
 import CollectionCard from '../Cards/Collection'
-import CreateCollection from '../Modals/ConfigureCollection'
-import Warning from '../Modals/Warning'
+import CreateCollection from '../Modals/CreateCollection'
 import { Container, InnerContainer } from '../UI/Containers'
 import { Modal } from '../UI/Modal'
 import { PageTitle } from '../UI/Typography'
@@ -20,19 +19,9 @@ import { Grid } from './styles'
 const Collections = () => {
   // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
-  const draftCollections = useStoreState((state) =>
-    state.collections.draftCollectionsByAddress(walletAddress)
-  )
-
-  // store actions
-  const removeCollection = useStoreActions(
-    (actions) => actions.collections.removeCollection
-  )
 
   // component state
   const [show, setShow] = useState(false)
-  const [showWarn, setShowWarn] = useState(false)
-  const [idToBeRemoved, setIdToBeRemoved] = useState('')
 
   const { data } = useQuery(
     ['collections', walletAddress],
@@ -54,17 +43,6 @@ const Collections = () => {
       `/nft/collections/${contractAddress}`,
       { shallow: true }
     )
-  }
-
-  const onClickRemove = (e: MouseEvent<HTMLButtonElement>, id: string) => {
-    e.stopPropagation()
-    setIdToBeRemoved(id)
-    setShowWarn(true)
-  }
-
-  const onRemove = () => {
-    removeCollection({ id: idToBeRemoved, walletAddress })
-    setShowWarn(false)
   }
 
   return (
@@ -90,16 +68,6 @@ const Collections = () => {
                   onClick={() => onClickCollection(data[index].address)}
                 />
               ))}
-            {draftCollections.map((config) => (
-              <CollectionCard
-                key={config.id}
-                name={config.name}
-                icon="drafting-compass-duo"
-                onClick={() => onClickCollection(config.id)}
-                draft
-                onClickRemove={(e) => onClickRemove(e, config.id)}
-              />
-            ))}
             <CollectionCard
               name="Create New Collection"
               icon="plus"
@@ -110,14 +78,6 @@ const Collections = () => {
       </Container>
       <Modal isOpen={show}>
         <CreateCollection toggle={() => setShow(!show)} />
-      </Modal>
-      <Modal isOpen={showWarn} onBackgroundClick={() => setShowWarn(!showWarn)}>
-        <Warning
-          title="Remove draft collection"
-          text="Are you sure you want to remove this collection?"
-          toggle={() => setShowWarn(!showWarn)}
-          onClickPrimary={onRemove}
-        />
       </Modal>
     </>
   )
