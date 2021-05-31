@@ -1,29 +1,38 @@
-import { FC, FormEvent, memo } from 'react'
+import { FormEvent, memo } from 'react'
 
 import { decimalsPattern } from '../../../../../utils/regexPatterns'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
-import { PublicMetadata, SetAttributePayload } from '../../Store/model'
+import ContextStore from '../../Store'
 import AttributeList from '../AttributeList'
 import FileUploader from '../FileUploader'
 
-type Props = {
-  data: PublicMetadata
-  setData: (data: Partial<PublicMetadata>) => void
-  setFile: (file: File | undefined) => void
-  setAttributes: (data: SetAttributePayload) => void
-  errors: { name: string; publicFile: string; attributes: string[] }
-}
+const Public = () => {
+  // context store state
+  const name = ContextStore.useStoreState((state) => state.publicMetadata.name)
+  const description = ContextStore.useStoreState(
+    (state) => state.publicMetadata.description
+  )
+  const supply = ContextStore.useStoreState(
+    (state) => state.publicMetadata.supply
+  )
+  const attributes = ContextStore.useStoreState(
+    (state) => state.publicMetadata.attributes
+  )
+  const file = ContextStore.useStoreState((state) => state.publicFile)
+  const errors = ContextStore.useStoreState((state) => state.validation.errors)
 
-const Public: FC<Props> = ({
-  data,
-  setAttributes,
-  setData,
-  setFile,
-  errors,
-}) => {
-  const { name, description, supply, attributes } = data
+  // context store actions
+  const setData = ContextStore.useStoreActions(
+    (actions) => actions.setPublicMetadata
+  )
+  const setAttributes = ContextStore.useStoreActions(
+    (actions) => actions.setAttributes
+  )
+  const setFile = ContextStore.useStoreActions(
+    (actions) => actions.setPublicFile
+  )
 
   const onChangeSupply = (e: FormEvent<HTMLInputElement>) => {
     const amount = e.currentTarget.value
@@ -36,7 +45,7 @@ const Public: FC<Props> = ({
     <Card>
       <Header>Public Data</Header>
       <Wrapper>
-        <FileUploader setFile={setFile} error={errors.publicFile} />
+        <FileUploader file={file} setFile={setFile} error={errors.publicFile} />
         <Field>
           <Label>Name</Label>
           <Input
