@@ -45,6 +45,13 @@ const actions: Actions = {
   setHasSubmitted: action((state, payload) => {
     state.hasSubmitted = payload
   }),
+  resetState: action((_state) => {
+    _state.publicMetadata = state.publicMetadata
+    _state.privateMetadata = state.privateMetadata
+    _state.publicFile = undefined
+    _state.privateFile = undefined
+    _state.hasSubmitted = false
+  }),
 }
 
 const computators: Computators = {

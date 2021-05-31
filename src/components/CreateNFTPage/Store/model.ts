@@ -45,6 +45,7 @@ export interface Actions {
   setPrivateFile: Action<Model, File | undefined>
   setAttributes: Action<Model, SetAttributePayload>
   setHasSubmitted: Action<Model, boolean>
+  resetState: Action<Model>
 }
 
 export interface Computators {
