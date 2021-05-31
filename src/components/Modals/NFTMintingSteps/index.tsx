@@ -1,29 +1,30 @@
-import cryptoRandomString from 'crypto-random-string'
-import { FC, memo, useEffect, useReducer, useState } from 'react'
+import { ParsedUrlQuery } from 'querystring'
+
+import { useRouter } from 'next/router'
+import { FC, memo, useEffect, useMemo, useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  HandleBatchMintNFT,
-  HandleMintNFT,
-  InitMsg,
-} from '../../../../interface/nft'
-import { CONTRACT_CODE_ID, MAX_GAS } from '../../../../utils/constants'
-import decoder from '../../../../utils/decoder'
+import { HandleBatchMintNFT, HandleMintNFT } from '../../../../interface/nft'
+import { MAX_GAS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import reducer from '../../../../utils/reducer'
-import { useStoreState } from '../../../hooks/storeHooks'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
-import useMutationInitContract from '../../../hooks/useMutationInitContract'
 import useMutationUploadFile from '../../../hooks/useMutationUploadFile'
 import ContextStore from '../../CreateNFTPage/Store'
 import Icon from '../../Icons'
 import { CloseButton, Header, Title } from '../../UI/Modal'
-import { formatForHandleMsg, formatForInstantiateMsg } from './lib'
+import { formatForHandleMsg } from './lib'
 import Step from './Step'
 import { Container, Steps } from './styles'
 
+export interface NFTMintRouterQuery extends ParsedUrlQuery {
+  contractAddress: string
+}
 export type StatusOption = 'awaiting' | 'in-progress' | 'completed' | 'failed'
-
+type Reducer = (p: Status, u: Partial<Status>) => Status
+type Props = {
+  toggle: () => void
+}
 interface Status {
   [key: number]: StatusOption
 }
@@ -31,33 +32,11 @@ interface Status {
 const STATUS: Status = {
   1: 'awaiting',
   2: 'awaiting',
-  3: 'awaiting',
 }
 
-type Reducer = (p: Status, u: Partial<Status>) => Status
-
-type Props = {
-  toggle: () => void
-  isDraft: boolean
-  contractAddress: string
-}
-
-const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
-  // store state
-  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
-  const collectionInfo = useStoreState((state) =>
-    state.collections.collectionById(walletAddress, contractAddress)
-  )
-
-  // custom hook
-  const { mutate: init } = useMutationInitContract<InitMsg>()
-  const { mutateAsync: uploadFile } = useMutationUploadFile()
-  const { mutate: mintNFT } =
-    useMutationExeContract<HandleMintNFT | HandleBatchMintNFT>()
-
-  // component state
-  const [status, setStatus] = useReducer<Reducer>(reducer, STATUS)
-  const [newAddress, setNewAddress] = useState(isDraft ? '' : contractAddress)
+const NFTMintingSteps: FC<Props> = ({ toggle }) => {
+  const router = useRouter()
+  const { contractAddress } = router.query as NFTMintRouterQuery
 
   // context store state
   const publicMetadata = ContextStore.useStoreState(
@@ -69,58 +48,59 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   )
   const privateFile = ContextStore.useStoreState((state) => state.privateFile)
 
+  // context store actions
+  const reset = ContextStore.useStoreActions((actions) => actions.resetState)
+
+  // custom hooks
+  const { mutateAsync: uploadFile } = useMutationUploadFile()
+  const { mutate: mintNFT } =
+    useMutationExeContract<HandleMintNFT | HandleBatchMintNFT>()
+
+  // component state
+  const [status, setStatus] = useReducer<Reducer>(reducer, STATUS)
+  const [publicFileLink, setPublicFileLink] = useState('')
+  const [privateFileLink, setPrivateFileLink] = useState('')
+  const isMultiMints = useMemo(
+    () => publicMetadata.supply !== '1',
+    [publicMetadata.supply]
+  )
+  const isMultiFiles = useMemo(
+    () => !!(publicFile && privateFile),
+    [publicFile, privateFile]
+  )
+
   useEffect(() => {
-    isDraft ? instantiate() : uploadAndMint()
+    upload()
   }, [])
 
-  const instantiate = () => {
-    if (!collectionInfo) {
-      return
-    }
-
+  const upload = async () => {
     setStatus({ 1: 'in-progress' })
 
-    const initMsg = formatForInstantiateMsg(collectionInfo)
-
-    init(
-      {
-        codeId: CONTRACT_CODE_ID.NFT,
-        initMsg,
-        label: `${initMsg.name} - ${cryptoRandomString({ length: 20 })}`,
-        maxGas: MAX_GAS.NFT.INIT_MSG,
-      },
-      {
-        onSuccess: ({ contractAddress: newAddress }) => {
-          setStatus({ 1: 'completed' })
-          setNewAddress(newAddress)
-          uploadAndMint()
-        },
-        onError: (error) => {
-          setStatus({ 1: 'failed' })
-          toast.error(parseErrorMsg(error))
-        },
-      }
-    )
-  }
-
-  const uploadAndMint = async () => {
-    setStatus({ 1: 'in-progress' })
-
-    // upload files and create link
-    let publicFileLink = ''
-    let privateFileLink = ''
     try {
       const publicResult = await uploadFile({ file: publicFile as File })
-      publicFileLink = `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
+      setPublicFileLink(
+        `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
+      )
+
       if (privateFile) {
         const privateResult = await uploadFile({ file: privateFile })
-        privateFileLink = `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
+        setPrivateFileLink(
+          `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
+        )
       }
+
+      setStatus({ 1: 'completed' })
+      toast.success(`Uploaded file${isMultiFiles ? 's.' : '.'}`)
+      mint()
     } catch (error) {
-      toast.error('Uploading file.')
+      toast.error(`Uploading file${isMultiFiles ? 's.' : '.'}`)
       setStatus({ 1: 'failed' })
       throw error
     }
+  }
+
+  const mint = () => {
+    setStatus({ 2: 'in-progress' })
 
     const handleMsg = formatForHandleMsg({
       publicMetadata,
@@ -129,26 +109,28 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
       privateFileLink,
     })
 
-    console.log({ handleMsg })
-
     mintNFT(
       {
-        contractAddress: newAddress,
+        contractAddress,
         handleMsg,
-        maxGas:
-          publicMetadata.supply === '1'
-            ? MAX_GAS.NFT.MINT
-            : MAX_GAS.NFT.BATCH_MINT,
+        maxGas: !isMultiMints
+          ? MAX_GAS.NFT.MINT
+          : MAX_GAS.NFT.BATCH_MINT(publicMetadata.supply),
       },
       {
-        onSuccess: ({ data }) => {
-          toast.success(`Minting collectible/s`)
-          console.log(decoder(data))
-          setStatus({ 1: 'completed' })
+        onSuccess: () => {
+          toast.success(
+            `Minted ${publicMetadata.supply} collectible${
+              isMultiMints ? 's' : ''
+            }`
+          )
+          reset()
+          setStatus({ 2: 'completed' })
+          toggle()
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))
-          setStatus({ 1: 'failed' })
+          setStatus({ 2: 'failed' })
         },
       }
     )
@@ -157,38 +139,28 @@ const NFTMintingSteps: FC<Props> = ({ toggle, isDraft, contractAddress }) => {
   return (
     <Container>
       <Header>
-        <Title>Add title</Title>
+        <Title>{`Steps to create your collectible${
+          isMultiMints ? 's' : ''
+        }`}</Title>
         <CloseButton onClick={toggle}>
           <Icon name="times" />
         </CloseButton>
       </Header>
       <Steps>
-        {isDraft ? (
-          <>
-            <Step
-              stepNumber={1}
-              label="Create collection"
-              hint="Instantiate contract with your custom configuration."
-              status={status[1]}
-              onClick={instantiate}
-            />
-            <Step
-              stepNumber={2}
-              label="Create collectibles"
-              hint="File upload and mint collectibles to contract."
-              status={status[2]}
-              onClick={uploadAndMint}
-            />
-          </>
-        ) : (
-          <Step
-            stepNumber={1}
-            label="Mint collectible"
-            hint="Uploading file and minting collectible"
-            status={status[1]}
-            onClick={uploadAndMint}
-          />
-        )}
+        <Step
+          stepNumber={1}
+          label={`Upload file${isMultiFiles ? 's' : ''}`}
+          hint={`Uploading file${isMultiFiles ? 's' : ''} to ipfs.`}
+          status={status[1]}
+          onClick={upload}
+        />
+        <Step
+          stepNumber={2}
+          label={`Create collectible${isMultiMints ? 's' : ''}`}
+          hint={`Minting collectible${isMultiMints ? 's' : ''} to contract.`}
+          status={status[2]}
+          onClick={mint}
+        />
       </Steps>
     </Container>
   )
