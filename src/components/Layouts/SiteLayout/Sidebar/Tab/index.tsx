@@ -21,17 +21,28 @@ interface Item {
 
 type Props = {
   item: Item
+  section?: string
+  id?: string
+}
+
+const matchRoute = (path: string, section?: string, id?: string) => {
+  if (section === 'token') {
+    return path.split('/')[1] === id
+  } else if (section === 'nft') {
+    return path.split('/')[2] === id
+  } else {
+    return path === '/'
+  }
 }
 
 const Tab: FC<Props> = (props) => {
-  const { item } = props
+  const { item, section, id } = props
   const { icon, label, menu, route } = item
 
   const router = useRouter()
   const selected = useMemo(
-    () =>
-      route === '/' ? router.asPath === route : !!router.asPath.match(route),
-    [router]
+    () => matchRoute(router.asPath, section, id),
+    [router.asPath]
   )
 
   const [ref, dimensions] = useDimensions()
