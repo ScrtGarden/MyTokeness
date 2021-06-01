@@ -138,6 +138,12 @@ const IconButton = styled.button<ButtonProps>`
       fill: ${props.theme.buttons.button.color.default};
     `}
   }
+
+  ${(props) =>
+    props.disabled &&
+    `
+    pointer-events: none;
+  `}
 `
 
 const StyledIcon = styled(Icon)`
