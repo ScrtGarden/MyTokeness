@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 import { useStoreState } from '../../../hooks/storeHooks'
-import { Container } from '../../UI/Containers'
 import { getLayout as getCollectionLayout } from '../CollectionLayout'
+import Sidebar from './Sidebar'
+import { Container } from './styles'
 
 type Props = {
   children?: React.ReactElement
@@ -11,7 +13,12 @@ type Props = {
 const SettingsLayout = ({ children }: Props) => {
   const router = useRouter()
 
-  return <>{children}</>
+  return (
+    <Container>
+      <Sidebar />
+      {children}
+    </Container>
+  )
 }
 
 const getLayout = (page: JSX.Element) =>
