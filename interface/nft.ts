@@ -65,6 +65,13 @@ export interface HandleBatchMintNFT {
   }
 }
 
+export interface HandleCreateViewingKey {
+  create_viewing_key: {
+    entropy: string
+    padding?: string
+  }
+}
+
 /**
  *  Results
  */
