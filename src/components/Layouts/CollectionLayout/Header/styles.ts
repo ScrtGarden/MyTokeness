@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { PageTitle } from '../../../UI/Typography'
 
 const Container = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-between; */
   margin: ${(props) => props.theme.space.xxl} 0;
   width: 100%;
 `
@@ -14,7 +14,12 @@ const Title = styled(PageTitle)`
   margin-bottom: 0;
 `
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
 
 const AddressWrapper = styled.div`
   align-items: center;

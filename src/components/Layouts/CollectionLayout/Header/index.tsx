@@ -35,25 +35,25 @@ const Header: FC<Props> = ({ title, contractAddress, subtext }) => {
     <Container>
       <Wrapper>
         <Title>{title}</Title>
-        <AddressWrapper>
-          {subtext ? (
-            <Subtext>{subtext}</Subtext>
-          ) : (
-            <>
-              <Subtext>{truncateAddress(contractAddress)}</Subtext>
-              <IconButton onClick={copy}>
-                <StyledIcon name="copy-duo" />
-              </IconButton>
-              <IconButton onClick={onClickLink}>
-                <StyledIcon name="external-link-duo" />
-              </IconButton>
-            </>
-          )}
-        </AddressWrapper>
+        <Button isPrimary onClick={onClickCreate}>
+          Create Collectible
+        </Button>
       </Wrapper>
-      <Button isPrimary onClick={onClickCreate}>
-        Create Collectible
-      </Button>
+      <AddressWrapper>
+        {subtext ? (
+          <Subtext>{subtext}</Subtext>
+        ) : (
+          <>
+            <Subtext>{truncateAddress(contractAddress)}</Subtext>
+            <IconButton onClick={copy}>
+              <StyledIcon name="copy-duo" />
+            </IconButton>
+            <IconButton onClick={onClickLink}>
+              <StyledIcon name="external-link-duo" />
+            </IconButton>
+          </>
+        )}
+      </AddressWrapper>
     </Container>
   )
 }
