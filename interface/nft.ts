@@ -43,12 +43,26 @@ export interface MintNFT {
   padding?: string
 }
 
+export interface Tokens {
+  tokens: string[]
+}
+
 /**
  *  Queries
  */
 
 export interface QueryContractInfo {
   contract_info: {}
+}
+
+export interface QueryTokens {
+  tokens: {
+    owner: string
+    viewer?: string
+    viewing_key?: string
+    start_after?: string
+    limit?: number
+  }
 }
 
 /**
@@ -81,4 +95,8 @@ export interface ResultContractInfo {
     name: string
     symbol: string
   }
+}
+
+export interface ResultTokens {
+  token_list: Tokens
 }
