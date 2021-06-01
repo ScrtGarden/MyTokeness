@@ -16,7 +16,6 @@ import { StyledInnerContainer } from './styles'
 
 export interface CollectionRouterQuery extends ParsedUrlQuery {
   contractAddress: string
-  tab?: string
   title?: string
 }
 
