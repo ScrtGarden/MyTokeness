@@ -37,9 +37,9 @@ const Collections = () => {
     })) ?? []
   ) as UseQueryResult<ResultContractInfo, Error>[]
 
-  const onClickCollection = (contractAddress: string) => {
+  const onClickCollection = (contractAddress: string, title?: string) => {
     Router.push(
-      '/nft/collections/[contractAddress]',
+      `/nft/collections/[contractAddress]?title=${title}`,
       `/nft/collections/${contractAddress}`,
       { shallow: true }
     )
@@ -56,7 +56,7 @@ const Collections = () => {
                 key={key}
                 name={value.name}
                 icon={value.icon}
-                onClick={() => onClickCollection(key)}
+                onClick={() => onClickCollection(key, value.name)}
               />
             ))}
             {data &&
@@ -65,7 +65,12 @@ const Collections = () => {
                   key={data[index].address}
                   name={query?.contract_info.name as string}
                   icon="store-duo"
-                  onClick={() => onClickCollection(data[index].address)}
+                  onClick={() =>
+                    onClickCollection(
+                      data[index].address,
+                      query?.contract_info.name
+                    )
+                  }
                 />
               ))}
             <CollectionCard
