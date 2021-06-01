@@ -1,7 +1,12 @@
+import ViewingKeyCard from '../../../Cards/ViewingKey'
 import { Container } from '../styles'
 
 const ViewingKey = () => {
-  return <Container>Viewing Key</Container>
+  return (
+    <Container>
+      <ViewingKeyCard />
+    </Container>
+  )
 }
 
 export default ViewingKey

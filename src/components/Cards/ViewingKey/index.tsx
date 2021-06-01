@@ -1,0 +1,141 @@
+import cryptoRandomString from 'crypto-random-string'
+import { useRouter } from 'next/router'
+import { memo, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { HandleCreateViewingKey } from '../../../../interface/nft'
+import { MAX_GAS } from '../../../../utils/constants'
+import decoder from '../../../../utils/decoder'
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
+import { useStoreActions, useStoreState } from '../../../hooks/storeHooks'
+import useCopyToClipboard from '../../../hooks/useCopyToClipboard'
+import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import ButtonWithLoading from '../../Common/ButtonWithLoading'
+import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
+import ImportViewingKey from '../../Modals/ImportViewingKey'
+import Warning from '../../Modals/Warning'
+import { Button, IconButton, StyledIcon } from '../../UI/Buttons'
+import { Header, Wrapper } from '../../UI/Card'
+import { Input } from '../../UI/Forms'
+import { Modal } from '../../UI/Modal'
+import { Actions, Buttons, InputButtonsWrapper, StyledCard } from './styles'
+
+const ViewingKeyCard = () => {
+  const router = useRouter()
+  const { contractAddress } = router.query as CollectionRouterQuery
+
+  // store state
+  const viewingKey = useStoreState((state) =>
+    state.auth.keyByContractAddress(contractAddress as string)
+  )
+
+  // store actions
+  const setKey = useStoreActions((actions) => actions.auth.setViewingKey)
+  const removeKey = useStoreActions((actions) => actions.auth.removeViewingKey)
+
+  // custom hooks
+  const [_, copy] = useCopyToClipboard(viewingKey)
+  const { mutate, isLoading } = useMutationExeContract<HandleCreateViewingKey>()
+
+  // component state
+  const [showWarning, setShowWarning] = useState(false)
+  const [showImport, setShowImport] = useState(false)
+
+  const onClickGetKey = () => {
+    mutate(
+      {
+        contractAddress,
+        maxGas: MAX_GAS.NFT.CREATE_VIEWING_KEY,
+        handleMsg: {
+          create_viewing_key: {
+            entropy: cryptoRandomString({ length: 40, type: 'base64' }),
+          },
+        },
+      },
+      {
+        onSuccess: ({ data }) => {
+          const {
+            viewing_key: { key },
+          } = decoder(data)
+
+          setKey({
+            contractAddress,
+            key,
+          })
+          toast.success('Created viewing key.')
+        },
+        onError: (error) => {
+          toast.error(parseErrorMsg(error))
+        },
+      }
+    )
+  }
+
+  const onClickRemove = () => {
+    removeKey(contractAddress)
+    setShowWarning(false)
+    toast.success('Removed viewing key.')
+  }
+
+  const onClickImport = (newKey: string) => {
+    setKey({ contractAddress, key: newKey })
+    setShowImport(false)
+    toast.success('Imported viewing key.')
+  }
+
+  return (
+    <>
+      <StyledCard>
+        <Header>Viewing Key</Header>
+        <Wrapper>
+          <InputButtonsWrapper>
+            <Input value={viewingKey || ''} disabled onChange={() => null} />
+            <Actions>
+              <IconButton disabled={!viewingKey} onClick={copy}>
+                <StyledIcon name="copy-duo" />
+              </IconButton>
+              <IconButton
+                disabled={!viewingKey}
+                onClick={() => setShowWarning(true)}
+              >
+                <StyledIcon name="trash-duo" />
+              </IconButton>
+            </Actions>
+          </InputButtonsWrapper>
+          <Buttons>
+            <Button onClick={() => setShowImport(true)}>Import</Button>
+            <ButtonWithLoading
+              text={`${viewingKey ? 'Rotate' : 'Get'} Key`}
+              width={viewingKey ? 97 : 76}
+              isPrimary
+              loading={isLoading}
+              onClick={onClickGetKey}
+            />
+          </Buttons>
+        </Wrapper>
+      </StyledCard>
+      <Modal
+        isOpen={showWarning}
+        onBackgroundClick={() => setShowWarning(!showWarning)}
+      >
+        <Warning
+          title="Remove viewing key from collection"
+          text="The viewing key enables you to see private collectibles you own. Are you sure you want to remove it?"
+          toggle={() => setShowWarning(!showWarning)}
+          onClickPrimary={onClickRemove}
+        />
+      </Modal>
+      <Modal
+        isOpen={showImport}
+        onBackgroundClick={() => setShowImport(!showImport)}
+      >
+        <ImportViewingKey
+          toggle={() => setShowImport(!showImport)}
+          onClickPrimary={onClickImport}
+        />
+      </Modal>
+    </>
+  )
+}
+
+export default memo(ViewingKeyCard)
