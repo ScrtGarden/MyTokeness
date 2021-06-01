@@ -14,7 +14,7 @@ const InnerContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1000px;
 `
 
 const Content = styled.div<ContentProps>`
