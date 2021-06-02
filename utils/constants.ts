@@ -120,7 +120,7 @@ const MYTOKENESS_NFT_CONTRACTS = {
     icon: 'stamp-duo',
   },
   secret1wet30m6zw35uxw0n6tz07ehdegjeygaw3zrvr2: {
-    name: 'Private Collection Long Title To See what',
+    name: 'Private Collection',
     symbol: '',
     icon: 'palette',
   },
