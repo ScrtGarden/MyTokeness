@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 
+import { Skeleton } from '../../../UI/Loaders'
 import { PageTitle } from '../../../UI/Typography'
 
 const Container = styled.div`
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-between; */
-  margin: ${(props) => props.theme.space.xxl} 0;
+  margin: 45px 0 100px 0;
   width: 100%;
 `
 
@@ -35,4 +33,8 @@ const Subtext = styled.p`
   margin: 0;
 `
 
-export { Container, Title, Wrapper, Subtext, AddressWrapper }
+const SkeletonTitle = styled(Skeleton)`
+  flex: unset;
+`
+
+export { Container, Title, Wrapper, Subtext, AddressWrapper, SkeletonTitle }
