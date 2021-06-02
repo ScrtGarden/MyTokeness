@@ -11,10 +11,11 @@ import { queryChain } from '../../../utils/secretjs'
 import { useStoreState } from '../../hooks/storeHooks'
 import CollectionCard from '../Cards/Collection'
 import CreateCollection from '../Modals/CreateCollection'
+import { Button } from '../UI/Buttons'
 import { Container, InnerContainer } from '../UI/Containers'
 import { Modal } from '../UI/Modal'
 import { PageTitle } from '../UI/Typography'
-import { Grid } from './styles'
+import { Grid, Header, SkeletonCard, StyledTitle } from './styles'
 
 const Collections = () => {
   // store state
@@ -23,7 +24,7 @@ const Collections = () => {
   // component state
   const [show, setShow] = useState(false)
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ['collections', walletAddress],
     () => queryChain.getContracts(CONTRACT_CODE_ID.NFT),
     { select: (data) => data.filter((item) => item.creator === walletAddress) }
@@ -49,7 +50,13 @@ const Collections = () => {
     <>
       <Container>
         <InnerContainer>
-          <PageTitle>Collections</PageTitle>
+          <Header>
+            <StyledTitle>Collections</StyledTitle>
+            <Button isPrimary onClick={() => setShow(!show)}>
+              Create Collection
+            </Button>
+          </Header>
+
           <Grid>
             {Object.entries(MYTOKENESS_NFT_CONTRACTS).map(([key, value]) => (
               <CollectionCard
@@ -59,8 +66,9 @@ const Collections = () => {
                 onClick={() => onClickCollection(key, value.name)}
               />
             ))}
+            {isLoading && <SkeletonCard height="unset" width="100%" />}
             {data &&
-              collectionQueries.map(({ data: query }, index) => (
+              collectionQueries.map(({ data: query, isLoading }, index) => (
                 <CollectionCard
                   key={data[index].address}
                   name={query?.contract_info.name as string}
@@ -71,13 +79,9 @@ const Collections = () => {
                       query?.contract_info.name
                     )
                   }
+                  loading={isLoading}
                 />
               ))}
-            <CollectionCard
-              name="Create New Collection"
-              icon="plus"
-              onClick={() => setShow(!show)}
-            />
           </Grid>
         </InnerContainer>
       </Container>
