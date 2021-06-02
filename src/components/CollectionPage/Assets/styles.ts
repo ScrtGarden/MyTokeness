@@ -5,4 +5,14 @@ const Container = styled.div`
   color: #fff;
 `
 
-export { Container }
+const ScrollWrapper = styled.div`
+  width: 100%;
+
+  .scroll {
+    gap: ${(props) => props.theme.space.md};
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+`
+
+export { Container, ScrollWrapper }
