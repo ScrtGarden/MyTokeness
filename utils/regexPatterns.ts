@@ -11,4 +11,13 @@ const amountPattern = (decimals: number | string) =>
 // Extract string between '{"generic_err"' and '}}' strings
 const getErrorMsgPattern = /{"generic_err"\s*(.*?)\s*}}/g
 
-export { symbolPattern, decimalsPattern, amountPattern, getErrorMsgPattern }
+// Get hash link
+const hashLinkPattern = /(?<=ipfs:\/\/).+/
+
+export {
+  symbolPattern,
+  decimalsPattern,
+  amountPattern,
+  getErrorMsgPattern,
+  hashLinkPattern,
+}
