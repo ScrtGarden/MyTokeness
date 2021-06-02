@@ -62,6 +62,7 @@ const theme = {
       },
       sizes: {
         md: '16px',
+        xxl: '50px',
       },
     },
     space: {
@@ -127,11 +128,11 @@ const theme = {
         border: {
           color: {
             default: '#5e707d',
-            error: '#de5f5f',
+            error: '#d95468',
           },
         },
         bg: {
-          default: '#11181d',
+          default: '#13181c',
           hover: '#0b0f13',
           active: '#000000',
         },
@@ -284,6 +285,22 @@ const theme = {
       color: '#181e24',
       bg: {
         default: '#e9ebed',
+      },
+    },
+
+    // step
+    step: {
+      progression: {
+        number: {
+          color: {
+            default: '#fff',
+            disabled: '#404a50',
+          },
+          border: {
+            default: '2px solid #fff',
+            disabled: '2px solid #404a50',
+          },
+        },
       },
     },
   },
