@@ -33,8 +33,21 @@ const Subtext = styled.p`
   margin: 0;
 `
 
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 const SkeletonTitle = styled(Skeleton)`
   flex: unset;
 `
 
-export { Container, Title, Wrapper, Subtext, AddressWrapper, SkeletonTitle }
+export {
+  Container,
+  Title,
+  Wrapper,
+  Subtext,
+  AddressWrapper,
+  SkeletonTitle,
+  Actions,
+}

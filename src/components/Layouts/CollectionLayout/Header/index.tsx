@@ -6,6 +6,7 @@ import truncateAddress from '../../../../../utils/truncateAddress'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import { Button, IconButton, StyledIcon } from '../../../UI/Buttons'
 import {
+  Actions,
   AddressWrapper,
   Container,
   SkeletonTitle,
@@ -55,12 +56,14 @@ const Header: FC<Props> = ({ title, contractAddress, subtext, loading }) => {
         ) : (
           <>
             <Subtext>{truncateAddress(contractAddress)}</Subtext>
-            <IconButton onClick={copy}>
-              <StyledIcon name="copy-duo" />
-            </IconButton>
-            <IconButton onClick={onClickLink}>
-              <StyledIcon name="external-link-duo" />
-            </IconButton>
+            <Actions>
+              <IconButton onClick={copy}>
+                <StyledIcon name="copy-duo" />
+              </IconButton>
+              <IconButton onClick={onClickLink}>
+                <StyledIcon name="external-link-duo" />
+              </IconButton>
+            </Actions>
           </>
         )}
       </AddressWrapper>
