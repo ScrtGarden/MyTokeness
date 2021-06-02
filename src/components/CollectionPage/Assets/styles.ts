@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import EmptyList from '../../EmptyList'
+
 const Container = styled.div`
   border: 1px solid red;
   color: #fff;
@@ -15,4 +17,15 @@ const ScrollWrapper = styled.div`
   }
 `
 
-export { Container, ScrollWrapper }
+const Placeholder = styled.div`
+  aspect-ratio: 0.9;
+  border: 2px solid ${(props) => props.theme.border.color};
+  border-radius: ${(props) => props.theme.border.radii.md};
+  background: ${(props) => props.theme.fg};
+`
+
+const StyledEmptyList = styled(EmptyList)`
+  width: 100%;
+`
+
+export { Container, ScrollWrapper, Placeholder, StyledEmptyList }
