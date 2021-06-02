@@ -1,38 +1,33 @@
-import { FC, MouseEvent, memo } from 'react'
+import { FC, memo } from 'react'
 
-import { StyledIcon as Icon } from '../../UI/Buttons'
 import {
   Container,
   Label,
+  SkeletonIcon,
+  SkeletonLabel,
   StyledIcon,
-  StyledIconButton,
-  StyledTag,
 } from './styles'
 
 type Props = {
   name: string
   icon: string
   onClick: () => void
-  draft?: boolean
-  onClickRemove?: (e: MouseEvent<HTMLButtonElement>) => void
+  loading?: boolean
 }
 
-const Collection: FC<Props> = ({
-  name,
-  icon,
-  onClick,
-  draft,
-  onClickRemove = () => null,
-}) => {
+const Collection: FC<Props> = ({ name, icon, onClick, loading }) => {
   return (
     <Container onClick={onClick}>
-      <Label>{name}</Label>
-      <StyledIcon name={icon} />
-      {draft && <StyledTag color="blue">Draft</StyledTag>}
-      {draft && (
-        <StyledIconButton onClick={(e) => onClickRemove(e)}>
-          <Icon name="trash-duo" />
-        </StyledIconButton>
+      {loading ? (
+        <>
+          <SkeletonLabel height="24px" width="80%" />
+          <SkeletonIcon height="60px" width="60px" />
+        </>
+      ) : (
+        <>
+          <Label>{name}</Label>
+          <StyledIcon name={icon} />
+        </>
       )}
     </Container>
   )
