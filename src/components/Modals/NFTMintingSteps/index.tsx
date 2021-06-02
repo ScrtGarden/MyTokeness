@@ -78,20 +78,19 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
 
     try {
       const publicResult = await uploadFile({ file: publicFile as File })
-      setPublicFileLink(
-        `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
-      )
+      const publicLink = `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
+      setPublicFileLink(publicLink)
 
+      let privateLink = ''
       if (privateFile) {
         const privateResult = await uploadFile({ file: privateFile })
-        setPrivateFileLink(
-          `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
-        )
+        privateLink = `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
+        setPrivateFileLink(privateLink)
       }
 
       setStatus({ 1: 'completed' })
       toast.success(`Uploaded file${isMultiFiles ? 's.' : '.'}`)
-      mint()
+      mint(publicLink, privateLink)
     } catch (error) {
       toast.error(`Uploading file${isMultiFiles ? 's.' : '.'}`)
       setStatus({ 1: 'failed' })
@@ -99,14 +98,14 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
     }
   }
 
-  const mint = () => {
+  const mint = (publicLink: string, privateLink: string) => {
     setStatus({ 2: 'in-progress' })
 
     const handleMsg = formatForHandleMsg({
       publicMetadata,
-      publicFileLink,
+      publicFileLink: publicLink,
       privateMetadata,
-      privateFileLink,
+      privateFileLink: privateLink,
     })
 
     mintNFT(
@@ -159,7 +158,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
           label={`Create collectible${isMultiMints ? 's' : ''}`}
           hint={`Minting collectible${isMultiMints ? 's' : ''} to contract.`}
           status={status[2]}
-          onClick={mint}
+          onClick={() => mint(publicFileLink, privateFileLink)}
         />
       </Steps>
     </Container>
