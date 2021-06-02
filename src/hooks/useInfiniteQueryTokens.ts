@@ -25,6 +25,7 @@ const useInfiniteQueryTokens = (
       },
 
       enabled: !!queryMsg.viewing_key,
+      retry: false,
     }
   )
 }
