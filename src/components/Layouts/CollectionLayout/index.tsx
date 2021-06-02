@@ -36,11 +36,10 @@ const CollectionLayout = ({ children }: Props) => {
   const { contractAddress, title } = router.query as CollectionRouterQuery
 
   // custom hooks
-  const { data } = useQueryContract<QueryContractInfo, ResultContractInfo>(
-    ['contractInfo', contractAddress],
-    contractAddress,
-    { contract_info: {} }
-  )
+  const { data, isLoading } = useQueryContract<
+    QueryContractInfo,
+    ResultContractInfo
+  >(['contractInfo', contractAddress], contractAddress, { contract_info: {} })
 
   // component state
   const activeTab = useMemo(
@@ -76,7 +75,11 @@ const CollectionLayout = ({ children }: Props) => {
     <Container>
       <StyledInnerContainer>
         <Tabs tabs={tabs} tab={activeTab} onClick={onClickTab} />
-        <Header {...headerProps} contractAddress={contractAddress} />
+        <Header
+          {...headerProps}
+          contractAddress={contractAddress}
+          loading={isLoading}
+        />
         {children}
       </StyledInnerContainer>
     </Container>

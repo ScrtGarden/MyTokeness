@@ -4,18 +4,24 @@ import { FC, memo } from 'react'
 import { CHAIN_EXPLORER } from '../../../../../utils/constants'
 import truncateAddress from '../../../../../utils/truncateAddress'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
-import Icon from '../../../Icons'
 import { Button, IconButton, StyledIcon } from '../../../UI/Buttons'
-import { PageTitle } from '../../../UI/Typography'
-import { AddressWrapper, Container, Subtext, Title, Wrapper } from './styles'
+import {
+  AddressWrapper,
+  Container,
+  SkeletonTitle,
+  Subtext,
+  Title,
+  Wrapper,
+} from './styles'
 
 type Props = {
   title?: string
   contractAddress: string
   subtext?: string
+  loading?: boolean
 }
 
-const Header: FC<Props> = ({ title, contractAddress, subtext }) => {
+const Header: FC<Props> = ({ title, contractAddress, subtext, loading }) => {
   // custom hooks
   const [_, copy] = useCopyToClipboard(contractAddress)
 
@@ -34,8 +40,12 @@ const Header: FC<Props> = ({ title, contractAddress, subtext }) => {
   return (
     <Container>
       <Wrapper>
-        <Title>{title}</Title>
-        <Button isPrimary onClick={onClickCreate}>
+        {loading ? (
+          <SkeletonTitle height="46px" width="40%" />
+        ) : (
+          <Title>{title}</Title>
+        )}
+        <Button isPrimary onClick={onClickCreate} width={143}>
           Create Collectible
         </Button>
       </Wrapper>
