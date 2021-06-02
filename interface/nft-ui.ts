@@ -8,3 +8,17 @@ export interface Config {
   enableBurn: boolean
   [key: string]: boolean
 }
+
+export interface UIPublicMetadata {
+  name: string
+  description?: string | null
+  image: string
+  properties: {
+    rarity: {
+      id?: string
+      number: number
+      total: number
+    }
+  }
+  attributes: { [key: string]: string }[]
+}
