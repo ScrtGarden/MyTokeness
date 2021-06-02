@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { FC, memo } from 'react'
+import { FC, memo, useMemo } from 'react'
 
 import { CHAIN_EXPLORER } from '../../../../../utils/constants'
 import truncateAddress from '../../../../../utils/truncateAddress'
@@ -20,11 +20,21 @@ type Props = {
   contractAddress: string
   subtext?: string
   loading?: boolean
+  activeTab: string
 }
 
-const Header: FC<Props> = ({ title, contractAddress, subtext, loading }) => {
+const Header: FC<Props> = ({
+  title,
+  contractAddress,
+  subtext,
+  loading,
+  activeTab,
+}) => {
   // custom hooks
   const [_, copy] = useCopyToClipboard(contractAddress)
+
+  // component state
+  const isAssets = useMemo(() => activeTab === 'assets', [activeTab])
 
   const onClickCreate = () => {
     Router.push(
@@ -41,14 +51,16 @@ const Header: FC<Props> = ({ title, contractAddress, subtext, loading }) => {
   return (
     <Container>
       <Wrapper>
-        {loading ? (
+        {loading && isAssets ? (
           <SkeletonTitle height="46px" width="40%" />
         ) : (
           <Title>{title}</Title>
         )}
-        <Button isPrimary onClick={onClickCreate} width={143}>
-          Create Collectible
-        </Button>
+        {isAssets && (
+          <Button isPrimary onClick={onClickCreate} width={143}>
+            Create Collectible
+          </Button>
+        )}
       </Wrapper>
       <AddressWrapper>
         {subtext ? (

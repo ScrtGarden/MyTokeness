@@ -79,6 +79,7 @@ const CollectionLayout = ({ children }: Props) => {
           {...headerProps}
           contractAddress={contractAddress}
           loading={isLoading}
+          activeTab={activeTab}
         />
         {children}
       </StyledInnerContainer>
