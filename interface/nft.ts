@@ -47,6 +47,42 @@ export interface Tokens {
   tokens: string[]
 }
 
+export interface ViewerInfo {
+  address: string
+  viewing_key: string
+}
+
+export type Expiration =
+  | {
+      at_time: number
+    }
+  | {
+      at_height: number
+    }
+  | 'never'
+
+export interface Snip721Approval {
+  address: string
+  view_owner_expiration: Expiration | null
+  view_private_metadata_expiration: Expiration | null
+  transfer_expiration: Expiration | null
+}
+
+export interface NFTDossier {
+  owner?: string
+  public_metadata?: Metadata
+  private_metadata?: Metadata | null
+  display_private_metadata_error?: string
+  owner_is_public: boolean
+  public_ownership_expiration?: Expiration
+  private_metadata_is_public: boolean
+  private_metadata_is_public_expiration?: Expiration
+  token_approvals?: Snip721Approval[]
+  inventory_approvals?: Snip721Approval[]
+}
+
+/**************************** ******************************/
+
 /**
  *  Queries
  */
@@ -62,6 +98,20 @@ export interface QueryTokens {
     viewing_key?: string
     start_after?: string
     limit?: number
+  }
+}
+
+export interface QueryNFTDossier {
+  nft_dossier: {
+    token_id: string
+    viewer?: ViewerInfo
+    include_expired?: boolean
+  }
+}
+
+export interface QueryNFTInfo {
+  nft_info: {
+    token_id: string
   }
 }
 
@@ -99,4 +149,12 @@ export interface ResultContractInfo {
 
 export interface ResultTokens {
   token_list: Tokens
+}
+
+export interface ResultNFTDossier {
+  nft_dossier: NFTDossier
+}
+
+export interface ResultNFTInfo {
+  nft_info: Metadata
 }
