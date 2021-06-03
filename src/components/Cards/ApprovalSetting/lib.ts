@@ -9,16 +9,24 @@ export interface FormatExpiration {
 }
 
 const formatExpiration = (expiration: Expiration): FormatExpiration => {
-  const initial = { type: undefined, date: new Date(), blockheight: '' }
+  const initial: FormatExpiration = {
+    type: 'never',
+    date: new Date(),
+    blockheight: '',
+  }
 
   if (expiration === null || !expiration) {
     return initial
   } else if (expiration === 'never') {
     return { ...initial, type: 'never' }
   } else if ('at_time' in expiration) {
-    return { ...initial, date: fromUnixTime(expiration.at_time) }
+    return { ...initial, type: 'date', date: fromUnixTime(expiration.at_time) }
   } else {
-    return { ...initial, blockheight: String(expiration.at_height) }
+    return {
+      ...initial,
+      type: 'blockheight',
+      blockheight: String(expiration.at_height),
+    }
   }
 }
 
