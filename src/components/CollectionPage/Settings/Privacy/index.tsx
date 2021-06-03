@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import {
   QueryInventoryApprovals,
@@ -6,9 +7,10 @@ import {
 } from '../../../../../interface/nft'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useQueryContract from '../../../../hooks/useQueryContract'
-import ApprovalSetting from '../../../Cards/ApprovalSetting'
 import { CollectionRouterQuery } from '../../../Layouts/CollectionLayout'
 import { Container } from '../styles'
+import OwnershipPrivacySetting from './OwnershipPrivacySetting'
+import PrivateMetadataPrivacySetting from './PrivateMetadataPrivacySetting'
 
 const Privacy = () => {
   const router = useRouter()
@@ -32,7 +34,7 @@ const Privacy = () => {
     { enabled: !!viewingKey }
   )
 
-  console.log({ data })
+  // console.log({ data })
 
   if (isLoading) {
     return <Container>Loading...</Container>
@@ -44,23 +46,19 @@ const Privacy = () => {
 
   return (
     <Container>
-      <ApprovalSetting
-        title="Ownership Privacy Setting"
-        description="Turning this off will allow anyone see which assets you own."
+      <OwnershipPrivacySetting
         isPrivate={!data.inventory_approvals.owner_is_public}
         expiration={data.inventory_approvals.public_ownership_expiration}
-        toggleId="ownership"
-        toggleLabel="Hide ownership"
+        contractAddress={contractAddress}
+        walletAddress={walletAddress}
       />
-      <ApprovalSetting
-        title="Private Metadata Privacy Setting"
-        description="Turning this off will allow anyone see the private metadata of all your owned assets."
+      <PrivateMetadataPrivacySetting
         isPrivate={!data.inventory_approvals.private_metadata_is_public}
         expiration={
           data.inventory_approvals.private_metadata_is_public_expiration
         }
-        toggleId="privateMetadata"
-        toggleLabel="Hide private metadata"
+        contractAddress={contractAddress}
+        walletAddress={walletAddress}
       />
     </Container>
   )
