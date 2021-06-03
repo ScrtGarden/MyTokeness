@@ -29,4 +29,9 @@ const Wrapper = styled.div`
   row-gap: ${(props) => props.theme.space.md};
 `
 
-export { Card, Header, Wrapper }
+const SettingsCard = styled(Card)`
+  max-width: none;
+  width: 100%;
+`
+
+export { Card, Header, Wrapper, SettingsCard }
