@@ -15,10 +15,10 @@ import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import ImportViewingKey from '../../Modals/ImportViewingKey'
 import Warning from '../../Modals/Warning'
 import { Button, IconButton, StyledIcon } from '../../UI/Buttons'
-import { Header, Wrapper } from '../../UI/Card'
+import { Header, SettingsCard, Wrapper } from '../../UI/Card'
 import { Input } from '../../UI/Forms'
 import { Modal } from '../../UI/Modal'
-import { Actions, Buttons, InputButtonsWrapper, StyledCard } from './styles'
+import { Actions, Buttons, InputButtonsWrapper } from './styles'
 
 const ViewingKeyCard = () => {
   const router = useRouter()
@@ -85,7 +85,7 @@ const ViewingKeyCard = () => {
 
   return (
     <>
-      <StyledCard>
+      <SettingsCard>
         <Header>Viewing Key</Header>
         <Wrapper>
           <InputButtonsWrapper>
@@ -113,7 +113,7 @@ const ViewingKeyCard = () => {
             />
           </Buttons>
         </Wrapper>
-      </StyledCard>
+      </SettingsCard>
       <Modal
         isOpen={showWarning}
         onBackgroundClick={() => setShowWarning(!showWarning)}
