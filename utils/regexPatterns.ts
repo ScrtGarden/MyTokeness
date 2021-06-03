@@ -4,6 +4,9 @@ const symbolPattern = /^[A-Za-z0-9]{0,6}$/
 // Only integers, no leading zero
 const decimalsPattern = /^([1-9][0-9]*)$/
 
+// Only integers with leading zero
+const blockheightPattern = /^(0|[1-9][0-9]*)$/
+
 // Only numbers, and amount of decimals is dynamic
 const amountPattern = (decimals: number | string) =>
   `^\\d{1,}(\\.\\d{0,${decimals}})?$`
@@ -20,4 +23,5 @@ export {
   amountPattern,
   getErrorMsgPattern,
   hashLinkPattern,
+  blockheightPattern,
 }
