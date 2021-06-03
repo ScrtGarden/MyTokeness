@@ -1,4 +1,5 @@
 import 'react-toastify/dist/ReactToastify.min.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 import { StoreProvider } from 'easy-peasy'
 import { AppProps } from 'next/app'
