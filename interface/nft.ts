@@ -81,6 +81,32 @@ export interface NFTDossier {
   inventory_approvals?: Snip721Approval[]
 }
 
+export type AccessLevel = 'approve_token' | 'revoke_token' | 'all' | 'none'
+
+export interface SetGlobalApproval {
+  token_id?: string
+  view_owner?: AccessLevel
+  view_private_metadata?: AccessLevel
+  expires?: Expiration
+  padding?: string
+}
+
+export type Status = 'success' | 'failure'
+
+export interface QInventoryApprovals {
+  address: string
+  viewing_key: string
+  include_expired?: boolean
+}
+
+export interface RInventoryApprovals {
+  owner_is_public: boolean
+  public_ownership_expiration: Expiration
+  private_metadata_is_public: boolean
+  private_metadata_is_public_expiration: Expiration
+  inventory_approvals: Snip721Approval[]
+}
+
 /**************************** ******************************/
 
 /**
@@ -115,6 +141,10 @@ export interface QueryNFTInfo {
   }
 }
 
+export interface QueryInventoryApprovals {
+  inventory_approvals: QInventoryApprovals
+}
+
 /**
  *  HandleMsg
  */
@@ -134,6 +164,10 @@ export interface HandleCreateViewingKey {
     entropy: string
     padding?: string
   }
+}
+
+export interface HandleSetGlobalApproval {
+  set_global_approval: SetGlobalApproval
 }
 
 /**
@@ -157,4 +191,14 @@ export interface ResultNFTDossier {
 
 export interface ResultNFTInfo {
   nft_info: Metadata
+}
+
+export interface ResultSetGlobalApproval {
+  set_global_approval: {
+    status: Status
+  }
+}
+
+export interface ResultInventoryApprovals {
+  inventory_approvals: RInventoryApprovals
 }
