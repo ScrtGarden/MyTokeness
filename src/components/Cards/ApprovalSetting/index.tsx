@@ -41,6 +41,8 @@ type Props = {
   toggleId: string
   toggleLabel: string
   error?: string
+  onSubmit: (isPrivate: boolean, exp: FormatExpiration) => void
+  loading?: boolean
 }
 
 const ApprovalSetting: FC<Props> = ({
@@ -51,6 +53,8 @@ const ApprovalSetting: FC<Props> = ({
   isPrivate,
   expiration,
   error,
+  onSubmit,
+  loading,
 }) => {
   // component state
   const [isPrivateState, setIsPrivate] = useState(isPrivate)
@@ -60,21 +64,10 @@ const ApprovalSetting: FC<Props> = ({
 
   // lifecycle
   useEffect(() => {
-    setExpSettings({ type: undefined, date: new Date(), blockheight: '' })
     if (error) {
       setErrorState('')
     }
-  }, [isPrivateState])
-
-  useEffect(() => {
-    if (expSettings.type === 'never') {
-      setExpSettings({ date: new Date(), blockheight: '' })
-    } else if (expSettings.type === 'date') {
-      setExpSettings({ blockheight: '' })
-    } else {
-      setExpSettings({ date: new Date() })
-    }
-  }, [expSettings.type])
+  }, [isPrivateState, expSettings])
 
   useEffect(() => {
     setExpSettings(initialExp)
@@ -87,12 +80,6 @@ const ApprovalSetting: FC<Props> = ({
   useEffect(() => {
     setErrorState(error)
   }, [error])
-
-  useEffect(() => {
-    if (error) {
-      setErrorState('')
-    }
-  }, [expSettings])
 
   const onChangeBlockheight = (e: FormEvent<HTMLInputElement>) => {
     const blockheight = e.currentTarget.value
@@ -158,7 +145,13 @@ const ApprovalSetting: FC<Props> = ({
         )}
       </Content>
       <ButtonWrapper>
-        <ButtonWithLoading text="Save" isPrimary />
+        <ButtonWithLoading
+          width={56}
+          text="Save"
+          isPrimary
+          onClick={() => onSubmit(isPrivateState, expSettings)}
+          loading={loading}
+        />
       </ButtonWrapper>
     </SettingsCard>
   )
