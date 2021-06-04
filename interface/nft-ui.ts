@@ -22,3 +22,13 @@ export interface UIPublicMetadata {
   }
   attributes: { [key: string]: string }[]
 }
+
+export interface UIExpiration {
+  type?: 'never' | 'date' | 'blockheight'
+  date?: Date
+  blockheight?: string
+}
+export type ExpirationReducer = (
+  p: UIExpiration,
+  u: UIExpiration
+) => UIExpiration
