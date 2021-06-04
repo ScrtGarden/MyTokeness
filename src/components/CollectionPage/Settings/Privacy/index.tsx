@@ -11,6 +11,7 @@ import { CollectionRouterQuery } from '../../../Layouts/CollectionLayout'
 import { Container } from '../styles'
 import OwnershipPrivacySetting from './OwnershipPrivacySetting'
 import PrivateMetadataPrivacySetting from './PrivateMetadataPrivacySetting'
+import Whitelisting from './Whitelisting'
 
 const Privacy = () => {
   const router = useRouter()
@@ -59,6 +60,11 @@ const Privacy = () => {
         }
         contractAddress={contractAddress}
         walletAddress={walletAddress}
+      />
+      <Whitelisting
+        contractAddress={contractAddress}
+        walletAddress={walletAddress}
+        approvedList={data.inventory_approvals.inventory_approvals}
       />
     </Container>
   )

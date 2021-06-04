@@ -1,8 +1,8 @@
 import { FC, FormEvent, memo } from 'react'
 import DatePicker from 'react-datepicker'
 
+import { UIExpiration } from '../../../../interface/nft-ui'
 import { blockheightPattern } from '../../../../utils/regexPatterns'
-import { FormatExpiration } from '../../Cards/ApprovalSetting/lib'
 import { DatePickerWrapper } from '../../UI/DatePicker'
 import { Label } from '../../UI/Forms'
 import { Radio } from '../../UI/Forms/Radio'
@@ -10,8 +10,8 @@ import MessageWithIcon from '../MessageWithIcon'
 import { Field, InputWrapper, StyledInput, StyledRadioGroup } from './styles'
 
 type Props = {
-  settings: FormatExpiration
-  onChange: (data: Partial<FormatExpiration>) => void
+  settings: UIExpiration
+  onChange: (data: Partial<UIExpiration>) => void
   error?: string
 }
 
@@ -28,9 +28,7 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
       <Label>Expiration</Label>
       <StyledRadioGroup
         selectedValue={settings.type}
-        onClick={(value) =>
-          onChange({ type: value as FormatExpiration['type'] })
-        }
+        onClick={(value) => onChange({ type: value as UIExpiration['type'] })}
       >
         <Radio value="never" labelText="Never" isRegular />
         <Radio value="date" labelText="Date" isRegular />

@@ -1,15 +1,10 @@
 import { fromUnixTime } from 'date-fns'
 
 import { Expiration } from '../../../../interface/nft'
+import { UIExpiration } from '../../../../interface/nft-ui'
 
-export interface FormatExpiration {
-  type?: 'never' | 'date' | 'blockheight'
-  date?: Date
-  blockheight?: string
-}
-
-const formatExpiration = (expiration: Expiration): FormatExpiration => {
-  const initial: FormatExpiration = {
+const formatExpiration = (expiration: Expiration): UIExpiration => {
+  const initial: UIExpiration = {
     type: 'never',
     date: new Date(),
     blockheight: '',

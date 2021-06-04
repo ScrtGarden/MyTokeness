@@ -4,9 +4,9 @@ import {
   Expiration,
   HandleSetGlobalApproval,
 } from '../../../../../interface/nft'
-import { FormatExpiration } from '../../../Cards/ApprovalSetting/lib'
+import { UIExpiration } from '../../../../../interface/nft-ui'
 
-const validate = (isPrivate: boolean, settings: FormatExpiration) => {
+const validate = (isPrivate: boolean, settings: UIExpiration) => {
   const { type, date, blockheight } = settings
 
   if (isPrivate) {
@@ -26,7 +26,7 @@ const validate = (isPrivate: boolean, settings: FormatExpiration) => {
 
 const format = (
   isPrivate: boolean,
-  settings: FormatExpiration,
+  settings: UIExpiration,
   isOwnership?: boolean
 ): HandleSetGlobalApproval => {
   const view = isPrivate ? 'none' : 'all'

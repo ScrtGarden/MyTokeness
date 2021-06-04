@@ -1,6 +1,7 @@
 import { FC, memo, useEffect, useMemo, useReducer, useState } from 'react'
 
 import { Expiration } from '../../../../interface/nft'
+import { ExpirationReducer, UIExpiration } from '../../../../interface/nft-ui'
 import reducer from '../../../../utils/reducer'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import ExpirationForm from '../../Common/ExpirationForm'
@@ -8,10 +9,8 @@ import { Header, SettingsCard } from '../../UI/Card'
 import { Label, ToggleWrapper } from '../../UI/Forms'
 import Toggle from '../../UI/Forms/Toggle'
 import { Text } from '../../UI/Typography'
-import { FormatExpiration, formatExpiration } from './lib'
+import { formatExpiration } from './lib'
 import { ButtonWrapper, Content } from './styles'
-
-type Reducer = (p: FormatExpiration, u: FormatExpiration) => FormatExpiration
 
 type Props = {
   title?: string
@@ -21,7 +20,7 @@ type Props = {
   toggleId: string
   toggleLabel: string
   error?: string
-  onSubmit: (isPrivate: boolean, exp: FormatExpiration) => void
+  onSubmit: (isPrivate: boolean, exp: UIExpiration) => void
   loading?: boolean
 }
 
@@ -39,7 +38,10 @@ const ApprovalSetting: FC<Props> = ({
   // component state
   const [isPrivateState, setIsPrivate] = useState(isPrivate)
   const initialExp = useMemo(() => formatExpiration(expiration), [expiration])
-  const [expSettings, setExpSettings] = useReducer<Reducer>(reducer, initialExp)
+  const [expSettings, setExpSettings] = useReducer<ExpirationReducer>(
+    reducer,
+    initialExp
+  )
   const [errorState, setErrorState] = useState(error)
 
   // lifecycle

@@ -7,11 +7,11 @@ import {
   HandleSetGlobalApproval,
   ResultInventoryApprovals,
 } from '../../../../../../interface/nft'
+import { UIExpiration } from '../../../../../../interface/nft-ui'
 import { MAX_GAS } from '../../../../../../utils/constants'
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../../../hooks/useMutationExeContract'
 import ApprovalSetting from '../../../../Cards/ApprovalSetting'
-import { FormatExpiration } from '../../../../Cards/ApprovalSetting/lib'
 import { format, validate } from '../lib'
 
 type Props = {
@@ -36,7 +36,7 @@ const OwnershipPrivacySetting: FC<Props> = ({
   // component state
   const [error, setError] = useState('')
 
-  const onSave = (isPrivate: boolean, expSettings: FormatExpiration) => {
+  const onSave = (isPrivate: boolean, expSettings: UIExpiration) => {
     const result = validate(isPrivate, expSettings)
 
     setError(result)
