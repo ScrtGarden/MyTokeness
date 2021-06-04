@@ -40,6 +40,7 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
             placeholder="3000000"
             value={settings.blockheight}
             onChange={onChangeBlockheight}
+            validation={error ? 'error' : undefined}
           />
           {error && <MessageWithIcon validation="error" message={error} />}
         </InputWrapper>
@@ -49,7 +50,9 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
           <DatePicker
             selected={settings.date}
             onChange={(date: Date) => onChange({ date })}
-            customInput={<StyledInput />}
+            customInput={
+              <StyledInput validation={error ? 'error' : undefined} />
+            }
             dateFormat="MMMM d, yyyy h:mm aa"
             showTimeInput
             minDate={new Date()}
