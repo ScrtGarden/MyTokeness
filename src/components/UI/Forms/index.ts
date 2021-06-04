@@ -288,7 +288,7 @@ const ToggleField = styled.div`
 
 const ToggleWrapper = styled.div`
   align-items: center;
-  column-gap: ${(props) => props.theme.space.md};
+  column-gap: ${(props) => props.theme.space.sm};
   display: flex;
   flex-direction: row;
 `
