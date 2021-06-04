@@ -5,21 +5,19 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  column-gap: ${(props) => props.theme.space.md};
-  display: flex;
-  flex-direction: row;
-  margin: ${(props) => props.theme.space.md} 0;
-`
-
-const Details = styled.div`
   display: flex;
   flex-direction: column;
+  margin: ${(props) => props.theme.space.md} 0;
+  row-gap: ${(props) => props.theme.space.md};
+`
+
+const Options = styled.div`
+  column-gap: ${(props) => props.theme.space.lg};
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   flex: 1;
   row-gap: ${(props) => props.theme.space.md};
 `
 
-const ExpirationWrapper = styled.div`
-  flex: 1;
-`
-
-export { Container, Content, Details, ExpirationWrapper }
+export { Container, Content, Options }
