@@ -1,7 +1,8 @@
 import { FC, memo } from 'react'
 
 import { Snip721Approval } from '../../../../interface/nft'
-import { Header, SettingsCard } from '../../UI/Card'
+import { Header, SettingsCard, Wrapper } from '../../UI/Card'
+import { Text } from '../../UI/Typography'
 import AddNew from './AddNew'
 import { Props as AddNewProps } from './AddNew'
 
@@ -17,18 +18,28 @@ const WhitelistSetting: FC<Props> = ({
   setOptions,
   expiration,
   setExpiration,
+  onAdd,
+  loading,
 }) => {
   return (
     <SettingsCard>
       <Header>Whitelist Setting</Header>
-      <AddNew
-        address={address}
-        setAddress={setAddress}
-        options={options}
-        setOptions={setOptions}
-        expiration={expiration}
-        setExpiration={setExpiration}
-      />
+      <Wrapper>
+        <Text>
+          Grant an address permission to view ownership, view private metadata,
+          and/or to transfer every token in the owner's inventory.
+        </Text>
+        <AddNew
+          address={address}
+          setAddress={setAddress}
+          options={options}
+          setOptions={setOptions}
+          expiration={expiration}
+          setExpiration={setExpiration}
+          onAdd={onAdd}
+          loading={loading}
+        />
+      </Wrapper>
     </SettingsCard>
   )
 }
