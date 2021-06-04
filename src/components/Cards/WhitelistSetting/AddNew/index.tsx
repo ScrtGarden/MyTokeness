@@ -3,6 +3,7 @@ import { FC, memo } from 'react'
 import { UIExpiration } from '../../../../../interface/nft-ui'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
 import ExpirationForm from '../../../Common/ExpirationForm'
+import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Buttons } from '../../../UI/Card'
 import { Field, Input, Label, ToggleWrapper } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
@@ -22,6 +23,9 @@ export type Props = {
   setOptions: (data: Partial<Options>) => void
   expiration: UIExpiration
   setExpiration: (data: Partial<UIExpiration>) => void
+  loading?: boolean
+  onAdd: () => void
+  addErrors: { address: string; expiration: string }
 }
 
 const TOGGLES = {
@@ -37,39 +41,54 @@ const AddNew: FC<Props> = ({
   setOptions,
   expiration,
   setExpiration,
-}) => {
-  return (
-    <Container>
-      <Content>
-        <Field>
-          <Label>Address</Label>
-          <Input
-            placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
-            value={address}
-            onChange={(e) => setAddress(e.currentTarget.value)}
-          />
-        </Field>
-        <Options>
-          {Object.entries(TOGGLES).map(([value, label]) => (
-            <ToggleWrapper key={value}>
-              <Toggle
-                id={value}
-                checked={options[value]}
-                onChange={() => setOptions({ [value]: !options[value] })}
-              />
-              <Label>{label}</Label>
-            </ToggleWrapper>
-          ))}
-        </Options>
-        {Object.values(options).some((value) => !value) && (
-          <ExpirationForm settings={expiration} onChange={setExpiration} />
+  onAdd,
+  loading,
+  addErrors,
+}) => (
+  <Container>
+    <Content>
+      <Field>
+        <Label>Address</Label>
+        <Input
+          placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
+          value={address}
+          onChange={(e) => setAddress(e.currentTarget.value)}
+          validation={!!addErrors.address ? 'error' : undefined}
+        />
+        {addErrors.address && (
+          <MessageWithIcon validation="error" message={addErrors.address} />
         )}
-      </Content>
-      <Buttons>
-        <ButtonWithLoading text="Add" isPrimary width={51} />
-      </Buttons>
-    </Container>
-  )
-}
+      </Field>
+      <Options>
+        {Object.entries(TOGGLES).map(([value, label]) => (
+          <ToggleWrapper key={value}>
+            <Toggle
+              id={value}
+              checked={options[value]}
+              onChange={() => setOptions({ [value]: !options[value] })}
+            />
+            <Label>{label}</Label>
+          </ToggleWrapper>
+        ))}
+      </Options>
+      {Object.values(options).some((value) => !value) && (
+        <ExpirationForm
+          settings={expiration}
+          onChange={setExpiration}
+          error={addErrors.expiration}
+        />
+      )}
+    </Content>
+    <Buttons>
+      <ButtonWithLoading
+        text="Add"
+        isPrimary
+        width={51}
+        loading={loading}
+        onClick={onAdd}
+      />
+    </Buttons>
+  </Container>
+)
 
 export default memo(AddNew)
