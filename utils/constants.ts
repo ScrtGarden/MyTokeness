@@ -34,6 +34,7 @@ const MAX_GAS = {
     BATCH_MINT: calcBatchMint,
     CREATE_VIEWING_KEY: '120000',
     SET_GLOBAL_APPROVAL: '120000',
+    SET_WHITELIST_APPROVAL: '130000',
   },
 }
 
