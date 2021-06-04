@@ -20,28 +20,28 @@ const WhitelistSetting: FC<Props> = ({
   setExpiration,
   onAdd,
   loading,
-}) => {
-  return (
-    <SettingsCard>
-      <Header>Whitelist Setting</Header>
-      <Wrapper>
-        <Text>
-          Grant an address permission to view ownership, view private metadata,
-          and/or to transfer every token in the owner's inventory.
-        </Text>
-        <AddNew
-          address={address}
-          setAddress={setAddress}
-          options={options}
-          setOptions={setOptions}
-          expiration={expiration}
-          setExpiration={setExpiration}
-          onAdd={onAdd}
-          loading={loading}
-        />
-      </Wrapper>
-    </SettingsCard>
-  )
-}
+  addErrors,
+}) => (
+  <SettingsCard>
+    <Header>Whitelist Setting</Header>
+    <Wrapper>
+      <Text>
+        Grant an address permission to view ownership, view private metadata,
+        and/or to transfer every token in the owner's inventory.
+      </Text>
+      <AddNew
+        address={address}
+        setAddress={setAddress}
+        options={options}
+        setOptions={setOptions}
+        expiration={expiration}
+        setExpiration={setExpiration}
+        onAdd={onAdd}
+        loading={loading}
+        addErrors={addErrors}
+      />
+    </Wrapper>
+  </SettingsCard>
+)
 
 export default memo(WhitelistSetting)
