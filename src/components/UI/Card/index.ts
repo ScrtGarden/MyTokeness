@@ -34,4 +34,11 @@ const SettingsCard = styled(Card)`
   width: 100%;
 `
 
-export { Card, Header, Wrapper, SettingsCard }
+const Buttons = styled.div`
+  align-items: center;
+  column-gap: ${(props) => props.theme.space.md};
+  display: flex;
+  justify-content: flex-end;
+`
+
+export { Card, Header, Wrapper, SettingsCard, Buttons }
