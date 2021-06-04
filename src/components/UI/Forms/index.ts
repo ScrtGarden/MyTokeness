@@ -286,6 +286,13 @@ const ToggleField = styled.div`
   justify-content: space-between;
 `
 
+const ToggleWrapper = styled.div`
+  align-items: center;
+  column-gap: ${(props) => props.theme.space.md};
+  display: flex;
+  flex-direction: row;
+`
+
 export {
   Field,
   Hint,
@@ -301,4 +308,5 @@ export {
   Select,
   Option,
   ToggleField,
+  ToggleWrapper,
 }
