@@ -101,10 +101,20 @@ export interface QInventoryApprovals {
 
 export interface RInventoryApprovals {
   owner_is_public: boolean
-  public_ownership_expiration: Expiration
+  public_ownership_expiration: Expiration | null
   private_metadata_is_public: boolean
-  private_metadata_is_public_expiration: Expiration
+  private_metadata_is_public_expiration: Expiration | null
   inventory_approvals: Snip721Approval[]
+}
+
+export interface SetWhitelistedApproval {
+  address: string
+  token_id?: string
+  view_owner?: AccessLevel
+  view_private_metadata?: AccessLevel
+  transfer?: AccessLevel
+  expires?: Expiration
+  padding?: string
 }
 
 /**************************** ******************************/
@@ -170,6 +180,10 @@ export interface HandleSetGlobalApproval {
   set_global_approval: SetGlobalApproval
 }
 
+export interface HandleSetWhitelistedApproval {
+  set_whitelisted_approval: SetWhitelistedApproval
+}
+
 /**
  *  Results
  */
@@ -201,4 +215,10 @@ export interface ResultSetGlobalApproval {
 
 export interface ResultInventoryApprovals {
   inventory_approvals: RInventoryApprovals
+}
+
+export interface ResultSetWhitelistApproval {
+  set_whitelisted_approval: {
+    status: Status
+  }
 }
