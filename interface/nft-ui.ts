@@ -23,12 +23,28 @@ export interface UIPublicMetadata {
   attributes: { [key: string]: string }[]
 }
 
-export interface UIExpiration {
+export type UIExpiration = {
   type?: 'never' | 'date' | 'blockheight'
   date?: Date
   blockheight?: string
 }
+
 export type ExpirationReducer = (
   p: UIExpiration,
   u: UIExpiration
 ) => UIExpiration
+
+export interface UISnip721Approval {
+  address: string
+  viewOwnerExpiration: UIExpiration | null
+  viewPrivateMetadataExpiration: UIExpiration | null
+  transferExpiration: UIExpiration | null
+}
+
+export interface UIInventoryApprovals {
+  ownerIsPublic: boolean
+  publicOwnershipExpiration: UIExpiration
+  privateMetadataIsPublic: boolean
+  privateMetadataIsPublicExpiration: UIExpiration
+  inventoryApprovals: UISnip721Approval[]
+}
