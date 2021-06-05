@@ -3,8 +3,8 @@ import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
 import {
-  Expiration,
   HandleSetGlobalApproval,
+  RInventoryApprovals,
   ResultInventoryApprovals,
 } from '../../../../../../interface/nft'
 import { UIExpiration } from '../../../../../../interface/nft-ui'
@@ -16,7 +16,7 @@ import { format, validate } from '../lib'
 
 type Props = {
   isPrivate: boolean
-  expiration: Expiration
+  expiration: UIExpiration
   contractAddress: string
   walletAddress: string
 }
@@ -54,24 +54,27 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
         maxGas: MAX_GAS.NFT.SET_GLOBAL_APPROVAL,
       },
       {
-        onSuccess: () => {
+        onSuccess: (_, { handleMsg: { set_global_approval } }) => {
           const key = ['inventoryApprovals', walletAddress, contractAddress]
           const original =
             queryClient.getQueryData<ResultInventoryApprovals>(key)
 
-          const update = {
-            private_metadata_is_public: !isPrivate,
-            private_metadata_is_public_expiration: isPrivate
-              ? null
-              : handleMsg.set_global_approval.expires,
+          if (original) {
+            const { view_private_metadata, expires } = set_global_approval
+            const isPublic = view_private_metadata === 'all'
+            const update: Partial<RInventoryApprovals> = {
+              private_metadata_is_public: isPublic ? true : false,
+              private_metadata_is_public_expiration: isPublic ? expires : null,
+            }
+
+            queryClient.setQueryData<ResultInventoryApprovals>(key, {
+              inventory_approvals: {
+                ...original.inventory_approvals,
+                ...update,
+              },
+            })
           }
 
-          queryClient.setQueriesData(key, {
-            inventory_approvals: {
-              ...original?.inventory_approvals,
-              ...update,
-            },
-          })
           toast.success('Updated private metadata privacy setting.')
         },
         onError: (error) => {

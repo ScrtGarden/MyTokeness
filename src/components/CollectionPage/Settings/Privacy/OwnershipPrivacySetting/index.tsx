@@ -3,8 +3,8 @@ import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
 import {
-  Expiration,
   HandleSetGlobalApproval,
+  RInventoryApprovals,
   ResultInventoryApprovals,
 } from '../../../../../../interface/nft'
 import { UIExpiration } from '../../../../../../interface/nft-ui'
@@ -16,7 +16,7 @@ import { format, validate } from '../lib'
 
 type Props = {
   isPrivate: boolean
-  expiration: Expiration
+  expiration: UIExpiration
   contractAddress: string
   walletAddress: string
 }
@@ -54,24 +54,27 @@ const OwnershipPrivacySetting: FC<Props> = ({
         maxGas: MAX_GAS.NFT.SET_GLOBAL_APPROVAL,
       },
       {
-        onSuccess: () => {
+        onSuccess: (_, { handleMsg: { set_global_approval } }) => {
           const key = ['inventoryApprovals', walletAddress, contractAddress]
           const original =
             queryClient.getQueryData<ResultInventoryApprovals>(key)
 
-          const update = {
-            owner_is_public: !isPrivate,
-            public_ownership_expiration: isPrivate
-              ? null
-              : handleMsg.set_global_approval.expires,
+          if (original) {
+            const { view_owner, expires } = set_global_approval
+            const isPublic = view_owner === 'all'
+            const update: Partial<RInventoryApprovals> = {
+              owner_is_public: isPublic ? true : false,
+              public_ownership_expiration: isPublic ? expires : null,
+            }
+
+            queryClient.setQueryData<ResultInventoryApprovals>(key, {
+              inventory_approvals: {
+                ...original.inventory_approvals,
+                ...update,
+              },
+            })
           }
 
-          queryClient.setQueriesData(key, {
-            inventory_approvals: {
-              ...original?.inventory_approvals,
-              ...update,
-            },
-          })
           toast.success('Updated ownership privacy setting.')
         },
         onError: (error) => {
