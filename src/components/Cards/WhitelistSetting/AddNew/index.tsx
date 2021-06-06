@@ -1,37 +1,23 @@
 import { FC, memo } from 'react'
 
-import { UIExpiration } from '../../../../../interface/nft-ui'
+import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
-import ExpirationForm from '../../../Common/ExpirationForm'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Buttons } from '../../../UI/Card'
-import { Field, Input, Label, ToggleWrapper } from '../../../UI/Forms'
-import Toggle from '../../../UI/Forms/Toggle'
-import { Container, Content, Options } from './styles'
-
-export type Options = {
-  hideOwnership: boolean
-  hidePrivateMetadata: boolean
-  preventTransferPower: boolean
-  [key: string]: boolean
-}
+import { Field, Input, Label } from '../../../UI/Forms'
+import Permissions from '../Permissions'
+import { Container, Content } from './styles'
 
 export type Props = {
   address: string
   setAddress: (value: string) => void
-  options: Options
-  setOptions: (data: Partial<Options>) => void
+  options: ApprovalOptions
+  setOptions: (data: Partial<ApprovalOptions>) => void
   expiration: UIExpiration
   setExpiration: (data: Partial<UIExpiration>) => void
   loading?: boolean
   onAdd: () => void
-  addErrors: { address: string; expiration: string }
-}
-
-const TOGGLES = {
-  hideOwnership: 'Hide ownership',
-  hidePrivateMetadata: 'Hide private metadata',
-  preventTransferPower: 'Prevent transfer power',
+  errors: { address: string; expiration: string }
 }
 
 const AddNew: FC<Props> = ({
@@ -43,7 +29,7 @@ const AddNew: FC<Props> = ({
   setExpiration,
   onAdd,
   loading,
-  addErrors,
+  errors,
 }) => (
   <Container>
     <Content>
@@ -53,31 +39,20 @@ const AddNew: FC<Props> = ({
           placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
           value={address}
           onChange={(e) => setAddress(e.currentTarget.value)}
-          validation={!!addErrors.address ? 'error' : undefined}
+          validation={!!errors.address ? 'error' : undefined}
         />
-        {addErrors.address && (
-          <MessageWithIcon validation="error" message={addErrors.address} />
+        {errors.address && (
+          <MessageWithIcon validation="error" message={errors.address} />
         )}
       </Field>
-      <Options>
-        {Object.entries(TOGGLES).map(([value, label]) => (
-          <ToggleWrapper key={value}>
-            <Toggle
-              id={value}
-              checked={options[value]}
-              onChange={() => setOptions({ [value]: !options[value] })}
-            />
-            <Label>{label}</Label>
-          </ToggleWrapper>
-        ))}
-      </Options>
-      {Object.values(options).some((value) => !value) && (
-        <ExpirationForm
-          settings={expiration}
-          onChange={setExpiration}
-          error={addErrors.expiration}
-        />
-      )}
+      <Permissions
+        id="add"
+        options={options}
+        setOptions={setOptions}
+        expiration={expiration}
+        setExpiration={setExpiration}
+        error={errors.expiration}
+      />
     </Content>
     <Buttons>
       <ButtonWithLoading
