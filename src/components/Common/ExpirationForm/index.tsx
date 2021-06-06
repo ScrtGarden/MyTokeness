@@ -2,6 +2,7 @@ import { FC, FormEvent, memo } from 'react'
 import DatePicker from 'react-datepicker'
 
 import { UIExpiration } from '../../../../interface/nft-ui'
+import { DATE_FORMAT } from '../../../../utils/constants'
 import { blockheightPattern } from '../../../../utils/regexPatterns'
 import { DatePickerWrapper } from '../../UI/DatePicker'
 import { Label } from '../../UI/Forms'
@@ -53,7 +54,7 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
             customInput={
               <StyledInput validation={error ? 'error' : undefined} />
             }
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat={DATE_FORMAT}
             showTimeInput
             minDate={new Date()}
           />
