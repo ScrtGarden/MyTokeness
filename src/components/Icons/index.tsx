@@ -15,6 +15,7 @@ import CopyDuo from './CopyDuo'
 import Dizzy from './Dizzy'
 import DraftingCompassDuo from './DraftingCompassDuo'
 import EllipsisH from './EllipsisH'
+import EllipsisV from './EllipsisV'
 import ExchangeDuo from './ExchangeDuo'
 import ExclamationCircle from './ExclamationCircle'
 import ExclamationCircleDuo from './ExclamationCircleDuo'
@@ -57,6 +58,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'ellipsis-v':
+      SelectedIcon = EllipsisV
+      break
     case 'external-link-duo':
       SelectedIcon = ExternalLinkDuo
       break
