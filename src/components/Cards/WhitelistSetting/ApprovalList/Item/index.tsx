@@ -13,13 +13,14 @@ import { Cell, StyledRow, Text } from './styles'
 
 type Props = {
   item: UISnip721Approval
+  isOpen?: boolean
+  toggle: (address: string) => void
 }
 
-const Item: FC<Props> = ({ item }) => {
+const Item: FC<Props> = ({ item, isOpen, toggle }) => {
   const { address, transfer, viewOwner, viewPrivateMetadata, expiration } = item
 
   // component state
-  const [showEdit, setShowEdit] = useState(false)
   const parsedData = useMemo(
     () => parseData(transfer, viewOwner, viewPrivateMetadata, expiration),
     [item]
@@ -27,7 +28,7 @@ const Item: FC<Props> = ({ item }) => {
 
   return (
     <>
-      <StyledRow active={showEdit}>
+      <StyledRow active={isOpen}>
         <Cell>
           <Text bold>{truncateAddress(address)}</Text>
         </Cell>
@@ -38,17 +39,17 @@ const Item: FC<Props> = ({ item }) => {
           <Text>{parsedData.expirationLabel}</Text>
         </Cell>
         <Cell>
-          <IconButton onClick={() => setShowEdit(!showEdit)}>
+          <IconButton onClick={() => toggle(address)}>
             <StyledIcon name="ellipsis-v" />
           </IconButton>
         </Cell>
       </StyledRow>
-      {showEdit && (
+      {isOpen && (
         <Row>
           <Editor
             expiration={expiration}
             options={parsedData.options}
-            toggle={() => setShowEdit(!showEdit)}
+            toggle={() => toggle(address)}
           />
         </Row>
       )}

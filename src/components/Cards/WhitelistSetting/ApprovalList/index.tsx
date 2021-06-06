@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useState } from 'react'
 
 import { UISnip721Approval } from '../../../../../interface/nft-ui'
 import { Body, Head, HeaderCell, HeaderRow } from '../../../UI/Table'
@@ -10,12 +10,20 @@ export type Props = {
 }
 
 const ApprovalList: FC<Props> = ({ list }) => {
+  const [selected, setSelected] = useState('')
+
   if (list.length === 0) {
     return (
       <Placeholder>
         <StyledEmptyList text="No whitelisted addresses" icon="list-ul-duo" />
       </Placeholder>
     )
+  }
+
+  const onToggle = (address: string) => {
+    address !== selected
+      ? setSelected(address)
+      : setSelected(selected ? '' : address)
   }
 
   return (
@@ -30,7 +38,12 @@ const ApprovalList: FC<Props> = ({ list }) => {
         </Head>
         <Body>
           {list.map((approved) => (
-            <Item key={approved.address} item={approved} />
+            <Item
+              key={approved.address}
+              item={approved}
+              isOpen={selected === approved.address}
+              toggle={onToggle}
+            />
           ))}
         </Body>
       </StyledTable>
