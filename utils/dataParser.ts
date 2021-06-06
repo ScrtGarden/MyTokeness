@@ -43,13 +43,21 @@ const Snip721ApprovalToUI = (original: Snip721Approval): UISnip721Approval => {
     view_private_metadata_expiration,
   } = original
 
+  const transfer = !!transfer_expiration || false
+  const viewOwner = !!view_owner_expiration || false
+  const viewPrivateMetadata = !!view_private_metadata_expiration || false
+  const expiration =
+    (transfer && expirationToUI(transfer_expiration)) ||
+    (viewOwner && expirationToUI(view_owner_expiration)) ||
+    ((viewPrivateMetadata &&
+      expirationToUI(view_private_metadata_expiration)) as UIExpiration)
+
   return {
     address,
-    transferExpiration: expirationToUI(transfer_expiration),
-    viewOwnerExpiration: expirationToUI(view_owner_expiration),
-    viewPrivateMetadataExpiration: expirationToUI(
-      view_private_metadata_expiration
-    ),
+    transfer,
+    viewOwner,
+    viewPrivateMetadata,
+    expiration,
   }
 }
 
