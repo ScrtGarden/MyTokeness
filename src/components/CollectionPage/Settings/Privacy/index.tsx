@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 
 import {
   QueryInventoryApprovals,
   ResultInventoryApprovals,
 } from '../../../../../interface/nft'
+import { UIInventoryApprovals } from '../../../../../interface/nft-ui'
+import { inventoryApprovalToUI } from '../../../../../utils/dataParser'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useQueryContract from '../../../../hooks/useQueryContract'
 import { CollectionRouterQuery } from '../../../Layouts/CollectionLayout'
@@ -25,17 +26,22 @@ const Privacy = () => {
   // custom hooks
   const { data, isLoading } = useQueryContract<
     QueryInventoryApprovals,
-    ResultInventoryApprovals
+    ResultInventoryApprovals,
+    UIInventoryApprovals
   >(
     ['inventoryApprovals', walletAddress, contractAddress],
     contractAddress,
     {
       inventory_approvals: { address: walletAddress, viewing_key: viewingKey },
     },
-    { enabled: !!viewingKey }
+    {
+      enabled: !!viewingKey,
+      select: inventoryApprovalToUI,
+      refetchOnWindowFocus: false,
+    }
   )
 
-  // console.log({ data })
+  console.log({ data })
 
   if (isLoading) {
     return <Container>Loading...</Container>
@@ -48,23 +54,21 @@ const Privacy = () => {
   return (
     <Container>
       <OwnershipPrivacySetting
-        isPrivate={!data.inventory_approvals.owner_is_public}
-        expiration={data.inventory_approvals.public_ownership_expiration}
+        isPrivate={!data.ownerIsPublic}
+        expiration={data.publicOwnershipExpiration}
         contractAddress={contractAddress}
         walletAddress={walletAddress}
       />
       <PrivateMetadataPrivacySetting
-        isPrivate={!data.inventory_approvals.private_metadata_is_public}
-        expiration={
-          data.inventory_approvals.private_metadata_is_public_expiration
-        }
+        isPrivate={!data.privateMetadataIsPublic}
+        expiration={data.privateMetadataIsPublicExpiration}
         contractAddress={contractAddress}
         walletAddress={walletAddress}
       />
       <Whitelisting
         contractAddress={contractAddress}
         walletAddress={walletAddress}
-        approvedList={data.inventory_approvals.inventory_approvals}
+        approvedList={data.inventoryApprovals}
       />
     </Container>
   )
