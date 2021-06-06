@@ -7,9 +7,8 @@ import {
   SetWhitelistedApproval,
   Snip721Approval,
 } from '../../../../../interface/nft'
-import { UIExpiration } from '../../../../../interface/nft-ui'
+import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
 import isSecretAddress from '../../../../../utils/isSecretAddress'
-import { Options } from '../../../Cards/WhitelistSetting/AddNew'
 
 const validate = (isPrivate: boolean, settings: UIExpiration) => {
   const { type, date, blockheight } = settings
@@ -64,7 +63,7 @@ const format = (
 
 const validateAdd = (
   address: string,
-  options: Options,
+  options: ApprovalOptions,
   { date, blockheight, type }: UIExpiration
 ) => {
   const validation = {
@@ -95,7 +94,7 @@ const validateAdd = (
 
 const formatAdd = (
   address: string,
-  { hideOwnership, hidePrivateMetadata, preventTransferPower }: Options,
+  { hideOwnership, hidePrivateMetadata, preventTransferPower }: ApprovalOptions,
   expiration: UIExpiration
 ): HandleSetWhitelistedApproval => {
   const viewOwner = hideOwnership ? 'none' : 'all'
