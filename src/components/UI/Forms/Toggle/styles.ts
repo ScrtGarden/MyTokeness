@@ -6,6 +6,7 @@ interface CheckBoxLabelProps {
 
 const CheckBoxWrapper = styled.div`
   position: relative;
+  height: 20px;
 `
 
 const CheckBoxLabel = styled.label<CheckBoxLabelProps>`
