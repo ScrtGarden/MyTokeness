@@ -36,9 +36,10 @@ export type ExpirationReducer = (
 
 export interface UISnip721Approval {
   address: string
-  viewOwnerExpiration: UIExpiration | null
-  viewPrivateMetadataExpiration: UIExpiration | null
-  transferExpiration: UIExpiration | null
+  viewOwner: boolean
+  viewPrivateMetadata: boolean
+  transfer: boolean
+  expiration: UIExpiration
 }
 
 export interface UIInventoryApprovals {
@@ -48,3 +49,15 @@ export interface UIInventoryApprovals {
   privateMetadataIsPublicExpiration: UIExpiration
   inventoryApprovals: UISnip721Approval[]
 }
+
+export type ApprovalOptions = {
+  hideOwnership: boolean
+  hidePrivateMetadata: boolean
+  preventTransferPower: boolean
+  [key: string]: boolean
+}
+
+export type ApprovalOptionsReducer = (
+  p: ApprovalOptions,
+  u: Partial<ApprovalOptions>
+) => ApprovalOptions
