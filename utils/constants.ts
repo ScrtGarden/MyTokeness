@@ -34,7 +34,7 @@ const MAX_GAS = {
     BATCH_MINT: calcBatchMint,
     CREATE_VIEWING_KEY: '120000',
     SET_GLOBAL_APPROVAL: '120000',
-    SET_WHITELIST_APPROVAL: '130000',
+    SET_WHITELIST_APPROVAL: '140000',
   },
 }
 
@@ -142,6 +142,8 @@ const FILE_UPLOADER = {
 
 const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
 
+const DATE_FORMAT = 'MMMM d, yyyy h:mm aa'
+
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
@@ -149,4 +151,5 @@ export {
   MYTOKENESS_NFT_CONTRACTS,
   FILE_UPLOADER,
   CHAIN_EXPLORER,
+  DATE_FORMAT,
 }
