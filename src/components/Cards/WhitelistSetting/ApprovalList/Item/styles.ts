@@ -21,8 +21,7 @@ const Text = styled.p<TextProps>`
 `
 
 const StyledRow = styled(Row)<RowProps>`
-  ${(props) =>
-    props.active && `border-bottom: none; background: ${props.theme.fg};`}
+  ${(props) => props.active && `border-bottom: none; background: #1f262d;`}
 `
 
 const Cell = styled.td`

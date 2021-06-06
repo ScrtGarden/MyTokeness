@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Cell = styled.td`
-  background: ${(props) => props.theme.fg};
+  background: #1f262d;
   padding: 0 ${(props) => props.theme.space.sm};
 `
 
