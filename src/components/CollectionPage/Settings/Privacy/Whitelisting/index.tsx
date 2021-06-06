@@ -5,18 +5,19 @@ import { toast } from 'react-toastify'
 import {
   HandleSetWhitelistedApproval,
   ResultInventoryApprovals,
-  Snip721Approval,
 } from '../../../../../../interface/nft'
 import {
+  ApprovalOptions,
+  ApprovalOptionsReducer,
   ExpirationReducer,
   UIExpiration,
+  UISnip721Approval,
 } from '../../../../../../interface/nft-ui'
 import { MAX_GAS } from '../../../../../../utils/constants'
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
 import useMutationExeContract from '../../../../../hooks/useMutationExeContract'
 import WhitelistSetting from '../../../../Cards/WhitelistSetting'
-import { Options } from '../../../../Cards/WhitelistSetting/AddNew'
 import {
   formatAdd as format,
   updateTokenApprovals,
@@ -26,12 +27,10 @@ import {
 type Props = {
   contractAddress: string
   walletAddress: string
-  approvedList: Snip721Approval[]
+  approvedList: UISnip721Approval[]
 }
 
-type OptionReducer = (p: Options, u: Partial<Options>) => Options
-
-const OPTIONS: Options = {
+const OPTIONS: ApprovalOptions = {
   hideOwnership: true,
   hidePrivateMetadata: true,
   preventTransferPower: true,
@@ -49,7 +48,10 @@ const Whitelisting: FC<Props> = (props) => {
 
   // component state
   const [address, setAddress] = useState('')
-  const [options, setOptions] = useReducer<OptionReducer>(reducer, OPTIONS)
+  const [options, setOptions] = useReducer<ApprovalOptionsReducer>(
+    reducer,
+    OPTIONS
+  )
   const [expiration, setExpiration] = useReducer<ExpirationReducer>(
     reducer,
     EXPIRATION
@@ -88,7 +90,7 @@ const Whitelisting: FC<Props> = (props) => {
       {
         contractAddress,
         handleMsg,
-        maxGas: MAX_GAS.NFT.SET_GLOBAL_APPROVAL,
+        maxGas: MAX_GAS.NFT.SET_WHITELIST_APPROVAL,
       },
       {
         onSuccess: (_, { handleMsg: { set_whitelisted_approval } }) => {
@@ -109,9 +111,11 @@ const Whitelisting: FC<Props> = (props) => {
                 inventory_approvals: updatedApprovals,
               },
             })
-            console.log({ updatedApprovals })
           }
 
+          setAddress('')
+          setOptions(OPTIONS)
+          setExpiration(EXPIRATION)
           toast.success('Added address to whitelist.')
         },
         onError: (error) => {
@@ -131,7 +135,7 @@ const Whitelisting: FC<Props> = (props) => {
       expiration={expiration}
       setExpiration={setExpiration}
       onAdd={onAdd}
-      addErrors={addError}
+      errors={addError}
       loading={isLoading}
     />
   )
