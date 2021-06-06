@@ -1,14 +1,13 @@
 import { FC, memo } from 'react'
 
-import { Snip721Approval } from '../../../../interface/nft'
 import { Header, SettingsCard, Wrapper } from '../../UI/Card'
 import { Text } from '../../UI/Typography'
 import AddNew from './AddNew'
 import { Props as AddNewProps } from './AddNew'
+import { Props as ApprovalListProps } from './ApprovalList'
+import ApprovalList from './ApprovalList'
 
-type Props = {
-  list: Snip721Approval[]
-} & AddNewProps
+type Props = AddNewProps & ApprovalListProps
 
 const WhitelistSetting: FC<Props> = ({
   list,
@@ -20,14 +19,14 @@ const WhitelistSetting: FC<Props> = ({
   setExpiration,
   onAdd,
   loading,
-  addErrors,
+  errors,
 }) => (
   <SettingsCard>
     <Header>Whitelist Setting</Header>
     <Wrapper>
       <Text>
         Grant an address permission to view ownership, view private metadata,
-        and/or to transfer every token in the owner's inventory.
+        and/or to transfer every token in the your inventory.
       </Text>
       <AddNew
         address={address}
@@ -38,9 +37,11 @@ const WhitelistSetting: FC<Props> = ({
         setExpiration={setExpiration}
         onAdd={onAdd}
         loading={loading}
-        addErrors={addErrors}
+        errors={errors}
       />
     </Wrapper>
+    <Header margin>Approved List</Header>
+    <ApprovalList list={list} />
   </SettingsCard>
 )
 
