@@ -4,7 +4,7 @@ import { Skeleton } from '../../../UI/Loaders'
 import { PageTitle } from '../../../UI/Typography'
 
 const Container = styled.div`
-  margin: 45px 0 100px 0;
+  margin: 60px 0;
   width: 100%;
 `
 
