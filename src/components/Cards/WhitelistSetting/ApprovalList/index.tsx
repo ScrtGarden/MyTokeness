@@ -12,18 +12,18 @@ export type Props = {
 const ApprovalList: FC<Props> = ({ list }) => {
   const [selected, setSelected] = useState('')
 
+  const onToggle = (address: string) => {
+    address !== selected
+      ? setSelected(address)
+      : setSelected(selected ? '' : address)
+  }
+
   if (list.length === 0) {
     return (
       <Placeholder>
         <StyledEmptyList text="No whitelisted addresses" icon="list-ul-duo" />
       </Placeholder>
     )
-  }
-
-  const onToggle = (address: string) => {
-    address !== selected
-      ? setSelected(address)
-      : setSelected(selected ? '' : address)
   }
 
   return (
