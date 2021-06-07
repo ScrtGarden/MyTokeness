@@ -1,9 +1,6 @@
-import { FC, memo, useMemo, useState } from 'react'
+import { FC, memo, useMemo } from 'react'
 
-import {
-  UIExpiration,
-  UISnip721Approval,
-} from '../../../../../../interface/nft-ui'
+import { UISnip721Approval } from '../../../../../../interface/nft-ui'
 import truncateAddress from '../../../../../../utils/truncateAddress'
 import { IconButton, StyledIcon } from '../../../../UI/Buttons'
 import { Row } from '../../../../UI/Table'
@@ -22,7 +19,7 @@ const Item: FC<Props> = ({ item, isOpen, toggle }) => {
 
   // component state
   const parsedData = useMemo(
-    () => parseData(transfer, viewOwner, viewPrivateMetadata, expiration),
+    () => parseData(viewOwner, viewPrivateMetadata, transfer, expiration),
     [item]
   )
 
@@ -38,7 +35,7 @@ const Item: FC<Props> = ({ item, isOpen, toggle }) => {
         <Cell>
           <Text>{parsedData.expirationLabel}</Text>
         </Cell>
-        <Cell>
+        <Cell width={40}>
           <IconButton onClick={() => toggle(address)}>
             <StyledIcon name="ellipsis-v" />
           </IconButton>
@@ -47,6 +44,7 @@ const Item: FC<Props> = ({ item, isOpen, toggle }) => {
       {isOpen && (
         <Row>
           <Editor
+            address={address}
             expiration={expiration}
             options={parsedData.options}
             toggle={() => toggle(address)}
