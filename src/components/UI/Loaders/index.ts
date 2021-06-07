@@ -6,6 +6,8 @@ interface SkeletonProps {
   readonly height?: string
   readonly width?: string
   readonly circle?: boolean
+  readonly noflex?: boolean
+  readonly pill?: boolean
 }
 
 const StyledDots = styled(Dots)`
@@ -42,6 +44,8 @@ const Skeleton = styled.div.attrs<SkeletonProps>(({ height, width }) => ({
   border-radius: ${(props) => (props.circle ? '50%' : '4px')};
   flex-shrink: 0;
   ${(props) => !props.circle && 'flex: 1'};
+  ${(props) => props.noflex && 'flex: unset'};
+  ${(props) => props.pill && 'border-radius: 500px'};
 `
 
 export { StyledDots, Skeleton }
