@@ -8,6 +8,8 @@ import { UIInventoryApprovals } from '../../../../../interface/nft-ui'
 import { inventoryApprovalToUI } from '../../../../../utils/dataParser'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useQueryContract from '../../../../hooks/useQueryContract'
+import SkeletonCard from '../../../Cards/Skeleton'
+import EmptyList from '../../../EmptyList'
 import { CollectionRouterQuery } from '../../../Layouts/CollectionLayout'
 import { Container } from '../styles'
 import OwnershipPrivacySetting from './OwnershipPrivacySetting'
@@ -24,7 +26,7 @@ const Privacy = () => {
   )
 
   // custom hooks
-  const { data, isLoading } = useQueryContract<
+  const { data, isLoading, isError } = useQueryContract<
     QueryInventoryApprovals,
     ResultInventoryApprovals,
     UIInventoryApprovals
@@ -41,14 +43,43 @@ const Privacy = () => {
     }
   )
 
-  console.log({ data })
-
-  if (isLoading) {
-    return <Container>Loading...</Container>
+  if (!viewingKey) {
+    return (
+      <Container>
+        <EmptyList
+          text="We need a viewing key to handle your privacy settings. Please make sure you have created one and then come back."
+          icon="key-skeleton"
+          buttonText="Go Create Viewing Key"
+          onClick={() =>
+            router.push(
+              '/nft/collections/[contractAddress]/settings/viewing-key',
+              `/nft/collections/${contractAddress}/settings/viewing-key`,
+              { shallow: true }
+            )
+          }
+        />
+      </Container>
+    )
   }
 
-  if (!data) {
-    return null
+  if (isLoading) {
+    return (
+      <Container>
+        <SkeletonCard />
+        <SkeletonCard />
+      </Container>
+    )
+  }
+
+  if (!data || isError) {
+    return (
+      <Container>
+        <EmptyList
+          text="Ooops! Looks like something went wrong."
+          icon="exclamation-circle-duo"
+        />
+      </Container>
+    )
   }
 
   return (
