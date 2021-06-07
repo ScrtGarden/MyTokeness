@@ -7,9 +7,12 @@ interface TabProps {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: fit-content;
   max-width: 250px;
   row-gap: ${(props) => props.theme.space.sm};
   width: 30%;
+  position: sticky;
+  top: 75px;
 `
 
 const Tab = styled.div<TabProps>`
