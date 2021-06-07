@@ -117,6 +117,16 @@ export interface SetWhitelistedApproval {
   padding?: string
 }
 
+export interface ContractConfig {
+  token_supply_is_public: boolean
+  owner_is_public: boolean
+  sealed_metadata_is_enabled: boolean
+  unwrapped_metadata_is_private: boolean
+  minter_may_update_metadata: boolean
+  owner_may_update_metadata: boolean
+  burn_is_enabled: boolean
+}
+
 /**************************** ******************************/
 
 /**
@@ -153,6 +163,10 @@ export interface QueryNFTInfo {
 
 export interface QueryInventoryApprovals {
   inventory_approvals: QInventoryApprovals
+}
+
+export interface QueryContractConfig {
+  contract_config: {}
 }
 
 /**
@@ -221,4 +235,8 @@ export interface ResultSetWhitelistApproval {
   set_whitelisted_approval: {
     status: Status
   }
+}
+
+export interface ResultContractConfig {
+  contract_config: ContractConfig
 }
