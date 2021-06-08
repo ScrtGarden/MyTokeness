@@ -2,11 +2,6 @@ import styled from 'styled-components'
 
 import EmptyList from '../../EmptyList'
 
-const Container = styled.div`
-  border: 1px solid red;
-  color: #fff;
-`
-
 const ScrollWrapper = styled.div`
   width: 100%;
 
@@ -28,4 +23,4 @@ const StyledEmptyList = styled(EmptyList)`
   width: 100%;
 `
 
-export { Container, ScrollWrapper, Placeholder, StyledEmptyList }
+export { ScrollWrapper, Placeholder, StyledEmptyList }
