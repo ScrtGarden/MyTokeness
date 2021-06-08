@@ -1,8 +1,11 @@
-// Only alphabetic chars and digits, up to 6 chars max.
-const symbolPattern = /^[A-Za-z0-9]{0,6}$/
+// Only alphabetic chars up to 6 chars max.
+const symbolPattern = /^[A-Za-z]{0,6}$/
 
 // Only integers, no leading zero
-const decimalsPattern = /^([1-9][0-9]*)$/
+const supplyPattern = /^([1-9][0-9]*)$/
+
+// Number between 1-18
+const decimalsPattern = /^(1[0-8]|[1-9])$/
 
 // Only integers with leading zero
 const blockheightPattern = /^(0|[1-9][0-9]*)$/
@@ -24,4 +27,5 @@ export {
   getErrorMsgPattern,
   hashLinkPattern,
   blockheightPattern,
+  supplyPattern,
 }

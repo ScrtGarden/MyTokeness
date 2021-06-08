@@ -1,6 +1,6 @@
 import { FormEvent, memo } from 'react'
 
-import { decimalsPattern } from '../../../../../utils/regexPatterns'
+import { supplyPattern } from '../../../../../utils/regexPatterns'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
@@ -36,7 +36,7 @@ const Public = () => {
 
   const onChangeSupply = (e: FormEvent<HTMLInputElement>) => {
     const amount = e.currentTarget.value
-    if (!amount || amount.match(decimalsPattern)) {
+    if (!amount || amount.match(supplyPattern)) {
       setData({ supply: amount })
     }
   }
