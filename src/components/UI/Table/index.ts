@@ -44,6 +44,10 @@ const Row = styled.tr`
   border-bottom: 1px solid ${(props) => props.theme.border.color}90;
   display: table-row;
   width: 100%;
+
+  :only-child {
+    border-bottom: none;
+  }
 `
 
 const Cell = styled.td<CellProps>`
