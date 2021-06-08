@@ -127,6 +127,40 @@ export interface ContractConfig {
   burn_is_enabled: boolean
 }
 
+export interface QTransactionHistory {
+  address: string
+  viewing_key: string
+  page?: number
+  page_size?: number
+}
+
+export interface Tx {
+  tx_id: number
+  blockheight: number
+  token_id: string
+  action:
+    | { mint: TxActionMint }
+    | { transfer: TxActionTransfer }
+    | { burn: TxActionBurn }
+  memo?: string
+}
+
+export interface TxActionMint {
+  minter: string
+  recipient: string
+}
+
+export interface TxActionTransfer {
+  from: string
+  sender?: string
+  recipient: string
+}
+
+export interface TxActionBurn {
+  owner: string
+  burner?: string
+}
+
 /**************************** ******************************/
 
 /**
@@ -167,6 +201,10 @@ export interface QueryInventoryApprovals {
 
 export interface QueryContractConfig {
   contract_config: {}
+}
+
+export interface QueryTransactionHistory {
+  transaction_history: QTransactionHistory
 }
 
 /**
@@ -239,4 +277,10 @@ export interface ResultSetWhitelistApproval {
 
 export interface ResultContractConfig {
   contract_config: ContractConfig
+}
+
+export interface ResultTransactionHistory {
+  transaction_history: {
+    txs: Tx[]
+  }
 }
