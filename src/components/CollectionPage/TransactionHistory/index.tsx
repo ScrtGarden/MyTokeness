@@ -103,7 +103,7 @@ const TransactionHistory = () => {
 
   if (isLoading) {
     return (
-      <Container>
+      <Container flexend>
         <SkeletonTable rows={4} />
       </Container>
     )
