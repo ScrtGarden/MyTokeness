@@ -9,7 +9,9 @@ import decoder from '../../../../utils/decoder'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreActions, useStoreState } from '../../../hooks/storeHooks'
 import useCopyToClipboard from '../../../hooks/useCopyToClipboard'
+import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import ImportViewingKey from '../../Modals/ImportViewingKey'
@@ -25,6 +27,7 @@ const ViewingKeyCard = () => {
   const { contractAddress } = router.query as CollectionRouterQuery
 
   // store state
+  const isConnected = useStoreState((state) => state.auth.isWalletConnected)
   const viewingKey = useStoreState((state) =>
     state.auth.keyByContractAddress(contractAddress as string)
   )
@@ -35,13 +38,26 @@ const ViewingKeyCard = () => {
 
   // custom hooks
   const [_, copy] = useCopyToClipboard(viewingKey)
+  const { mutateAsync: connectWallet, isLoading: connecting } =
+    useMutationConnectWallet()
+  const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
+    useMutationGetAccounts()
   const { mutate, isLoading } = useMutationExeContract<HandleCreateViewingKey>()
 
   // component state
   const [showWarning, setShowWarning] = useState(false)
   const [showImport, setShowImport] = useState(false)
 
-  const onClickGetKey = () => {
+  const onClickGetKey = async () => {
+    if (!isConnected) {
+      try {
+        await connectWallet()
+        await getAccounts()
+      } catch (error) {
+        return
+      }
+    }
+
     mutate(
       {
         contractAddress,
@@ -77,7 +93,16 @@ const ViewingKeyCard = () => {
     toast.success('Removed viewing key.')
   }
 
-  const onClickImport = (newKey: string) => {
+  const onClickImport = async (newKey: string) => {
+    if (!isConnected) {
+      try {
+        await connectWallet()
+        await getAccounts()
+      } catch (error) {
+        return
+      }
+    }
+
     setKey({ contractAddress, key: newKey })
     setShowImport(false)
     toast.success('Imported viewing key.')
@@ -108,7 +133,9 @@ const ViewingKeyCard = () => {
               text={`${viewingKey ? 'Rotate' : 'Get'} Key`}
               width={viewingKey ? 97 : 76}
               isPrimary
-              loading={isLoading}
+              loading={
+                (connecting || gettingAccounts || isLoading) && !showImport
+              }
               onClick={onClickGetKey}
             />
           </Buttons>
@@ -132,6 +159,7 @@ const ViewingKeyCard = () => {
         <ImportViewingKey
           toggle={() => setShowImport(!showImport)}
           onClickPrimary={onClickImport}
+          loading={(connecting || gettingAccounts) && showImport}
         />
       </Modal>
     </>
