@@ -9,6 +9,7 @@ import {
 } from '../../../../interface/nft'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useQueryContract from '../../../hooks/useQueryContract'
+import SkeletonTable from '../../Common/SkeletonTable'
 import EmptyList from '../../EmptyList'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import Pagination from '../../UI/Pagination'
@@ -30,7 +31,7 @@ const TransactionHistory = () => {
   // component state
   const [page, setPage] = useState(1)
 
-  const { data, isError } = useQueryContract<
+  const { data, isError, isLoading } = useQueryContract<
     QueryTransactionHistory,
     ResultTransactionHistory
   >(
@@ -96,6 +97,14 @@ const TransactionHistory = () => {
             )
           }
         />
+      </Container>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <Container>
+        <SkeletonTable rows={4} />
       </Container>
     )
   }
