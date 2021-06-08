@@ -48,7 +48,7 @@ const TransactionTable: FC<Props> = ({ data, columns }) => {
             <Cell colSpan={4}>
               <StyledEmptyList
                 icon="list-ul-duo"
-                text="No transactions have be made with this account."
+                text="No transactions have be made on this account."
               />
             </Cell>
           </Row>
