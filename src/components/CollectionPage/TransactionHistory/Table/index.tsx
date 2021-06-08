@@ -11,6 +11,7 @@ import {
   Row,
   Table,
 } from '../../../UI/Table'
+import { StyledEmptyList } from './styles'
 
 type Props = {
   columns: Column<Tx>[]
@@ -42,18 +43,27 @@ const TransactionTable: FC<Props> = ({ data, columns }) => {
         ))}
       </Head>
       <Body {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <Row {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
+        {rows.length === 0 ? (
+          <Row>
+            <Cell colSpan={4}>
+              <StyledEmptyList
+                icon="list-ul-duo"
+                text="No transactions have be made with this account."
+              />
+            </Cell>
+          </Row>
+        ) : (
+          rows.map((row) => {
+            prepareRow(row)
+            return (
+              <Row {...row.getRowProps()}>
+                {row.cells.map((cell) => (
                   <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-                )
-              })}
-            </Row>
-          )
-        })}
+                ))}
+              </Row>
+            )
+          })
+        )}
       </Body>
     </Table>
   )
