@@ -38,7 +38,7 @@ const Details = () => {
         </Field>
         <Field>
           <Label>Symbol</Label>
-          <Hint>May contain digits. 3-6 characters long.</Hint>
+          <Hint>Must be 3-6 characters long. Alphabetical letters only.</Hint>
           <Input
             value={symbol}
             onChange={(e) => setSymbol(e.currentTarget.value)}
@@ -53,6 +53,7 @@ const Details = () => {
           <Label>Decimals</Label>
           <Hint>
             Decimal precision of your token. E.g. SCRT uses 6, ETH uses 18.
+            Enter number between 1-18.
           </Hint>
           <Input
             value={decimals}
