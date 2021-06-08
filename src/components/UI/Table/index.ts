@@ -8,6 +8,7 @@ interface CustomCellProps {
   readonly bold?: boolean
   readonly center?: boolean
   readonly left?: boolean
+  readonly right?: boolean
 }
 
 const Table = styled.table`
@@ -49,7 +50,6 @@ const Cell = styled.td<CellProps>`
   box-sizing: border-box;
   align-items: center;
   color: ${(props) => props.theme.font.colors.primary};
-  display: flex;
   font-size: ${(props) => props.theme.font.sizes.md};
   padding: ${(props) => props.theme.space.sm};
   ${({ width }) => width && `width: ${width}`};
@@ -63,6 +63,7 @@ const CustomCell = styled.div<CustomCellProps>`
     props.bold && `font-weight: ${props.theme.font.weights.semibold}`};
   ${(props) => props.center && 'text-align: center'};
   ${(props) => props.left && 'text-align: left'};
+  ${(props) => props.right && 'text-align: right'};
 `
 
 export { Table, Head, HeaderRow, HeaderCell, Body, Row, Cell, CustomCell }
