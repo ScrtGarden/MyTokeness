@@ -38,8 +38,6 @@ const Table: FC<Props> = ({ data = [], columns }) => {
       useFlexLayout
     )
 
-  console.log({ data })
-
   return (
     <StyledTable {...getTableProps()}>
       <Head>
