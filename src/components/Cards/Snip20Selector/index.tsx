@@ -15,7 +15,7 @@ type Props = {
 
 const Snip20Selector: FC<Props> = ({ value, onChange, loading, error }) => (
   <Card>
-    <Header>Token Selector</Header>
+    <Header>Token</Header>
     <Wrapper>
       <Field>
         <Label>Contract address</Label>
