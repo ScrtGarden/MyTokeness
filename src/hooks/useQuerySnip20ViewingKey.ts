@@ -14,7 +14,7 @@ const useQuerySnip20ViewingKey = (
   return useQuery(
     ['viewingKey', walletAddress, contractAddress],
     () => keplr.getSnip20ViewingKey(contractAddress),
-    { refetchOnWindowFocus: false, ...options }
+    { refetchOnWindowFocus: false, retry: false, ...options }
   )
 }
 
