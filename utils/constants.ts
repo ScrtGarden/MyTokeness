@@ -86,25 +86,25 @@ const SIDEBAR_TABS = {
         },
       ],
     },
-    track: {
-      label: 'Track',
-      icon: 'analytics-duo',
-      route: '/track',
-      menu: [
-        {
-          label: 'Transfers',
-          icon: 'exchange-duo',
-          route: '/track/transfers',
-          as: undefined,
-        },
-        {
-          label: 'Transactions',
-          icon: 'list-ul-duo',
-          route: '/track/transactions',
-          as: undefined,
-        },
-      ],
-    },
+    // track: {
+    //   label: 'Track',
+    //   icon: 'analytics-duo',
+    //   route: '/track',
+    //   menu: [
+    //     {
+    //       label: 'Transfers',
+    //       icon: 'exchange-duo',
+    //       route: '/track/transfers',
+    //       as: undefined,
+    //     },
+    //     {
+    //       label: 'Transactions',
+    //       icon: 'list-ul-duo',
+    //       route: '/track/transactions',
+    //       as: undefined,
+    //     },
+    //   ],
+    // },
   },
   NFT: {
     collections: {
