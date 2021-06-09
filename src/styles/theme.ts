@@ -10,9 +10,6 @@ const theme = {
         md: '20px',
       },
     },
-    brand: {
-      color: '',
-    },
     font: {
       sizes: {
         xs: '1rem',
@@ -24,7 +21,7 @@ const theme = {
         xxxl: '3.6rem',
       },
       colors: {
-        brand: '#499bfc',
+        brand: '#f0be72',
         primary: '#fff',
         secondary: '#a0b3c6',
         disabled: '#404a50',
