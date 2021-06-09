@@ -11,6 +11,12 @@ interface CustomCellProps {
   readonly right?: boolean
 }
 
+const Container = styled.div`
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+`
+
 const Table = styled.table`
   border-collapse: collapse;
   border-spacing: 0px;
@@ -70,4 +76,14 @@ const CustomCell = styled.div<CustomCellProps>`
   ${(props) => props.right && 'text-align: right'};
 `
 
-export { Table, Head, HeaderRow, HeaderCell, Body, Row, Cell, CustomCell }
+export {
+  Table,
+  Head,
+  HeaderRow,
+  HeaderCell,
+  Body,
+  Row,
+  Cell,
+  CustomCell,
+  Container,
+}
