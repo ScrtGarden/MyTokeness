@@ -139,6 +139,10 @@ export interface QueryTransactionHistory {
   transaction_history: TransactionHistory
 }
 
+export interface QueryContractStatus {
+  contract_status: {}
+}
+
 /**
  *  Query Results
  */
@@ -167,6 +171,12 @@ export interface ResultTransactionHistory {
   transaction_history: {
     txs: RichTx[]
     total: number
+  }
+}
+
+export interface ResultContractStatus {
+  contract_status: {
+    status: ContractStatusLevel
   }
 }
 
