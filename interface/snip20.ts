@@ -69,6 +69,8 @@ export interface Tx {
   action: TxAction
   coins: Coin
   memo?: string
+  block_time?: number
+  block_height?: number
 }
 
 export interface TxAction {
@@ -102,6 +104,15 @@ export interface TxActionDeposit {
 export interface TxActionRedeem {
   owner: string
   recipient?: string
+}
+
+export interface RichTx {
+  id: number
+  action: TxAction
+  coins: Coin
+  memo: string
+  block_time: number
+  block_height: number
 }
 
 /**
@@ -154,7 +165,8 @@ export interface ResultTransferHistory {
 
 export interface ResultTransactionHistory {
   transaction_history: {
-    txs: Tx[]
+    txs: RichTx[]
+    total: number
   }
 }
 
