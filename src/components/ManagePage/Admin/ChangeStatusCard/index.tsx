@@ -1,13 +1,18 @@
 import { FC, memo, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { HandleMsgSetContractStatus } from '../../../../../interface/snip20'
+import {
+  HandleMsgSetContractStatus,
+  QueryContractStatus,
+  ResultContractStatus,
+} from '../../../../../interface/snip20'
 import { MAX_GAS } from '../../../../../utils/constants'
 import parseErrorMsg from '../../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
 import useMutationExeContract from '../../../../hooks/useMutationExeContract'
 import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
+import useQueryContract from '../../../../hooks/useQueryContract'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Option, Select } from '../../../UI/Forms'
@@ -37,16 +42,34 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
   const { mutate, isLoading: updating } =
     useMutationExeContract<HandleMsgSetContractStatus>()
 
+  const { data, isError } = useQueryContract<
+    QueryContractStatus,
+    ResultContractStatus
+  >(
+    ['contractStatus', contractAddress],
+    contractAddress,
+    { contract_status: {} },
+    { enabled: !!contractAddress, refetchOnWindowFocus: false, retry: false }
+  )
+
   // component state
-  const [status, setStatus] = useState<Options>('')
+  const [status, setStatus] = useState<Options>(
+    data?.contract_status.status || ''
+  )
   const [error, setError] = useState('')
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    error && setError('')
   }, [status])
+
+  useEffect(() => {
+    data && setStatus(data.contract_status.status)
+  }, [data])
+
+  useEffect(() => {
+    !contractAddress && setStatus('')
+  }, [contractAddress])
 
   const onUpdate = async () => {
     if (!status) {
@@ -90,6 +113,7 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
           name="status"
           value={status}
           onChange={(e) => setStatus(e.currentTarget.value as Options)}
+          disabled={!enableButton}
         >
           <Option disabled value={''}>
             Select an option
