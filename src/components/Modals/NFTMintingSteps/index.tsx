@@ -1,25 +1,23 @@
-import { ParsedUrlQuery } from 'querystring'
-
 import { useRouter } from 'next/router'
 import { FC, memo, useEffect, useMemo, useReducer, useState } from 'react'
+import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
 import { HandleBatchMintNFT, HandleMintNFT } from '../../../../interface/nft'
 import { MAX_GAS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import reducer from '../../../../utils/reducer'
+import { useStoreState } from '../../../hooks/storeHooks'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
 import useMutationUploadFile from '../../../hooks/useMutationUploadFile'
 import ContextStore from '../../CreateNFTPage/Store'
 import Icon from '../../Icons'
+import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import { CloseButton, Header, Title } from '../../UI/Modal'
 import { formatForHandleMsg } from './lib'
 import Step from './Step'
 import { Container, Steps } from './styles'
 
-export interface NFTMintRouterQuery extends ParsedUrlQuery {
-  contractAddress: string
-}
 export type StatusOption = 'awaiting' | 'in-progress' | 'completed' | 'failed'
 type Reducer = (p: Status, u: Partial<Status>) => Status
 type Props = {
@@ -35,8 +33,12 @@ const STATUS: Status = {
 }
 
 const NFTMintingSteps: FC<Props> = ({ toggle }) => {
+  const queryClient = useQueryClient()
   const router = useRouter()
-  const { contractAddress } = router.query as NFTMintRouterQuery
+  const { contractAddress } = router.query as CollectionRouterQuery
+
+  // store state
+  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
   // context store state
   const publicMetadata = ContextStore.useStoreState(
@@ -125,7 +127,16 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
           )
           reset()
           setStatus({ 2: 'completed' })
-          toggle()
+
+          queryClient.invalidateQueries([
+            'tokens',
+            walletAddress,
+            contractAddress,
+          ])
+
+          setTimeout(() => {
+            toggle()
+          }, 1000)
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))
