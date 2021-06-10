@@ -78,13 +78,13 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
 
     try {
       const publicResult = await uploadFile({ file: publicFile as File })
-      const publicLink = `ipfs://${publicResult.uploadFile.IpfsHash}/${publicFile?.name}`
+      const publicLink = publicResult.uploadFile.ipfsLink
       setPublicFileLink(publicLink)
 
       let privateLink = ''
       if (privateFile) {
         const privateResult = await uploadFile({ file: privateFile })
-        privateLink = `ipfs://${privateResult.uploadFile.IpfsHash}/${privateFile.name}`
+        privateLink = privateResult.uploadFile.ipfsLink
         setPrivateFileLink(privateLink)
       }
 
