@@ -32,7 +32,7 @@ const Assets = () => {
   if (!viewingKey) {
     return (
       <StyledEmptyList
-        text="We need a viewing key to find your assets. Please make sure you have created one and then come back."
+        text="We need a viewing key to fetch your assets. Please make sure you have created one and then come back."
         icon="key-skeleton"
         buttonText="Go Create Viewing Key"
         onClick={() =>
