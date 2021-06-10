@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import { UseQueryResult, useQueries, useQuery } from 'react-query'
 
 import { ResultContractInfo } from '../../../interface/nft'
@@ -8,10 +8,12 @@ import {
   MYTOKENESS_NFT_CONTRACTS,
 } from '../../../utils/constants'
 import { queryChain } from '../../../utils/secretjs'
-import { useStoreState } from '../../hooks/storeHooks'
+import { useStoreActions, useStoreState } from '../../hooks/storeHooks'
+import useToggle from '../../hooks/useToggle'
 import CollectionCard from '../Cards/Collection'
 import AddCollection from '../Modals/AddCollection'
 import CreateCollection from '../Modals/CreateCollection'
+import Warning from '../Modals/Warning'
 import { Button } from '../UI/Buttons'
 import { Container, InnerContainer } from '../UI/Containers'
 import { Modal } from '../UI/Modal'
@@ -21,12 +23,19 @@ const Collections = () => {
   // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
   const addedCollections = useStoreState(
-    (state) => state.collections.collections
+    (state) => state.collections.collectionsByAddress
+  )
+
+  // store actions
+  const removeCollection = useStoreActions(
+    (actions) => actions.collections.removeCollection
   )
 
   // component state
-  const [show, setShow] = useState(false)
-  const [showAdd, setShowAdd] = useState(false)
+  const [showCreate, toggleCreate] = useToggle()
+  const [showAdd, toggleAdd] = useToggle()
+  const [showWarn, toggleWarn] = useToggle()
+  const [addyToBeRemoved, setAddyToBeRemoved] = useState('')
 
   const { data, isLoading } = useQuery(
     ['collections', walletAddress],
@@ -63,6 +72,17 @@ const Collections = () => {
     )
   }
 
+  const onClickRemove = (e: MouseEvent<HTMLButtonElement>, address: string) => {
+    e.stopPropagation()
+    setAddyToBeRemoved(address)
+    toggleWarn()
+  }
+
+  const onRemove = () => {
+    removeCollection(addyToBeRemoved)
+    toggleWarn()
+  }
+
   return (
     <>
       <Container>
@@ -70,15 +90,14 @@ const Collections = () => {
           <Header>
             <StyledTitle>Collections</StyledTitle>
             <Buttons>
-              <Button isPrimary onClick={() => setShowAdd(!showAdd)}>
+              <Button isPrimary onClick={toggleAdd}>
                 Add Collection
               </Button>
-              <Button isPrimary onClick={() => setShow(!show)}>
+              <Button isPrimary onClick={toggleCreate}>
                 Create Collection
               </Button>
             </Buttons>
           </Header>
-
           <Grid>
             {Object.entries(MYTOKENESS_NFT_CONTRACTS).map(([key, value]) => (
               <CollectionCard
@@ -102,6 +121,7 @@ const Collections = () => {
                     )
                   }
                   loading={isLoading}
+                  isOwner
                 />
               ))}
             {!isLoading &&
@@ -118,20 +138,31 @@ const Collections = () => {
                       )
                     }
                     loading={isLoading}
+                    onClickRemove={(e) =>
+                      onClickRemove(e, addedCollections[index].address)
+                    }
                   />
                 )
               )}
           </Grid>
         </InnerContainer>
       </Container>
-      <Modal isOpen={show}>
-        <CreateCollection toggle={() => setShow(!show)} />
+      <Modal isOpen={showCreate}>
+        <CreateCollection toggle={toggleCreate} />
       </Modal>
-      <Modal isOpen={showAdd} onBackgroundClick={() => setShowAdd(!showAdd)}>
+      <Modal isOpen={showAdd}>
         <AddCollection
-          toggle={() => setShowAdd(!showAdd)}
+          toggle={toggleAdd}
           addedCollections={addedCollections}
           myCollections={data || []}
+        />
+      </Modal>
+      <Modal isOpen={showWarn} onBackgroundClick={toggleWarn}>
+        <Warning
+          title="Remove collection from list"
+          text="Are you sure you want to remove it?"
+          onClickPrimary={onRemove}
+          toggle={toggleWarn}
         />
       </Modal>
     </>

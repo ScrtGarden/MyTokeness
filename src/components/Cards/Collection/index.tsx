@@ -1,11 +1,14 @@
-import { FC, memo } from 'react'
+import { FC, MouseEvent, memo } from 'react'
 
+import { StyledIcon as Icon } from '../../UI/Buttons'
 import {
   Container,
   Label,
   SkeletonIcon,
   SkeletonLabel,
   StyledIcon,
+  StyledIconButton,
+  StyledTag,
 } from './styles'
 
 type Props = {
@@ -13,11 +16,25 @@ type Props = {
   icon: string
   onClick: () => void
   loading?: boolean
+  isOwner?: boolean
+  onClickRemove?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-const Collection: FC<Props> = ({ name, icon, onClick, loading }) => {
+const Collection: FC<Props> = ({
+  name,
+  icon,
+  onClick,
+  loading,
+  isOwner,
+  onClickRemove,
+}) => {
   return (
     <Container onClick={onClick}>
+      {onClickRemove && !loading && (
+        <StyledIconButton onClick={onClickRemove}>
+          <Icon name="trash-duo" />
+        </StyledIconButton>
+      )}
       {loading ? (
         <>
           <SkeletonLabel height="24px" width="80%" />
@@ -29,6 +46,7 @@ const Collection: FC<Props> = ({ name, icon, onClick, loading }) => {
           <StyledIcon name={icon} />
         </>
       )}
+      {isOwner && !loading && <StyledTag color="blue">Owner</StyledTag>}
     </Container>
   )
 }

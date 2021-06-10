@@ -10,7 +10,7 @@ export interface Collections {
   [key: string]: Collection[]
 }
 
-export interface AddCollectionPayload {
+export interface UpdateCollectionPayload {
   contractAddress: string
   walletAddress: string
 }
@@ -20,11 +20,13 @@ export interface State {
 }
 
 export interface Actions {
-  addedCollection: Action<Model, AddCollectionPayload>
+  addedCollection: Action<Model, UpdateCollectionPayload>
+  removedCollection: Action<Model, UpdateCollectionPayload>
 }
 
 export interface Thunks {
   addCollection: Thunk<Model, string, any, StoreModel>
+  removeCollection: Thunk<Model, string, any, StoreModel>
 }
 
 export interface Computators {

@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 import Icon from '../../Icons'
+import { IconButton } from '../../UI/Buttons'
 import { Skeleton } from '../../UI/Loaders'
+import { Tag } from '../../UI/Tags'
 
 const Container = styled.div`
   align-items: center;
@@ -49,4 +51,25 @@ const SkeletonIcon = styled(Skeleton)`
   margin-top: ${(props) => props.theme.space.md};
 `
 
-export { Container, Label, StyledIcon, SkeletonLabel, SkeletonIcon }
+const StyledTag = styled(Tag)`
+  bottom: 20px;
+  position: absolute;
+  right: 20px;
+`
+
+const StyledIconButton = styled(IconButton)`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 1;
+`
+
+export {
+  Container,
+  Label,
+  StyledIcon,
+  SkeletonLabel,
+  SkeletonIcon,
+  StyledTag,
+  StyledIconButton,
+}
