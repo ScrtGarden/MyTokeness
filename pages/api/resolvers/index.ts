@@ -1,6 +1,9 @@
-import axios from 'axios'
-import FormData from 'form-data'
 import { FileUpload } from 'graphql-upload'
+import { File, NFTStorage } from 'nft.storage'
+
+import streamToBuffer from '../../../utils/streamToBuffer'
+
+const client = new NFTStorage({ token: process.env.NFT_STORAGE_KEY as string })
 
 export const resolvers = {
   Mutation: {
@@ -11,36 +14,17 @@ export const resolvers = {
         const fileStream = createReadStream()
         fileStream.path = filename
 
-        let data = new FormData()
-        data.append('file', fileStream)
+        const result = await streamToBuffer(fileStream)
 
-        // metadata options
-        const metadata = JSON.stringify({
-          keyvalues: {
-            filename,
-            mimetype,
-          },
+        const {
+          data: { image },
+        } = await client.store({
+          name: filename,
+          description: '',
+          image: new File([result], filename, { type: mimetype }),
         })
-        data.append('pinataMetadata', metadata)
 
-        // pinata options
-        const pinataOptions = JSON.stringify({
-          wrapWithDirectory: true,
-        })
-        data.append('pinataOptions', pinataOptions)
-
-        const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
-        const config = {
-          maxBodyLength: Infinity,
-          headers: {
-            Authorization: `Bearer ${process.env.PINATA_JWT}`,
-            'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
-          },
-        }
-
-        const response = await axios.post(url, data, config)
-
-        return response.data
+        return { ipfsLink: image }
       } catch (error) {
         console.log('*** uploadFile error ***')
         console.log(error)

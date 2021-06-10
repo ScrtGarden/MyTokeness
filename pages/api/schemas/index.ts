@@ -2,9 +2,7 @@ import { gql } from 'apollo-server-micro'
 
 export const typeDefs = gql`
   type UploadFileResult {
-    IpfsHash: String
-    PinSize: Int
-    Timestamp: String
+    ipfsLink: String
   }
 
   type Query {
