@@ -92,7 +92,8 @@ const Buttons = styled.div<ButtonsProps>`
   column-gap: ${(props) => props.theme.space.md};
   display: flex;
   justify-content: flex-end;
-  padding: ${(props) => props.theme.space.lg};
+  padding: ${(props) =>
+    `0 ${props.theme.space.lg} ${props.theme.space.lg} ${props.theme.space.lg}`};
 `
 
 const CloseButton = styled(IconButton)`
