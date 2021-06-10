@@ -1,49 +1,17 @@
 import { Action, Computed } from 'easy-peasy'
 
-export interface DraftCollectionConfig {
-  id: string
-  publicOwner: boolean
-  enableSealedMetadata: boolean
-  unwrappedMetadataIsPrivate: boolean
-  minterMayUpdateMetadata: boolean
-  ownerMayUpdateMetadata: boolean
-  enableBurn: boolean
-  publicTokenSupply: boolean
-  name: string
-  symbol: string
-}
-
-interface ConfigsByAddress {
-  [walletAddress: string]: DraftCollectionConfig[]
-}
-
-interface AddConfigPayload extends DraftCollectionConfig {
-  walletAddress: string
-}
-
-interface RemoveCollectionPayload {
-  id: string
-  walletAddress: string
+export interface Collection {
+  address: string
 }
 
 export interface State {
-  draftCollectionConfigs: ConfigsByAddress
+  collections: Collection[]
 }
 
 export interface Actions {
-  addCollection: Action<Model, AddConfigPayload>
-  removeCollection: Action<Model, RemoveCollectionPayload>
+  addCollection: Action<Model, string>
 }
 
-export interface Computators {
-  draftCollectionsByAddress: Computed<
-    Model,
-    (address: string) => DraftCollectionConfig[]
-  >
-  collectionById: Computed<
-    Model,
-    (walletAddress: string, id: string) => DraftCollectionConfig | undefined
-  >
-}
+export interface Computators {}
 
 export interface Model extends State, Actions, Computators {}
