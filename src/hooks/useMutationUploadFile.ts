@@ -7,7 +7,7 @@ import { fetcher } from '../../utils/graphqlRequest'
 const mutateUploadFile = gql`
   mutation UploadFile($file: Upload!) {
     uploadFile(file: $file) {
-      IpfsHash
+      ipfsLink
     }
   }
 `
