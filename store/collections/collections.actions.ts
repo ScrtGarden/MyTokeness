@@ -1,10 +1,19 @@
-import { action } from 'easy-peasy'
+import { action, thunk } from 'easy-peasy'
 
-import { Actions } from './collections.model'
+import { Actions, Thunks } from './collections.model'
 
-const actions: Actions = {
-  addCollection: action((state, payload) => {
-    state.collections.push({ address: payload })
+const actions: Actions & Thunks = {
+  addedCollection: action((state, payload) => {
+    const { contractAddress, walletAddress } = payload
+    state.collections[walletAddress]
+      ? state.collections[walletAddress].push({ address: contractAddress })
+      : (state.collections[walletAddress] = [{ address: contractAddress }])
+  }),
+  addCollection: thunk((actions, payload, { getStoreState }) => {
+    actions.addedCollection({
+      contractAddress: payload,
+      walletAddress: getStoreState().auth.connectedAddress,
+    })
   }),
 }
 
