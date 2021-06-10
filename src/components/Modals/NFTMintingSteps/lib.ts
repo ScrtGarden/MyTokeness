@@ -25,6 +25,7 @@ const formatSingleMint = ({
 }: FormatForHandleMsgParams): HandleMintNFT => {
   const publicProperties = {
     rarity: {
+      id: cryptoRandomString({ length: 21 }),
       number: 1,
       total: 1,
     },
