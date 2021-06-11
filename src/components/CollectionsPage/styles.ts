@@ -29,9 +29,4 @@ const SkeletonCard = styled(Skeleton)`
   flex: unset;
 `
 
-const Buttons = styled.div`
-  column-gap: ${(props) => props.theme.space.md};
-  display: flex;
-`
-
-export { Grid, SkeletonCard, StyledTitle, Header, Buttons }
+export { Grid, SkeletonCard, StyledTitle, Header }
