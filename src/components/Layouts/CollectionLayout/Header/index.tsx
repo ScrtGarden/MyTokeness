@@ -10,10 +10,14 @@ import truncateAddress from '../../../../../utils/truncateAddress'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import useQueryContract from '../../../../hooks/useQueryContract'
-import { Button, IconButton, StyledIcon } from '../../../UI/Buttons'
+import {
+  Button,
+  IconButton,
+  IconButtonWrapper,
+  StyledIcon,
+} from '../../../UI/Buttons'
 import { Skeleton } from '../../../UI/Loaders'
 import {
-  Actions,
   AddressWrapper,
   Container,
   SkeletonTitle,
@@ -95,14 +99,14 @@ const Header: FC<Props> = ({
         ) : (
           <>
             <Subtext>{truncateAddress(contractAddress)}</Subtext>
-            <Actions>
-              <IconButton onClick={copy}>
-                <StyledIcon name="copy-duo" />
+            <IconButtonWrapper>
+              <IconButton onClick={copy} size="small">
+                <StyledIcon name="copy-duo" width={12} height={12} />
               </IconButton>
-              <IconButton onClick={onClickLink}>
-                <StyledIcon name="external-link-duo" />
+              <IconButton onClick={onClickLink} size="small">
+                <StyledIcon name="external-link-duo" width={12} height={12} />
               </IconButton>
-            </Actions>
+            </IconButtonWrapper>
           </>
         )}
       </AddressWrapper>
