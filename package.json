@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.5",
     "apollo-server-micro": "^2.25.0",
     "bech32": "^2.0.0",
     "big.js": "^6.1.1",
