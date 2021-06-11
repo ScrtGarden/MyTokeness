@@ -1,10 +1,13 @@
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 
+import { QueryMinters, ResultMinters } from '../../../../interface/nft'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useInfiniteQueryTokens from '../../../hooks/useInfiniteQueryTokens'
+import useQueryContract from '../../../hooks/useQueryContract'
 import NFTCard from '../../Cards/NFT'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import { Placeholder, ScrollWrapper, StyledEmptyList } from './styles'
@@ -28,6 +31,18 @@ const Assets = () => {
       viewing_key: viewingKey,
       limit: LIMIT,
     })
+  const { data: minterData, isLoading: loadingMinters } = useQueryContract<
+    QueryMinters,
+    ResultMinters
+  >(['minters', contractAddress], contractAddress, { minters: {} })
+
+  // component state
+  const isMinter = useMemo(
+    () =>
+      minterData &&
+      minterData.minters.minters.some((address) => address === walletAddress),
+    [minterData, walletAddress]
+  )
 
   if (!viewingKey) {
     return (
@@ -88,9 +103,11 @@ const Assets = () => {
         </InfiniteScroll>
       ) : (
         <StyledEmptyList
-          text="Looks like you have no assets in this collection. Click on the button below to get started!"
+          text={`Looks like you have no assets in this collection. ${
+            isMinter ? 'Click on the button below to get started!' : ''
+          } `}
           icon="pencil-paintbrush-duo"
-          buttonText="Lets Go!"
+          buttonText={isMinter ? 'Lets Go!' : undefined}
           onClick={() =>
             router.push(
               '/nft/collections/[contractAddress]/create',

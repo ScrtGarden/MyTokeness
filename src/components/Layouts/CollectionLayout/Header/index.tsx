@@ -1,10 +1,14 @@
 import Router from 'next/router'
 import { FC, memo, useMemo } from 'react'
 
+import { QueryMinters, ResultMinters } from '../../../../../interface/nft'
 import { CHAIN_EXPLORER } from '../../../../../utils/constants'
 import truncateAddress from '../../../../../utils/truncateAddress'
+import { useStoreState } from '../../../../hooks/storeHooks'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
+import useQueryContract from '../../../../hooks/useQueryContract'
 import { Button, IconButton, StyledIcon } from '../../../UI/Buttons'
+import { Skeleton } from '../../../UI/Loaders'
 import {
   Actions,
   AddressWrapper,
@@ -30,11 +34,24 @@ const Header: FC<Props> = ({
   loading,
   activeTab,
 }) => {
+  // store state
+  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
+
   // custom hooks
   const [_, copy] = useCopyToClipboard(contractAddress)
+  const { data, isLoading } = useQueryContract<QueryMinters, ResultMinters>(
+    ['minters', contractAddress],
+    contractAddress,
+    { minters: {} }
+  )
 
   // component state
   const isAssets = useMemo(() => activeTab === 'assets', [activeTab])
+  const showButton = useMemo(
+    () =>
+      data && data.minters.minters.some((address) => address === walletAddress),
+    [data, walletAddress]
+  )
 
   const onClickCreate = () => {
     Router.push(
@@ -56,10 +73,15 @@ const Header: FC<Props> = ({
         ) : (
           <Title>{title}</Title>
         )}
-        {isAssets && (
-          <Button isPrimary onClick={onClickCreate} width={143}>
-            Create Collectible
-          </Button>
+        {isLoading ? (
+          <Skeleton width="143px" pill height="30px" noflex />
+        ) : (
+          isAssets &&
+          showButton && (
+            <Button isPrimary onClick={onClickCreate} width={143}>
+              Create Collectible
+            </Button>
+          )
         )}
       </Wrapper>
       <AddressWrapper>
