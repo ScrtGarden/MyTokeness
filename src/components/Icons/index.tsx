@@ -50,6 +50,9 @@ import UsersDuo from './UsersDuo'
 type Props = {
   name?: string
   className?: string
+  width?: string | number
+  height?: string | number
+  fill?: string
 }
 
 const Icon: FC<Props> = forwardRef((props, _) => {
