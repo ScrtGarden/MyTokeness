@@ -14,10 +14,12 @@ import CollectionCard from '../Cards/Collection'
 import AddCollection from '../Modals/AddCollection'
 import CreateCollection from '../Modals/CreateCollection'
 import Warning from '../Modals/Warning'
-import { Button } from '../UI/Buttons'
+import { IconButton, StyledIcon } from '../UI/Buttons'
 import { Container, InnerContainer } from '../UI/Containers'
+import Dropdown from '../UI/Dropdowns/Menu'
 import { Modal } from '../UI/Modal'
-import { Buttons, Grid, Header, SkeletonCard, StyledTitle } from './styles'
+import Menu from './Menu'
+import { Grid, Header, SkeletonCard, StyledTitle } from './styles'
 
 const Collections = () => {
   // store state
@@ -35,6 +37,7 @@ const Collections = () => {
   const [showCreate, toggleCreate] = useToggle()
   const [showAdd, toggleAdd] = useToggle()
   const [showWarn, toggleWarn] = useToggle()
+  const [showDropdown, toggleDropdown] = useToggle()
   const [addyToBeRemoved, setAddyToBeRemoved] = useState('')
 
   const { data, isLoading } = useQuery(
@@ -83,20 +86,37 @@ const Collections = () => {
     toggleWarn()
   }
 
+  const onClickMenuAdd = () => {
+    toggleAdd()
+    toggleDropdown()
+  }
+
+  const onClickMenuCreate = () => {
+    toggleCreate()
+    toggleDropdown()
+  }
+
   return (
     <>
       <Container>
         <InnerContainer>
           <Header>
             <StyledTitle>Collections</StyledTitle>
-            <Buttons>
-              <Button isPrimary onClick={toggleAdd}>
-                Add Collection
-              </Button>
-              <Button isPrimary onClick={toggleCreate}>
-                Create Collection
-              </Button>
-            </Buttons>
+            <Dropdown
+              isOpen={showDropdown}
+              toggle={toggleDropdown}
+              content={
+                <Menu
+                  onClickAdd={onClickMenuAdd}
+                  onClickCreate={onClickMenuCreate}
+                />
+              }
+              placement="bottom-end"
+            >
+              <IconButton>
+                <StyledIcon name="ellipsis-v" width={25} height={25} />
+              </IconButton>
+            </Dropdown>
           </Header>
           <Grid>
             {Object.entries(MYTOKENESS_NFT_CONTRACTS).map(([key, value]) => (
