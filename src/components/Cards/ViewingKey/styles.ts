@@ -1,10 +1,5 @@
 import styled from 'styled-components'
 
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
 const InputButtonsWrapper = styled.div`
   align-items: center;
   column-gap: ${(props) => props.theme.space.md};
@@ -19,4 +14,4 @@ const Buttons = styled.div`
   justify-content: flex-end;
 `
 
-export { InputButtonsWrapper, Actions, Buttons }
+export { InputButtonsWrapper, Buttons }

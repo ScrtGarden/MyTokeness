@@ -16,11 +16,16 @@ import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import ImportViewingKey from '../../Modals/ImportViewingKey'
 import Warning from '../../Modals/Warning'
-import { Button, IconButton, StyledIcon } from '../../UI/Buttons'
+import {
+  Button,
+  IconButton,
+  IconButtonWrapper,
+  StyledIcon,
+} from '../../UI/Buttons'
 import { Header, SettingsCard, Wrapper } from '../../UI/Card'
 import { Input } from '../../UI/Forms'
 import { Modal } from '../../UI/Modal'
-import { Actions, Buttons, InputButtonsWrapper } from './styles'
+import { Buttons, InputButtonsWrapper } from './styles'
 
 const ViewingKeyCard = () => {
   const router = useRouter()
@@ -115,17 +120,17 @@ const ViewingKeyCard = () => {
         <Wrapper>
           <InputButtonsWrapper>
             <Input value={viewingKey || ''} disabled onChange={() => null} />
-            <Actions>
+            <IconButtonWrapper>
               <IconButton disabled={!viewingKey} onClick={copy}>
-                <StyledIcon name="copy-duo" />
+                <StyledIcon name="copy-duo" width={14} height={14} />
               </IconButton>
               <IconButton
                 disabled={!viewingKey}
                 onClick={() => setShowWarning(true)}
               >
-                <StyledIcon name="trash-duo" />
+                <StyledIcon name="trash-duo" width={14} height={14} />
               </IconButton>
-            </Actions>
+            </IconButtonWrapper>
           </InputButtonsWrapper>
           <Buttons>
             <Button onClick={() => setShowImport(true)}>Import</Button>
