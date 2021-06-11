@@ -31,8 +31,8 @@ const Collection: FC<Props> = ({
   return (
     <Container onClick={onClick}>
       {onClickRemove && !loading && (
-        <StyledIconButton onClick={onClickRemove}>
-          <Icon name="trash-duo" />
+        <StyledIconButton onClick={onClickRemove} size="small">
+          <Icon name="trash-duo" width={12} height={12} />
         </StyledIconButton>
       )}
       {loading ? (
