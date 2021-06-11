@@ -115,7 +115,7 @@ const SIDEBAR_TABS = {
   },
 }
 
-const MYTOKENESS_NFT_CONTRACTS = {
+const MYTOKENESS_NFT_CONTRACTS: { [key: string]: {} } = {
   secret1zf4f60zr0lepc3339knvtp0aawgfnrfj8dshru: {
     name: 'Sealed Private Collection',
     symbol: '',
@@ -137,7 +137,7 @@ const FILE_UPLOADER = {
     'audio/mpeg',
     'video/mp4',
   ],
-  MAX_SIZE: 50000000, // 20mb
+  MAX_SIZE: 50000000, // 50mb
 }
 
 const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
