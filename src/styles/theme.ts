@@ -96,8 +96,8 @@ const theme = {
         bg: {
           default: {
             base: 'transparent',
-            hover: '#60af7310',
-            active: '#60af7326',
+            hover: '#212a3140',
+            active: '#212a3178',
           },
           primary: {
             base: '#60af73',
@@ -112,9 +112,15 @@ const theme = {
           disabled: '#30373e',
         },
         color: {
-          default: { base: '#60af73', hover: '#6dc783', active: '#7bdc93' },
+          default: { base: '#fff', hover: '#fff', active: '#fff' },
           primary: '#181e24',
+          danger: '#181e24',
           disabled: '#181e24',
+        },
+        border: {
+          default: '1px solid #212a31',
+          primary: 'none',
+          danger: 'none',
         },
       },
     },

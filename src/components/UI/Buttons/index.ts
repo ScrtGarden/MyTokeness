@@ -14,7 +14,7 @@ export interface ButtonProps {
 
 const Button = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.buttons.button.bg.default.base};
-  border: none;
+  border: ${(props) => props.theme.buttons.button.border.default};
   border-radius: 500px;
   color: ${(props) => props.theme.buttons.button.color.default.base};
   cursor: pointer;
@@ -32,6 +32,7 @@ const Button = styled.button<ButtonProps>`
     props.isPrimary &&
     `
     background-color: ${props.theme.buttons.button.bg.primary.base};
+    border: ${props.theme.buttons.button.border.primary};
     color: ${props.theme.buttons.button.color.primary};
   `}
 
@@ -39,7 +40,8 @@ const Button = styled.button<ButtonProps>`
     props.isDanger &&
     `
     background-color: ${props.theme.buttons.button.bg.danger.base};
-    color: ${props.theme.buttons.button.color.primary};
+    border: ${props.theme.buttons.button.border.danger};
+    color: ${props.theme.buttons.button.color.danger};
   `}
 
   :hover {
@@ -92,7 +94,7 @@ const Button = styled.button<ButtonProps>`
 
 const IconButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.buttons.button.bg.default.base};
-  border: none;
+  border: ${(props) => props.theme.buttons.button.border.default};
   border-radius: 50%;
   cursor: pointer;
   height: 40px;
@@ -103,6 +105,13 @@ const IconButton = styled.button<ButtonProps>`
   text-decoration: none;
   transition: background-color 0.25s ease-in-out 0s;
   width: 40px;
+
+  ${(props) =>
+    props.size === 'small' &&
+    `
+    height: 32px;
+    width: 32px;
+  `}
 
   ${(props) =>
     props.isDanger &&
@@ -148,8 +157,13 @@ const IconButton = styled.button<ButtonProps>`
 
 const StyledIcon = styled(Icon)`
   fill: ${(props) => props.theme.icon.colors.secondary};
-  height: 16px;
-  width: 16px;
 `
 
-export { Button, IconButton, StyledIcon }
+const IconButtonWrapper = styled.div`
+  align-items: center;
+  column-gap: ${(props) => props.theme.space.xxs};
+  display: flex;
+  flex-direction: row;
+`
+
+export { Button, IconButton, StyledIcon, IconButtonWrapper }
