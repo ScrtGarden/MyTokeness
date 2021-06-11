@@ -1,3 +1,11 @@
+interface MyTokenessNFTContract {
+  [key: string]: {
+    name: string
+    symbol: string
+    icon: string
+  }
+}
+
 const calcBatchMint = (amount: string) => {
   switch (amount) {
     case '2':
@@ -115,7 +123,7 @@ const SIDEBAR_TABS = {
   },
 }
 
-const MYTOKENESS_NFT_CONTRACTS: { [key: string]: {} } = {
+const MYTOKENESS_NFT_CONTRACTS: MyTokenessNFTContract = {
   secret1zf4f60zr0lepc3339knvtp0aawgfnrfj8dshru: {
     name: 'Sealed Private Collection',
     symbol: '',
