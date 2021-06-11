@@ -82,7 +82,7 @@ const Header: FC<Props> = ({
         ) : (
           <Title>{title}</Title>
         )}
-        {isLoading ? (
+        {isLoading && isAssets ? (
           <Skeleton width="143px" pill height="30px" noflex />
         ) : (
           isAssets &&
