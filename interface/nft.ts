@@ -207,6 +207,10 @@ export interface QueryTransactionHistory {
   transaction_history: QTransactionHistory
 }
 
+export interface QueryMinters {
+  minters: {}
+}
+
 /**
  *  HandleMsg
  */
@@ -282,5 +286,11 @@ export interface ResultContractConfig {
 export interface ResultTransactionHistory {
   transaction_history: {
     txs: Tx[]
+  }
+}
+
+export interface ResultMinters {
+  minters: {
+    minters: string[]
   }
 }
