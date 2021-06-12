@@ -1,11 +1,6 @@
 import { FC, memo, useEffect, useReducer, useState } from 'react'
-import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
-import {
-  HandleSetWhitelistedApproval,
-  ResultInventoryApprovals,
-} from '../../../../../../interface/nft'
 import {
   ApprovalOptions,
   ApprovalOptionsReducer,
@@ -13,16 +8,11 @@ import {
   UIExpiration,
   UISnip721Approval,
 } from '../../../../../../interface/nft-ui'
-import { MAX_GAS } from '../../../../../../utils/constants'
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
-import useMutationExeContract from '../../../../../hooks/useMutationExeContract'
+import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import WhitelistSetting from '../../../../Cards/WhitelistSetting'
-import {
-  formatAdd as format,
-  updateTokenApprovals,
-  validateAdd as validate,
-} from '../lib'
+import { formatAdd as format, validateAdd as validate } from '../lib'
 
 type Props = {
   contractAddress: string
@@ -44,7 +34,6 @@ const EXPIRATION: UIExpiration = {
 
 const Whitelisting: FC<Props> = (props) => {
   const { contractAddress, walletAddress, approvedList } = props
-  const queryClient = useQueryClient()
 
   // component state
   const [address, setAddress] = useState('')
@@ -59,8 +48,10 @@ const Whitelisting: FC<Props> = (props) => {
   const [addError, setAddError] = useState({ address: '', expiration: '' })
 
   // custom hooks
-  const { mutate, isLoading } =
-    useMutationExeContract<HandleSetWhitelistedApproval>()
+  const { mutate, isLoading } = useMutationWhitelist(
+    walletAddress,
+    contractAddress
+  )
 
   // lifecycle
   useEffect(() => {
@@ -84,45 +75,19 @@ const Whitelisting: FC<Props> = (props) => {
       return
     }
 
-    const handleMsg = format(address, options, expiration)
+    const data = format(address, options, expiration)
 
-    mutate(
-      {
-        contractAddress,
-        handleMsg,
-        maxGas: MAX_GAS.NFT.SET_WHITELIST_APPROVAL,
+    mutate(data, {
+      onSuccess: () => {
+        setAddress('')
+        setOptions(OPTIONS)
+        setExpiration(EXPIRATION)
+        toast.success('Added address to whitelist.')
       },
-      {
-        onSuccess: (_, { handleMsg: { set_whitelisted_approval } }) => {
-          const key = ['inventoryApprovals', walletAddress, contractAddress]
-          const original =
-            queryClient.getQueryData<ResultInventoryApprovals>(key)
-
-          if (original) {
-            const { inventory_approvals } = original.inventory_approvals
-            const updatedApprovals = updateTokenApprovals(
-              inventory_approvals,
-              set_whitelisted_approval
-            )
-
-            queryClient.setQueryData<ResultInventoryApprovals>(key, {
-              inventory_approvals: {
-                ...original.inventory_approvals,
-                inventory_approvals: updatedApprovals,
-              },
-            })
-          }
-
-          setAddress('')
-          setOptions(OPTIONS)
-          setExpiration(EXPIRATION)
-          toast.success('Added address to whitelist.')
-        },
-        onError: (error) => {
-          toast.error(parseErrorMsg(error))
-        },
-      }
-    )
+      onError: (error) => {
+        toast.error(parseErrorMsg(error))
+      },
+    })
   }
 
   return (
