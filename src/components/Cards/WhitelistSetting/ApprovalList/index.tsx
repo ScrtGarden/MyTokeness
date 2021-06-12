@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router'
 import { FC, memo, useState } from 'react'
 
 import { UISnip721Approval } from '../../../../../interface/nft-ui'
+import { useStoreState } from '../../../../hooks/storeHooks'
+import { CollectionRouterQuery } from '../../../Layouts/CollectionLayout'
 import { Body, Head, HeaderCell, HeaderRow } from '../../../UI/Table'
 import Item from './Item'
 import { Container, Placeholder, StyledEmptyList, StyledTable } from './styles'
@@ -10,6 +13,13 @@ export type Props = {
 }
 
 const ApprovalList: FC<Props> = ({ list }) => {
+  const router = useRouter()
+  const { contractAddress } = router.query as CollectionRouterQuery
+
+  // store state
+  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
+
+  // component state
   const [selected, setSelected] = useState('')
 
   const onToggle = (address: string) => {
@@ -43,6 +53,8 @@ const ApprovalList: FC<Props> = ({ list }) => {
               item={approved}
               isOpen={selected === approved.address}
               toggle={onToggle}
+              contractAddress={contractAddress}
+              walletAddress={walletAddress}
             />
           ))}
         </Body>
