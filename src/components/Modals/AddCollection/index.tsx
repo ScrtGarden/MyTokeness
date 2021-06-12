@@ -91,6 +91,7 @@ const AddCollection: FC<Props> = (props) => {
             placeholder="secret1gqmn3e3p9gudwa4x3pucr25px4zw5ypqh62jgu"
             value={address}
             onChange={(e) => setAddress(e.currentTarget.value)}
+            autoFocus
           />
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
