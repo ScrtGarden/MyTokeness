@@ -38,7 +38,7 @@ const Collections = () => {
   const [showAdd, toggleAdd] = useToggle()
   const [showWarn, toggleWarn] = useToggle()
   const [showDropdown, toggleDropdown] = useToggle()
-  const [addyToBeRemoved, setAddyToBeRemoved] = useState('')
+  const [toBeRemoved, setToBeRemoved] = useState({ address: '', name: '' })
 
   const { data, isLoading } = useQuery(
     ['collections', walletAddress],
@@ -75,14 +75,18 @@ const Collections = () => {
     )
   }
 
-  const onClickRemove = (e: MouseEvent<HTMLButtonElement>, address: string) => {
+  const onClickRemove = (
+    e: MouseEvent<HTMLButtonElement>,
+    address: string,
+    name: string
+  ) => {
     e.stopPropagation()
-    setAddyToBeRemoved(address)
+    setToBeRemoved({ address, name })
     toggleWarn()
   }
 
   const onRemove = () => {
-    removeCollection(addyToBeRemoved)
+    removeCollection(toBeRemoved.address)
     toggleWarn()
   }
 
@@ -145,23 +149,20 @@ const Collections = () => {
               ))}
             {!isLoading &&
               addedCollectionQueries.map(
-                ({ data: query, isLoading }, index) => (
-                  <CollectionCard
-                    key={addedCollections[index].address}
-                    name={query?.contract_info.name as string}
-                    icon="store-duo"
-                    onClick={() =>
-                      onClickCollection(
-                        addedCollections[index].address,
-                        query?.contract_info.name
-                      )
-                    }
-                    loading={isLoading}
-                    onClickRemove={(e) =>
-                      onClickRemove(e, addedCollections[index].address)
-                    }
-                  />
-                )
+                ({ data: query, isLoading }, index) => {
+                  const address = addedCollections[index].address
+                  const name = query?.contract_info.name as string
+                  return (
+                    <CollectionCard
+                      key={address}
+                      name={name}
+                      icon="store-duo"
+                      onClick={() => onClickCollection(address, name)}
+                      loading={isLoading}
+                      onClickRemove={(e) => onClickRemove(e, address, name)}
+                    />
+                  )
+                }
               )}
           </Grid>
         </InnerContainer>
@@ -178,8 +179,8 @@ const Collections = () => {
       </Modal>
       <Modal isOpen={showWarn} onBackgroundClick={toggleWarn}>
         <Warning
-          title="Remove collection from list"
-          text="Are you sure you want to remove it?"
+          title="Remove collection"
+          text={`The following collection, ${toBeRemoved.name}, will be permanently deleted. Are you sure you want to continue?`}
           onClickPrimary={onRemove}
           toggle={toggleWarn}
         />
