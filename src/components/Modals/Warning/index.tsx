@@ -1,5 +1,6 @@
 import { FC, memo } from 'react'
 
+import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import Icon from '../../Icons'
 import { Button } from '../../UI/Buttons'
 import {
@@ -17,9 +18,18 @@ type Props = {
   text?: string
   toggle: () => void
   onClickPrimary: () => void
+  loading?: boolean
+  buttonWidth?: number
 }
 
-const WarningModal: FC<Props> = ({ toggle, onClickPrimary, title, text }) => (
+const WarningModal: FC<Props> = ({
+  toggle,
+  onClickPrimary,
+  title,
+  text,
+  loading,
+  buttonWidth,
+}) => (
   <>
     <Header>
       <StyledIcon name="exclamation-circle" danger="true" />
@@ -33,9 +43,13 @@ const WarningModal: FC<Props> = ({ toggle, onClickPrimary, title, text }) => (
     </Content>
     <Buttons>
       <Button onClick={toggle}>Cancel</Button>
-      <Button onClick={onClickPrimary} isDanger>
-        Remove
-      </Button>
+      <ButtonWithLoading
+        text="Remove"
+        onClick={onClickPrimary}
+        isDanger
+        loading={loading}
+        width={buttonWidth}
+      />
     </Buttons>
   </>
 )
