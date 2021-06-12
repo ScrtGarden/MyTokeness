@@ -3,9 +3,7 @@ import { getUnixTime } from 'date-fns'
 import {
   Expiration,
   HandleSetGlobalApproval,
-  HandleSetWhitelistedApproval,
   SetWhitelistedApproval,
-  Snip721Approval,
 } from '../../../../../interface/nft'
 import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
 import isSecretAddress from '../../../../../utils/isSecretAddress'
@@ -96,7 +94,7 @@ const formatAdd = (
   address: string,
   { hideOwnership, hidePrivateMetadata, preventTransferPower }: ApprovalOptions,
   expiration: UIExpiration
-): HandleSetWhitelistedApproval => {
+): SetWhitelistedApproval => {
   const viewOwner = hideOwnership ? 'none' : 'all'
   const viewPrivateMetadata = hidePrivateMetadata ? 'none' : 'all'
   const transfer = preventTransferPower ? 'none' : 'all'
@@ -107,62 +105,12 @@ const formatAdd = (
   }
 
   return {
-    set_whitelisted_approval: {
-      address,
-      view_owner: viewOwner,
-      view_private_metadata: viewPrivateMetadata,
-      transfer,
-      ...(!!expires && { expires }),
-    },
-  }
-}
-
-const updateTokenApprovals = (
-  tokens: Snip721Approval[],
-  toBeApproved: SetWhitelistedApproval
-): Snip721Approval[] => {
-  const formatted = formatToSnip721Approval(toBeApproved)
-  const {
     address,
-    view_owner_expiration,
-    view_private_metadata_expiration,
-    transfer_expiration,
-  } = formatted
-
-  const isWhitelisted = tokens.some((approved) => approved.address === address)
-
-  if (!isWhitelisted) {
-    return tokens.concat([formatted])
+    view_owner: viewOwner,
+    view_private_metadata: viewPrivateMetadata,
+    transfer,
+    ...(!!expires && { expires }),
   }
-
-  return tokens.reduce((acc: Snip721Approval[], approved) => {
-    if (approved.address === address) {
-      if (
-        view_owner_expiration === null &&
-        view_private_metadata_expiration === null &&
-        transfer_expiration === null
-      ) {
-        return acc
-      } else {
-        return acc.concat([formatted])
-      }
-    }
-    return acc.concat([approved])
-  }, [])
 }
 
-const formatToSnip721Approval = ({
-  address,
-  view_owner,
-  view_private_metadata,
-  transfer,
-  expires,
-}: SetWhitelistedApproval): Snip721Approval => ({
-  address,
-  view_owner_expiration: view_owner === 'all' ? (expires as Expiration) : null,
-  view_private_metadata_expiration:
-    view_private_metadata === 'all' ? (expires as Expiration) : null,
-  transfer_expiration: transfer === 'all' ? (expires as Expiration) : null,
-})
-
-export { validate, format, validateAdd, formatAdd, updateTokenApprovals }
+export { validate, format, validateAdd, formatAdd }
