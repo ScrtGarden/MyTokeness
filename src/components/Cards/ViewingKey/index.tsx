@@ -152,7 +152,7 @@ const ViewingKeyCard = () => {
       >
         <Warning
           title="Remove viewing key from collection"
-          text="The viewing key enables you to see private collectibles you own. Are you sure you want to remove it?"
+          text="The viewing key enables you to see private collectibles you own. Are you sure you want to continue?"
           toggle={() => setShowWarning(!showWarning)}
           onClickPrimary={onClickRemove}
         />
