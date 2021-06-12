@@ -111,7 +111,6 @@ const Collections = () => {
                   onClickCreate={onClickMenuCreate}
                 />
               }
-              placement="bottom-end"
             >
               <IconButton>
                 <StyledIcon name="ellipsis-v" width={25} height={25} />
