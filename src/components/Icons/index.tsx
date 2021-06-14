@@ -32,6 +32,7 @@ import Keplr from './Kelpr'
 import KeySkeleton from './KeySkeleton'
 import ListUlDuo from './ListUlDuo'
 import LockKeyholeDuo from './LockKeyholeDuo'
+import LockKeyholeOpenDuo from './LockKeyholeOpenDuo'
 import Minus from './Minus'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
@@ -64,6 +65,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'lock-keyhole-open-duo':
+      SelectedIcon = LockKeyholeOpenDuo
+      break
     case 'lock-keyhole-duo':
       SelectedIcon = LockKeyholeDuo
       break
