@@ -31,6 +31,7 @@ import IndustryDuo from './IndustryDuo'
 import Keplr from './Kelpr'
 import KeySkeleton from './KeySkeleton'
 import ListUlDuo from './ListUlDuo'
+import LockKeyholeDuo from './LockKeyholeDuo'
 import Minus from './Minus'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
@@ -38,6 +39,7 @@ import PhotoVideoDuo from './PhotoVideoDuo'
 import Plus from './Plus'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
+import ShieldDuo from './ShieldDuo'
 import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
 import TasksAltDuo from './TasksAltDuo'
@@ -46,6 +48,7 @@ import TrashDuo from './TrashDuo'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
 import UsersDuo from './UsersDuo'
+import UserShieldDuo from './UserShieldDuo'
 
 type Props = {
   name?: string
@@ -61,6 +64,15 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'lock-keyhole-duo':
+      SelectedIcon = LockKeyholeDuo
+      break
+    case 'shield-duo':
+      SelectedIcon = ShieldDuo
+      break
+    case 'user-shield-duo':
+      SelectedIcon = UserShieldDuo
+      break
     case 'ellipsis-v':
       SelectedIcon = EllipsisV
       break
