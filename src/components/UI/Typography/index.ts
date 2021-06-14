@@ -18,6 +18,11 @@ const Text = styled.p`
   font-size: ${(props) => props.theme.font.sizes.md};
   line-height: ${(props) => props.theme.font.lineHeights.md};
   margin: 0;
+
+  span {
+    color: ${(props) => props.theme.font.colors.primary};
+    font-weight: ${(props) => props.theme.font.weights.semibold};
+  }
 `
 
 export { PageTitle, Text }
