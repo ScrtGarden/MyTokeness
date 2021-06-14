@@ -32,10 +32,11 @@ const Assets = () => {
       viewing_key: viewingKey,
       limit: LIMIT,
     })
-  const { data: minterData, isLoading: loadingMinters } = useQueryContract<
-    QueryMinters,
-    ResultMinters
-  >(['minters', contractAddress], contractAddress, { minters: {} })
+  const { data: minterData } = useQueryContract<QueryMinters, ResultMinters>(
+    ['minters', contractAddress],
+    contractAddress,
+    { minters: {} }
+  )
 
   // component state
   const isMinter = useMemo(
@@ -101,7 +102,13 @@ const Assets = () => {
           )}
           {data?.pages.map(({ token_list: { tokens } }) =>
             tokens.map((id) => (
-              <NFTCard key={id} id={id} contractAddress={contractAddress} />
+              <NFTCard
+                key={id}
+                id={id}
+                contractAddress={contractAddress}
+                walletAddress={walletAddress}
+                viewingKey={viewingKey}
+              />
             ))
           )}
         </InfiniteScroll>
