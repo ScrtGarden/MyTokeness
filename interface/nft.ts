@@ -240,6 +240,13 @@ export interface HandleSetWhitelistedApproval {
   set_whitelisted_approval: SetWhitelistedApproval
 }
 
+export interface HandleReveal {
+  reveal: {
+    token_id: string
+    padding?: string
+  }
+}
+
 /**
  *  Results
  */
@@ -292,5 +299,11 @@ export interface ResultTransactionHistory {
 export interface ResultMinters {
   minters: {
     minters: string[]
+  }
+}
+
+export interface ResultReveal {
+  reveal: {
+    status: Status
   }
 }
