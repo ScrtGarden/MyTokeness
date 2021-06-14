@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 
 const Container = styled.div`
-  padding: ${(props) => props.theme.space.md};
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: ${(props) => props.theme.space.sm};
 `
 
 const Title = styled.h3`

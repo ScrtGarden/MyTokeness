@@ -7,6 +7,8 @@ const Container = styled.div`
   border: 2px solid ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radii.md};
   background: ${(props) => props.theme.fg};
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 `
 
