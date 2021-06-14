@@ -1,11 +1,16 @@
-import { memo } from 'react'
+import { FC, memo } from 'react'
 
 import Tooltip from '../../../UI/Tooltip'
 import { Container, Section, StyledIcon } from './styles'
 
+type Props = {
+  enabledSealedData?: boolean
+  isSealed: boolean
+}
+
 const SIZE = 16
 
-const Settings = () => {
+const Settings: FC<Props> = ({ enabledSealedData, isSealed }) => {
   return (
     <Container>
       <Section>
@@ -17,9 +22,18 @@ const Settings = () => {
         </Tooltip>
       </Section>
       <Section>
-        <Tooltip content="Sealed" placement="top-end">
-          <StyledIcon name="lock-keyhole-duo" width={SIZE} height={SIZE} />
-        </Tooltip>
+        {enabledSealedData && (
+          <Tooltip
+            content={isSealed ? 'Sealed' : 'Unsealed'}
+            placement="top-end"
+          >
+            <StyledIcon
+              name={isSealed ? 'lock-keyhole-duo' : 'lock-keyhole-open-duo'}
+              width={SIZE}
+              height={SIZE}
+            />
+          </Tooltip>
+        )}
       </Section>
     </Container>
   )

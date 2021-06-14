@@ -66,7 +66,12 @@ const NFTCard: FC<Props> = ({
           <Dropdown
             isOpen={showMenu}
             toggle={toggleMenu}
-            content={<Menu onClickUnseal={onClickUnseal} />}
+            content={
+              <Menu
+                onClickUnseal={onClickUnseal}
+                showUnseal={!!enabledSealedData && data.isSealed}
+              />
+            }
             placement="left-end"
           >
             <IconButton>
