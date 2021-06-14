@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query'
 
 import { ResultNFTDossier } from '../../interface/nft'
+import { UINFTDossier } from '../../interface/nft-ui'
+import { Snip721ApprovalToUI, expirationToUI } from '../../utils/dataParser'
 import { queryChain } from '../../utils/secretjs'
 
 const useQueryNFTDossier = (
@@ -9,7 +11,7 @@ const useQueryNFTDossier = (
   walletAddress?: string,
   viewingKey?: string
 ) => {
-  return useQuery<ResultNFTDossier, Error, ReturnType<typeof formatNFTDossier>>(
+  return useQuery<ResultNFTDossier, Error, UINFTDossier>(
     ['nftDossier', contractAddress, id],
     () =>
       queryChain.queryContractSmart(contractAddress, {
@@ -25,7 +27,7 @@ const useQueryNFTDossier = (
   )
 }
 
-const formatNFTDossier = (original: ResultNFTDossier) => {
+const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
   const {
     nft_dossier: {
       display_private_metadata_error,
@@ -41,26 +43,20 @@ const formatNFTDossier = (original: ResultNFTDossier) => {
         image: pubImg,
         name: pubName,
         properties: pubProps,
-      } = {},
+      },
       public_ownership_expiration,
       token_approvals,
     },
   } = original
 
-  const privateMetadata =
-    !private_metadata || private_metadata === null
-      ? private_metadata
-      : {
-          attributes: private_metadata.attributes
-            ? JSON.parse(private_metadata.attributes)
-            : [],
-          description: private_metadata.description,
-          image: private_metadata.image,
-          name: private_metadata.name,
-          properties: private_metadata.properties
-            ? JSON.parse(private_metadata.properties)
-            : {},
-        }
+  const privateMetadata = !private_metadata
+    ? null
+    : {
+        image: private_metadata.image,
+        properties: private_metadata.properties
+          ? JSON.parse(private_metadata.properties)
+          : { content: '' },
+      }
 
   const publicMetadata = {
     attributes: pubAttrs ? JSON.parse(pubAttrs) : [],
@@ -72,15 +68,19 @@ const formatNFTDossier = (original: ResultNFTDossier) => {
 
   return {
     displayPrivateMetadataError: display_private_metadata_error,
-    inventoryApprovals: inventory_approvals,
     owner,
     ownerIsPublic: owner_is_public,
     privateMetadata,
     privateMetadataIsPublic: private_metadata_is_public,
-    privateMetadataIsPublicExpiration: private_metadata_is_public_expiration,
+    privateMetadataIsPublicExpiration: expirationToUI(
+      private_metadata_is_public_expiration
+    ),
     publicMetadata,
-    publicOwnershipExpiration: public_ownership_expiration,
-    tokenApprovals: token_approvals,
+    publicOwnershipExpiration: expirationToUI(public_ownership_expiration),
+    inventoryApprovals: inventory_approvals.map((item) =>
+      Snip721ApprovalToUI(item)
+    ),
+    tokenApprovals: token_approvals.map((item) => Snip721ApprovalToUI(item)),
   }
 }
 
