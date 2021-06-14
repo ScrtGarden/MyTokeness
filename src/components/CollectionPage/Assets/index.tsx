@@ -3,7 +3,12 @@ import { useMemo } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 
-import { QueryMinters, ResultMinters } from '../../../../interface/nft'
+import {
+  QueryContractConfig,
+  QueryMinters,
+  ResultContractConfig,
+  ResultMinters,
+} from '../../../../interface/nft'
 import { MYTOKENESS_NFT_CONTRACTS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../hooks/storeHooks'
@@ -35,7 +40,19 @@ const Assets = () => {
   const { data: minterData } = useQueryContract<QueryMinters, ResultMinters>(
     ['minters', contractAddress],
     contractAddress,
-    { minters: {} }
+    { minters: {} },
+    { refetchOnWindowFocus: false }
+  )
+  const { data: config, isLoading: fetchingConfig } = useQueryContract<
+    QueryContractConfig,
+    ResultContractConfig
+  >(
+    ['contractConfig', contractAddress],
+    contractAddress,
+    {
+      contract_config: {},
+    },
+    { refetchOnWindowFocus: false }
   )
 
   // component state
@@ -93,7 +110,7 @@ const Assets = () => {
             </>
           }
         >
-          {isLoading && (
+          {isLoading && fetchingConfig && (
             <>
               <Placeholder />
               <Placeholder />
@@ -108,6 +125,9 @@ const Assets = () => {
                 contractAddress={contractAddress}
                 walletAddress={walletAddress}
                 viewingKey={viewingKey}
+                enabledSealedData={
+                  config?.contract_config.sealed_metadata_is_enabled
+                }
               />
             ))
           )}
