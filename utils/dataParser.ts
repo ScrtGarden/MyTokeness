@@ -20,7 +20,7 @@ const expirationToUI = (
     blockheight: '',
   }
 
-  if (original === null || !original) {
+  if (!original) {
     return initial
   } else if (original === 'never') {
     return { ...initial, type: 'never' }
