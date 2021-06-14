@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import { Skeleton } from '../../UI/Loaders'
-
 const Container = styled.div`
   aspect-ratio: 0.9;
   border: 2px solid ${(props) => props.theme.border.color};
@@ -12,16 +10,12 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const SkeletonVisual = styled(Skeleton)`
-  aspect-ratio: 1.3;
-  border-radius: 0;
-`
-
 const Wrapper = styled.div`
-  display: grid;
-  flex-direction: column;
-  padding: ${(props) => props.theme.space.md};
-  row-gap: ${(props) => props.theme.space.xs};
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: ${(props) => props.theme.space.sm};
 `
 
-export { Container, SkeletonVisual, Wrapper }
+export { Container, Wrapper }
