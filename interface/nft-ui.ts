@@ -78,8 +78,5 @@ export interface UINFTDossier {
   privateMetadataIsPublicExpiration: UIExpiration
   tokenApprovals: UISnip721Approval[]
   inventoryApprovals: UISnip721Approval[]
-}
-
-export interface CustomNFTDossier extends UINFTDossier {
-  ownershipStatus: 'Public' | 'Private'
+  isSealed: boolean
 }
