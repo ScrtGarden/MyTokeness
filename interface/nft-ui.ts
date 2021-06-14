@@ -23,6 +23,11 @@ export interface UIPublicMetadata {
   attributes: { [key: string]: string }[]
 }
 
+export interface UIPrivateMetadata {
+  image?: string
+  properties: { content: string }
+}
+
 export type UIExpiration = {
   type?: 'never' | 'date' | 'blockheight'
   date?: Date
@@ -61,3 +66,20 @@ export type ApprovalOptionsReducer = (
   p: ApprovalOptions,
   u: Partial<ApprovalOptions>
 ) => ApprovalOptions
+
+export interface UINFTDossier {
+  owner?: string | null
+  publicMetadata: UIPublicMetadata
+  privateMetadata: UIPrivateMetadata | null
+  displayPrivateMetadataError?: string | null
+  ownerIsPublic: boolean
+  publicOwnershipExpiration: UIExpiration
+  privateMetadataIsPublic: boolean
+  privateMetadataIsPublicExpiration: UIExpiration
+  tokenApprovals: UISnip721Approval[]
+  inventoryApprovals: UISnip721Approval[]
+}
+
+export interface CustomNFTDossier extends UINFTDossier {
+  ownershipStatus: 'Public' | 'Private'
+}
