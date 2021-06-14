@@ -70,15 +70,15 @@ export interface Snip721Approval {
 
 export interface NFTDossier {
   owner?: string
-  public_metadata?: Metadata
+  public_metadata: Metadata
   private_metadata?: Metadata | null
   display_private_metadata_error?: string
   owner_is_public: boolean
   public_ownership_expiration?: Expiration
   private_metadata_is_public: boolean
   private_metadata_is_public_expiration?: Expiration
-  token_approvals?: Snip721Approval[]
-  inventory_approvals?: Snip721Approval[]
+  token_approvals: Snip721Approval[]
+  inventory_approvals: Snip721Approval[]
 }
 
 export type AccessLevel = 'approve_token' | 'revoke_token' | 'all' | 'none'
