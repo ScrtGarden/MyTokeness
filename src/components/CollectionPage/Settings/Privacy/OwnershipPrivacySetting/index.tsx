@@ -45,7 +45,7 @@ const OwnershipPrivacySetting: FC<Props> = ({
       return
     }
 
-    const handleMsg = format(isPrivate, expSettings, true)
+    const handleMsg = format(isPrivate, expSettings, { isOwnership: true })
 
     mutate(
       {
