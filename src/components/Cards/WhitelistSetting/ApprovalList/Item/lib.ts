@@ -63,17 +63,17 @@ const validate = (options: ApprovalOptions, expiration: UIExpiration) => {
   const validation = {
     hasError: false,
     errors: {
-      expiration: '',
+      value: '',
     },
   }
 
   if (Object.values(options).some((value) => !value)) {
     if (type === 'date' && !date) {
       validation.hasError = true
-      validation.errors.expiration = 'Please select a valid date.'
+      validation.errors.value = 'Please select a valid date.'
     } else if (type === 'blockheight' && !blockheight) {
       validation.hasError = true
-      validation.errors.expiration = 'Please enter a valid blockheight value.'
+      validation.errors.value = 'Please enter a valid blockheight value.'
     }
   }
 

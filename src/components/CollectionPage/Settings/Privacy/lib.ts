@@ -9,8 +9,8 @@ import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
 import isSecretAddress from '../../../../../utils/isSecretAddress'
 
 export interface ValidationError {
-  option: string
-  value: string
+  option?: string
+  value?: string
 }
 
 interface FormatOptions {
@@ -36,7 +36,7 @@ const validate = (isPrivate: boolean, settings: UIExpiration) => {
     validation.errors.value = 'Please selected a valid date.'
   } else if (type === 'blockheight' && !blockheight) {
     validation.hasError = true
-    validation.errors.value = 'Please enter a valid number.'
+    validation.errors.value = 'Please enter a valid blockheight value.'
   }
 
   return validation
@@ -92,7 +92,8 @@ const validateAdd = (
     hasError: false,
     errors: {
       address: '',
-      expiration: '',
+      option: '',
+      value: '',
     },
   }
 
@@ -102,12 +103,15 @@ const validateAdd = (
   }
 
   if (Object.values(options).some((value) => !value)) {
-    if (type === 'date' && !date) {
+    if (!type) {
       validation.hasError = true
-      validation.errors.expiration = 'Please select a valid date.'
+      validation.errors.option = 'Please select an option.'
+    } else if (type === 'date' && !date) {
+      validation.hasError = true
+      validation.errors.value = 'Please selected a valid date.'
     } else if (type === 'blockheight' && !blockheight) {
       validation.hasError = true
-      validation.errors.expiration = 'Please enter a valid blockheight value.'
+      validation.errors.value = 'Please enter a valid blockheight value.'
     }
   }
 
