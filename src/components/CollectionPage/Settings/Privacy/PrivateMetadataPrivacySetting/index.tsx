@@ -12,7 +12,7 @@ import { MAX_GAS } from '../../../../../../utils/constants'
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../../../hooks/useMutationExeContract'
 import ApprovalSetting from '../../../../Cards/ApprovalSetting'
-import { format, validate } from '../lib'
+import { ValidationError, format, validate } from '../lib'
 
 type Props = {
   isPrivate: boolean
@@ -34,14 +34,14 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
     useMutationExeContract<HandleSetGlobalApproval>()
 
   // component state
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState<ValidationError | undefined>()
 
   const onSave = (isPrivate: boolean, expSettings: UIExpiration) => {
-    const result = validate(isPrivate, expSettings)
+    const validation = validate(isPrivate, expSettings)
 
-    setError(result)
+    setErrors(validation.errors)
 
-    if (result) {
+    if (validation.hasError) {
       return
     }
 
@@ -93,7 +93,7 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
       toggleId="privateMetadata"
       toggleLabel="Hide private metadata"
       onSubmit={onSave}
-      error={error}
+      errors={errors}
       loading={isLoading}
     />
   )

@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import { UIExpiration } from '../../../../interface/nft-ui'
 import { DATE_FORMAT } from '../../../../utils/constants'
 import { blockheightPattern } from '../../../../utils/regexPatterns'
+import { ValidationError } from '../../CollectionPage/Settings/Privacy/lib'
 import { DatePickerWrapper } from '../../UI/DatePicker'
 import { Input, Label } from '../../UI/Forms'
 import { Radio } from '../../UI/Forms/Radio'
@@ -13,7 +14,7 @@ import { Field, StyledRadioGroup, Wrapper } from './styles'
 type Props = {
   settings: UIExpiration
   onChange: (data: Partial<UIExpiration>) => void
-  errors?: { option: string; value: string }
+  errors?: ValidationError
 }
 
 const ExpirationForm: FC<Props> = ({ settings, onChange, errors }) => {
