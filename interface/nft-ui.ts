@@ -29,14 +29,14 @@ export interface UIPrivateMetadata {
 }
 
 export type UIExpiration = {
-  type?: 'never' | 'date' | 'blockheight'
-  date?: Date
-  blockheight?: string
+  type: 'never' | 'date' | 'blockheight' | ''
+  date: Date
+  blockheight: string
 }
 
 export type ExpirationReducer = (
   p: UIExpiration,
-  u: UIExpiration
+  u: Partial<UIExpiration>
 ) => UIExpiration
 
 export interface UISnip721Approval {
