@@ -7,6 +7,7 @@ import SkeletonNFTCard from '../../Skeleton/NFTCard'
 import { IconButton, StyledIcon } from '../../UI/Buttons'
 import Dropdown from '../../UI/Dropdowns/Menu'
 import { Modal } from '../../UI/Modal'
+import ContentsPrivacySetting from './ContentsPrivacySetting'
 import Details from './Details'
 import Menu from './Menu'
 import OwnershipPrivacySetting from './OwnershipPrivacySetting'
@@ -33,6 +34,7 @@ const NFTCard: FC<Props> = ({
   const [showMenu, toggleMenu] = useToggle()
   const [showUnseal, toggleUnseal] = useToggle()
   const [showOwnership, toggleOwnership] = useToggle()
+  const [showContentsSettings, toggleContentsSettings] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(
@@ -50,6 +52,11 @@ const NFTCard: FC<Props> = ({
   const onClickOwnership = () => {
     toggleMenu()
     toggleOwnership()
+  }
+
+  const onClickPrivateContents = () => {
+    toggleMenu()
+    toggleContentsSettings()
   }
 
   if (isLoading) {
@@ -78,6 +85,7 @@ const NFTCard: FC<Props> = ({
                 onClickUnseal={onClickUnseal}
                 showUnseal={!!enabledSealedData && data.isSealed}
                 onClickOwnership={onClickOwnership}
+                onClickPrivateContents={onClickPrivateContents}
               />
             }
             placement="left-end"
@@ -92,6 +100,8 @@ const NFTCard: FC<Props> = ({
           isSealed={data.isSealed}
           hiddenOwnership={!data.ownerIsPublic}
           ownershipExpiration={data.publicOwnershipExpiration}
+          hiddenPrivateMetadata={!data.privateMetadataIsPublic}
+          privateMetadataExpiration={data.privateMetadataIsPublicExpiration}
         />
       </Container>
       <Modal isOpen={showUnseal} onBackgroundClick={toggleUnseal}>
@@ -106,12 +116,18 @@ const NFTCard: FC<Props> = ({
         <OwnershipPrivacySetting
           tokenId={id}
           contractAddress={contractAddress}
-          title="Ownership privacy setting"
-          description="Turning this off will allow anyone see you own this asset."
-          id="ownership"
           toggle={toggleOwnership}
           isPrivate={!data.ownerIsPublic}
           expiration={data.publicOwnershipExpiration}
+        />
+      </Modal>
+      <Modal isOpen={showContentsSettings}>
+        <ContentsPrivacySetting
+          tokenId={id}
+          contractAddress={contractAddress}
+          toggle={toggleContentsSettings}
+          isPrivate={!data.privateMetadataIsPublic}
+          expiration={data.privateMetadataIsPublicExpiration}
         />
       </Modal>
     </>
