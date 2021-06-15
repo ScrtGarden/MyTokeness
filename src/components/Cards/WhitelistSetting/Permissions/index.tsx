@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 
 import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
+import { ValidationError } from '../../../CollectionPage/Settings/Privacy/lib'
 import ExpirationForm from '../../../Common/ExpirationForm'
 import { Label, ToggleWrapper } from '../../../UI/Forms'
 import Toggle from '../../../UI/Forms/Toggle'
@@ -18,7 +19,7 @@ export type Props = {
   setOptions: (data: Partial<ApprovalOptions>) => void
   expiration: UIExpiration
   setExpiration: (data: Partial<UIExpiration>) => void
-  error?: string
+  errors?: ValidationError
 }
 
 const Permissions: FC<Props> = ({
@@ -27,7 +28,7 @@ const Permissions: FC<Props> = ({
   setOptions,
   expiration,
   setExpiration,
-  error,
+  errors,
 }) => {
   return (
     <>
@@ -47,7 +48,7 @@ const Permissions: FC<Props> = ({
         <ExpirationForm
           settings={expiration}
           onChange={setExpiration}
-          error={error}
+          errors={errors}
         />
       )}
     </>

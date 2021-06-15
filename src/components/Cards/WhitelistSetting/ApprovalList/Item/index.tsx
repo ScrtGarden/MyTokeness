@@ -12,7 +12,10 @@ import reducer from '../../../../../../utils/reducer'
 import truncateAddress from '../../../../../../utils/truncateAddress'
 import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import useToggle from '../../../../../hooks/useToggle'
-import { formatAdd as format } from '../../../../CollectionPage/Settings/Privacy/lib'
+import {
+  ValidationError,
+  formatAdd as format,
+} from '../../../../CollectionPage/Settings/Privacy/lib'
 import Warning from '../../../../Modals/Warning'
 import { IconButton, StyledIcon } from '../../../../UI/Buttons'
 import Dropdown from '../../../../UI/Dropdowns/Menu'
@@ -55,7 +58,7 @@ const Item: FC<Props> = ({
   )
   const [showMenu, toggleMenu] = useToggle()
   const [showWarn, toggleWarn] = useToggle()
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState<ValidationError | undefined>()
 
   // custom hooks
   const { mutate, isLoading } = useMutationWhitelist(
@@ -71,6 +74,12 @@ const Item: FC<Props> = ({
   useEffect(() => {
     setLocalExpiration(expiration)
   }, [expiration])
+
+  useEffect(() => {
+    if (errors) {
+      setErrors(undefined)
+    }
+  }, [localExpiration])
 
   const onClickEdit = () => {
     toggleMenu()
@@ -92,8 +101,9 @@ const Item: FC<Props> = ({
 
     if (isSave) {
       const { hasError, errors } = validate(localOptions, localExpiration)
+
       if (hasError) {
-        setError(errors.expiration)
+        setErrors(errors)
         return
       } else {
         data = format(address, localOptions, localExpiration)
@@ -151,7 +161,7 @@ const Item: FC<Props> = ({
             setExpiration={setLocalExpiration}
             setOptions={setLocalOptions}
             onClickSave={() => onUpdate(true)}
-            error={error}
+            errors={errors}
             loading={isLoading && !showWarn}
           />
         </Row>

@@ -17,7 +17,7 @@ export type Props = {
   setExpiration: (data: Partial<UIExpiration>) => void
   loading?: boolean
   onAdd: () => void
-  errors: { address: string; expiration: string }
+  errors: { address: string; option: string; value: string }
 }
 
 const AddNew: FC<Props> = ({
@@ -51,7 +51,7 @@ const AddNew: FC<Props> = ({
         setOptions={setOptions}
         expiration={expiration}
         setExpiration={setExpiration}
-        error={errors.expiration}
+        errors={{ option: errors.option, value: errors.value }}
       />
     </Content>
     <Buttons>

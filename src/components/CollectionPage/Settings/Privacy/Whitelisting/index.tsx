@@ -27,7 +27,7 @@ const OPTIONS: ApprovalOptions = {
 }
 
 const EXPIRATION: UIExpiration = {
-  type: 'never',
+  type: '',
   date: new Date(),
   blockheight: '',
 }
@@ -45,7 +45,11 @@ const Whitelisting: FC<Props> = (props) => {
     reducer,
     EXPIRATION
   )
-  const [addError, setAddError] = useState({ address: '', expiration: '' })
+  const [addError, setAddError] = useState({
+    address: '',
+    option: '',
+    value: '',
+  })
 
   // custom hooks
   const { mutate, isLoading } = useMutationWhitelist(
@@ -61,8 +65,8 @@ const Whitelisting: FC<Props> = (props) => {
   }, [address])
 
   useEffect(() => {
-    if (addError.expiration) {
-      setAddError({ ...addError, expiration: '' })
+    if (addError.option || addError.value) {
+      setAddError({ ...addError, option: '', value: '' })
     }
   }, [expiration])
 

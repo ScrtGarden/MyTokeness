@@ -4,6 +4,7 @@ import {
   ApprovalOptions,
   UIExpiration,
 } from '../../../../../../../interface/nft-ui'
+import { ValidationError } from '../../../../../CollectionPage/Settings/Privacy/lib'
 import ButtonWithLoading from '../../../../../Common/ButtonWithLoading'
 import { Button } from '../../../../../UI/Buttons'
 import Permissions from '../../../Permissions'
@@ -16,7 +17,7 @@ type Props = {
   setExpiration: (data: Partial<UIExpiration>) => void
   toggle: () => void
   toggleWarn: () => void
-  error?: string
+  errors?: ValidationError
   onClickSave: () => void
   loading?: boolean
 }
@@ -30,7 +31,7 @@ const Editor: FC<Props> = (props) => {
     setOptions,
     setExpiration,
     onClickSave,
-    error,
+    errors,
     loading,
   } = props
 
@@ -43,7 +44,7 @@ const Editor: FC<Props> = (props) => {
           expiration={expiration}
           setOptions={setOptions}
           setExpiration={setExpiration}
-          error={error}
+          errors={errors}
         />
         <Buttons>
           <Button onClick={toggleWarn} isDanger>
