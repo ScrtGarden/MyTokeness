@@ -15,7 +15,7 @@ const expirationToUI = (
   original: Expiration | null | undefined
 ): UIExpiration => {
   const initial: UIExpiration = {
-    type: 'never',
+    type: '',
     date: new Date(),
     blockheight: '',
   }
