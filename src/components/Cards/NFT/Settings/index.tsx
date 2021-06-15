@@ -10,6 +10,8 @@ type Props = {
   isSealed: boolean
   hiddenOwnership: boolean
   ownershipExpiration: UIExpiration
+  hiddenPrivateMetadata: boolean
+  privateMetadataExpiration: UIExpiration
 }
 
 const SIZE = 16
@@ -19,47 +21,64 @@ const Settings: FC<Props> = ({
   isSealed,
   hiddenOwnership,
   ownershipExpiration,
-}) => {
-  return (
-    <Container>
-      <Section>
-        <Tooltip
-          content={
-            hiddenOwnership ? (
-              'Hidden ownership'
-            ) : (
-              <PrivacyTooltip expiration={ownershipExpiration} />
-            )
-          }
-          placement="top-start"
-        >
+  hiddenPrivateMetadata,
+  privateMetadataExpiration,
+}) => (
+  <Container>
+    <Section>
+      <Tooltip
+        content={
+          hiddenOwnership ? (
+            'Hidden ownership'
+          ) : (
+            <PrivacyTooltip
+              expiration={ownershipExpiration}
+              label="Viewable ownership"
+            />
+          )
+        }
+        placement="top-start"
+      >
+        <StyledIcon
+          name="user-shield-duo"
+          width={SIZE}
+          height={SIZE}
+          disabled={!hiddenOwnership}
+        />
+      </Tooltip>
+      <Tooltip
+        content={
+          hiddenPrivateMetadata ? (
+            'Hidden private contents'
+          ) : (
+            <PrivacyTooltip
+              expiration={privateMetadataExpiration}
+              label="Viewable private contents"
+            />
+          )
+        }
+        placement="top-start"
+      >
+        <StyledIcon
+          name="shield-duo"
+          width={SIZE}
+          height={SIZE}
+          disabled={!hiddenPrivateMetadata}
+        />
+      </Tooltip>
+    </Section>
+    <Section>
+      {enabledSealedData && (
+        <Tooltip content={isSealed ? 'Sealed' : 'Unsealed'} placement="top-end">
           <StyledIcon
-            name="user-shield-duo"
+            name={isSealed ? 'lock-keyhole-duo' : 'lock-keyhole-open-duo'}
             width={SIZE}
             height={SIZE}
-            disabled={!hiddenOwnership}
           />
         </Tooltip>
-        <Tooltip content="Hidden private contents" placement="top-start">
-          <StyledIcon name="shield-duo" width={SIZE} height={SIZE} />
-        </Tooltip>
-      </Section>
-      <Section>
-        {enabledSealedData && (
-          <Tooltip
-            content={isSealed ? 'Sealed' : 'Unsealed'}
-            placement="top-end"
-          >
-            <StyledIcon
-              name={isSealed ? 'lock-keyhole-duo' : 'lock-keyhole-open-duo'}
-              width={SIZE}
-              height={SIZE}
-            />
-          </Tooltip>
-        )}
-      </Section>
-    </Container>
-  )
-}
+      )}
+    </Section>
+  </Container>
+)
 
 export default memo(Settings)
