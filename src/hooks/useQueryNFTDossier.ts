@@ -81,6 +81,9 @@ const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
       Snip721ApprovalToUI(item)
     ),
     tokenApprovals: token_approvals.map((item) => Snip721ApprovalToUI(item)),
+    isSealed:
+      display_private_metadata_error ===
+      'Sealed metadata must be unwrapped by calling Reveal before it can be viewed',
   }
 }
 
