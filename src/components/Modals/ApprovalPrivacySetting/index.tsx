@@ -19,7 +19,7 @@ export type Props = {
   toggle: () => void
   isPrivate: boolean
   expiration: UIExpiration
-  error?: string
+  errors?: { option: string; value: string }
   toggleLabel?: string
   onSubmit: (isPrivate: boolean, expiration: UIExpiration) => void
   loading?: boolean
@@ -32,7 +32,7 @@ const ApprovalPrivacySetting: FC<Props> = ({
   description,
   isPrivate,
   expiration,
-  error,
+  errors,
   toggleLabel,
   onSubmit,
   loading,
@@ -43,12 +43,12 @@ const ApprovalPrivacySetting: FC<Props> = ({
     reducer,
     expiration
   )
-  const [errorState, setErrorState] = useState(error)
+  const [errorState, setErrorState] = useState(errors)
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setErrorState('')
+    if (errors) {
+      setErrorState(undefined)
     }
   }, [isPrivateState, expSettings])
 
@@ -61,8 +61,8 @@ const ApprovalPrivacySetting: FC<Props> = ({
   }, [isPrivate])
 
   useEffect(() => {
-    setErrorState(error)
-  }, [error])
+    setErrorState(errors)
+  }, [errors])
 
   return (
     <>
@@ -86,7 +86,7 @@ const ApprovalPrivacySetting: FC<Props> = ({
           <ExpirationForm
             settings={expSettings}
             onChange={setExpSettings}
-            error={errorState}
+            errors={errorState}
           />
         )}
       </StyledContent>
