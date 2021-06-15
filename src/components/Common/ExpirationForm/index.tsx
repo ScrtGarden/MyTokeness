@@ -5,10 +5,10 @@ import { UIExpiration } from '../../../../interface/nft-ui'
 import { DATE_FORMAT } from '../../../../utils/constants'
 import { blockheightPattern } from '../../../../utils/regexPatterns'
 import { DatePickerWrapper } from '../../UI/DatePicker'
-import { Label } from '../../UI/Forms'
+import { Input, Label } from '../../UI/Forms'
 import { Radio } from '../../UI/Forms/Radio'
 import MessageWithIcon from '../MessageWithIcon'
-import { Field, InputWrapper, StyledInput, StyledRadioGroup } from './styles'
+import { Field, InputWrapper, StyledRadioGroup } from './styles'
 
 type Props = {
   settings: UIExpiration
@@ -37,7 +37,7 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
       </StyledRadioGroup>
       {settings.type === 'blockheight' && (
         <InputWrapper>
-          <StyledInput
+          <Input
             placeholder="3000000"
             value={settings.blockheight}
             onChange={onChangeBlockheight}
@@ -51,9 +51,7 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
           <DatePicker
             selected={settings.date}
             onChange={(date: Date) => onChange({ date })}
-            customInput={
-              <StyledInput validation={error ? 'error' : undefined} />
-            }
+            customInput={<Input validation={error ? 'error' : undefined} />}
             dateFormat={DATE_FORMAT}
             showTimeInput
             minDate={new Date()}
