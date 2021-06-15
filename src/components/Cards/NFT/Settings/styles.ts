@@ -17,7 +17,7 @@ const Container = styled.div`
 const StyledIcon = styled(Icon)<IconProps>`
   fill: ${(props) =>
     props.disabled
-      ? props.theme.icon.colors.disabled
+      ? `${props.theme.palette.yellow[600]}60`
       : props.theme.palette.yellow[600]};
 `
 

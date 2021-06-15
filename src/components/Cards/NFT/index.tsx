@@ -90,6 +90,8 @@ const NFTCard: FC<Props> = ({
         <Settings
           enabledSealedData={enabledSealedData}
           isSealed={data.isSealed}
+          hiddenOwnership={!data.ownerIsPublic}
+          ownershipExpiration={data.publicOwnershipExpiration}
         />
       </Container>
       <Modal isOpen={showUnseal} onBackgroundClick={toggleUnseal}>
