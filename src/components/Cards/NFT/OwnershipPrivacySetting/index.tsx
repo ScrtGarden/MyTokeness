@@ -19,7 +19,7 @@ import ApprovalPrivacySetting, {
 type Props = {
   tokenId: string
   contractAddress: string
-} & Omit<ApprovalSettingProps, 'onSubmit'>
+} & Omit<ApprovalSettingProps, 'onSubmit' | 'title' | 'id'>
 
 const OwnershipPrivacySetting: FC<Props> = ({
   tokenId,
