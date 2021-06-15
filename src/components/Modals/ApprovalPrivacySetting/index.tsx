@@ -2,6 +2,7 @@ import { FC, memo, useEffect, useReducer, useState } from 'react'
 
 import { ExpirationReducer, UIExpiration } from '../../../../interface/nft-ui'
 import reducer from '../../../../utils/reducer'
+import { ValidationError } from '../../CollectionPage/Settings/Privacy/lib'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import ExpirationForm from '../../Common/ExpirationForm'
 import Icon from '../../Icons'
@@ -19,7 +20,7 @@ export type Props = {
   toggle: () => void
   isPrivate: boolean
   expiration: UIExpiration
-  errors?: { option: string; value: string }
+  errors?: ValidationError
   toggleLabel?: string
   onSubmit: (isPrivate: boolean, expiration: UIExpiration) => void
   loading?: boolean
