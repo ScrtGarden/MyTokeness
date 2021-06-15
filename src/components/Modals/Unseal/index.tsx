@@ -40,6 +40,7 @@ const UnsealModal: FC<Props> = (props) => {
             contractAddress,
             tokenId,
           ])
+          toggle()
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))
