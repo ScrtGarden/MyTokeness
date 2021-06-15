@@ -2,6 +2,7 @@ import { FC, memo, useEffect, useMemo, useReducer, useState } from 'react'
 
 import { ExpirationReducer, UIExpiration } from '../../../../interface/nft-ui'
 import reducer from '../../../../utils/reducer'
+import { ValidationError } from '../../CollectionPage/Settings/Privacy/lib'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import ExpirationForm from '../../Common/ExpirationForm'
 import { Header, SettingsCard } from '../../UI/Card'
@@ -17,7 +18,7 @@ type Props = {
   expiration: UIExpiration
   toggleId: string
   toggleLabel: string
-  error?: string
+  errors?: ValidationError
   onSubmit: (isPrivate: boolean, exp: UIExpiration) => void
   loading?: boolean
 }
@@ -29,7 +30,7 @@ const ApprovalSetting: FC<Props> = ({
   toggleLabel,
   isPrivate,
   expiration,
-  error,
+  errors,
   onSubmit,
   loading,
 }) => {
@@ -39,12 +40,12 @@ const ApprovalSetting: FC<Props> = ({
     reducer,
     expiration
   )
-  const [errorState, setErrorState] = useState(error)
+  const [errorState, setErrorState] = useState(errors)
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setErrorState('')
+    if (errors) {
+      setErrorState(undefined)
     }
   }, [isPrivateState, expSettings])
 
@@ -57,8 +58,8 @@ const ApprovalSetting: FC<Props> = ({
   }, [isPrivate])
 
   useEffect(() => {
-    setErrorState(error)
-  }, [error])
+    setErrorState(errors)
+  }, [errors])
 
   return (
     <SettingsCard>
@@ -77,7 +78,7 @@ const ApprovalSetting: FC<Props> = ({
           <ExpirationForm
             settings={expSettings}
             onChange={setExpSettings}
-            error={errorState}
+            errors={errorState}
           />
         )}
       </Content>
