@@ -40,6 +40,7 @@ const UnsealModal: FC<Props> = (props) => {
             contractAddress,
             tokenId,
           ])
+          toast.success("You can now view the asset's private contents.")
           toggle()
         },
         onError: (error) => {
