@@ -9,7 +9,7 @@ import Icon from '../../Icons'
 import { Button } from '../../UI/Buttons'
 import { Label, ToggleWrapper } from '../../UI/Forms'
 import Toggle from '../../UI/Forms/Toggle'
-import { Buttons, CloseButton, Content, Header, Title } from '../../UI/Modal'
+import { Buttons, CloseButton, Header, Title } from '../../UI/Modal'
 import { Text } from '../../UI/Typography'
 import { StyledContent } from './styles'
 
