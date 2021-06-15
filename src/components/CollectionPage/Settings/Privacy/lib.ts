@@ -8,22 +8,38 @@ import {
 import { ApprovalOptions, UIExpiration } from '../../../../../interface/nft-ui'
 import isSecretAddress from '../../../../../utils/isSecretAddress'
 
+export interface ValidationError {
+  option: string
+  value: string
+}
+
+interface FormatOptions {
+  isOwnership?: boolean
+  tokenId?: string
+}
+
 const validate = (isPrivate: boolean, settings: UIExpiration) => {
   const { type, date, blockheight } = settings
-
-  if (isPrivate) {
-    return ''
+  const validation = {
+    hasError: false,
+    errors: {
+      option: '',
+      value: '',
+    },
   }
 
-  if (type === 'date' && !date) {
-    return 'Please selected a valid date.'
+  if (!isPrivate && !type) {
+    validation.hasError = true
+    validation.errors.option = 'Please select an option.'
+  } else if (type === 'date' && !date) {
+    validation.hasError = true
+    validation.errors.value = 'Please selected a valid date.'
+  } else if (type === 'blockheight' && !blockheight) {
+    validation.hasError = true
+    validation.errors.value = 'Please enter a valid number.'
   }
 
-  if (type === 'blockheight' && !blockheight) {
-    return 'Please enter a valid number.'
-  }
-
-  return ''
+  return validation
 }
 
 const formatExpiration = ({
@@ -42,9 +58,16 @@ const formatExpiration = ({
 const format = (
   isPrivate: boolean,
   expiration: UIExpiration,
-  isOwnership?: boolean
+  config: FormatOptions = {}
 ): HandleSetGlobalApproval => {
-  const view = isPrivate ? 'none' : 'all'
+  const { isOwnership, tokenId } = config
+  const view = isPrivate
+    ? !!tokenId
+      ? 'revoke_token'
+      : 'none'
+    : !!tokenId
+    ? 'approve_token'
+    : 'all'
 
   let expires
   if (!isPrivate) {
@@ -55,6 +78,7 @@ const format = (
     set_global_approval: {
       ...(isOwnership ? { view_owner: view } : { view_private_metadata: view }),
       ...(!isPrivate && { expires }),
+      ...(!!tokenId && { token_id: tokenId }),
     },
   }
 }
