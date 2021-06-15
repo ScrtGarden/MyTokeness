@@ -7,7 +7,7 @@ const StyledRadioGroup = styled(RadioGroup)`
   flex-direction: row;
 `
 
-const InputWrapper = styled.div``
+const Wrapper = styled.div``
 
 const Field = styled.div`
   display: flex;
@@ -15,4 +15,4 @@ const Field = styled.div`
   row-gap: ${(props) => props.theme.space.md};
 `
 
-export { StyledRadioGroup, InputWrapper, Field }
+export { StyledRadioGroup, Wrapper, Field }

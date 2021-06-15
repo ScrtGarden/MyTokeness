@@ -8,15 +8,15 @@ import { DatePickerWrapper } from '../../UI/DatePicker'
 import { Input, Label } from '../../UI/Forms'
 import { Radio } from '../../UI/Forms/Radio'
 import MessageWithIcon from '../MessageWithIcon'
-import { Field, InputWrapper, StyledRadioGroup } from './styles'
+import { Field, StyledRadioGroup, Wrapper } from './styles'
 
 type Props = {
   settings: UIExpiration
   onChange: (data: Partial<UIExpiration>) => void
-  error?: string
+  errors?: { option: string; value: string }
 }
 
-const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
+const ExpirationForm: FC<Props> = ({ settings, onChange, errors }) => {
   const onChangeBlockheight = (e: FormEvent<HTMLInputElement>) => {
     const blockheight = e.currentTarget.value
     if (!blockheight || blockheight.match(blockheightPattern)) {
@@ -27,36 +27,47 @@ const ExpirationForm: FC<Props> = ({ settings, onChange, error }) => {
   return (
     <Field>
       <Label>Expiration</Label>
-      <StyledRadioGroup
-        selectedValue={settings.type}
-        onClick={(value) => onChange({ type: value as UIExpiration['type'] })}
-      >
-        <Radio value="never" labelText="Never" isRegular />
-        <Radio value="date" labelText="Date" isRegular />
-        <Radio value="blockheight" labelText="Blockheight" isRegular />
-      </StyledRadioGroup>
+      <Wrapper>
+        <StyledRadioGroup
+          selectedValue={settings.type}
+          onClick={(value) => onChange({ type: value as UIExpiration['type'] })}
+        >
+          <Radio value="never" labelText="Never" isRegular />
+          <Radio value="date" labelText="Date" isRegular />
+          <Radio value="blockheight" labelText="Blockheight" isRegular />
+        </StyledRadioGroup>
+        {errors?.option && (
+          <MessageWithIcon validation="error" message={errors.option} />
+        )}
+      </Wrapper>
       {settings.type === 'blockheight' && (
-        <InputWrapper>
+        <Wrapper>
           <Input
             placeholder="3000000"
             value={settings.blockheight}
             onChange={onChangeBlockheight}
-            validation={error ? 'error' : undefined}
+            validation={errors?.value ? 'error' : undefined}
           />
-          {error && <MessageWithIcon validation="error" message={error} />}
-        </InputWrapper>
+          {errors?.value && (
+            <MessageWithIcon validation="error" message={errors.value} />
+          )}
+        </Wrapper>
       )}
       {settings.type === 'date' && (
         <DatePickerWrapper>
           <DatePicker
             selected={settings.date}
             onChange={(date: Date) => onChange({ date })}
-            customInput={<Input validation={error ? 'error' : undefined} />}
+            customInput={
+              <Input validation={errors?.value ? 'error' : undefined} />
+            }
             dateFormat={DATE_FORMAT}
             showTimeInput
             minDate={new Date()}
           />
-          {error && <MessageWithIcon validation="error" message={error} />}
+          {errors?.value && (
+            <MessageWithIcon validation="error" message={errors.value} />
+          )}
         </DatePickerWrapper>
       )}
     </Field>
