@@ -1,9 +1,17 @@
 import { FC, memo, useState } from 'react'
+import { useQueryClient } from 'react-query'
+import { toast } from 'react-toastify'
 
 import { HandleSetGlobalApproval } from '../../../../../interface/nft'
 import { UIExpiration } from '../../../../../interface/nft-ui'
+import { MAX_GAS } from '../../../../../utils/constants'
+import parseErrorMsg from '../../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../../hooks/useMutationExeContract'
-import { validate } from '../../../CollectionPage/Settings/Privacy/lib'
+import {
+  ValidationError,
+  format,
+  validate,
+} from '../../../CollectionPage/Settings/Privacy/lib'
 import ApprovalPrivacySetting, {
   Props as ApprovalSettingProps,
 } from '../../../Modals/ApprovalPrivacySetting'
@@ -14,15 +22,20 @@ type Props = {
 } & Omit<ApprovalSettingProps, 'onSubmit'>
 
 const OwnershipPrivacySetting: FC<Props> = ({
+  tokenId,
+  contractAddress,
   toggle,
   isPrivate,
   expiration,
 }) => {
+  const queryClient = useQueryClient()
+
   // component state
-  const [errors, setErrors] = useState({ option: '', value: '' })
+  const [errors, setErrors] = useState<ValidationError | undefined>()
 
   // custom hooks
-  const { mutate } = useMutationExeContract<HandleSetGlobalApproval>()
+  const { mutate, isLoading } =
+    useMutationExeContract<HandleSetGlobalApproval>()
 
   const onSubmit = (hideOwnership: boolean, exp: UIExpiration) => {
     const validation = validate(hideOwnership, exp)
@@ -31,6 +44,37 @@ const OwnershipPrivacySetting: FC<Props> = ({
     if (validation.hasError) {
       return
     }
+
+    const handleMsg = format(hideOwnership, exp, {
+      isOwnership: true,
+      tokenId,
+    })
+
+    mutate(
+      {
+        contractAddress,
+        maxGas: MAX_GAS.NFT.SET_GLOBAL_APPROVAL_TOKEN,
+        handleMsg,
+      },
+      {
+        onSuccess: (_, { handleMsg: { set_global_approval } }) => {
+          const { view_owner } = set_global_approval
+          const isHidden = view_owner && view_owner === 'revoke_token'
+          queryClient.invalidateQueries([
+            'nftDossier',
+            contractAddress,
+            tokenId,
+          ])
+          toast.success(
+            `Ownership of asset is now ${isHidden ? 'hidden' : 'public'}. `
+          )
+          toggle()
+        },
+        onError: (error) => {
+          toast.error(parseErrorMsg(error))
+        },
+      }
+    )
   }
 
   return (
@@ -44,7 +88,7 @@ const OwnershipPrivacySetting: FC<Props> = ({
       toggleLabel="Hide ownership"
       toggle={toggle}
       onSubmit={onSubmit}
-      loading={false}
+      loading={isLoading}
     />
   )
 }

@@ -9,6 +9,7 @@ import Dropdown from '../../UI/Dropdowns/Menu'
 import { Modal } from '../../UI/Modal'
 import Details from './Details'
 import Menu from './Menu'
+import OwnershipPrivacySetting from './OwnershipPrivacySetting'
 import Settings from './Settings'
 import { Container, Wrapper } from './styles'
 import Visual from './Visual'
@@ -31,6 +32,7 @@ const NFTCard: FC<Props> = ({
   // component state
   const [showMenu, toggleMenu] = useToggle()
   const [showUnseal, toggleUnseal] = useToggle()
+  const [showOwnership, toggleOwnership] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(
@@ -45,6 +47,11 @@ const NFTCard: FC<Props> = ({
     toggleUnseal()
   }
 
+  const onClickOwnership = () => {
+    toggleMenu()
+    toggleOwnership()
+  }
+
   if (isLoading) {
     return <SkeletonNFTCard />
   }
@@ -53,7 +60,7 @@ const NFTCard: FC<Props> = ({
     return <Container>Error</Container>
   }
 
-  console.log({ data, enabledSealedData })
+  console.log({ data })
   return (
     <>
       <Container>
@@ -70,6 +77,7 @@ const NFTCard: FC<Props> = ({
               <Menu
                 onClickUnseal={onClickUnseal}
                 showUnseal={!!enabledSealedData && data.isSealed}
+                onClickOwnership={onClickOwnership}
               />
             }
             placement="left-end"
@@ -90,6 +98,18 @@ const NFTCard: FC<Props> = ({
           name={data.publicMetadata.name}
           tokenId={id}
           contractAddress={contractAddress}
+        />
+      </Modal>
+      <Modal isOpen={showOwnership}>
+        <OwnershipPrivacySetting
+          tokenId={id}
+          contractAddress={contractAddress}
+          title="Ownership privacy setting"
+          description="Turning this off will allow anyone see you own this asset."
+          id="ownership"
+          toggle={toggleOwnership}
+          isPrivate={!data.ownerIsPublic}
+          expiration={data.publicOwnershipExpiration}
         />
       </Modal>
     </>
