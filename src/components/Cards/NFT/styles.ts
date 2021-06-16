@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Modal } from '../../UI/Modal'
+
 const Container = styled.div`
   aspect-ratio: 0.9;
   border: 2px solid ${(props) => props.theme.border.color};
@@ -18,4 +20,8 @@ const Wrapper = styled.div`
   padding: ${(props) => props.theme.space.sm};
 `
 
-export { Container, Wrapper }
+const StyledModal = styled(Modal)`
+  max-width: 725px;
+`
+
+export { Container, Wrapper, StyledModal }

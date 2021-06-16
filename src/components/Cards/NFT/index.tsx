@@ -3,6 +3,7 @@ import { FC, memo } from 'react'
 import useQueryNFTDossier from '../../../hooks/useQueryNFTDossier'
 import useToggle from '../../../hooks/useToggle'
 import UnsealModal from '../../Modals/Unseal'
+import Whitelisting from '../../Modals/Whitelisting'
 import SkeletonNFTCard from '../../Skeleton/NFTCard'
 import { IconButton, StyledIcon } from '../../UI/Buttons'
 import Dropdown from '../../UI/Dropdowns/Menu'
@@ -12,7 +13,7 @@ import Details from './Details'
 import Menu from './Menu'
 import OwnershipPrivacySetting from './OwnershipPrivacySetting'
 import Settings from './Settings'
-import { Container, Wrapper } from './styles'
+import { Container, StyledModal, Wrapper } from './styles'
 import Visual from './Visual'
 
 type Props = {
@@ -35,6 +36,7 @@ const NFTCard: FC<Props> = ({
   const [showUnseal, toggleUnseal] = useToggle()
   const [showOwnership, toggleOwnership] = useToggle()
   const [showContentsSettings, toggleContentsSettings] = useToggle()
+  const [showWhitelist, toggleWhitelist] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(
@@ -57,6 +59,11 @@ const NFTCard: FC<Props> = ({
   const onClickPrivateContents = () => {
     toggleMenu()
     toggleContentsSettings()
+  }
+
+  const onClickWhitelist = () => {
+    toggleMenu()
+    toggleWhitelist()
   }
 
   if (isLoading) {
@@ -86,6 +93,7 @@ const NFTCard: FC<Props> = ({
                 showUnseal={!!enabledSealedData && data.isSealed}
                 onClickOwnership={onClickOwnership}
                 onClickPrivateContents={onClickPrivateContents}
+                onClickWhitelist={onClickWhitelist}
               />
             }
             placement="left-end"
@@ -130,6 +138,15 @@ const NFTCard: FC<Props> = ({
           expiration={data.privateMetadataIsPublicExpiration}
         />
       </Modal>
+      <StyledModal isOpen={showWhitelist}>
+        <Whitelisting
+          toggle={toggleWhitelist}
+          tokenId={id}
+          contractAddress={contractAddress}
+          walletAddress={walletAddress}
+          approvedList={data.tokenApprovals}
+        />
+      </StyledModal>
     </>
   )
 }
