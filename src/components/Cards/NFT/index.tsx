@@ -2,6 +2,7 @@ import { FC, memo } from 'react'
 
 import useQueryNFTDossier from '../../../hooks/useQueryNFTDossier'
 import useToggle from '../../../hooks/useToggle'
+import Transfer from '../../Modals/Transfer'
 import UnsealModal from '../../Modals/Unseal'
 import Whitelisting from '../../Modals/Whitelisting'
 import SkeletonNFTCard from '../../Skeleton/NFTCard'
@@ -37,6 +38,7 @@ const NFTCard: FC<Props> = ({
   const [showOwnership, toggleOwnership] = useToggle()
   const [showContentsSettings, toggleContentsSettings] = useToggle()
   const [showWhitelist, toggleWhitelist] = useToggle()
+  const [showTransfer, toggleTransfer] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(
@@ -64,6 +66,11 @@ const NFTCard: FC<Props> = ({
   const onClickWhitelist = () => {
     toggleMenu()
     toggleWhitelist()
+  }
+
+  const onClickTransfer = () => {
+    toggleMenu()
+    toggleTransfer()
   }
 
   if (isLoading) {
@@ -94,6 +101,7 @@ const NFTCard: FC<Props> = ({
                 onClickOwnership={onClickOwnership}
                 onClickPrivateContents={onClickPrivateContents}
                 onClickWhitelist={onClickWhitelist}
+                onClickTransfer={onClickTransfer}
               />
             }
             placement="left-end"
@@ -119,6 +127,7 @@ const NFTCard: FC<Props> = ({
           name={data.publicMetadata.name}
           tokenId={id}
           contractAddress={contractAddress}
+          walletAddress={walletAddress}
         />
       </Modal>
       <Modal isOpen={showOwnership}>
@@ -128,6 +137,7 @@ const NFTCard: FC<Props> = ({
           toggle={toggleOwnership}
           isPrivate={!data.ownerIsPublic}
           expiration={data.publicOwnershipExpiration}
+          walletAddress={walletAddress}
         />
       </Modal>
       <Modal isOpen={showContentsSettings}>
@@ -137,6 +147,7 @@ const NFTCard: FC<Props> = ({
           toggle={toggleContentsSettings}
           isPrivate={!data.privateMetadataIsPublic}
           expiration={data.privateMetadataIsPublicExpiration}
+          walletAddress={walletAddress}
         />
       </Modal>
       <StyledModal isOpen={showWhitelist}>
@@ -148,6 +159,15 @@ const NFTCard: FC<Props> = ({
           approvedList={data.tokenApprovals}
         />
       </StyledModal>
+      <Modal isOpen={showTransfer}>
+        <Transfer
+          toggle={toggleTransfer}
+          contractAddress={contractAddress}
+          walletAddress={walletAddress}
+          tokenId={id}
+          name={data.publicMetadata.name}
+        />
+      </Modal>
     </>
   )
 }
