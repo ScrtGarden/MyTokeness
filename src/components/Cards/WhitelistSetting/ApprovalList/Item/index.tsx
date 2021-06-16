@@ -14,7 +14,7 @@ import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import useToggle from '../../../../../hooks/useToggle'
 import {
   ValidationError,
-  formatAdd as format,
+  formatWhitelistAdd as format,
 } from '../../../../CollectionPage/Settings/Privacy/lib'
 import Warning from '../../../../Modals/Warning'
 import { IconButton, StyledIcon } from '../../../../UI/Buttons'
