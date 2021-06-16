@@ -13,8 +13,12 @@ export interface ValidationError {
   value?: string
 }
 
-interface FormatOptions {
+interface FormatConfig {
   isOwnership?: boolean
+  tokenId?: string
+}
+
+interface FormatWhitelistAddConfig {
   tokenId?: string
 }
 
@@ -58,7 +62,7 @@ const formatExpiration = ({
 const format = (
   isPrivate: boolean,
   expiration: UIExpiration,
-  config: FormatOptions = {}
+  config: FormatConfig = {}
 ): HandleSetGlobalApproval => {
   const { isOwnership, tokenId } = config
   const view = isPrivate
@@ -83,7 +87,7 @@ const format = (
   }
 }
 
-const validateAdd = (
+const validateWhitelistAdd = (
   address: string,
   options: ApprovalOptions,
   { date, blockheight, type }: UIExpiration
@@ -118,14 +122,18 @@ const validateAdd = (
   return validation
 }
 
-const formatAdd = (
+const formatWhitelistAdd = (
   address: string,
   { hideOwnership, hidePrivateMetadata, preventTransferPower }: ApprovalOptions,
-  expiration: UIExpiration
+  expiration: UIExpiration,
+  config: FormatWhitelistAddConfig = {}
 ): SetWhitelistedApproval => {
-  const viewOwner = hideOwnership ? 'none' : 'all'
-  const viewPrivateMetadata = hidePrivateMetadata ? 'none' : 'all'
-  const transfer = preventTransferPower ? 'none' : 'all'
+  const { tokenId } = config
+  const hiddenValue = !!tokenId ? 'revoke_token' : 'none'
+  const publicValue = !!tokenId ? 'approve_token' : 'all'
+  const viewOwner = hideOwnership ? hiddenValue : publicValue
+  const viewPrivateMetadata = hidePrivateMetadata ? hiddenValue : publicValue
+  const transfer = preventTransferPower ? hiddenValue : publicValue
 
   let expires
   if (!hideOwnership || !hidePrivateMetadata || !preventTransferPower) {
@@ -138,7 +146,8 @@ const formatAdd = (
     view_private_metadata: viewPrivateMetadata,
     transfer,
     ...(!!expires && { expires }),
+    ...(!!tokenId && { token_id: tokenId }),
   }
 }
 
-export { validate, format, validateAdd, formatAdd }
+export { validate, format, validateWhitelistAdd, formatWhitelistAdd }
