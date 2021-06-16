@@ -12,7 +12,7 @@ const useQueryNFTDossier = (
   viewingKey?: string
 ) => {
   return useQuery<ResultNFTDossier, Error, UINFTDossier>(
-    ['nftDossier', contractAddress, id],
+    ['nftDossier', walletAddress, contractAddress, id],
     () =>
       queryChain.queryContractSmart(contractAddress, {
         nft_dossier: {

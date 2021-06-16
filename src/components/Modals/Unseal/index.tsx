@@ -17,6 +17,7 @@ type Props = {
   name: string
   tokenId: string
   contractAddress: string
+  walletAddress: string
 }
 
 const UnsealModal: FC<Props> = (props) => {
@@ -37,6 +38,7 @@ const UnsealModal: FC<Props> = (props) => {
         onSuccess: () => {
           queryClient.invalidateQueries([
             'nftDossier',
+            walletAddress,
             contractAddress,
             tokenId,
           ])

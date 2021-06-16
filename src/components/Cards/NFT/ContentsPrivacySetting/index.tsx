@@ -19,6 +19,7 @@ import ApprovalPrivacySetting, {
 type Props = {
   tokenId: string
   contractAddress: string
+  walletAddress: string
 } & Omit<ApprovalSettingProps, 'onSubmit' | 'title' | 'id'>
 
 const ContentsPrivacySetting: FC<Props> = ({
@@ -27,6 +28,7 @@ const ContentsPrivacySetting: FC<Props> = ({
   toggle,
   isPrivate,
   expiration,
+  walletAddress,
 }) => {
   const queryClient = useQueryClient()
 
@@ -61,6 +63,7 @@ const ContentsPrivacySetting: FC<Props> = ({
           const isHidden = view_private_metadata === 'revoke_token'
           queryClient.invalidateQueries([
             'nftDossier',
+            walletAddress,
             contractAddress,
             tokenId,
           ])
