@@ -12,7 +12,10 @@ import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
 import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import WhitelistSetting from '../../../../Cards/WhitelistSetting'
-import { formatAdd as format, validateAdd as validate } from '../lib'
+import {
+  formatWhitelistAdd as format,
+  validateWhitelistAdd as validate,
+} from '../lib'
 
 type Props = {
   contractAddress: string
@@ -70,7 +73,7 @@ const Whitelisting: FC<Props> = (props) => {
     }
   }, [expiration])
 
-  const onAdd = () => {
+  const onWhitelistAdd = () => {
     const { hasError, errors } = validate(address, options, expiration)
 
     setAddError(errors)
@@ -103,7 +106,7 @@ const Whitelisting: FC<Props> = (props) => {
       setOptions={setOptions}
       expiration={expiration}
       setExpiration={setExpiration}
-      onAdd={onAdd}
+      onAdd={onWhitelistAdd}
       errors={addError}
       loading={isLoading}
     />
