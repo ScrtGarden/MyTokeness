@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `
 
 const StyledModal = styled(Modal)`
-  max-width: 725px;
+  max-width: 750px;
 `
 
 export { Container, Wrapper, StyledModal }
