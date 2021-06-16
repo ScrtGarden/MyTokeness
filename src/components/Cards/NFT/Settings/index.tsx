@@ -12,6 +12,7 @@ type Props = {
   ownershipExpiration: UIExpiration
   hiddenPrivateMetadata: boolean
   privateMetadataExpiration: UIExpiration
+  numOfWhitelistedAddresses: number
 }
 
 const SIZE = 16
@@ -23,6 +24,7 @@ const Settings: FC<Props> = ({
   ownershipExpiration,
   hiddenPrivateMetadata,
   privateMetadataExpiration,
+  numOfWhitelistedAddresses,
 }) => (
   <Container>
     <Section>
@@ -33,7 +35,7 @@ const Settings: FC<Props> = ({
           ) : (
             <PrivacyTooltip
               expiration={ownershipExpiration}
-              label="Viewable ownership"
+              label="Public ownership"
             />
           )
         }
@@ -53,7 +55,7 @@ const Settings: FC<Props> = ({
           ) : (
             <PrivacyTooltip
               expiration={privateMetadataExpiration}
-              label="Viewable private contents"
+              label="Public private contents"
             />
           )
         }
@@ -68,6 +70,16 @@ const Settings: FC<Props> = ({
       </Tooltip>
     </Section>
     <Section>
+      {numOfWhitelistedAddresses !== 0 && (
+        <Tooltip
+          content={`${numOfWhitelistedAddresses} whitelisted address${
+            numOfWhitelistedAddresses === 1 ? '' : 'es'
+          }`}
+          placement="top-end"
+        >
+          <StyledIcon name="list-ul-duo" width={SIZE} height={SIZE} />
+        </Tooltip>
+      )}
       {enabledSealedData && (
         <Tooltip content={isSealed ? 'Sealed' : 'Unsealed'} placement="top-end">
           <StyledIcon

@@ -110,6 +110,7 @@ const NFTCard: FC<Props> = ({
           ownershipExpiration={data.publicOwnershipExpiration}
           hiddenPrivateMetadata={!data.privateMetadataIsPublic}
           privateMetadataExpiration={data.privateMetadataIsPublicExpiration}
+          numOfWhitelistedAddresses={data.tokenApprovals.length}
         />
       </Container>
       <Modal isOpen={showUnseal} onBackgroundClick={toggleUnseal}>
