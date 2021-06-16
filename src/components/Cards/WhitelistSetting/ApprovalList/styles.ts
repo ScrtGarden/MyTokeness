@@ -17,7 +17,7 @@ const Placeholder = styled.div`
   display: flex;
   justify-content: center;
   margin-top: ${(props) => props.theme.space.md};
-  height: 300px;
+  height: 250px;
 `
 
 const StyledEmptyList = styled(EmptyList)`
