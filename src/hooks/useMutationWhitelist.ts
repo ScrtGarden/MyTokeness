@@ -1,9 +1,15 @@
-import { UseMutationResult, useMutation, useQueryClient } from 'react-query'
+import {
+  QueryClient,
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from 'react-query'
 import { ExecuteResult } from 'secretjs'
 
 import {
   Expiration,
   ResultInventoryApprovals,
+  ResultNFTDossier,
   SetWhitelistedApproval,
   Snip721Approval,
 } from '../../interface/nft'
@@ -25,29 +31,65 @@ const useMutationWhitelist = (
       }),
     {
       onSuccess: (_, data) => {
-        const key = ['inventoryApprovals', walletAddress, contractAddress]
-        const original = queryClient.getQueryData<ResultInventoryApprovals>(key)
-
-        if (original) {
-          const { inventory_approvals } = original.inventory_approvals
-          const updatedApprovals = updateTokenApprovals(
-            inventory_approvals,
-            data
-          )
-
-          queryClient.setQueryData<ResultInventoryApprovals>(key, {
-            inventory_approvals: {
-              ...original.inventory_approvals,
-              inventory_approvals: updatedApprovals,
-            },
-          })
-        }
+        const { token_id } = data
+        !!token_id
+          ? invalidateTokenApprovals(contractAddress, queryClient, data)
+          : invalidateInventoryApprovals(
+              walletAddress,
+              contractAddress,
+              queryClient,
+              data
+            )
       },
       onSettled: () => {
         queryClient.invalidateQueries(['nativeBalance', walletAddress])
       },
     }
   )
+}
+
+const invalidateTokenApprovals = (
+  contractAddress: string,
+  queryClient: QueryClient,
+  data: SetWhitelistedApproval
+) => {
+  const { token_id } = data
+  const key = ['nftDossier', contractAddress, token_id]
+  const original = queryClient.getQueryData<ResultNFTDossier>(key)
+
+  if (original) {
+    const { token_approvals } = original.nft_dossier
+    const updatedApprovals = updateTokenApprovals(token_approvals, data)
+
+    queryClient.setQueryData<ResultNFTDossier>(key, {
+      nft_dossier: {
+        ...original.nft_dossier,
+        token_approvals: updatedApprovals,
+      },
+    })
+  }
+}
+
+const invalidateInventoryApprovals = (
+  walletAddress: string,
+  contractAddress: string,
+  queryClient: QueryClient,
+  data: SetWhitelistedApproval
+) => {
+  const key = ['inventoryApprovals', walletAddress, contractAddress]
+  const original = queryClient.getQueryData<ResultInventoryApprovals>(key)
+
+  if (original) {
+    const { inventory_approvals } = original.inventory_approvals
+    const updatedApprovals = updateTokenApprovals(inventory_approvals, data)
+
+    queryClient.setQueryData<ResultInventoryApprovals>(key, {
+      inventory_approvals: {
+        ...original.inventory_approvals,
+        inventory_approvals: updatedApprovals,
+      },
+    })
+  }
 }
 
 const updateTokenApprovals = (
@@ -90,12 +132,19 @@ const formatToSnip721Approval = ({
   view_private_metadata,
   transfer,
   expires,
-}: SetWhitelistedApproval): Snip721Approval => ({
-  address,
-  view_owner_expiration: view_owner === 'all' ? (expires as Expiration) : null,
-  view_private_metadata_expiration:
-    view_private_metadata === 'all' ? (expires as Expiration) : null,
-  transfer_expiration: transfer === 'all' ? (expires as Expiration) : null,
-})
+  token_id,
+}: SetWhitelistedApproval): Snip721Approval => {
+  const selectedValue = !!token_id ? 'approve_token' : 'all'
+
+  return {
+    address,
+    view_owner_expiration:
+      view_owner === selectedValue ? (expires as Expiration) : null,
+    view_private_metadata_expiration:
+      view_private_metadata === selectedValue ? (expires as Expiration) : null,
+    transfer_expiration:
+      transfer === selectedValue ? (expires as Expiration) : null,
+  }
+}
 
 export default useMutationWhitelist
