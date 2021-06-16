@@ -32,6 +32,7 @@ type Props = {
   toggle: (address: string) => void
   contractAddress: string
   walletAddress: string
+  tokenId?: string
 }
 
 const Item: FC<Props> = ({
@@ -40,6 +41,7 @@ const Item: FC<Props> = ({
   toggle,
   walletAddress,
   contractAddress,
+  tokenId,
 }) => {
   const { address, transfer, viewOwner, viewPrivateMetadata, expiration } = item
 
@@ -92,11 +94,13 @@ const Item: FC<Props> = ({
   }
 
   const onUpdate = (isSave?: boolean) => {
+    const privateAccessLevel = !!tokenId ? 'revoke_token' : 'none'
     let data: SetWhitelistedApproval = {
       address,
-      view_owner: 'none',
-      view_private_metadata: 'none',
-      transfer: 'none',
+      view_owner: privateAccessLevel,
+      view_private_metadata: privateAccessLevel,
+      transfer: privateAccessLevel,
+      ...(!!tokenId && { token_id: tokenId }),
     }
 
     if (isSave) {
@@ -106,7 +110,7 @@ const Item: FC<Props> = ({
         setErrors(errors)
         return
       } else {
-        data = format(address, localOptions, localExpiration)
+        data = format(address, localOptions, localExpiration, { tokenId })
       }
     }
 

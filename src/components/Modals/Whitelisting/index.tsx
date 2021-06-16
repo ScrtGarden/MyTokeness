@@ -136,7 +136,7 @@ const WhitelistingModal: FC<Props> = ({
           />
         </Wrapper>
         <Separator margin>Approved List</Separator>
-        <ApprovalList list={approvedList} />
+        <ApprovalList list={approvedList} tokenId={tokenId} />
       </Content>
     </>
   )

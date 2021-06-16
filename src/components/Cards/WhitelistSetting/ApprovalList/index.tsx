@@ -10,9 +10,10 @@ import { Container, Placeholder, StyledEmptyList, StyledTable } from './styles'
 
 export type Props = {
   list: UISnip721Approval[]
+  tokenId?: string
 }
 
-const ApprovalList: FC<Props> = ({ list }) => {
+const ApprovalList: FC<Props> = ({ list, tokenId }) => {
   const router = useRouter()
   const { contractAddress } = router.query as CollectionRouterQuery
 
@@ -55,6 +56,7 @@ const ApprovalList: FC<Props> = ({ list }) => {
               toggle={onToggle}
               contractAddress={contractAddress}
               walletAddress={walletAddress}
+              tokenId={tokenId}
             />
           ))}
         </Body>
