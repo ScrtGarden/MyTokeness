@@ -10,7 +10,12 @@ interface RowProps {
   readonly active?: boolean
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  align-items: center;
+  column-gap: ${(props) => props.theme.space.sm};
+  display: flex;
+  flex-direction: row;
+`
 
 const Text = styled.p<TextProps>`
   color: ${(props) => props.theme.font.colors.secondary};

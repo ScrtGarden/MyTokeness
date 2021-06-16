@@ -10,6 +10,7 @@ import {
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
 import truncateAddress from '../../../../../../utils/truncateAddress'
+import useCopyToClipboard from '../../../../../hooks/useCopyToClipboard'
 import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import useToggle from '../../../../../hooks/useToggle'
 import {
@@ -24,7 +25,7 @@ import { Row } from '../../../../UI/Table'
 import Editor from './Editor'
 import { parseData, validate } from './lib'
 import Menu from './Menu'
-import { Cell, StyledRow, Text } from './styles'
+import { Cell, StyledRow, Text, Wrapper } from './styles'
 
 type Props = {
   item: UISnip721Approval
@@ -67,6 +68,7 @@ const Item: FC<Props> = ({
     walletAddress,
     contractAddress
   )
+  const [_, copy] = useCopyToClipboard(address)
 
   // lifecycle
   useEffect(() => {
@@ -132,8 +134,13 @@ const Item: FC<Props> = ({
   return (
     <>
       <StyledRow active={isOpen}>
-        <Cell>
-          <Text bold>{truncateAddress(address)}</Text>
+        <Cell width={250}>
+          <Wrapper>
+            <Text bold>{truncateAddress(address)}</Text>
+            <IconButton size="small" onClick={copy}>
+              <StyledIcon name="copy-duo" width={12} height={12} />
+            </IconButton>
+          </Wrapper>
         </Cell>
         <Cell>
           <Text>{parsedData.permissions}</Text>
