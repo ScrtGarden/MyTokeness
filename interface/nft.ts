@@ -161,6 +161,13 @@ export interface TxActionBurn {
   burner?: string
 }
 
+export interface TransferNFT {
+  recipient: string
+  token_id: string
+  memo?: string
+  padding?: string
+}
+
 /**************************** ******************************/
 
 /**
@@ -245,6 +252,10 @@ export interface HandleReveal {
     token_id: string
     padding?: string
   }
+}
+
+export interface HandleTransferNFT {
+  transfer_nft: TransferNFT
 }
 
 /**
