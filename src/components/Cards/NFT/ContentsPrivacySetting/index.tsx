@@ -65,7 +65,7 @@ const ContentsPrivacySetting: FC<Props> = ({
             tokenId,
           ])
           toast.success(
-            `Contents of asset are now ${isHidden ? 'hidden' : 'public'}. `
+            `Contents of asset is now ${isHidden ? 'hidden' : 'public'}. `
           )
           toggle()
         },
