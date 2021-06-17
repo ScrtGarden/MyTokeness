@@ -11,6 +11,7 @@ import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
+import CirclePlayDuo from './CirclePlayDuo'
 import CopyDuo from './CopyDuo'
 import Dizzy from './Dizzy'
 import DraftingCompassDuo from './DraftingCompassDuo'
@@ -25,6 +26,7 @@ import Flower from './Flower'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
 import HandHoldingUSD from './HandHoldingUSD'
+import HeadphonesDuo from './HeadphonesDuo'
 import HomeDuo from './HomeDuo'
 import HorizontalRule from './HorizontalRule'
 import IndustryDuo from './IndustryDuo'
@@ -65,6 +67,12 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'circle-play-duo':
+      SelectedIcon = CirclePlayDuo
+      break
+    case 'headphones-duo':
+      SelectedIcon = HeadphonesDuo
+      break
     case 'lock-keyhole-open-duo':
       SelectedIcon = LockKeyholeOpenDuo
       break
