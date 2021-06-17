@@ -111,24 +111,25 @@ const updateTokenApprovals = (
     transfer_expiration,
   } = formatted
 
+  const isAllNull =
+    view_owner_expiration === null &&
+    view_private_metadata_expiration === null &&
+    transfer_expiration === null
   const isWhitelisted = tokens.some((approved) => approved.address === address)
 
-  if (!isWhitelisted) {
+  if (!isWhitelisted && !isAllNull) {
     return tokens.concat([formatted])
   }
 
   return tokens.reduce((acc: Snip721Approval[], approved) => {
     if (approved.address === address) {
-      if (
-        view_owner_expiration === null &&
-        view_private_metadata_expiration === null &&
-        transfer_expiration === null
-      ) {
+      if (isAllNull) {
         return acc
       } else {
         return acc.concat([formatted])
       }
     }
+
     return acc.concat([approved])
   }, [])
 }
