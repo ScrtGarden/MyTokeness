@@ -44,7 +44,7 @@ const SiteLayout: FC<Props> = ({ children, config = {} }) => {
   )
 }
 
-const getLayout = (page: JSX.Element, config: Config) => (
+const getLayout = (page: JSX.Element, config?: Config) => (
   <SiteLayout config={config}>{page}</SiteLayout>
 )
 
