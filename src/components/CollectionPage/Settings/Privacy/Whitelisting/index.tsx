@@ -89,7 +89,7 @@ const Whitelisting: FC<Props> = (props) => {
         setAddress('')
         setOptions(OPTIONS)
         setExpiration(EXPIRATION)
-        toast.success('Added address to whitelist.')
+        toast.success('Updated whitelist privacy settings.')
       },
       onError: (error) => {
         toast.error(parseErrorMsg(error))

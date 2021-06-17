@@ -86,7 +86,7 @@ const OwnershipPrivacySetting: FC<Props> = ({
 
   return (
     <ApprovalSetting
-      title="Ownership Privacy Setting"
+      title="Ownership Privacy Settings"
       description="Turning this off will allow anyone see which assets you own."
       isPrivate={isPrivate}
       expiration={expiration}

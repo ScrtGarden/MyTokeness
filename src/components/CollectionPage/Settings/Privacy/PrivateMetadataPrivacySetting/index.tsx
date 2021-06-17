@@ -86,7 +86,7 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
 
   return (
     <ApprovalSetting
-      title="Private Metadata Privacy Setting"
+      title="Private Metadata Privacy Settings"
       description="Turning this off will allow anyone see the private metadata of all your owned assets."
       isPrivate={isPrivate}
       expiration={expiration}

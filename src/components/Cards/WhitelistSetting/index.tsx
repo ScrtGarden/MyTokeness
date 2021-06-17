@@ -22,7 +22,7 @@ const WhitelistSetting: FC<Props> = ({
   errors,
 }) => (
   <SettingsCard>
-    <Header>Whitelist Setting</Header>
+    <Header>Whitelist Settings</Header>
     <Wrapper>
       <Text>
         Grant an address permission to view ownership, view private metadata,
