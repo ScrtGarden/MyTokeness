@@ -56,11 +56,14 @@ const NFTCard: FC<Props> = ({
     return <Container>Error</Container>
   }
 
-  console.log({ data })
+  // console.log({ data })
   return (
     <>
       <Container>
-        <Visual image={data.publicMetadata.image} />
+        <Visual
+          publicImage={data.publicMetadata.image}
+          privateImage={data.privateMetadata?.image}
+        />
         <Wrapper>
           <Details
             title={data.publicMetadata.name}

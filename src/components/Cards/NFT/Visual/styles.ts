@@ -1,16 +1,29 @@
 import styled from 'styled-components'
 
+import Icon from '../../../Icons'
+
 interface ContainerProps {
   readonly type?: string
 }
 
-const ImageWrapper = styled.div.attrs<ContainerProps>(({ type }) => ({
+const getColor = (theme: any, type?: string) => {
+  if (type === 'video') {
+    return '#000'
+  } else if (type === 'audio') {
+    return theme.bg
+  } else {
+    return 'transparent'
+  }
+}
+
+const ImageWrapper = styled.div.attrs<ContainerProps>(({ type, theme }) => ({
   style: {
-    backgroundColor: type === 'video' ? '#000' : 'transparent',
+    backgroundColor: getColor(theme, type),
   },
 }))<ContainerProps>`
-  background-color: #000;
   aspect-ratio: 1.3;
+  background-color: #000;
+  cursor: pointer;
   position: relative;
   width: 100%;
 
@@ -21,4 +34,24 @@ const ImageWrapper = styled.div.attrs<ContainerProps>(({ type }) => ({
   }
 `
 
-export { ImageWrapper }
+const Play = styled(Icon)`
+  bottom: 0;
+  fill: #e8e8e8;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
+const StyledIcon = styled(Icon)`
+  bottom: 0;
+  fill: ${(props) => props.theme.palette.teal[600]};
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
+export { ImageWrapper, StyledIcon, Play }
