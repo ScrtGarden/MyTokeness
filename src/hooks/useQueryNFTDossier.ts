@@ -17,17 +17,19 @@ const useQueryNFTDossier = (
       queryChain.queryContractSmart(contractAddress, {
         nft_dossier: {
           token_id: id,
-          ...(!!walletAddress && {
-            viewer: { address: walletAddress, viewing_key: viewingKey },
-          }),
+          ...(!!walletAddress &&
+            !!viewingKey && {
+              viewer: { address: walletAddress, viewing_key: viewingKey },
+            }),
           include_expired: false,
         },
       }),
-    { refetchOnWindowFocus: false, select: formatNFTDossier }
+    { refetchOnWindowFocus: false, retry: false, select: formatNFTDossier }
   )
 }
 
 const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
+  // console.log({ original })
   const {
     nft_dossier: {
       display_private_metadata_error,
@@ -77,13 +79,20 @@ const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
     ),
     publicMetadata,
     publicOwnershipExpiration: expirationToUI(public_ownership_expiration),
-    inventoryApprovals: inventory_approvals.map((item) =>
-      Snip721ApprovalToUI(item)
-    ),
-    tokenApprovals: token_approvals.map((item) => Snip721ApprovalToUI(item)),
-    isSealed:
-      display_private_metadata_error ===
-      'Sealed metadata must be unwrapped by calling Reveal before it can be viewed',
+    inventoryApprovals: inventory_approvals
+      ? inventory_approvals.map((item) => Snip721ApprovalToUI(item))
+      : [],
+    tokenApprovals: token_approvals
+      ? token_approvals.map((item) => Snip721ApprovalToUI(item))
+      : [],
+    isSealed: display_private_metadata_error
+      ? display_private_metadata_error?.includes(
+          'Sealed metadata must be unwrapped'
+        ) ||
+        display_private_metadata_error?.includes(
+          'You are not authorized to perform this action'
+        )
+      : false,
   }
 }
 
