@@ -66,6 +66,12 @@ const Assets = () => {
     [minterData, walletAddress]
   )
 
+  const onClickCard = (id: string) => {
+    router.push(`/nft/[contract:token]`, `/nft/${contractAddress}:${id}`, {
+      shallow: true,
+    })
+  }
+
   if (!viewingKey) {
     return (
       <StyledEmptyList
@@ -128,6 +134,7 @@ const Assets = () => {
                 enabledSealedData={
                   config?.contract_config.sealed_metadata_is_enabled
                 }
+                onClick={() => onClickCard(id)}
               />
             ))
           )}
