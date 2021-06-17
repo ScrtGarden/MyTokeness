@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react/headless'
-import { FC, cloneElement, memo } from 'react'
+import { FC, memo } from 'react'
 import { Placement } from 'tippy.js'
 
 type Props = {
@@ -24,7 +24,7 @@ const Dropdown: FC<Props> = (props) => {
   return (
     <Tippy
       render={(attrs) => (
-        <div tabIndex={-1} {...attrs}>
+        <div tabIndex={-1} {...attrs} onClick={toggle}>
           {content}
         </div>
       )}
@@ -34,7 +34,7 @@ const Dropdown: FC<Props> = (props) => {
       offset={offset}
       interactive
     >
-      {cloneElement(children, { onClick: toggle })}
+      {children}
     </Tippy>
   )
 }
