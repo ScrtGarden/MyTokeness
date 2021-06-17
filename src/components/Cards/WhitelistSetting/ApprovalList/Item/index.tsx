@@ -49,7 +49,7 @@ const Item: FC<Props> = ({
   // component state
   const parsedData = useMemo(
     () => parseData(viewOwner, viewPrivateMetadata, transfer, expiration),
-    [item]
+    [viewOwner, viewPrivateMetadata, transfer, expiration]
   )
   const [localOptions, setLocalOptions] = useReducer<ApprovalOptionsReducer>(
     reducer,

@@ -44,9 +44,7 @@ const ApprovalSetting: FC<Props> = ({
 
   // lifecycle
   useEffect(() => {
-    if (errors) {
-      setErrorState(undefined)
-    }
+    setErrorState(undefined)
   }, [isPrivateState, expSettings])
 
   useEffect(() => {

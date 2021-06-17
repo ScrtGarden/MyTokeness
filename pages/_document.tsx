@@ -1,5 +1,8 @@
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
-import Head from 'next/head'
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Head,
+} from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 class MyDocument extends Document {
