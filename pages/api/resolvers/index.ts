@@ -21,7 +21,9 @@ export const resolvers = {
         } = await client.store({
           name: filename,
           description: '',
-          image: new File([result], filename, { type: mimetype }),
+          // hotfix -- type is hardcoded, should be dynamic? e.g. videos / audios.
+          // keep track @ https://github.com/ipfs-shipyard/nft.storage
+          image: new File([result], filename, { type: 'image/*' }),
         })
 
         return { ipfsLink: image }
