@@ -27,8 +27,6 @@ const Visual: FC<Props> = ({ privateImage, publicImage }) => {
     setImageProps(privateImageProps || publicImageProps)
   }, [privateImageProps])
 
-  console.log({ type, hashLink })
-
   return (
     <Container>
       {type === 'image' && (
