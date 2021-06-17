@@ -33,7 +33,12 @@ const useMutationWhitelist = (
       onSuccess: (_, data) => {
         const { token_id } = data
         !!token_id
-          ? invalidateTokenApprovals(contractAddress, queryClient, data)
+          ? invalidateTokenApprovals(
+              walletAddress,
+              contractAddress,
+              queryClient,
+              data
+            )
           : invalidateInventoryApprovals(
               walletAddress,
               contractAddress,
@@ -49,12 +54,13 @@ const useMutationWhitelist = (
 }
 
 const invalidateTokenApprovals = (
+  walletAddress: string,
   contractAddress: string,
   queryClient: QueryClient,
   data: SetWhitelistedApproval
 ) => {
   const { token_id } = data
-  const key = ['nftDossier', contractAddress, token_id]
+  const key = ['nftDossier', walletAddress, contractAddress, token_id]
   const original = queryClient.getQueryData<ResultNFTDossier>(key)
 
   if (original) {
@@ -97,6 +103,7 @@ const updateTokenApprovals = (
   toBeApproved: SetWhitelistedApproval
 ): Snip721Approval[] => {
   const formatted = formatToSnip721Approval(toBeApproved)
+  console.log({ formatted, tokens })
   const {
     address,
     view_owner_expiration,
