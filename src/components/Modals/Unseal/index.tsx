@@ -21,7 +21,7 @@ type Props = {
 }
 
 const UnsealModal: FC<Props> = (props) => {
-  const { toggle, name, tokenId, contractAddress } = props
+  const { toggle, name, tokenId, contractAddress, walletAddress } = props
   const queryClient = useQueryClient()
 
   // custom hook
