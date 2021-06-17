@@ -23,6 +23,7 @@ type Props = {
   walletAddress: string
   viewingKey: string
   enabledSealedData?: boolean
+  onClick: () => void
 }
 
 const NFTCard: FC<Props> = ({
@@ -31,6 +32,7 @@ const NFTCard: FC<Props> = ({
   walletAddress,
   viewingKey,
   enabledSealedData,
+  onClick,
 }) => {
   // component state
   const [showMenu, toggleMenu] = useToggle()
@@ -63,6 +65,7 @@ const NFTCard: FC<Props> = ({
         <Visual
           publicImage={data.publicMetadata.image}
           privateImage={data.privateMetadata?.image}
+          onClick={onClick}
         />
         <Wrapper>
           <Details

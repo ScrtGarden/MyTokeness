@@ -8,9 +8,10 @@ import { ImageWrapper, Play, StyledIcon } from './styles'
 type Props = {
   privateImage?: string
   publicImage: string
+  onClick: () => void
 }
 
-const Visual: FC<Props> = ({ publicImage, privateImage }) => {
+const Visual: FC<Props> = ({ publicImage, privateImage, onClick }) => {
   const publicImageProps = useMemo(
     () => getImageLinkProps(publicImage),
     [publicImage]
@@ -24,12 +25,13 @@ const Visual: FC<Props> = ({ publicImage, privateImage }) => {
   return (
     <ImageWrapper
       type={type}
-      onMouseOver={() =>
+      onMouseEnter={() =>
         privateImageProps ? setImageProps(privateImageProps) : null
       }
-      onMouseOut={() =>
+      onMouseLeave={() =>
         !!privateImageProps ? setImageProps(publicImageProps) : null
       }
+      onClick={onClick}
     >
       {type === 'image' && (
         <Image
