@@ -48,31 +48,6 @@ const NFTCard: FC<Props> = ({
     viewingKey
   )
 
-  const onClickUnseal = () => {
-    toggleMenu()
-    toggleUnseal()
-  }
-
-  const onClickOwnership = () => {
-    toggleMenu()
-    toggleOwnership()
-  }
-
-  const onClickPrivateContents = () => {
-    toggleMenu()
-    toggleContentsSettings()
-  }
-
-  const onClickWhitelist = () => {
-    toggleMenu()
-    toggleWhitelist()
-  }
-
-  const onClickTransfer = () => {
-    toggleMenu()
-    toggleTransfer()
-  }
-
   if (isLoading) {
     return <SkeletonNFTCard />
   }
@@ -96,17 +71,17 @@ const NFTCard: FC<Props> = ({
             toggle={toggleMenu}
             content={
               <Menu
-                onClickUnseal={onClickUnseal}
+                onClickUnseal={toggleUnseal}
                 showUnseal={!!enabledSealedData && data.isSealed}
-                onClickOwnership={onClickOwnership}
-                onClickPrivateContents={onClickPrivateContents}
-                onClickWhitelist={onClickWhitelist}
-                onClickTransfer={onClickTransfer}
+                onClickOwnership={toggleOwnership}
+                onClickPrivateContents={toggleContentsSettings}
+                onClickWhitelist={toggleWhitelist}
+                onClickTransfer={toggleTransfer}
               />
             }
             placement="left-end"
           >
-            <IconButton>
+            <IconButton onClick={toggleMenu}>
               <StyledIcon name="ellipsis-v" width={25} height={25} />
             </IconButton>
           </Dropdown>

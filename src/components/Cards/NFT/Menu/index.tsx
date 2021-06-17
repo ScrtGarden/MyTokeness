@@ -25,7 +25,7 @@ const Menu: FC<Props> = ({
     <Item onClick={onClickPrivateContents}>Private contents setting</Item>
     <Item onClick={onClickWhitelist}>Whitelist</Item>
     <Item onClick={onClickTransfer}>Transfer</Item>
-    {!showUnseal && <Item>View private contents</Item>}
+    {/* {!showUnseal && <Item>View private contents</Item>} */}
   </Container>
 )
 

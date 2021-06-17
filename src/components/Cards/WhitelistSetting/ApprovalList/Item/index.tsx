@@ -85,16 +85,6 @@ const Item: FC<Props> = ({
     }
   }, [localExpiration])
 
-  const onClickEdit = () => {
-    toggleMenu()
-    toggle(address)
-  }
-
-  const onClickRemove = () => {
-    toggleMenu()
-    toggleWarn()
-  }
-
   const onUpdate = (isSave?: boolean) => {
     const privateAccessLevel = !!tokenId ? 'revoke_token' : 'none'
     let data: SetWhitelistedApproval = {
@@ -153,10 +143,13 @@ const Item: FC<Props> = ({
             isOpen={showMenu}
             toggle={!isOpen ? toggleMenu : () => toggle('')}
             content={
-              <Menu onClickEdit={onClickEdit} onClickRemove={onClickRemove} />
+              <Menu
+                onClickEdit={() => toggle(address)}
+                onClickRemove={toggleWarn}
+              />
             }
           >
-            <IconButton>
+            <IconButton onClick={!isOpen ? toggleMenu : () => toggle('')}>
               <StyledIcon name="ellipsis-v" width={25} height={25} />
             </IconButton>
           </Dropdown>

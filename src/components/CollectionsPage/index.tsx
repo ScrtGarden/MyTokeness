@@ -90,16 +90,6 @@ const Collections = () => {
     toggleWarn()
   }
 
-  const onClickMenuAdd = () => {
-    toggleAdd()
-    toggleDropdown()
-  }
-
-  const onClickMenuCreate = () => {
-    toggleCreate()
-    toggleDropdown()
-  }
-
   return (
     <>
       <Container>
@@ -110,13 +100,10 @@ const Collections = () => {
               isOpen={showDropdown}
               toggle={toggleDropdown}
               content={
-                <Menu
-                  onClickAdd={onClickMenuAdd}
-                  onClickCreate={onClickMenuCreate}
-                />
+                <Menu onClickAdd={toggleAdd} onClickCreate={toggleCreate} />
               }
             >
-              <IconButton>
+              <IconButton onClick={toggleDropdown}>
                 <StyledIcon name="ellipsis-v" width={25} height={25} />
               </IconButton>
             </Dropdown>
