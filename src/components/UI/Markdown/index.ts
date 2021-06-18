@@ -14,6 +14,10 @@ const Markdown = styled(ReactMarkdown)`
     color: ${(props) => props.theme.font.colors.secondary};
     font-size: ${(props) => props.theme.font.sizes.md};
     line-height: ${(props) => props.theme.font.lineHeights.md};
+
+    :only-child {
+      margin: 0;
+    }
   }
 
   ul {
