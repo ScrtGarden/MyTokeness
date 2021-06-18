@@ -29,8 +29,10 @@ const TransactionTable: FC<Props> = ({ data, columns }) => {
     <Table {...getTableProps()}>
       <Head>
         {headerGroups.map((headerGroup) => (
+          // eslint-disable-next-line react/jsx-key
           <HeaderRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
+              // eslint-disable-next-line react/jsx-key
               <HeaderCell
                 {...column.getHeaderProps({
                   style: { width: column.width },
@@ -56,8 +58,10 @@ const TransactionTable: FC<Props> = ({ data, columns }) => {
           rows.map((row) => {
             prepareRow(row)
             return (
+              // eslint-disable-next-line react/jsx-key
               <Row {...row.getRowProps()}>
                 {row.cells.map((cell) => (
+                  // eslint-disable-next-line react/jsx-key
                   <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
                 ))}
               </Row>

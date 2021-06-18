@@ -59,7 +59,7 @@ const Header: FC<Props> = ({
       (data &&
         data.minters.minters.some((address) => address === walletAddress)) ||
       !!MYTOKENESS_NFT_CONTRACTS[contractAddress],
-    [data, walletAddress]
+    [data, walletAddress, contractAddress]
   )
 
   const onClickCreate = () => {

@@ -23,12 +23,15 @@ const FileUploader: FC<Props> = ({ file, label, setFile, error }) => {
     [file]
   )
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0]
-      setFile(file)
-    }
-  }, [])
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (acceptedFiles.length > 0) {
+        const file = acceptedFiles[0]
+        setFile(file)
+      }
+    },
+    [setFile]
+  )
 
   const {
     getRootProps,

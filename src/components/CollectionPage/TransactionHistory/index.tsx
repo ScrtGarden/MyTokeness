@@ -79,7 +79,7 @@ const TransactionHistory = () => {
         Cell: ({ value }) => <CustomCell left>{value}</CustomCell>,
       },
     ],
-    []
+    [walletAddress]
   )
 
   if (!viewingKey) {

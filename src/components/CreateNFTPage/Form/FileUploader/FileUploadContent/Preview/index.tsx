@@ -11,7 +11,7 @@ type Props = {
 const Preview: FC<Props> = ({ src, type }) => (
   <Container>
     {type.includes('image/') ? (
-      <Image src={src} />
+      <Image src={src} alt="" />
     ) : (
       <StyledPlayer>
         <ReactPlayer

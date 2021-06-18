@@ -80,9 +80,7 @@ const Item: FC<Props> = ({
   }, [expiration])
 
   useEffect(() => {
-    if (errors) {
-      setErrors(undefined)
-    }
+    setErrors(undefined)
   }, [localExpiration])
 
   const onUpdate = (isSave?: boolean) => {

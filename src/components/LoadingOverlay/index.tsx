@@ -18,7 +18,7 @@ const LoadingOverlay: FC<Props> = ({ onLoaded = () => null, className }) => {
     if (ready && rehydrated) {
       onLoaded(true)
     }
-  }, [ready, rehydrated])
+  }, [ready, rehydrated, onLoaded])
 
   return (
     <Container className={className}>

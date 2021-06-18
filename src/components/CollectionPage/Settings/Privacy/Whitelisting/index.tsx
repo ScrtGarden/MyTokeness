@@ -12,11 +12,13 @@ import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
 import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import WhitelistSetting from '../../../../Cards/WhitelistSetting'
+import { Errors } from '../../../../Cards/WhitelistSetting/AddNew'
 import {
   formatWhitelistAdd as format,
   validateWhitelistAdd as validate,
 } from '../lib'
 
+type ErrorsReducer = (p: Errors, u: Partial<Errors>) => Errors
 type Props = {
   contractAddress: string
   walletAddress: string
@@ -35,6 +37,12 @@ const EXPIRATION: UIExpiration = {
   blockheight: '',
 }
 
+const ERRORS: Errors = {
+  address: '',
+  option: '',
+  value: '',
+}
+
 const Whitelisting: FC<Props> = (props) => {
   const { contractAddress, walletAddress, approvedList } = props
 
@@ -48,11 +56,7 @@ const Whitelisting: FC<Props> = (props) => {
     reducer,
     EXPIRATION
   )
-  const [addError, setAddError] = useState({
-    address: '',
-    option: '',
-    value: '',
-  })
+  const [addErrors, setAddErrors] = useReducer<ErrorsReducer>(reducer, ERRORS)
 
   // custom hooks
   const { mutate, isLoading } = useMutationWhitelist(
@@ -62,21 +66,17 @@ const Whitelisting: FC<Props> = (props) => {
 
   // lifecycle
   useEffect(() => {
-    if (addError.address) {
-      setAddError({ ...addError, address: '' })
-    }
+    setAddErrors({ address: '' })
   }, [address])
 
   useEffect(() => {
-    if (addError.option || addError.value) {
-      setAddError({ ...addError, option: '', value: '' })
-    }
+    setAddErrors({ option: '', value: '' })
   }, [expiration])
 
   const onWhitelistAdd = () => {
     const { hasError, errors } = validate(address, options, expiration)
 
-    setAddError(errors)
+    setAddErrors(errors)
 
     if (hasError) {
       return
@@ -107,7 +107,7 @@ const Whitelisting: FC<Props> = (props) => {
       expiration={expiration}
       setExpiration={setExpiration}
       onAdd={onWhitelistAdd}
-      errors={addError}
+      errors={addErrors}
       loading={isLoading}
     />
   )

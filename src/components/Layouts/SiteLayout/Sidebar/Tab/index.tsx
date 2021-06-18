@@ -42,7 +42,7 @@ const Tab: FC<Props> = (props) => {
   const router = useRouter()
   const selected = useMemo(
     () => matchRoute(router.asPath, section, id),
-    [router.asPath]
+    [router.asPath, section, id]
   )
 
   const [ref, dimensions] = useDimensions()
@@ -86,6 +86,7 @@ const Tab: FC<Props> = (props) => {
                     href={item.route}
                     as={item.as}
                     shallow={true}
+                    passHref
                   >
                     <Item
                       label={item.label}

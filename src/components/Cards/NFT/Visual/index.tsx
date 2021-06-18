@@ -39,6 +39,7 @@ const Visual: FC<Props> = ({ publicImage, privateImage, onClick }) => {
           src={`https://ipfs.io/ipfs/${hashLink}`}
           layout="fill"
           objectFit="cover"
+          alt=""
         />
       )}
 

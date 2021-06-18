@@ -8,6 +8,12 @@ import { Field, Input, Label } from '../../../UI/Forms'
 import Permissions from '../Permissions'
 import { Container, Content } from './styles'
 
+export interface Errors {
+  address: string
+  option: string
+  value: string
+}
+
 export type Props = {
   address: string
   setAddress: (value: string) => void
@@ -17,7 +23,7 @@ export type Props = {
   setExpiration: (data: Partial<UIExpiration>) => void
   loading?: boolean
   onAdd: () => void
-  errors: { address: string; option: string; value: string }
+  errors: Errors
 }
 
 const AddNew: FC<Props> = ({

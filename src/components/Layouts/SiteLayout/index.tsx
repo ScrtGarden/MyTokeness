@@ -27,11 +27,11 @@ const SiteLayout: FC<Props> = ({ children, config = {} }) => {
 
     return () =>
       window.removeEventListener('keplr_keystorechange', () => mutate())
-  }, [])
+  }, [mutate])
 
   useEffect(() => {
     mutate()
-  }, [])
+  }, [mutate])
 
   return (
     <>

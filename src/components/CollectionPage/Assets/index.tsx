@@ -63,7 +63,7 @@ const Assets = () => {
           (address) => address === walletAddress
         )) ||
       !!MYTOKENESS_NFT_CONTRACTS[contractAddress],
-    [minterData, walletAddress]
+    [minterData, walletAddress, contractAddress]
   )
 
   const onClickCard = (id: string) => {
