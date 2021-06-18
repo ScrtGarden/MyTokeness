@@ -25,11 +25,9 @@ const Sidebar: FC<Props> = ({
   return (
     <Container>
       <Header name={name} rarity={rarity} />
-      <Details
-        description={description}
-        attributes={attributes}
-        privateContent={privateContent}
-      />
+      {(!!description || attributes.length !== 0) && (
+        <Details description={description} attributes={attributes} />
+      )}
       {(!!owner || !!privateContent) && (
         <PermissionData owner={owner} content={privateContent} />
       )}
