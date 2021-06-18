@@ -9,9 +9,14 @@ export interface Config {
   [key: string]: boolean
 }
 
+export interface Attribute {
+  key: string
+  value: string
+}
+
 export interface UIPublicMetadata {
   name: string
-  description?: string | null
+  description?: string
   image: string
   properties: {
     rarity: {
@@ -20,7 +25,7 @@ export interface UIPublicMetadata {
       total: number
     }
   }
-  attributes: { [key: string]: string }[]
+  attributes: Attribute[]
 }
 
 export interface UIPrivateMetadata {
