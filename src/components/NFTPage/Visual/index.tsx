@@ -25,7 +25,7 @@ const Visual: FC<Props> = ({ privateImage, publicImage }) => {
 
   useEffect(() => {
     setImageProps(privateImageProps || publicImageProps)
-  }, [privateImageProps])
+  }, [privateImageProps, publicImageProps])
 
   return (
     <Container>
@@ -34,6 +34,7 @@ const Visual: FC<Props> = ({ privateImage, publicImage }) => {
           src={`https://ipfs.io/ipfs/${hashLink}`}
           layout="fill"
           objectFit="contain"
+          alt=""
         />
       )}
 
