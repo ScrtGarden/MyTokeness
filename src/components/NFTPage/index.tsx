@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 
 import { useStoreState } from '../../hooks/storeHooks'
 import useQueryNFTDossier from '../../hooks/useQueryNFTDossier'
+import Sidebar from './Sidebar'
 import { Container } from './styles'
 import Visual from './Visual'
 
@@ -42,7 +43,7 @@ const NFTPage = () => {
         publicImage={data.publicMetadata.image}
         privateImage={data.privateMetadata?.image}
       />
-      <div>Bye</div>
+      <Sidebar publicMetadata={data.publicMetadata} />
     </Container>
   )
 }
