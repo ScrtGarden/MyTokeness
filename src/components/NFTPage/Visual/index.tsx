@@ -43,7 +43,7 @@ const Visual: FC<Props> = ({ privateImage, publicImage }) => {
           className="react-player"
           url={`https://ipfs.io/ipfs/${hashLink}`}
           width="100%"
-          height="100%"
+          height="unset"
           controls
           config={{
             file: {
@@ -65,7 +65,7 @@ const Visual: FC<Props> = ({ privateImage, publicImage }) => {
           className="react-player"
           url={`https://ipfs.io/ipfs/${hashLink}`}
           width="100%"
-          height="100%"
+          height="unset"
           controls
           config={{
             file: {

@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 
 const Container = styled.div`
-  /* border: 1px solid rebeccapurple; */
+  align-items: center;
+  display: flex;
   height: 600px;
+  justify-content: center;
   max-width: 600px;
   position: relative;
   width: 90%;
