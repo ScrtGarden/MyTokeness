@@ -43,7 +43,11 @@ const NFTPage = () => {
         publicImage={data.publicMetadata.image}
         privateImage={data.privateMetadata?.image}
       />
-      <Sidebar publicMetadata={data.publicMetadata} />
+      <Sidebar
+        publicMetadata={data.publicMetadata}
+        privateContent={data.privateMetadata?.properties.content}
+        owner={data.owner}
+      />
     </Container>
   )
 }

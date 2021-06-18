@@ -8,9 +8,14 @@ import { Attributes, Container } from './styles'
 export type Props = {
   description?: string
   attributes: Attribute[]
+  privateContent?: string
 }
 
-const Details: FC<Props> = ({ description = '', attributes }) => (
+const Details: FC<Props> = ({
+  description = '',
+  attributes,
+  privateContent,
+}) => (
   <Container>
     {!!description && <Markdown>{description}</Markdown>}
     {attributes.length !== 0 && (
