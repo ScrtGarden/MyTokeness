@@ -70,9 +70,7 @@ const Transfers = () => {
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [debouncedAddy, viewingKey])
 
   console.log({ data })

@@ -49,9 +49,7 @@ const BurnCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
   }, [data])
 
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [amount])
 
   const onChangeAmount = (e: FormEvent<HTMLInputElement>) => {

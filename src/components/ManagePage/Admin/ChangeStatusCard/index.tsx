@@ -60,7 +60,7 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
 
   // lifecycle
   useEffect(() => {
-    error && setError('')
+    setError('')
   }, [status])
 
   useEffect(() => {

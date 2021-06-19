@@ -1,9 +1,10 @@
-import { FC, FormEvent, memo, useEffect, useState } from 'react'
+import { FC, FormEvent, memo, useEffect, useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { HandleMsgMint } from '../../../../../interface/snip20'
 import { MAX_GAS } from '../../../../../utils/constants'
 import parseErrorMsg from '../../../../../utils/parseErrorMsg'
+import reducer from '../../../../../utils/reducer'
 import { amountPattern } from '../../../../../utils/regexPatterns'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
@@ -17,11 +18,19 @@ import { Field, Input, InputGroup, Label, Symbol } from '../../../UI/Forms'
 import { StyledDots } from '../../../UI/Loaders'
 import { format, validate } from './lib'
 
+interface Errors {
+  amount: string
+  recipient: string
+}
+type Reducer = (p: Errors, u: Partial<Errors>) => Errors
+
 type Props = {
   contractAddress: string
   enableButton?: boolean
   success?: boolean
 }
+
+const ERRORS = { amount: '', recipient: '' }
 
 const MintCard: FC<Props> = ({ success, enableButton, contractAddress }) => {
   // store state
@@ -31,7 +40,7 @@ const MintCard: FC<Props> = ({ success, enableButton, contractAddress }) => {
   const [amount, setAmount] = useState('')
   const [recipient, setRecipient] = useState('')
   const [memo, setMemo] = useState('')
-  const [errors, setErrors] = useState({ amount: '', recipient: '' })
+  const [errors, setErrors] = useReducer<Reducer>(reducer, ERRORS)
 
   // custom hooks
   const { mutateAsync: connect, isLoading: connecting } =
@@ -51,15 +60,11 @@ const MintCard: FC<Props> = ({ success, enableButton, contractAddress }) => {
   }, [data])
 
   useEffect(() => {
-    if (errors.recipient) {
-      setErrors({ ...errors, recipient: '' })
-    }
+    setErrors({ recipient: '' })
   }, [recipient])
 
   useEffect(() => {
-    if (errors.amount) {
-      setErrors({ ...errors, amount: '' })
-    }
+    setErrors({ amount: '' })
   }, [amount])
 
   const onChangeAmount = (e: FormEvent<HTMLInputElement>) => {

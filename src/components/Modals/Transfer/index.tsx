@@ -38,15 +38,8 @@ const TransferModal: FC<Props> = (props) => {
 
   // lifecycle
   useEffect(() => {
-    error && setError('')
+    setError('')
   }, [address])
-
-  useEffect(() => {
-    // const tokensKey = ['tokens', walletAddress, contractAddress]
-    // const test = queryClient.getQueryData(tokensKey)
-    // const test1 = tokensUpdater(tokenId, test)
-    // console.log(tokenId, test1)
-  }, [])
 
   const onClickTransfer = async () => {
     const { hasError, errors } = validate(address, walletAddress)
@@ -106,7 +99,7 @@ const TransferModal: FC<Props> = (props) => {
           Transfer ownership of, <span>{name}</span>, to:
         </Text>
         <Field>
-          <Label>Recipient's address</Label>
+          <Label>Recipient&apos;s address</Label>
           <Input
             placeholder="secret1gvjcte2asddt09394s3r2aqhllgchg4608fmew"
             value={address}

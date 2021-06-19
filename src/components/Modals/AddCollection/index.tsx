@@ -44,7 +44,7 @@ const AddCollection: FC<Props> = (props) => {
   )
 
   useEffect(() => {
-    error && setError('')
+    setError('')
   }, [address])
 
   const onClickAdd = async () => {
@@ -92,6 +92,7 @@ const AddCollection: FC<Props> = (props) => {
             value={address}
             onChange={(e) => setAddress(e.currentTarget.value)}
             autoFocus
+            validation={error ? 'error' : undefined}
           />
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>

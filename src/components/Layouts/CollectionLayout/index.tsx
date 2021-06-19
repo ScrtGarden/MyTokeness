@@ -60,7 +60,7 @@ const CollectionLayout = ({ children }: Props) => {
         subtext: 'Update the settings of this contract.',
       }
     }
-  }, [data, router, activeTab, title])
+  }, [data, activeTab, title])
 
   const onClickTab = (route: string) => {
     const isAssets = route === 'assets'

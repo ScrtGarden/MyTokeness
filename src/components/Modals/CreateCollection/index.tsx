@@ -66,15 +66,11 @@ const CreateCollectionModal: FC<Props> = ({ toggle }) => {
 
   // lifecycle
   useEffect(() => {
-    if (errors.name) {
-      setErrors({ name: '' })
-    }
+    setErrors({ name: '' })
   }, [name])
 
   useEffect(() => {
-    if (errors.symbol) {
-      setErrors({ symbol: '' })
-    }
+    setErrors({ symbol: '' })
   }, [symbol])
 
   const onChangeSymbol = (value: string) => {

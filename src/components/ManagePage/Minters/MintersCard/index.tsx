@@ -68,9 +68,7 @@ const MintersCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
   }, [data])
 
   useEffect(() => {
-    if (addError) {
-      setAddError('')
-    }
+    setAddError('')
   }, [address])
 
   const onAdd = () => {

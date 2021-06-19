@@ -37,9 +37,7 @@ const ChangeAdminCard: FC<Props> = ({ contractAddress, enableButton }) => {
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [address])
 
   const onUpdate = async () => {

@@ -35,9 +35,12 @@ const Pagination: FC<Props> = ({ totalPages, currentPage, onChange }) => {
     [currentPage, totalPages]
   )
 
-  const onClickPage = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    onChange(parseInt(e.currentTarget.value, 10))
-  }, [])
+  const onClickPage = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      onChange(parseInt(e.currentTarget.value, 10))
+    },
+    [onChange]
+  )
 
   return (
     <Container>

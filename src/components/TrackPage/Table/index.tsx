@@ -28,8 +28,10 @@ const Table: FC<Props> = ({ data = [], columns }) => {
     <StyledTable {...getTableProps()}>
       <Head>
         {headerGroups.map((headerGroup) => (
+          // eslint-disable-next-line react/jsx-key
           <HeaderRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
+              // eslint-disable-next-line react/jsx-key
               <HeaderCell
                 {...column.getHeaderProps({
                   style: { width: column.width },
@@ -45,12 +47,12 @@ const Table: FC<Props> = ({ data = [], columns }) => {
         {rows.map((row, i) => {
           prepareRow(row)
           return (
+            // eslint-disable-next-line react/jsx-key
             <Row {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-                )
-              })}
+              {row.cells.map((cell) => (
+                // eslint-disable-next-line react/jsx-key
+                <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
+              ))}
             </Row>
           )
         })}

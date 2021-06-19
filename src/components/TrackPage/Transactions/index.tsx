@@ -52,9 +52,7 @@ const Transactions = () => {
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [debouncedAddy, viewingKey])
 
   return (

@@ -38,9 +38,7 @@ const Mint = () => {
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [debouncedAddy])
 
   return (

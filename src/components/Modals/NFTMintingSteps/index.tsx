@@ -73,6 +73,8 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
 
   useEffect(() => {
     upload()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const upload = async () => {

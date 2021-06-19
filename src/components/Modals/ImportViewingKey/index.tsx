@@ -29,9 +29,7 @@ const ImportViewingKeyModal: FC<Props> = (props) => {
   }
 
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [newKey])
 
   return (

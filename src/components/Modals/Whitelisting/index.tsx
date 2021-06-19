@@ -74,15 +74,11 @@ const WhitelistingModal: FC<Props> = ({
 
   // lifecycle
   useEffect(() => {
-    if (addErrors.address) {
-      setAddErrors({ ...addErrors, address: '' })
-    }
+    setAddErrors((prev) => ({ ...prev, address: '' }))
   }, [address])
 
   useEffect(() => {
-    if (addErrors.option || addErrors.value) {
-      setAddErrors({ ...addErrors, option: '', value: '' })
-    }
+    setAddErrors((prev) => ({ ...prev, option: '', value: '' }))
   }, [expiration])
 
   const onWhitelistAdd = () => {

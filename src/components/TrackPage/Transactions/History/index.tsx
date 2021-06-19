@@ -61,7 +61,7 @@ const History: FC<Props> = (props) => {
 
   const totalPages = useMemo(
     () => (data ? getTotalPages(data.transaction_history.total, PAGE_SIZE) : 1),
-    [data?.transaction_history.total]
+    [data]
   )
 
   const columns: Column<RichTx>[] = useMemo(

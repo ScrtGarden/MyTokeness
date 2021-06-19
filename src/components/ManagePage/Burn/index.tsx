@@ -38,9 +38,7 @@ const Burn = () => {
 
   // lifecycle
   useEffect(() => {
-    if (error) {
-      setError('')
-    }
+    setError('')
   }, [debouncedAddy])
 
   return (
