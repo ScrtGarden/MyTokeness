@@ -1,11 +1,3 @@
-interface MyTokenessNFTContract {
-  [key: string]: {
-    name: string
-    symbol: string
-    icon: string
-  }
-}
-
 const calcBatchMint = (amount: string) => {
   switch (amount) {
     case '2':
@@ -126,19 +118,6 @@ const SIDEBAR_TABS = {
   },
 }
 
-const MYTOKENESS_NFT_CONTRACTS: MyTokenessNFTContract = {
-  secret1zf4f60zr0lepc3339knvtp0aawgfnrfj8dshru: {
-    name: 'Sealed Private Collection',
-    symbol: '',
-    icon: 'stamp-duo',
-  },
-  secret1wet30m6zw35uxw0n6tz07ehdegjeygaw3zrvr2: {
-    name: 'Private Collection',
-    symbol: '',
-    icon: 'palette',
-  },
-}
-
 const FILE_UPLOADER = {
   ACCEPTS: [
     'image/jpeg',
@@ -159,7 +138,6 @@ export {
   MAX_GAS,
   CONTRACT_CODE_ID,
   SIDEBAR_TABS,
-  MYTOKENESS_NFT_CONTRACTS,
   FILE_UPLOADER,
   CHAIN_EXPLORER,
   DATE_FORMAT,

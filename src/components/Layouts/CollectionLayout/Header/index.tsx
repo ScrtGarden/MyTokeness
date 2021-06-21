@@ -2,10 +2,7 @@ import Router from 'next/router'
 import { FC, memo, useMemo } from 'react'
 
 import { QueryMinters, ResultMinters } from '../../../../../interface/nft'
-import {
-  CHAIN_EXPLORER,
-  MYTOKENESS_NFT_CONTRACTS,
-} from '../../../../../utils/constants'
+import { CHAIN_EXPLORER } from '../../../../../utils/constants'
 import truncateAddress from '../../../../../utils/truncateAddress'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
@@ -57,10 +54,8 @@ const Header: FC<Props> = ({
   const isAssets = useMemo(() => activeTab === 'assets', [activeTab])
   const showButton = useMemo(
     () =>
-      (data &&
-        data.minters.minters.some((address) => address === walletAddress)) ||
-      !!MYTOKENESS_NFT_CONTRACTS[contractAddress],
-    [data, walletAddress, contractAddress]
+      data && data.minters.minters.some((address) => address === walletAddress),
+    [data, walletAddress]
   )
 
   const onClickCreate = () => {

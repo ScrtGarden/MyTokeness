@@ -9,7 +9,6 @@ import {
   ResultContractConfig,
   ResultMinters,
 } from '../../../../interface/nft'
-import { MYTOKENESS_NFT_CONTRACTS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useInfiniteQueryTokens from '../../../hooks/useInfiniteQueryTokens'
@@ -58,12 +57,9 @@ const Assets = () => {
   // component state
   const isMinter = useMemo(
     () =>
-      (minterData &&
-        minterData.minters.minters.some(
-          (address) => address === walletAddress
-        )) ||
-      !!MYTOKENESS_NFT_CONTRACTS[contractAddress],
-    [minterData, walletAddress, contractAddress]
+      minterData &&
+      minterData.minters.minters.some((address) => address === walletAddress),
+    [minterData, walletAddress]
   )
 
   const onClickCard = (id: string) => {
