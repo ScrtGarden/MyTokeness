@@ -73,7 +73,6 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
 
   useEffect(() => {
     upload()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -127,7 +126,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
               isMultiMints ? 's' : ''
             }`
           )
-          reset()
+
           setStatus({ 2: 'completed' })
 
           queryClient.invalidateQueries([
@@ -137,8 +136,9 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
           ])
 
           setTimeout(() => {
+            reset()
             toggle()
-          }, 1000)
+          }, 1500)
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))
@@ -151,9 +151,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
   return (
     <Container>
       <Header>
-        <Title>{`Steps to create your collectible${
-          isMultiMints ? 's' : ''
-        }`}</Title>
+        <Title>Collectible creation</Title>
         <CloseButton onClick={toggle}>
           <Icon name="times" />
         </CloseButton>
@@ -169,7 +167,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
         <Step
           stepNumber={2}
           label={`Create collectible${isMultiMints ? 's' : ''}`}
-          hint={`Minting collectible${isMultiMints ? 's' : ''} to contract.`}
+          hint={`Minting collectible${isMultiMints ? 's' : ''} to collection.`}
           status={status[2]}
           onClick={() => mint(publicFileLink, privateFileLink)}
         />
