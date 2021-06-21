@@ -85,3 +85,8 @@ export interface UINFTDossier {
   inventoryApprovals: UISnip721Approval[]
   isSealed: boolean
 }
+
+export interface UserInfo {
+  walletAddress: string
+  viewingKey: string
+}
