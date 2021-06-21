@@ -1,6 +1,6 @@
+import BackLink from '../Common/BackLink'
 import { Container, InnerContainer } from '../UI/Containers'
 import { PageTitle } from '../UI/Typography'
-import BackLink from './BackLink'
 import Form from './Form'
 import ContextStore from './Store'
 
