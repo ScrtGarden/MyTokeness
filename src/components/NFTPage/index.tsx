@@ -5,7 +5,7 @@ import { useStoreState } from '../../hooks/storeHooks'
 import useQueryNFTDossier from '../../hooks/useQueryNFTDossier'
 import CreateViewingKey from './CreateViewingKey'
 import Sidebar from './Sidebar'
-import { Container } from './styles'
+import { Container, StyledBack } from './styles'
 import Visual from './Visual'
 
 const parseQuery = (value: string) => {
@@ -40,23 +40,23 @@ const NFTPage = () => {
 
   return (
     <Container>
+      <StyledBack label="Back" />
       <Visual
         publicImage={data.publicMetadata.image}
         privateImage={data.privateMetadata?.image}
       />
-      <>
-        <Sidebar
-          publicMetadata={data.publicMetadata}
-          privateContent={data.privateMetadata?.properties.content}
-          owner={data.owner}
+
+      <Sidebar
+        publicMetadata={data.publicMetadata}
+        privateContent={data.privateMetadata?.properties.content}
+        owner={data.owner}
+      />
+      {!viewingKey && (
+        <CreateViewingKey
+          walletAddress={walletAddress}
+          contractAddress={contractAddress}
         />
-        {!viewingKey && (
-          <CreateViewingKey
-            walletAddress={walletAddress}
-            contractAddress={contractAddress}
-          />
-        )}
-      </>
+      )}
     </Container>
   )
 }

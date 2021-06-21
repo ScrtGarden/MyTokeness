@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import BackLink from '../Common/BackLink'
+
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 500px;
@@ -8,4 +10,10 @@ const Container = styled.div`
   flex: 1;
 `
 
-export { Container }
+const StyledBack = styled(BackLink)`
+  left: ${(props) => props.theme.space.lg};
+  position: absolute;
+  top: ${(props) => props.theme.space.lg};
+`
+
+export { Container, StyledBack }
