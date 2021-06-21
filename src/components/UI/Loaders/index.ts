@@ -48,4 +48,10 @@ const Skeleton = styled.div.attrs<SkeletonProps>(({ height, width }) => ({
   ${(props) => props.pill && 'border-radius: 500px'};
 `
 
-export { StyledDots, Skeleton }
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: ${(props) => props.theme.space.xs};
+`
+
+export { StyledDots, Skeleton, Wrapper }
