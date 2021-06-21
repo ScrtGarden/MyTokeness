@@ -4,6 +4,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 500px;
   place-items: center;
+  position: relative;
   flex: 1;
 `
 

@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 
 import { useStoreState } from '../../hooks/storeHooks'
 import useQueryNFTDossier from '../../hooks/useQueryNFTDossier'
+import CreateViewingKey from './CreateViewingKey'
 import Sidebar from './Sidebar'
 import { Container } from './styles'
 import Visual from './Visual'
@@ -28,8 +29,8 @@ const NFTPage = () => {
   const { data, error } = useQueryNFTDossier(
     contractAddress,
     tokenId,
-    walletAddress,
-    viewingKey
+    !!viewingKey ? { walletAddress, viewingKey } : undefined,
+    { keepPreviousData: true }
   )
 
   console.log({ data, error })
@@ -43,11 +44,19 @@ const NFTPage = () => {
         publicImage={data.publicMetadata.image}
         privateImage={data.privateMetadata?.image}
       />
-      <Sidebar
-        publicMetadata={data.publicMetadata}
-        privateContent={data.privateMetadata?.properties.content}
-        owner={data.owner}
-      />
+      <>
+        <Sidebar
+          publicMetadata={data.publicMetadata}
+          privateContent={data.privateMetadata?.properties.content}
+          owner={data.owner}
+        />
+        {!viewingKey && (
+          <CreateViewingKey
+            walletAddress={walletAddress}
+            contractAddress={contractAddress}
+          />
+        )}
+      </>
     </Container>
   )
 }
