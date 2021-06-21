@@ -98,7 +98,7 @@ const Collections = () => {
       <Container>
         <InnerContainer>
           <Header>
-            <StyledTitle>Collections</StyledTitle>
+            <StyledTitle>My Collections</StyledTitle>
             <Dropdown
               isOpen={showDropdown}
               toggle={toggleDropdown}

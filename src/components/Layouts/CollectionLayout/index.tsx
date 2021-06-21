@@ -52,12 +52,12 @@ const CollectionLayout = ({ children }: Props) => {
     } else if (activeTab === 'transaction-history') {
       return {
         title: 'Transaction History',
-        subtext: 'A list of transactions made on this contract.',
+        subtext: 'A list of transactions made on this collection.',
       }
     } else {
       return {
-        title: 'Contract Settings',
-        subtext: 'Update the settings of this contract.',
+        title: 'Collection Settings',
+        subtext: 'Update the settings of this collection.',
       }
     }
   }, [data, activeTab, title])
