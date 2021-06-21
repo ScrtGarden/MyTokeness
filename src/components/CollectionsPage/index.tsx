@@ -3,10 +3,7 @@ import { MouseEvent, useState } from 'react'
 import { UseQueryResult, useQueries, useQuery } from 'react-query'
 
 import { ResultContractInfo } from '../../../interface/nft'
-import {
-  CONTRACT_CODE_ID,
-  MYTOKENESS_NFT_CONTRACTS,
-} from '../../../utils/constants'
+import { CONTRACT_CODE_ID } from '../../../utils/constants'
 import { queryChain } from '../../../utils/secretjs'
 import { useStoreActions, useStoreState } from '../../hooks/storeHooks'
 import useToggle from '../../hooks/useToggle'
@@ -19,7 +16,13 @@ import { Container, InnerContainer } from '../UI/Containers'
 import Dropdown from '../UI/Dropdowns/Menu'
 import { Modal } from '../UI/Modal'
 import Menu from './Menu'
-import { Grid, Header, SkeletonCard, StyledTitle } from './styles'
+import {
+  Grid,
+  Header,
+  SkeletonCard,
+  StyledEmptyList,
+  StyledTitle,
+} from './styles'
 
 const Collections = () => {
   // store state
@@ -108,50 +111,62 @@ const Collections = () => {
               </IconButton>
             </Dropdown>
           </Header>
-          <Grid>
-            {Object.entries(MYTOKENESS_NFT_CONTRACTS).map(([key, value]) => (
-              <CollectionCard
-                key={key}
-                name={value.name}
-                icon={value.icon}
-                onClick={() => onClickCollection(key, value.name)}
+          {isLoading && (
+            <Grid>
+              <SkeletonCard height="unset" width="100%" />
+              <SkeletonCard height="unset" width="100%" />
+              <SkeletonCard height="unset" width="100%" />
+            </Grid>
+          )}
+
+          {!isLoading &&
+            data?.length === 0 &&
+            addedCollections.length === 0 && (
+              <StyledEmptyList
+                icon="album-collection-duo"
+                text="To get started you can either add or create a collection."
+                buttonText="Create"
+                onClick={toggleCreate}
               />
-            ))}
-            {isLoading && <SkeletonCard height="unset" width="100%" />}
-            {data &&
-              collectionQueries.map(({ data: query, isLoading }, index) => (
-                <CollectionCard
-                  key={data[index].address}
-                  name={query?.contract_info.name as string}
-                  icon="store-duo"
-                  onClick={() =>
-                    onClickCollection(
-                      data[index].address,
-                      query?.contract_info.name
+            )}
+
+          {!isLoading && (data?.length !== 0 || addedCollections.length !== 0) && (
+            <Grid>
+              {data &&
+                collectionQueries.map(({ data: query, isLoading }, index) => (
+                  <CollectionCard
+                    key={data[index].address}
+                    name={query?.contract_info.name as string}
+                    icon="store-duo"
+                    onClick={() =>
+                      onClickCollection(
+                        data[index].address,
+                        query?.contract_info.name
+                      )
+                    }
+                    loading={isLoading}
+                    isOwner
+                  />
+                ))}
+              {!isLoading &&
+                addedCollectionQueries.map(
+                  ({ data: query, isLoading }, index) => {
+                    const address = addedCollections[index].address
+                    const name = query?.contract_info.name as string
+                    return (
+                      <CollectionCard
+                        key={address}
+                        name={name}
+                        icon="store-duo"
+                        onClick={() => onClickCollection(address, name)}
+                        loading={isLoading}
+                        onClickRemove={(e) => onClickRemove(e, address, name)}
+                      />
                     )
                   }
-                  loading={isLoading}
-                  isOwner
-                />
-              ))}
-            {!isLoading &&
-              addedCollectionQueries.map(
-                ({ data: query, isLoading }, index) => {
-                  const address = addedCollections[index].address
-                  const name = query?.contract_info.name as string
-                  return (
-                    <CollectionCard
-                      key={address}
-                      name={name}
-                      icon="store-duo"
-                      onClick={() => onClickCollection(address, name)}
-                      loading={isLoading}
-                      onClickRemove={(e) => onClickRemove(e, address, name)}
-                    />
-                  )
-                }
-              )}
-          </Grid>
+                )}
+            </Grid>
+          )}
         </InnerContainer>
       </Container>
       <Modal isOpen={showCreate}>

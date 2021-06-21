@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import EmptyList from '../EmptyList'
 import { Skeleton } from '../UI/Loaders'
 import { PageTitle } from '../UI/Typography'
 
@@ -29,4 +30,9 @@ const SkeletonCard = styled(Skeleton)`
   flex: unset;
 `
 
-export { Grid, SkeletonCard, StyledTitle, Header }
+const StyledEmptyList = styled(EmptyList)`
+  margin-top: ${(props) => props.theme.space.xxl};
+  width: 100%;
+`
+
+export { Grid, SkeletonCard, StyledTitle, Header, StyledEmptyList }
