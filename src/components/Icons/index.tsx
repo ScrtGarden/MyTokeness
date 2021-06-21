@@ -42,6 +42,7 @@ import PhotoVideoDuo from './PhotoVideoDuo'
 import Plus from './Plus'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
+import SadTearDuo from './SadTearDuo'
 import ShieldDuo from './ShieldDuo'
 import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
@@ -68,6 +69,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'sad-tear-duo':
+      SelectedIcon = SadTearDuo
+      break
     case 'circle-play-duo':
       SelectedIcon = CirclePlayDuo
       break
