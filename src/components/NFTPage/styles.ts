@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import BackLink from '../Common/BackLink'
+import EmptyList from '../EmptyList'
 
 const Container = styled.div`
   display: grid;
@@ -16,4 +17,8 @@ const StyledBack = styled(BackLink)`
   top: ${(props) => props.theme.space.lg};
 `
 
-export { Container, StyledBack }
+const StyledEmptyList = styled(EmptyList)`
+  width: 100%;
+`
+
+export { Container, StyledBack, StyledEmptyList }

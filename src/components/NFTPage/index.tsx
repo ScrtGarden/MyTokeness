@@ -5,7 +5,8 @@ import { useStoreState } from '../../hooks/storeHooks'
 import useQueryNFTDossier from '../../hooks/useQueryNFTDossier'
 import CreateViewingKey from './CreateViewingKey'
 import Sidebar from './Sidebar'
-import { Container, StyledBack } from './styles'
+import SkeletonPage from './SkeletonPage'
+import { Container, StyledBack, StyledEmptyList } from './styles'
 import Visual from './Visual'
 
 const parseQuery = (value: string) => {
@@ -26,16 +27,27 @@ const NFTPage = () => {
     state.auth.keyByContractAddress(contractAddress)
   )
 
-  const { data, error } = useQueryNFTDossier(
+  const { data, error, isLoading } = useQueryNFTDossier(
     contractAddress,
     tokenId,
     !!viewingKey ? { walletAddress, viewingKey } : undefined,
     { keepPreviousData: true }
   )
 
-  console.log({ data, error })
-  if (!data) {
-    return <div>Broken, send help!</div>
+  if (isLoading) {
+    return <SkeletonPage />
+  }
+
+  if (!data || error) {
+    return (
+      <>
+        <StyledBack label="Back" />
+        <StyledEmptyList
+          text="Ooops! Looks like something went wrong."
+          icon="exclamation-circle-duo"
+        />
+      </>
+    )
   }
 
   return (
@@ -45,7 +57,6 @@ const NFTPage = () => {
         publicImage={data.publicMetadata.image}
         privateImage={data.privateMetadata?.image}
       />
-
       <Sidebar
         publicMetadata={data.publicMetadata}
         privateContent={data.privateMetadata?.properties.content}
