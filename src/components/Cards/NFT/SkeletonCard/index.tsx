@@ -1,6 +1,9 @@
-import { Section, Container as Settings } from '../../Cards/NFT/Settings/styles'
-import { Container } from '../../Cards/NFT/styles'
-import { Skeleton } from '../../UI/Loaders'
+import {
+  Section,
+  Container as Settings,
+} from '../../../Cards/NFT/Settings/styles'
+import { Container } from '../../../Cards/NFT/styles'
+import { Skeleton } from '../../../UI/Loaders'
 import { SkeletonVisual, Wrapper } from './styles'
 
 const SkeletonNFTCard = () => (

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Skeleton } from '../../UI/Loaders'
+import { Skeleton } from '../../../UI/Loaders'
 
 const SkeletonVisual = styled(Skeleton)`
   aspect-ratio: 1.3;
