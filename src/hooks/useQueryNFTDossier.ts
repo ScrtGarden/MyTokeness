@@ -1,35 +1,55 @@
-import { useQuery } from 'react-query'
+import { UseQueryOptions, useQuery } from 'react-query'
 
 import { ResultNFTDossier } from '../../interface/nft'
-import { UINFTDossier } from '../../interface/nft-ui'
+import { UINFTDossier, UserInfo } from '../../interface/nft-ui'
 import { Snip721ApprovalToUI, expirationToUI } from '../../utils/dataParser'
 import { queryChain } from '../../utils/secretjs'
+
+const nftDossierQueryKey = (
+  contractAddress: string,
+  id: string,
+  viewerInfo?: UserInfo
+) => [
+  'nftDossier',
+  contractAddress,
+  id,
+  ...(!!viewerInfo ? [viewerInfo.walletAddress, viewerInfo.viewingKey] : []),
+]
 
 const useQueryNFTDossier = (
   contractAddress: string,
   id: string,
-  walletAddress?: string,
-  viewingKey?: string
-) => {
-  return useQuery<ResultNFTDossier, Error, UINFTDossier>(
-    ['nftDossier', walletAddress, contractAddress, id],
+  viewerInfo?: UserInfo,
+  options?: UseQueryOptions<ResultNFTDossier, Error, UINFTDossier>
+) =>
+  useQuery(
+    nftDossierQueryKey(
+      contractAddress,
+      id,
+      !!viewerInfo ? { ...viewerInfo } : undefined
+    ),
     () =>
       queryChain.queryContractSmart(contractAddress, {
         nft_dossier: {
           token_id: id,
-          ...(!!walletAddress &&
-            !!viewingKey && {
-              viewer: { address: walletAddress, viewing_key: viewingKey },
-            }),
+          ...(!!viewerInfo && {
+            viewer: {
+              address: viewerInfo.walletAddress,
+              viewing_key: viewerInfo.viewingKey,
+            },
+          }),
           include_expired: false,
         },
       }),
-    { refetchOnWindowFocus: false, retry: false, select: formatNFTDossier }
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+      select: formatNFTDossier,
+      ...options,
+    }
   )
-}
 
 const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
-  // console.log({ original })
   const {
     nft_dossier: {
       display_private_metadata_error,
@@ -96,4 +116,4 @@ const formatNFTDossier = (original: ResultNFTDossier): UINFTDossier => {
   }
 }
 
-export default useQueryNFTDossier
+export { useQueryNFTDossier as default, nftDossierQueryKey }

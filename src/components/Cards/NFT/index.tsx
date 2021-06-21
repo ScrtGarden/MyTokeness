@@ -43,12 +43,10 @@ const NFTCard: FC<Props> = ({
   const [showTransfer, toggleTransfer] = useToggle()
 
   // custom hooks
-  const { data, isLoading, isError } = useQueryNFTDossier(
-    contractAddress,
-    id,
+  const { data, isLoading, isError } = useQueryNFTDossier(contractAddress, id, {
     walletAddress,
-    viewingKey
-  )
+    viewingKey,
+  })
 
   if (isLoading) {
     return <SkeletonNFTCard />
@@ -58,7 +56,7 @@ const NFTCard: FC<Props> = ({
     return <Container>Error</Container>
   }
 
-  // console.log({ data })
+  console.log({ data })
   return (
     <>
       <Container>
@@ -109,6 +107,7 @@ const NFTCard: FC<Props> = ({
           tokenId={id}
           contractAddress={contractAddress}
           walletAddress={walletAddress}
+          viewingKey={viewingKey}
         />
       </Modal>
       <Modal isOpen={showOwnership}>
@@ -119,6 +118,7 @@ const NFTCard: FC<Props> = ({
           isPrivate={!data.ownerIsPublic}
           expiration={data.publicOwnershipExpiration}
           walletAddress={walletAddress}
+          viewingKey={viewingKey}
         />
       </Modal>
       <Modal isOpen={showContentsSettings}>
@@ -129,6 +129,7 @@ const NFTCard: FC<Props> = ({
           isPrivate={!data.privateMetadataIsPublic}
           expiration={data.privateMetadataIsPublicExpiration}
           walletAddress={walletAddress}
+          viewingKey={viewingKey}
         />
       </Modal>
       <StyledModal isOpen={showWhitelist}>
@@ -138,6 +139,7 @@ const NFTCard: FC<Props> = ({
           contractAddress={contractAddress}
           walletAddress={walletAddress}
           approvedList={data.tokenApprovals}
+          viewingKey={viewingKey}
         />
       </StyledModal>
       <Modal isOpen={showTransfer}>
@@ -147,6 +149,7 @@ const NFTCard: FC<Props> = ({
           walletAddress={walletAddress}
           tokenId={id}
           name={data.publicMetadata.name}
+          viewingKey={viewingKey}
         />
       </Modal>
     </>

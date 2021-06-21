@@ -19,6 +19,9 @@ const ApprovalList: FC<Props> = ({ list, tokenId }) => {
 
   // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
+  const viewingKey = useStoreState((state) =>
+    state.auth.keyByContractAddress(contractAddress)
+  )
 
   // component state
   const [selected, setSelected] = useState('')
@@ -57,6 +60,7 @@ const ApprovalList: FC<Props> = ({ list, tokenId }) => {
               contractAddress={contractAddress}
               walletAddress={walletAddress}
               tokenId={tokenId}
+              viewingKey={viewingKey}
             />
           ))}
         </Body>

@@ -13,11 +13,13 @@ import {
   SetWhitelistedApproval,
   Snip721Approval,
 } from '../../interface/nft'
+import { UserInfo } from '../../interface/nft-ui'
 import { MAX_GAS } from '../../utils/constants'
 import { executeContract } from '../../utils/contractInteractions'
+import { nftDossierQueryKey } from './useQueryNFTDossier'
 
 const useMutationWhitelist = (
-  walletAddress: string,
+  userInfo: UserInfo,
   contractAddress: string
 ): UseMutationResult<ExecuteResult, Error, SetWhitelistedApproval> => {
   const queryClient = useQueryClient()
@@ -34,55 +36,55 @@ const useMutationWhitelist = (
         const { token_id } = data
         !!token_id
           ? invalidateTokenApprovals(
-              walletAddress,
+              userInfo,
               contractAddress,
               queryClient,
               data
             )
           : invalidateInventoryApprovals(
-              walletAddress,
+              userInfo,
               contractAddress,
               queryClient,
               data
             )
       },
       onSettled: () => {
-        queryClient.invalidateQueries(['nativeBalance', walletAddress])
+        queryClient.invalidateQueries(['nativeBalance', userInfo.walletAddress])
       },
     }
   )
 }
 
 const invalidateTokenApprovals = (
-  walletAddress: string,
+  userInfo: UserInfo,
   contractAddress: string,
   queryClient: QueryClient,
   data: SetWhitelistedApproval
 ) => {
-  const { token_id } = data
-  const key = ['nftDossier', walletAddress, contractAddress, token_id]
-  const original = queryClient.getQueryData<ResultNFTDossier>(key)
+  const tokenId = data.token_id as string
+  const key = nftDossierQueryKey(contractAddress, tokenId, userInfo)
 
-  if (original) {
-    const { token_approvals } = original.nft_dossier
-    const updatedApprovals = updateTokenApprovals(token_approvals, data)
-
-    queryClient.setQueryData<ResultNFTDossier>(key, {
-      nft_dossier: {
-        ...original.nft_dossier,
-        token_approvals: updatedApprovals,
-      },
-    })
-  }
+  queryClient.setQueryData<ResultNFTDossier | undefined>(key, (original) => {
+    if (original) {
+      const { token_approvals } = original.nft_dossier
+      const updatedApprovals = updateTokenApprovals(token_approvals, data)
+      return {
+        nft_dossier: {
+          ...original.nft_dossier,
+          token_approvals: updatedApprovals,
+        },
+      }
+    }
+  })
 }
 
 const invalidateInventoryApprovals = (
-  walletAddress: string,
+  { viewingKey, walletAddress }: UserInfo,
   contractAddress: string,
   queryClient: QueryClient,
   data: SetWhitelistedApproval
 ) => {
-  const key = ['inventoryApprovals', walletAddress, contractAddress]
+  const key = ['inventoryApprovals', walletAddress, viewingKey, contractAddress]
   const original = queryClient.getQueryData<ResultInventoryApprovals>(key)
 
   if (original) {
@@ -103,7 +105,7 @@ const updateTokenApprovals = (
   toBeApproved: SetWhitelistedApproval
 ): Snip721Approval[] => {
   const formatted = formatToSnip721Approval(toBeApproved)
-  console.log({ formatted, tokens })
+
   const {
     address,
     view_owner_expiration,

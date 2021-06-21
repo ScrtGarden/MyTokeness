@@ -6,6 +6,7 @@ import { HandleReveal } from '../../../../interface/nft'
 import { MAX_GAS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import { nftDossierQueryKey } from '../../../hooks/useQueryNFTDossier'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import Icon from '../../Icons'
 import { Button } from '../../UI/Buttons'
@@ -18,10 +19,12 @@ type Props = {
   tokenId: string
   contractAddress: string
   walletAddress: string
+  viewingKey: string
 }
 
 const UnsealModal: FC<Props> = (props) => {
-  const { toggle, name, tokenId, contractAddress, walletAddress } = props
+  const { toggle, name, tokenId, contractAddress, walletAddress, viewingKey } =
+    props
   const queryClient = useQueryClient()
 
   // custom hook
@@ -36,12 +39,12 @@ const UnsealModal: FC<Props> = (props) => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([
-            'nftDossier',
-            walletAddress,
-            contractAddress,
-            tokenId,
-          ])
+          queryClient.invalidateQueries(
+            nftDossierQueryKey(contractAddress, tokenId, {
+              walletAddress,
+              viewingKey,
+            })
+          )
           toast.success("You can now view the asset's private contents.")
           toggle()
         },

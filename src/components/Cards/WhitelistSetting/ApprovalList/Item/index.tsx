@@ -34,6 +34,7 @@ type Props = {
   contractAddress: string
   walletAddress: string
   tokenId?: string
+  viewingKey: string
 }
 
 const Item: FC<Props> = ({
@@ -43,6 +44,7 @@ const Item: FC<Props> = ({
   walletAddress,
   contractAddress,
   tokenId,
+  viewingKey,
 }) => {
   const { address, transfer, viewOwner, viewPrivateMetadata, expiration } = item
 
@@ -65,7 +67,7 @@ const Item: FC<Props> = ({
 
   // custom hooks
   const { mutate, isLoading } = useMutationWhitelist(
-    walletAddress,
+    { walletAddress, viewingKey },
     contractAddress
   )
   const [_, copy] = useCopyToClipboard(address)

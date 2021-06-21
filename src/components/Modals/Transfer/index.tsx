@@ -6,6 +6,7 @@ import { HandleTransferNFT, ResultTokens } from '../../../../interface/nft'
 import { MAX_GAS } from '../../../../utils/constants'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import { nftDossierQueryKey } from '../../../hooks/useQueryNFTDossier'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
 import MessageWithIcon from '../../Common/MessageWithIcon'
 import Icon from '../../Icons'
@@ -22,10 +23,12 @@ type Props = {
   contractAddress: string
   walletAddress: string
   name: string
+  viewingKey: string
 }
 
 const TransferModal: FC<Props> = (props) => {
-  const { toggle, tokenId, contractAddress, name, walletAddress } = props
+  const { toggle, tokenId, contractAddress, name, walletAddress, viewingKey } =
+    props
   const queryClient = useQueryClient()
 
   // component state
@@ -62,12 +65,10 @@ const TransferModal: FC<Props> = (props) => {
       {
         onSuccess: () => {
           const tokensKey = ['tokens', walletAddress, contractAddress]
-          const dossierKey = [
-            'nftDossier',
+          const dossierKey = nftDossierQueryKey(contractAddress, tokenId, {
             walletAddress,
-            contractAddress,
-            tokenId,
-          ]
+            viewingKey,
+          })
 
           queryClient.setQueryData<InfiniteData<ResultTokens>>(
             tokensKey,

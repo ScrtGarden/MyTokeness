@@ -23,6 +23,7 @@ type Props = {
   contractAddress: string
   walletAddress: string
   approvedList: UISnip721Approval[]
+  viewingKey: string
 }
 
 const OPTIONS: ApprovalOptions = {
@@ -44,7 +45,7 @@ const ERRORS: Errors = {
 }
 
 const Whitelisting: FC<Props> = (props) => {
-  const { contractAddress, walletAddress, approvedList } = props
+  const { contractAddress, walletAddress, approvedList, viewingKey } = props
 
   // component state
   const [address, setAddress] = useState('')
@@ -60,7 +61,7 @@ const Whitelisting: FC<Props> = (props) => {
 
   // custom hooks
   const { mutate, isLoading } = useMutationWhitelist(
-    walletAddress,
+    { walletAddress, viewingKey },
     contractAddress
   )
 

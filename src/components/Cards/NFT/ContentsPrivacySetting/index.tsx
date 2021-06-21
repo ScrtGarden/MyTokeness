@@ -7,6 +7,7 @@ import { UIExpiration } from '../../../../../interface/nft-ui'
 import { MAX_GAS } from '../../../../../utils/constants'
 import parseErrorMsg from '../../../../../utils/parseErrorMsg'
 import useMutationExeContract from '../../../../hooks/useMutationExeContract'
+import { nftDossierQueryKey } from '../../../../hooks/useQueryNFTDossier'
 import {
   ValidationError,
   format,
@@ -20,6 +21,7 @@ type Props = {
   tokenId: string
   contractAddress: string
   walletAddress: string
+  viewingKey: string
 } & Omit<ApprovalSettingProps, 'onSubmit' | 'title' | 'id'>
 
 const ContentsPrivacySetting: FC<Props> = ({
@@ -29,6 +31,7 @@ const ContentsPrivacySetting: FC<Props> = ({
   isPrivate,
   expiration,
   walletAddress,
+  viewingKey,
 }) => {
   const queryClient = useQueryClient()
 
@@ -61,12 +64,12 @@ const ContentsPrivacySetting: FC<Props> = ({
         onSuccess: (_, { handleMsg: { set_global_approval } }) => {
           const { view_private_metadata } = set_global_approval
           const isHidden = view_private_metadata === 'revoke_token'
-          queryClient.invalidateQueries([
-            'nftDossier',
-            walletAddress,
-            contractAddress,
-            tokenId,
-          ])
+          queryClient.invalidateQueries(
+            nftDossierQueryKey(contractAddress, tokenId, {
+              walletAddress,
+              viewingKey,
+            })
+          )
           toast.success(
             `Contents of asset is now ${isHidden ? 'hidden' : 'public'}. `
           )

@@ -31,7 +31,7 @@ const Privacy = () => {
     ResultInventoryApprovals,
     UIInventoryApprovals
   >(
-    ['inventoryApprovals', walletAddress, contractAddress],
+    ['inventoryApprovals', walletAddress, viewingKey, contractAddress],
     contractAddress,
     {
       inventory_approvals: { address: walletAddress, viewing_key: viewingKey },
@@ -89,17 +89,20 @@ const Privacy = () => {
         expiration={data.publicOwnershipExpiration}
         contractAddress={contractAddress}
         walletAddress={walletAddress}
+        viewingKey={viewingKey}
       />
       <PrivateMetadataPrivacySetting
         isPrivate={!data.privateMetadataIsPublic}
         expiration={data.privateMetadataIsPublicExpiration}
         contractAddress={contractAddress}
         walletAddress={walletAddress}
+        viewingKey={viewingKey}
       />
       <Whitelisting
         contractAddress={contractAddress}
         walletAddress={walletAddress}
         approvedList={data.inventoryApprovals}
+        viewingKey={viewingKey}
       />
     </Container>
   )

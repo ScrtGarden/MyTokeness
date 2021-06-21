@@ -19,6 +19,7 @@ type Props = {
   expiration: UIExpiration
   contractAddress: string
   walletAddress: string
+  viewingKey: string
 }
 
 const PrivateMetadataPrivacySetting: FC<Props> = ({
@@ -26,6 +27,7 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
   expiration,
   contractAddress,
   walletAddress,
+  viewingKey,
 }) => {
   const queryClient = useQueryClient()
 
@@ -55,25 +57,27 @@ const PrivateMetadataPrivacySetting: FC<Props> = ({
       },
       {
         onSuccess: (_, { handleMsg: { set_global_approval } }) => {
-          const key = ['inventoryApprovals', walletAddress, contractAddress]
-          const original =
-            queryClient.getQueryData<ResultInventoryApprovals>(key)
-
-          if (original) {
-            const { view_private_metadata, expires } = set_global_approval
-            const isPublic = view_private_metadata === 'all'
-            const update: Partial<RInventoryApprovals> = {
-              private_metadata_is_public: isPublic ? true : false,
-              private_metadata_is_public_expiration: isPublic ? expires : null,
+          queryClient.setQueryData<ResultInventoryApprovals | undefined>(
+            ['inventoryApprovals', walletAddress, viewingKey, contractAddress],
+            (original) => {
+              if (original) {
+                const { view_private_metadata, expires } = set_global_approval
+                const isPublic = view_private_metadata === 'all'
+                const update: Partial<RInventoryApprovals> = {
+                  private_metadata_is_public: isPublic ? true : false,
+                  private_metadata_is_public_expiration: isPublic
+                    ? expires
+                    : null,
+                }
+                return {
+                  inventory_approvals: {
+                    ...original.inventory_approvals,
+                    ...update,
+                  },
+                }
+              }
             }
-
-            queryClient.setQueryData<ResultInventoryApprovals>(key, {
-              inventory_approvals: {
-                ...original.inventory_approvals,
-                ...update,
-              },
-            })
-          }
+          )
 
           toast.success('Updated private metadata privacy setting.')
         },

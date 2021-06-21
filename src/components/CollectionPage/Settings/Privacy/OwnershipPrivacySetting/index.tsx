@@ -19,6 +19,7 @@ type Props = {
   expiration: UIExpiration
   contractAddress: string
   walletAddress: string
+  viewingKey: string
 }
 
 const OwnershipPrivacySetting: FC<Props> = ({
@@ -26,6 +27,7 @@ const OwnershipPrivacySetting: FC<Props> = ({
   expiration,
   contractAddress,
   walletAddress,
+  viewingKey,
 }) => {
   const queryClient = useQueryClient()
 
@@ -55,25 +57,25 @@ const OwnershipPrivacySetting: FC<Props> = ({
       },
       {
         onSuccess: (_, { handleMsg: { set_global_approval } }) => {
-          const key = ['inventoryApprovals', walletAddress, contractAddress]
-          const original =
-            queryClient.getQueryData<ResultInventoryApprovals>(key)
-
-          if (original) {
-            const { view_owner, expires } = set_global_approval
-            const isPublic = view_owner === 'all'
-            const update: Partial<RInventoryApprovals> = {
-              owner_is_public: isPublic ? true : false,
-              public_ownership_expiration: isPublic ? expires : null,
+          queryClient.setQueryData<ResultInventoryApprovals | undefined>(
+            ['inventoryApprovals', walletAddress, viewingKey, contractAddress],
+            (original) => {
+              if (original) {
+                const { view_owner, expires } = set_global_approval
+                const isPublic = view_owner === 'all'
+                const update: Partial<RInventoryApprovals> = {
+                  owner_is_public: isPublic ? true : false,
+                  public_ownership_expiration: isPublic ? expires : null,
+                }
+                return {
+                  inventory_approvals: {
+                    ...original.inventory_approvals,
+                    ...update,
+                  },
+                }
+              }
             }
-
-            queryClient.setQueryData<ResultInventoryApprovals>(key, {
-              inventory_approvals: {
-                ...original.inventory_approvals,
-                ...update,
-              },
-            })
-          }
+          )
 
           toast.success('Updated ownership privacy setting.')
         },
