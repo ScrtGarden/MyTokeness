@@ -19,4 +19,10 @@ const Title = styled.h2`
   margin-top: 0;
 `
 
-export { Brand, Title }
+const Images = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: ${(props) => props.theme.space.lg};
+`
+
+export { Brand, Title, Images }

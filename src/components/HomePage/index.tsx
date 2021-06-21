@@ -1,6 +1,8 @@
+import Image from 'next/image'
+
 import { Container, InnerContainer } from '../UI/Containers'
 import { Text } from '../UI/Typography'
-import { Brand, Title } from './styles'
+import { Brand, Images, Title } from './styles'
 
 const Home = () => {
   return (
@@ -11,6 +13,22 @@ const Home = () => {
         <Text>
           A place to create, manage and explore tokens on the Secret Network.
         </Text>
+        <Images>
+          <Image
+            src="/images/king.png"
+            alt="king"
+            height="300px"
+            width="300px"
+            objectFit="contain"
+          />
+          <Image
+            src="/images/queen.png"
+            alt="king"
+            height="300px"
+            width="300px"
+            objectFit="contain"
+          />
+        </Images>
       </InnerContainer>
     </Container>
   )
