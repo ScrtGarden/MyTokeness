@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { FC, FormEvent, memo, useMemo, useState } from 'react'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 
 import getImageLinkProps from '../../../../../utils/getImageLinkProps'
 import { ImageWrapper, Play, StyledIcon } from './styles'
@@ -64,7 +64,6 @@ const Visual: FC<Props> = ({ publicImage, privateImage, onClick }) => {
                 },
               },
             }}
-            fallback={<div>Loading...</div>}
           />
         </>
       )}
