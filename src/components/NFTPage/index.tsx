@@ -44,7 +44,7 @@ const NFTPage = () => {
         <StyledBack label="Back" />
         <StyledEmptyList
           text="Ooops! Looks like something went wrong."
-          icon="exclamation-circle-duo"
+          icon="sad-tear-duo"
         />
       </>
     )

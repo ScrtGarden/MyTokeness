@@ -90,7 +90,7 @@ const Assets = () => {
     return (
       <StyledEmptyList
         text="Ooops! Looks like something went wrong."
-        icon="exclamation-circle-duo"
+        icon="sad-tear-duo"
       />
     )
   }

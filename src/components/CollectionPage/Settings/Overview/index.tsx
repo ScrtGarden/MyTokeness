@@ -58,7 +58,7 @@ const Overview = () => {
       <Container>
         <EmptyList
           text="Ooops! Looks like something went wrong."
-          icon="exclamation-circle-duo"
+          icon="sad-tear-duo"
         />
       </Container>
     )
