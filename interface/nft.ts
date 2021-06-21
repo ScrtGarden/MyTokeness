@@ -168,6 +168,11 @@ export interface TransferNFT {
   padding?: string
 }
 
+export interface CreateViewingKey {
+  entropy: string
+  padding?: string
+}
+
 /**************************** ******************************/
 
 /**
@@ -233,10 +238,7 @@ export interface HandleBatchMintNFT {
 }
 
 export interface HandleCreateViewingKey {
-  create_viewing_key: {
-    entropy: string
-    padding?: string
-  }
+  create_viewing_key: CreateViewingKey
 }
 
 export interface HandleSetGlobalApproval {
