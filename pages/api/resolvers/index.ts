@@ -10,7 +10,7 @@ export const resolvers = {
     uploadFile: async (_: any, args: { file: FileUpload }) => {
       try {
         const file = await args.file
-        const { createReadStream, filename, mimetype } = file
+        const { createReadStream, filename } = file
         const fileStream = createReadStream()
         fileStream.path = filename
 

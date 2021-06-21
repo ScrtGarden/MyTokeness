@@ -1,6 +1,6 @@
 import { FC, memo } from 'react'
 
-import { Attribute, UIPublicMetadata } from '../../../../../interface/nft-ui'
+import { Attribute } from '../../../../../interface/nft-ui'
 import { Markdown } from '../../../UI/Markdown'
 import { Text } from '../../../UI/Typography'
 import { Attributes, Container } from './styles'

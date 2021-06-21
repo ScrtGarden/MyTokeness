@@ -9,7 +9,7 @@ type OwnProps = {
 
 type Props = InputProps & OwnProps & InputHTMLAttributes<HTMLInputElement>
 
-const InputWithLoading: FC<Props> = ({ loading, children, ...rest }) => (
+const InputWithLoading: FC<Props> = ({ loading, ...rest }) => (
   <Container>
     <Input {...rest} />
     {loading && <StyledDots color="white" />}

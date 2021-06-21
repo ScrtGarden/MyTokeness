@@ -1,8 +1,6 @@
-import commaNumber from 'comma-number'
-import { FC, memo, useMemo } from 'react'
+import { FC, memo } from 'react'
 
 import { Tx } from '../../../../../../interface/nft'
-import toBiggestDenomination from '../../../../../../utils/toBiggestDenomination'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {

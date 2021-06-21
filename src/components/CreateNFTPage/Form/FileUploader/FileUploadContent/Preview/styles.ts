@@ -1,4 +1,3 @@
-import ReactPlayer from 'react-player'
 import styled from 'styled-components'
 
 const Container = styled.div`

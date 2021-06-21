@@ -1,6 +1,5 @@
-import { FC, useEffect, useMemo } from 'react'
+import { FC, useEffect } from 'react'
 
-import { useStoreState } from '../../../hooks/storeHooks'
 import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
 import Header from './Header'
 import Sidebar from './Sidebar'

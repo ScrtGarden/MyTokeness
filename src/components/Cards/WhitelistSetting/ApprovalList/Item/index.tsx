@@ -70,6 +70,7 @@ const Item: FC<Props> = ({
     { walletAddress, viewingKey },
     contractAddress
   )
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, copy] = useCopyToClipboard(address)
 
   // lifecycle

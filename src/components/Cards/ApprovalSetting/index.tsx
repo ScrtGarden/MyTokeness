@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo, useReducer, useState } from 'react'
+import { FC, memo, useEffect, useReducer, useState } from 'react'
 
 import { ExpirationReducer, UIExpiration } from '../../../../interface/nft-ui'
 import reducer from '../../../../utils/reducer'

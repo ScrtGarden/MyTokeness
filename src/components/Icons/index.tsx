@@ -61,6 +61,7 @@ type Props = {
   fill?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Icon: FC<Props> = forwardRef((props, _) => {
   const { name, className, ...rest } = props
 

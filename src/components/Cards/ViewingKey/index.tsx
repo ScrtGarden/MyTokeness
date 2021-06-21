@@ -42,12 +42,13 @@ const ViewingKeyCard = () => {
   const removeKey = useStoreActions((actions) => actions.auth.removeViewingKey)
 
   // custom hooks
-  const [_, copy] = useCopyToClipboard(viewingKey)
   const { mutateAsync: connectWallet, isLoading: connecting } =
     useMutationConnectWallet()
   const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
     useMutationGetAccounts()
   const { mutate, isLoading } = useMutationExeContract<HandleCreateViewingKey>()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, copy] = useCopyToClipboard(viewingKey)
 
   // component state
   const [showWarning, setShowWarning] = useState(false)

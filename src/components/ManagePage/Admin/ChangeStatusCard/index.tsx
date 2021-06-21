@@ -14,8 +14,10 @@ import useMutationExeContract from '../../../../hooks/useMutationExeContract'
 import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
 import useQueryContract from '../../../../hooks/useQueryContract'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
+import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
 import { Option, Select } from '../../../UI/Forms'
+import { SelectWrapper } from './styles'
 
 const OPTIONS = {
   normal_run: 'Active',
@@ -42,10 +44,7 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
   const { mutate, isLoading: updating } =
     useMutationExeContract<HandleMsgSetContractStatus>()
 
-  const { data, isError } = useQueryContract<
-    QueryContractStatus,
-    ResultContractStatus
-  >(
+  const { data } = useQueryContract<QueryContractStatus, ResultContractStatus>(
     ['contractStatus', contractAddress],
     contractAddress,
     { contract_status: {} },
@@ -82,7 +81,7 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
         await connect()
         await getAccounts()
       } catch (error) {
-        throw error
+        return
       }
     }
 
@@ -108,22 +107,26 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
     <Card>
       <Header>Change contract status</Header>
       <Wrapper>
-        <Select
-          id="status"
-          name="status"
-          value={status}
-          onChange={(e) => setStatus(e.currentTarget.value as Options)}
-          disabled={!enableButton}
-        >
-          <Option disabled value={''}>
-            Select an option
-          </Option>
-          {Object.entries(OPTIONS).map(([key, value]) => (
-            <Option key={key} value={key}>
-              {value}
+        <SelectWrapper>
+          <Select
+            id="status"
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.currentTarget.value as Options)}
+            disabled={!enableButton}
+          >
+            <Option disabled value={''}>
+              Select an option
             </Option>
-          ))}
-        </Select>
+            {Object.entries(OPTIONS).map(([key, value]) => (
+              <Option key={key} value={key}>
+                {value}
+              </Option>
+            ))}
+          </Select>
+          {error && <MessageWithIcon validation="error" message={error} />}
+        </SelectWrapper>
+
         <ButtonWithLoading
           isPrimary
           text="Update"

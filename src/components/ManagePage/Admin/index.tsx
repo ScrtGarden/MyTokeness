@@ -24,7 +24,7 @@ const Admin = () => {
     onSuccess: () => {
       queryClient.setQueryData('selectedContractAddress', debouncedAddy)
     },
-    onError: (error) => {
+    onError: () => {
       setError('Unable to fetch token information.')
     },
   })

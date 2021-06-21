@@ -46,10 +46,6 @@ const FileUploader: FC<Props> = ({ file, label, setFile, error }) => {
     maxFiles: 1,
   })
 
-  const removeFile = () => {
-    setFile()
-  }
-
   return (
     <Field>
       <Label>{label || 'Image, Video or Audio'}</Label>

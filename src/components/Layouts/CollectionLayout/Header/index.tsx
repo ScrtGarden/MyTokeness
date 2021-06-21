@@ -45,12 +45,13 @@ const Header: FC<Props> = ({
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
   // custom hooks
-  const [_, copy] = useCopyToClipboard(contractAddress)
   const { data, isLoading } = useQueryContract<QueryMinters, ResultMinters>(
     ['minters', contractAddress],
     contractAddress,
     { minters: {} }
   )
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, copy] = useCopyToClipboard(contractAddress)
 
   // component state
   const isAssets = useMemo(() => activeTab === 'assets', [activeTab])

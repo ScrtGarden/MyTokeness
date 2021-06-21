@@ -13,7 +13,8 @@ import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../../Cards/Snip20Selector'
 import { Container, InnerContainer } from '../../UI/Containers'
 import { PageTitle } from '../../UI/Typography'
-import Table from './Table'
+
+// import Table from './Table'
 
 const Transfers = () => {
   const queryClient = useQueryClient()
@@ -51,10 +52,7 @@ const Transfers = () => {
     }
   )
 
-  const { data } = useQueryContract<
-    QueryTransferHistory,
-    ResultTransferHistory
-  >(
+  const {} = useQueryContract<QueryTransferHistory, ResultTransferHistory>(
     ['transferHistory', walletAddress, contractAddress],
     contractAddress,
     {

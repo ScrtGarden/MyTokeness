@@ -85,7 +85,7 @@ const BurnCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
     mutate(
       { contractAddress, maxGas: MAX_GAS.SNIP20.BURN, handleMsg },
       {
-        onSuccess: (test) => {
+        onSuccess: () => {
           toast.success(`Burnt ${amount} ${data?.token_info.symbol}`)
           setAmount('')
           setMemo('')

@@ -44,7 +44,7 @@ const Table: FC<Props> = ({ data = [], columns }) => {
         ))}
       </Head>
       <Body {...getTableBodyProps()}>
-        {rows.map((row, i) => {
+        {rows.map((row) => {
           prepareRow(row)
           return (
             // eslint-disable-next-line react/jsx-key
