@@ -1,7 +1,7 @@
 const theme = {
   dark: {
-    bg: '#13181c',
-    // bg: '#111519',
+    // bg: '#13181c',
+    bg: '#0e1115',
     fg: '#181e24',
     border: {
       color: '#212a31',
@@ -96,8 +96,8 @@ const theme = {
         bg: {
           default: {
             base: 'transparent',
-            hover: '#212a3140',
-            active: '#212a3178',
+            hover: '#889aa730',
+            active: '#889aa778',
           },
           primary: {
             base: '#60af73',
@@ -118,7 +118,7 @@ const theme = {
           disabled: '#181e24',
         },
         border: {
-          default: '1px solid #212a31',
+          default: '1px solid #889aa7',
           primary: 'none',
           danger: 'none',
         },
@@ -135,14 +135,14 @@ const theme = {
           },
         },
         bg: {
-          default: '#13181c',
+          default: '#0e1115',
           hover: '#0b0f13',
           active: '#000000',
         },
       },
       input: {
         bg: {
-          default: '#13181c',
+          default: '#0e1115',
         },
         border: {
           color: {
@@ -248,7 +248,7 @@ const theme = {
     // modal
     modal: {
       overlay: {
-        bg: '#13181cab',
+        bg: '#0e1115ab',
       },
       card: {
         bg: '#181e24',
