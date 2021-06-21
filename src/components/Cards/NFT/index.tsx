@@ -56,7 +56,6 @@ const NFTCard: FC<Props> = ({
     return <Container>Error</Container>
   }
 
-  console.log({ data })
   return (
     <>
       <Container>

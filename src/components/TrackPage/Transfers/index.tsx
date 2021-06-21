@@ -73,8 +73,6 @@ const Transfers = () => {
     setError('')
   }, [debouncedAddy, viewingKey])
 
-  console.log({ data })
-
   return (
     <Container>
       <InnerContainer>
