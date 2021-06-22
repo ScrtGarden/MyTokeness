@@ -123,6 +123,13 @@ const theme = {
           danger: 'none',
         },
       },
+      anchor: {
+        color: {
+          base: '#499bfc',
+          hover: '#75b4ff',
+          active: '#9cc9ff',
+        },
+      },
     },
 
     // forms

@@ -166,4 +166,21 @@ const IconButtonWrapper = styled.div`
   flex-direction: row;
 `
 
-export { Button, IconButton, StyledIcon, IconButtonWrapper }
+const Anchor = styled.a`
+  color: ${(props) => props.theme.buttons.anchor.color.base};
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.25s ease-in-out 0s;
+
+  :hover {
+    color: ${(props) => props.theme.buttons.anchor.color.hover};
+    text-decoration: underline;
+  }
+
+  :active {
+    color: ${(props) => props.theme.buttons.anchor.color.active};
+    text-decoration: underline;
+  }
+`
+
+export { Button, IconButton, StyledIcon, IconButtonWrapper, Anchor }
