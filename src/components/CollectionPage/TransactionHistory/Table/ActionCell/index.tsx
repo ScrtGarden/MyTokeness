@@ -1,6 +1,7 @@
 import { FC, memo } from 'react'
 
 import { Tx } from '../../../../../../interface/nft'
+import truncateAddress from '../../../../../../utils/truncateAddress'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {
@@ -21,7 +22,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
             <Text>
               {walletAddress === action.mint.minter
                 ? 'You'
-                : action.mint.minter}
+                : truncateAddress(action.mint.minter)}
             </Text>
           </Field>
           <Field>
@@ -29,7 +30,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
             <Text>
               {walletAddress === action.mint.recipient
                 ? 'You'
-                : action.mint.recipient}
+                : truncateAddress(action.mint.recipient)}
             </Text>
           </Field>
         </>
@@ -41,7 +42,9 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
           <Field>
             <Label>Owner:</Label>
             <Text>
-              {walletAddress === action.burn.owner ? 'You' : action.burn.owner}
+              {walletAddress === action.burn.owner
+                ? 'You'
+                : truncateAddress(action.burn.owner)}
             </Text>
           </Field>
           {action.burn.burner && (
@@ -50,7 +53,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
               <Text>
                 {walletAddress === action.burn.burner
                   ? 'You'
-                  : action.burn.burner}
+                  : truncateAddress(action.burn.burner)}
               </Text>
             </Field>
           )}
@@ -65,7 +68,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
             <Text>
               {walletAddress === action.transfer.from
                 ? 'You'
-                : action.transfer.from}
+                : truncateAddress(action.transfer.from)}
             </Text>
           </Field>
           {action.transfer.sender && (
@@ -74,7 +77,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
               <Text>
                 {walletAddress === action.transfer.sender
                   ? 'You'
-                  : action.transfer.sender}
+                  : truncateAddress(action.transfer.sender)}
               </Text>
             </Field>
           )}
@@ -83,7 +86,7 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
             <Text>
               {walletAddress === action.transfer.recipient
                 ? 'You'
-                : action.transfer.recipient}
+                : truncateAddress(action.transfer.recipient)}
             </Text>
           </Field>
         </>

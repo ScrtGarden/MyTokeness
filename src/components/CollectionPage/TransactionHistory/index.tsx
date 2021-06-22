@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { memo, useMemo, useState } from 'react'
 import { Column } from 'react-table'
@@ -7,6 +8,9 @@ import {
   ResultTransactionHistory,
   Tx,
 } from '../../../../interface/nft'
+import { DATE_FORMAT } from '../../../../utils/constants'
+import getTotalPages from '../../../../utils/getTotalPages'
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../hooks/storeHooks'
 import useQueryContract from '../../../hooks/useQueryContract'
 import SkeletonTable from '../../Common/SkeletonTable'
@@ -17,6 +21,8 @@ import { CustomCell } from '../../UI/Table'
 import { Container } from './styles'
 import Table from './Table'
 import ActionCell from './Table/ActionCell'
+
+const PAGE_SIZE = 10
 
 const TransactionHistory = () => {
   const router = useRouter()
@@ -31,7 +37,7 @@ const TransactionHistory = () => {
   // component state
   const [page, setPage] = useState(1)
 
-  const { data, isError, isLoading } = useQueryContract<
+  const { data, isLoading, error } = useQueryContract<
     QueryTransactionHistory,
     ResultTransactionHistory
   >(
@@ -42,10 +48,15 @@ const TransactionHistory = () => {
         address: walletAddress,
         viewing_key: viewingKey,
         page: page - 1,
-        page_size: 10,
+        page_size: PAGE_SIZE,
       },
     },
-    { keepPreviousData: true, enabled: !!viewingKey }
+    { keepPreviousData: true, enabled: !!viewingKey, retry: false }
+  )
+
+  const totalPages = useMemo(
+    () => (data ? getTotalPages(data.transaction_history.total, PAGE_SIZE) : 1),
+    [data]
   )
 
   const columns: Column<Tx>[] = useMemo(
@@ -62,7 +73,6 @@ const TransactionHistory = () => {
       },
       {
         Header: () => <CustomCell left>NFT Id</CustomCell>,
-        width: 70,
         accessor: 'token_id',
       },
       {
@@ -73,10 +83,16 @@ const TransactionHistory = () => {
         ),
       },
       {
-        Header: () => <CustomCell left>Blockheight</CustomCell>,
-        width: 50,
-        accessor: 'blockheight',
-        Cell: ({ value }) => <CustomCell left>{value}</CustomCell>,
+        Header: () => <CustomCell left>Memo</CustomCell>,
+        accessor: 'memo',
+      },
+      {
+        Header: () => <CustomCell left>Date</CustomCell>,
+
+        accessor: 'block_time',
+        Cell: ({ value }) => (
+          <CustomCell left>{format(value * 1000, DATE_FORMAT)}</CustomCell>
+        ),
       },
     ],
     [walletAddress]
@@ -109,7 +125,16 @@ const TransactionHistory = () => {
     )
   }
 
-  if (!data || isError) {
+  if (error) {
+    const msg = parseErrorMsg(error)
+    return (
+      <Container>
+        <EmptyList text={`Ooops! ${msg}.`} icon="sad-tear-duo" />
+      </Container>
+    )
+  }
+
+  if (!data) {
     return (
       <Container>
         <EmptyList
@@ -122,7 +147,11 @@ const TransactionHistory = () => {
 
   return (
     <Container flexend>
-      <Pagination currentPage={page} totalPages={5} onChange={setPage} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onChange={setPage}
+      />
       <Table data={data.transaction_history.txs} columns={columns} />
     </Container>
   )
