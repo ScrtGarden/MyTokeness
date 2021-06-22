@@ -13,6 +13,7 @@ import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
 import CirclePlayDuo from './CirclePlayDuo'
 import CopyDuo from './CopyDuo'
+import CrownLogo from './CrownLogo'
 import Dizzy from './Dizzy'
 import DraftingCompassDuo from './DraftingCompassDuo'
 import EllipsisH from './EllipsisH'
@@ -70,6 +71,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'crown-logo':
+      SelectedIcon = CrownLogo
+      break
     case 'secret-network-logo':
       SelectedIcon = SecretNetworkLogo
       break
