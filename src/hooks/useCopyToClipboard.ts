@@ -1,36 +1,32 @@
-import { useCallback, useEffect, useState } from 'react'
+import { MouseEvent, useCallback, useEffect, useState } from 'react'
 
-const useCopyToClipboard = (text: string) => {
-  const copyToClipboard = (str: string) => {
-    const el = document.createElement('textarea')
-    el.value = str
-    el.setAttribute('readonly', '')
-    el.style.position = 'absolute'
-    el.style.left = '-9999px'
-    document.body.appendChild(el)
-    const rangeCount = document.getSelection()?.rangeCount || 0
-    const selected =
-      rangeCount > 0 ? document.getSelection()?.getRangeAt(0) : false
-    el.select()
-    const success = document.execCommand('copy')
-    document.body.removeChild(el)
-    if (selected) {
-      document.getSelection()?.removeAllRanges()
-      document.getSelection()?.addRange(selected)
+const useCopyToClipboard = (text: string, notifyTimeout = 2500) => {
+  const [copyStatus, setCopyStatus] = useState('inactive')
+  const copy = useCallback(
+    async (newText?: MouseEvent<HTMLButtonElement> | string) => {
+      try {
+        await navigator.clipboard.writeText(
+          typeof newText === 'string' ? newText : text
+        )
+        setCopyStatus('copied')
+      } catch (e) {
+        setCopyStatus('failed')
+      }
+    },
+    [text]
+  )
+
+  useEffect(() => {
+    if (copyStatus === 'inactive') {
+      return
     }
 
-    return success
-  }
+    const timeoutId = setTimeout(() => setCopyStatus('inactive'), notifyTimeout)
 
-  const [copied, setCopied] = useState(false)
+    return () => clearTimeout(timeoutId)
+  }, [copyStatus, notifyTimeout])
 
-  const copy = useCallback(() => {
-    if (!copied) setCopied(copyToClipboard(text))
-  }, [text])
-
-  useEffect(() => () => setCopied(false), [text])
-
-  return [copied, copy] as const
+  return [copyStatus, copy] as const
 }
 
 export default useCopyToClipboard
