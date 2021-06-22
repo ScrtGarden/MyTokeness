@@ -6,6 +6,7 @@ import {
 } from '../../../../../interface/nft'
 import { UIInventoryApprovals } from '../../../../../interface/nft-ui'
 import { inventoryApprovalToUI } from '../../../../../utils/dataParser'
+import parseErrorMsg from '../../../../../utils/parseErrorMsg'
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useQueryContract from '../../../../hooks/useQueryContract'
 import SkeletonCard from '../../../Cards/Skeleton'
@@ -26,7 +27,7 @@ const Privacy = () => {
   )
 
   // custom hooks
-  const { data, isLoading, isError } = useQueryContract<
+  const { data, isLoading, error } = useQueryContract<
     QueryInventoryApprovals,
     ResultInventoryApprovals,
     UIInventoryApprovals
@@ -40,6 +41,7 @@ const Privacy = () => {
       enabled: !!viewingKey,
       select: inventoryApprovalToUI,
       refetchOnWindowFocus: false,
+      retry: false,
     }
   )
 
@@ -71,13 +73,11 @@ const Privacy = () => {
     )
   }
 
-  if (!data || isError) {
+  if (!data || error) {
+    const msg = parseErrorMsg(error as Error)
     return (
       <Container>
-        <EmptyList
-          text="Ooops! Looks like something went wrong."
-          icon="sad-tear-duo"
-        />
+        <EmptyList text={`Ooops! ${msg}.`} icon="sad-tear-duo" />
       </Container>
     )
   }
