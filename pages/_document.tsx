@@ -47,6 +47,17 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap"
             rel="stylesheet"
           />
+          <meta
+            name="description"
+            content="Easily create, manage and explore privacy centric tokens and NFT with MyTokeness."
+          />
+          <link rel="icon" type="image/png" href="favicon-16x16.png" />
+          <link rel="icon" type="image/png" href="favicon-32x32.png" />
+          <link
+            rel="icon"
+            type="image/png"
+            href="favicons/favicon-128x128.png"
+          />
         </Head>
         <body>
           <Main />
