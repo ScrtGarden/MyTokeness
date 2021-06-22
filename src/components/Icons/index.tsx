@@ -43,6 +43,7 @@ import Plus from './Plus'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
 import SadTearDuo from './SadTearDuo'
+import SecretNetworkLogo from './SecretNetworkLogo'
 import ShieldDuo from './ShieldDuo'
 import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
@@ -69,6 +70,9 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'secret-network-logo':
+      SelectedIcon = SecretNetworkLogo
+      break
     case 'sad-tear-duo':
       SelectedIcon = SadTearDuo
       break
@@ -165,7 +169,6 @@ const Icon: FC<Props> = forwardRef((props, _) => {
     case 'exclamation-circle-duo':
       SelectedIcon = ExclamationCircleDuo
       break
-
     case 'horizontal-rule':
       SelectedIcon = HorizontalRule
       break
