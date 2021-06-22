@@ -84,6 +84,18 @@ const Assets = () => {
     )
   }
 
+  if (isLoading || fetchingConfig) {
+    return (
+      <ScrollWrapper>
+        <div className="scroll">
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
+        </div>
+      </ScrollWrapper>
+    )
+  }
+
   if (error) {
     const msg = parseErrorMsg(error)
     return <StyledEmptyList text={`Ooops! ${msg}.`} icon="sad-tear-duo" />
@@ -115,13 +127,6 @@ const Assets = () => {
             </>
           }
         >
-          {isLoading && fetchingConfig && (
-            <>
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-            </>
-          )}
           {data.pages.map(({ token_list: { tokens } }) =>
             tokens.map((id) => (
               <NFTCard
