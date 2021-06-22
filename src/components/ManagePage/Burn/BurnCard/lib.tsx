@@ -16,11 +16,7 @@ const validate = (amount: string) => {
   return errors
 }
 
-const format = (
-  memo: string,
-  amount: string,
-  decimals: number = 0
-): HandleMsgBurn => {
+const format = (memo: string, amount: string, decimals = 0): HandleMsgBurn => {
   const amountInSmallestDenom = toSmallestDenomination(amount, decimals)
   return {
     burn: {

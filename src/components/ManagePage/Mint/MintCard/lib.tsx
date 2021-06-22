@@ -27,7 +27,7 @@ const format = (
   recipient: string,
   memo: string,
   amount: string,
-  decimals: number = 0
+  decimals = 0
 ): HandleMsgMint => {
   const amountInSmallestDenom = toSmallestDenomination(amount, decimals)
   return {
