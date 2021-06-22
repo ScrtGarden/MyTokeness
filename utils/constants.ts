@@ -1,4 +1,4 @@
-const calcBatchMint = (amount: string) => {
+const calcBatchMint = (amount: string): string => {
   switch (amount) {
     case '2':
       return String(parseInt(amount) * 150000)
@@ -134,6 +134,9 @@ const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT
 
 const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
 
+const HEAD_TITLE_TEXT =
+  'MyTokeness | Create, manage and explore tokens on the Secret Network.'
+
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
@@ -141,4 +144,5 @@ export {
   FILE_UPLOADER,
   CHAIN_EXPLORER,
   DATE_FORMAT,
+  HEAD_TITLE_TEXT,
 }
