@@ -3,6 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { StoreProvider } from 'easy-peasy'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'styled-components'
@@ -30,21 +31,26 @@ const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <StoreProvider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme.dark}>
-          <ModalProvider backgroundComponent={ModalBackground}>
-            <GlobalStyle />
-            {ready ? (
-              getLayout(<Component {...pageProps} />)
-            ) : (
-              <LoadingOverlay onLoaded={(value) => setReady(value)} />
-            )}
-            <StyledToastContainer autoClose={8000} />
-          </ModalProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </StoreProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <StoreProvider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme.dark}>
+            <ModalProvider backgroundComponent={ModalBackground}>
+              <GlobalStyle />
+              {ready ? (
+                getLayout(<Component {...pageProps} />)
+              ) : (
+                <LoadingOverlay onLoaded={(value) => setReady(value)} />
+              )}
+              <StyledToastContainer autoClose={8000} />
+            </ModalProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </StoreProvider>
+    </>
   )
 }
 
