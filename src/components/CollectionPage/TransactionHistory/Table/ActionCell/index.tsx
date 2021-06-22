@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 
 import { Tx } from '../../../../../../interface/nft'
-import truncateAddress from '../../../../../../utils/truncateAddress'
+import AddressWithCopy from '../../../../Common/AddressWithCopy'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {
@@ -19,19 +19,19 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
           <Title green>Mint</Title>
           <Field>
             <Label>Minter:</Label>
-            <Text>
-              {walletAddress === action.mint.minter
-                ? 'You'
-                : truncateAddress(action.mint.minter)}
-            </Text>
+            {walletAddress === action.mint.minter ? (
+              <Text>You</Text>
+            ) : (
+              <AddressWithCopy address={action.mint.minter} />
+            )}
           </Field>
           <Field>
             <Label>Recipient:</Label>
-            <Text>
-              {walletAddress === action.mint.recipient
-                ? 'You'
-                : truncateAddress(action.mint.recipient)}
-            </Text>
+            {walletAddress === action.mint.recipient ? (
+              <Text>You</Text>
+            ) : (
+              <AddressWithCopy address={action.mint.recipient} />
+            )}
           </Field>
         </>
       )}
@@ -41,20 +41,20 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
           <Title red>Burn</Title>
           <Field>
             <Label>Owner:</Label>
-            <Text>
-              {walletAddress === action.burn.owner
-                ? 'You'
-                : truncateAddress(action.burn.owner)}
-            </Text>
+            {walletAddress === action.burn.owner ? (
+              <Text>You</Text>
+            ) : (
+              <AddressWithCopy address={action.burn.owner} />
+            )}
           </Field>
           {action.burn.burner && (
             <Field>
               <Label>Burner:</Label>
-              <Text>
-                {walletAddress === action.burn.burner
-                  ? 'You'
-                  : truncateAddress(action.burn.burner)}
-              </Text>
+              {walletAddress === action.burn.burner ? (
+                <Text>You</Text>
+              ) : (
+                <AddressWithCopy address={action.burn.burner} />
+              )}
             </Field>
           )}
         </>
@@ -65,29 +65,29 @@ const ActionCell: FC<Props> = ({ tx, walletAddress }) => {
           <Title yellow>Transfer</Title>
           <Field>
             <Label>From:</Label>
-            <Text>
-              {walletAddress === action.transfer.from
-                ? 'You'
-                : truncateAddress(action.transfer.from)}
-            </Text>
+            {walletAddress === action.transfer.from ? (
+              <Text>You</Text>
+            ) : (
+              <AddressWithCopy address={action.transfer.from} />
+            )}
           </Field>
           {action.transfer.sender && (
             <Field>
               <Label>To:</Label>
-              <Text>
-                {walletAddress === action.transfer.sender
-                  ? 'You'
-                  : truncateAddress(action.transfer.sender)}
-              </Text>
+              {walletAddress === action.transfer.sender ? (
+                <Text>You</Text>
+              ) : (
+                <AddressWithCopy address={action.transfer.sender} />
+              )}
             </Field>
           )}
           <Field>
             <Label>To:</Label>
-            <Text>
-              {walletAddress === action.transfer.recipient
-                ? 'You'
-                : truncateAddress(action.transfer.recipient)}
-            </Text>
+            {walletAddress === action.transfer.recipient ? (
+              <Text>You</Text>
+            ) : (
+              <AddressWithCopy address={action.transfer.recipient} />
+            )}
           </Field>
         </>
       )}
