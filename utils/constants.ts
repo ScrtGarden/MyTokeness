@@ -132,7 +132,7 @@ const FILE_UPLOADER = {
 
 const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
 
-const DATE_FORMAT = 'MMMM d, yyyy h:mm aa'
+const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
 
 export {
   MAX_GAS,
