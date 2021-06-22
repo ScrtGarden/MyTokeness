@@ -1,11 +1,14 @@
+import Link from 'next/link'
+
 import { useStoreState } from '../../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
 import ButtonWithLoading from '../../../Common/ButtonWithLoading'
+import Icon from '../../../Icons'
 import Avatar from './Avatar'
-import { Brand, Container } from './styles'
+import { Brand, Container, Wrapper } from './styles'
 
-const Header = () => {
+const Header = (): JSX.Element => {
   // store state
   const isConnected = useStoreState((state) => state.auth.isWalletConnected)
 
@@ -25,7 +28,13 @@ const Header = () => {
 
   return (
     <Container>
-      <Brand>MyTokeness</Brand>
+      <Link href="/" passHref>
+        <Wrapper>
+          <Icon name="crown-logo" height={30} width={30} />
+          <Brand>MyTokeness</Brand>
+        </Wrapper>
+      </Link>
+
       {isConnected ? (
         <Avatar />
       ) : (

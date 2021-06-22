@@ -15,10 +15,18 @@ const Container = styled.div`
   z-index: 2;
 `
 
+const Wrapper = styled.div`
+  align-items: center;
+  column-gap: ${(props) => props.theme.space.sm};
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+`
+
 const Brand = styled.div`
   color: ${(props) => props.theme.font.colors.primary};
   font-size: ${(props) => props.theme.font.sizes.lg};
   font-weight: ${(props) => props.theme.font.weights.bold};
 `
 
-export { Container, Brand }
+export { Container, Brand, Wrapper }
