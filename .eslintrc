@@ -3,7 +3,11 @@
   "plugins": [
     "@typescript-eslint"
   ],
-  "extends": "next",
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next"
+  ],
   "rules": {
     "react/display-name": "off",
     "no-unused-vars": "off",
