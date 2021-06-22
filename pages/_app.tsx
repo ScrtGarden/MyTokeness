@@ -22,7 +22,7 @@ type Props = AppProps & {
 
 const queryClient = new QueryClient()
 
-const MyApp = ({ Component, pageProps }: Props) => {
+const MyApp = ({ Component, pageProps }: Props): JSX.Element => {
   const store = useStore(pageProps.initialState)
 
   const [ready, setReady] = useState(false)

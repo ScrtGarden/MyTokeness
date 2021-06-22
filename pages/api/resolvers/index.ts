@@ -7,7 +7,10 @@ const client = new NFTStorage({ token: process.env.NFT_STORAGE_KEY as string })
 
 export const resolvers = {
   Mutation: {
-    uploadFile: async (_: any, args: { file: FileUpload }) => {
+    uploadFile: async (
+      _: unknown,
+      args: { file: FileUpload }
+    ): Promise<{ ipfsLink: URL }> => {
       try {
         const file = await args.file
         const { createReadStream, filename } = file
@@ -35,6 +38,6 @@ export const resolvers = {
     },
   },
   Query: {
-    empty: async () => true,
+    empty: async (): Promise<boolean> => true,
   },
 }

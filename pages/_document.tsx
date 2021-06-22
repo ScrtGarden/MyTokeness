@@ -18,7 +18,7 @@ class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props: any) =>
+          enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />),
         })
 
@@ -38,7 +38,7 @@ class MyDocument extends Document {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>
