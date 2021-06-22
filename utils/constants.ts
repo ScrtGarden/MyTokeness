@@ -43,7 +43,7 @@ const MAX_GAS = {
 
 const CONTRACT_CODE_ID = {
   SNIP20: 29215,
-  NFT: 29176,
+  NFT: 29578,
 }
 
 const SIDEBAR_TABS = {
