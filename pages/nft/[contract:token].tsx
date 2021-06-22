@@ -3,7 +3,7 @@ import NFTPage from '../../src/components/NFTPage'
 
 const getLayout = () => getSiteLayout(<NFTPage />, { hideSidebar: true })
 
-const Page = () => <NFTPage />
+const Page = (): JSX.Element => <NFTPage />
 
 Page.getLayout = getLayout
 
