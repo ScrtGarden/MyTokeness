@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { memo, useMemo, useState } from 'react'
 import { Column } from 'react-table'
@@ -16,6 +17,7 @@ import useQueryContract from '../../../hooks/useQueryContract'
 import SkeletonTable from '../../Common/SkeletonTable'
 import EmptyList from '../../EmptyList'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
+import { Anchor } from '../../UI/Buttons'
 import Pagination from '../../UI/Pagination'
 import { CustomCell } from '../../UI/Table'
 import { Container } from './styles'
@@ -36,7 +38,6 @@ const TransactionHistory = () => {
 
   // component state
   const [page, setPage] = useState(1)
-
   const { data, isLoading, error } = useQueryContract<
     QueryTransactionHistory,
     ResultTransactionHistory
@@ -53,7 +54,6 @@ const TransactionHistory = () => {
     },
     { keepPreviousData: true, enabled: !!viewingKey, retry: false }
   )
-
   const totalPages = useMemo(
     () => (data ? getTotalPages(data.transaction_history.total, PAGE_SIZE) : 1),
     [data]
@@ -74,10 +74,25 @@ const TransactionHistory = () => {
       {
         Header: () => <CustomCell left>NFT Id</CustomCell>,
         accessor: 'token_id',
+        Cell: ({
+          row: {
+            original: { token_id },
+          },
+        }) => (
+          <Link
+            href="/nft/[contract:token]"
+            as={`/nft/${contractAddress}:${token_id}`}
+            shallow={false}
+            passHref
+          >
+            <Anchor>{token_id}</Anchor>
+          </Link>
+        ),
       },
       {
         Header: () => <CustomCell left>Action</CustomCell>,
         accessor: 'action',
+        width: 200,
         Cell: ({ row: { original } }) => (
           <ActionCell tx={original} walletAddress={walletAddress} />
         ),
@@ -85,6 +100,11 @@ const TransactionHistory = () => {
       {
         Header: () => <CustomCell left>Memo</CustomCell>,
         accessor: 'memo',
+        Cell: ({
+          row: {
+            original: { memo },
+          },
+        }) => memo || '--',
       },
       {
         Header: () => <CustomCell left>Date</CustomCell>,
@@ -95,7 +115,7 @@ const TransactionHistory = () => {
         ),
       },
     ],
-    [walletAddress]
+    [walletAddress, contractAddress]
   )
 
   if (!viewingKey) {
