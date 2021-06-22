@@ -71,11 +71,11 @@ const Overview = () => {
         <Wrapper>
           <Field>
             <Label>Name:</Label>
-            <Text>{info?.contract_info.name}</Text>
+            <Text>{info.contract_info.name}</Text>
           </Field>
           <Field>
             <Label>Symbol:</Label>
-            <Text>{info?.contract_info.symbol}</Text>
+            <Text>{info.contract_info.symbol}</Text>
           </Field>
         </Wrapper>
       </SettingsCard>

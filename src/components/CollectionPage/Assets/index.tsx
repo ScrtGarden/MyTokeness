@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { toast } from 'react-toastify'
 
 import {
   QueryContractConfig,
@@ -30,7 +29,7 @@ const Assets = () => {
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
   // custom hooks
-  const { data, fetchNextPage, hasNextPage, isLoading, error, isError } =
+  const { data, fetchNextPage, hasNextPage, isLoading, error } =
     useInfiniteQueryTokens(walletAddress, contractAddress, {
       owner: walletAddress,
       viewing_key: viewingKey,
@@ -85,8 +84,12 @@ const Assets = () => {
     )
   }
 
-  if (isError && error !== null) {
-    toast.error(parseErrorMsg(error))
+  if (error) {
+    const msg = parseErrorMsg(error)
+    return <StyledEmptyList text={`Ooops! ${msg}.`} icon="sad-tear-duo" />
+  }
+
+  if (!data) {
     return (
       <StyledEmptyList
         text="Ooops! Looks like something went wrong."
@@ -97,10 +100,10 @@ const Assets = () => {
 
   return (
     <ScrollWrapper>
-      {data?.pages[0].token_list.tokens.length !== 0 ? (
+      {data.pages[0].token_list.tokens.length !== 0 ? (
         <InfiniteScroll
           className="scroll"
-          dataLength={data?.pages.length || LIMIT * LIMIT}
+          dataLength={data.pages.length}
           next={fetchNextPage}
           hasMore={!!hasNextPage}
           scrollThreshold={0.9}
@@ -119,7 +122,7 @@ const Assets = () => {
               <Placeholder />
             </>
           )}
-          {data?.pages.map(({ token_list: { tokens } }) =>
+          {data.pages.map(({ token_list: { tokens } }) =>
             tokens.map((id) => (
               <NFTCard
                 key={id}

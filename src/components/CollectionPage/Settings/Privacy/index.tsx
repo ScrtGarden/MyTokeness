@@ -73,11 +73,22 @@ const Privacy = () => {
     )
   }
 
-  if (!data || error) {
-    const msg = parseErrorMsg(error as Error)
+  if (error) {
+    const msg = parseErrorMsg(error)
     return (
       <Container>
         <EmptyList text={`Ooops! ${msg}.`} icon="sad-tear-duo" />
+      </Container>
+    )
+  }
+
+  if (!data) {
+    return (
+      <Container>
+        <EmptyList
+          text="Ooops! Looks like something went wrong."
+          icon="sad-tear-duo"
+        />
       </Container>
     )
   }
