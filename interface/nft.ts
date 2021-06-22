@@ -136,7 +136,8 @@ export interface QTransactionHistory {
 
 export interface Tx {
   tx_id: number
-  blockheight: number
+  block_height: number
+  block_time: number
   token_id: string
   action:
     | { mint: TxActionMint }
@@ -305,6 +306,7 @@ export interface ResultContractConfig {
 
 export interface ResultTransactionHistory {
   transaction_history: {
+    total: number
     txs: Tx[]
   }
 }
