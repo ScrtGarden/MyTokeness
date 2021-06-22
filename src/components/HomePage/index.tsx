@@ -1,10 +1,13 @@
 import Image from 'next/image'
 
+import KING from '../../../public/images/king.png'
+import QUEEN from '../../../public/images/queen.png'
+import Icon from '../Icons'
 import { Container, InnerContainer } from '../UI/Containers'
 import { Text } from '../UI/Typography'
-import { Brand, Images, Title } from './styles'
+import { Brand, Images, Title, Wrapper } from './styles'
 
-const Home = () => {
+const Home = (): JSX.Element => {
   return (
     <Container>
       <InnerContainer>
@@ -15,20 +18,26 @@ const Home = () => {
         </Text>
         <Images>
           <Image
-            src="/images/king.png"
+            src={KING}
             alt="king"
             height="300px"
             width="300px"
             objectFit="contain"
           />
           <Image
-            src="/images/queen.png"
+            src={QUEEN}
             alt="king"
             height="300px"
             width="300px"
             objectFit="contain"
           />
         </Images>
+        <Wrapper>
+          <Text>
+            <span>Powered by</span>
+          </Text>
+          <Icon name="secret-network-logo" width={100} height={40} />
+        </Wrapper>
       </InnerContainer>
     </Container>
   )

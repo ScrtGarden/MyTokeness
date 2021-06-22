@@ -25,4 +25,13 @@ const Images = styled.div`
   margin-top: ${(props) => props.theme.space.lg};
 `
 
-export { Brand, Title, Images }
+const Wrapper = styled.div`
+  bottom: ${(props) => props.theme.space.lg};
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: ${(props) => props.theme.space.lg};
+  row-gap: ${(props) => props.theme.space.xs};
+`
+
+export { Brand, Title, Images, Wrapper }
