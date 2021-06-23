@@ -122,9 +122,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
       {
         onSuccess: () => {
           toast.success(
-            `Minted ${publicMetadata.supply} collectible${
-              isMultiMints ? 's' : ''
-            }`
+            `Minted ${publicMetadata.supply} asset${isMultiMints ? 's' : ''}`
           )
 
           setStatus({ 2: 'completed' })
@@ -151,7 +149,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
   return (
     <Container>
       <Header>
-        <Title>Collectible creation</Title>
+        <Title>{`Steps creating asset${isMultiMints ? 's' : ''}`}</Title>
         <CloseButton onClick={toggle}>
           <Icon name="times" />
         </CloseButton>
@@ -166,8 +164,8 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
         />
         <Step
           stepNumber={2}
-          label={`Create collectible${isMultiMints ? 's' : ''}`}
-          hint={`Minting collectible${isMultiMints ? 's' : ''} to collection.`}
+          label={`Create asset${isMultiMints ? 's' : ''}`}
+          hint={`Minting asset${isMultiMints ? 's' : ''} to collection.`}
           status={status[2]}
           onClick={() => mint(publicFileLink, privateFileLink)}
         />
