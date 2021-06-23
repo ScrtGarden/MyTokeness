@@ -9,6 +9,16 @@ export interface Config {
   [key: string]: boolean
 }
 
+export type Category =
+  | 'Art'
+  | 'Collectibles'
+  | 'Domain Names'
+  | 'Gift Cards'
+  | 'Music'
+  | 'Trading Cards'
+  | 'Utility'
+  | 'Virtual Worlds'
+
 export interface Attribute {
   key: string
   value: string
@@ -24,6 +34,7 @@ export interface UIPublicMetadata {
       number: number
       total: number
     }
+    categories: Category[]
   }
   attributes: Attribute[]
 }
