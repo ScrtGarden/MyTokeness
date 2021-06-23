@@ -137,6 +137,17 @@ const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
 const HEAD_TITLE_TEXT =
   'MyTokeness | Create, manage and explore tokens on the Secret Network.'
 
+const NFT_CATEGORIES = [
+  { value: 'Art', label: 'Art' },
+  { value: 'Collectibles', label: 'Collectibles' },
+  { value: 'Domain Names', label: 'Domain Names' },
+  { value: 'Gift Cards', label: 'Gift Gards' },
+  { value: 'Music', label: 'Music' },
+  { value: 'Trading Cards', label: 'Trading Cards' },
+  { value: 'Utility', label: 'Utility' },
+  { value: 'Virtual Worlds', label: 'Virtual Worlds' },
+]
+
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
@@ -145,4 +156,5 @@ export {
   CHAIN_EXPLORER,
   DATE_FORMAT,
   HEAD_TITLE_TEXT,
+  NFT_CATEGORIES,
 }
