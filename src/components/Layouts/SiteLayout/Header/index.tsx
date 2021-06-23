@@ -34,7 +34,6 @@ const Header = (): JSX.Element => {
           <Brand>MyTokeness</Brand>
         </Wrapper>
       </Link>
-
       {isConnected ? (
         <Avatar />
       ) : (
