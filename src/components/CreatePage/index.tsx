@@ -90,7 +90,7 @@ const CreatePage = () => {
       {
         codeId: CONTRACT_CODE_ID.SNIP20,
         initMsg,
-        label: `${name} snip20-${cryptoRandomString({ length: 15 })}`,
+        label: `${name} - ${cryptoRandomString({ length: 15 })}`,
         maxGas: MAX_GAS.SNIP20.INIT_MSG,
       },
       {
@@ -140,7 +140,7 @@ const CreatePage = () => {
   )
 }
 
-const CreatePageWithStore = () => (
+const CreatePageWithStore = (): JSX.Element => (
   <Store.Provider>
     <CreatePage />
   </Store.Provider>
