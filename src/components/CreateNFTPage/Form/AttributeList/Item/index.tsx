@@ -1,8 +1,8 @@
 import { FC, memo } from 'react'
 
+import { Attribute } from '../../../../../../interface/nft-ui'
 import MessageWithIcon from '../../../../Common/MessageWithIcon'
 import { Input } from '../../../../UI/Forms'
-import { Attribute } from '../../../Store/model'
 import { Container, Wrapper } from './styles'
 
 type Props = {

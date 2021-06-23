@@ -1,8 +1,8 @@
 import cryptoRandomString from 'crypto-random-string'
 
 import { HandleBatchMintNFT, HandleMintNFT } from '../../../../interface/nft'
+import { Attribute } from '../../../../interface/nft-ui'
 import {
-  Attribute,
   PrivateMetadata,
   PublicMetadata,
 } from '../../CreateNFTPage/Store/model'

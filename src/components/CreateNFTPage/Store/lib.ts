@@ -1,11 +1,12 @@
-import { Attribute, ValidationResult } from './model'
+import { Attribute } from '../../../../interface/nft-ui'
+import { ValidationResult } from './model'
 
 const validate = (
   hasSubmitted: boolean,
   name: string,
   attributes: Attribute[],
   uploadedFile?: File
-) => {
+): ValidationResult => {
   const validation: ValidationResult = {
     hasError: false,
     errors: {

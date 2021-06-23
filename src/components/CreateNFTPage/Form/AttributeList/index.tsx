@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 
+import { Attribute } from '../../../../../interface/nft-ui'
 import { Label } from '../../../UI/Forms'
-import { Attribute } from '../../Store/model'
 import Item from './Item'
 import { Container, List } from './styles'
 

@@ -1,19 +1,6 @@
 import { Action, Computed } from 'easy-peasy'
 
-export interface Attribute {
-  key: string
-  value: string
-}
-
-export type Category =
-  | 'Art'
-  | 'Collectibles'
-  | 'Domain Names'
-  | 'Gift Cards'
-  | 'Music'
-  | 'Trading Cards'
-  | 'Utility'
-  | 'Virtual Worlds'
+import { Attribute, Category } from '../../../../interface/nft-ui'
 
 export interface CategoryItem {
   value: Category
