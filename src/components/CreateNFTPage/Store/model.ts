@@ -5,11 +5,27 @@ export interface Attribute {
   value: string
 }
 
+export type Category =
+  | 'Art'
+  | 'Collectibles'
+  | 'Domain Names'
+  | 'Gift Cards'
+  | 'Music'
+  | 'Trading Cards'
+  | 'Utility'
+  | 'Virtual Worlds'
+
+export interface CategoryItem {
+  value: Category
+  label: Category
+}
+
 export interface PublicMetadata {
   name: string
   description?: string
   attributes: Attribute[]
   supply: string
+  categories: CategoryItem[]
 }
 
 export interface PrivateMetadata {
@@ -44,6 +60,7 @@ export interface Actions {
   setPublicFile: Action<Model, File | undefined>
   setPrivateFile: Action<Model, File | undefined>
   setAttributes: Action<Model, SetAttributePayload>
+  setCategories: Action<Model, CategoryItem[]>
   setHasSubmitted: Action<Model, boolean>
   resetState: Action<Model>
 }

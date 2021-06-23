@@ -7,6 +7,7 @@ import { Card, Header, Wrapper } from '../../../UI/Card'
 import { StyledSelect } from '../../../UI/Forms'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
 import ContextStore from '../../Store'
+import { CategoryItem } from '../../Store/model'
 import AttributeList from '../AttributeList'
 import FileUploader from '../FileUploader'
 
@@ -22,6 +23,9 @@ const Public = () => {
   const attributes = ContextStore.useStoreState(
     (state) => state.publicMetadata.attributes
   )
+  const categories = ContextStore.useStoreState(
+    (state) => state.publicMetadata.categories
+  )
   const file = ContextStore.useStoreState((state) => state.publicFile)
   const errors = ContextStore.useStoreState((state) => state.validation.errors)
 
@@ -34,6 +38,9 @@ const Public = () => {
   )
   const setFile = ContextStore.useStoreActions(
     (actions) => actions.setPublicFile
+  )
+  const setCategories = ContextStore.useStoreActions(
+    (actions) => actions.setCategories
   )
 
   const onChangeSupply = (e: FormEvent<HTMLInputElement>) => {
@@ -71,11 +78,13 @@ const Public = () => {
           />
         </Field>
         <Field>
-          <Label>Categories</Label>
+          <Label>Categories (optional)</Label>
           <StyledSelect
             classNamePrefix="select"
             options={NFT_CATEGORIES}
             isMulti
+            value={categories}
+            onChange={(value: CategoryItem[]) => setCategories(value)}
           />
         </Field>
         <Field>

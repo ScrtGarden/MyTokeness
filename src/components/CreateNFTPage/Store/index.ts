@@ -9,6 +9,7 @@ const state: State = {
     description: '',
     attributes: [{ key: '', value: '' }],
     supply: '1',
+    categories: [],
   },
   privateMetadata: {
     content: '',
@@ -41,6 +42,9 @@ const actions: Actions = {
     state.publicMetadata.attributes = empty
       ? newAttrs
       : newAttrs.concat([{ key: '', value: '' }])
+  }),
+  setCategories: action((state, payload) => {
+    state.publicMetadata.categories = payload
   }),
   setHasSubmitted: action((state, payload) => {
     state.hasSubmitted = payload

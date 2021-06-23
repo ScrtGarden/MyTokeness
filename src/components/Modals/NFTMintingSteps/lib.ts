@@ -14,7 +14,7 @@ interface FormatForHandleMsgParams {
   privateFileLink: string
 }
 
-const formatAttrs = (attrs: Attribute[]) =>
+const formatAttrs = (attrs: Attribute[]): Attribute[] =>
   attrs.filter(({ key, value }) => key && value)
 
 const formatSingleMint = ({
@@ -29,6 +29,7 @@ const formatSingleMint = ({
       number: 1,
       total: 1,
     },
+    categories: publicMetadata.categories.map((item) => item.value),
   }
   const privateProperties = {
     content: privateMetadata.content,
@@ -65,6 +66,7 @@ const formatBatchMint = ({
     content: privateMetadata.content,
   }
   const attributes = formatAttrs(publicMetadata.attributes)
+  const categories = publicMetadata.categories.map((item) => item.value)
   const mints = []
 
   for (let i = 0; i < supply; i++) {
@@ -74,6 +76,7 @@ const formatBatchMint = ({
         number: i + 1,
         total: supply,
       },
+      categories,
     }
 
     mints.push({
