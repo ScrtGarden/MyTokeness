@@ -21,7 +21,7 @@ const useQueryNFTDossier = (
   id: string,
   viewerInfo?: UserInfo,
   options?: UseQueryOptions<ResultNFTDossier, Error, UINFTDossier>
-): UseQueryResult =>
+): UseQueryResult<UINFTDossier, Error> =>
   useQuery(
     nftDossierQueryKey(
       contractAddress,

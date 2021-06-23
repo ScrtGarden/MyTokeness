@@ -4,7 +4,10 @@ import { ResultNFTInfo } from '../../interface/nft'
 import { UIPublicMetadata } from '../../interface/nft-ui'
 import { queryChain } from '../../utils/secretjs'
 
-const useQueryNFTInfo = (contractAddress: string, id: string): UseQueryResult =>
+const useQueryNFTInfo = (
+  contractAddress: string,
+  id: string
+): UseQueryResult<UIPublicMetadata, Error> =>
   useQuery<ResultNFTInfo, Error, UIPublicMetadata>(
     ['nftInfo', contractAddress, id],
     () =>
