@@ -4,11 +4,11 @@ import { PageTitle } from '../UI/Typography'
 import Form from './Form'
 import ContextStore from './Store'
 
-const CreateNFTPage = () => (
+const CreateNFTPage = (): JSX.Element => (
   <Container>
     <InnerContainer>
       <BackLink label="Back" />
-      <PageTitle>Create your collectible</PageTitle>
+      <PageTitle>Create your asset</PageTitle>
       <ContextStore.Provider>
         <Form />
       </ContextStore.Provider>
