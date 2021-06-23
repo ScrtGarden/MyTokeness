@@ -1,4 +1,4 @@
-import { UseQueryOptions, useQuery } from 'react-query'
+import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query'
 
 import { ResultNFTDossier } from '../../interface/nft'
 import { UINFTDossier, UserInfo } from '../../interface/nft-ui'
@@ -9,7 +9,7 @@ const nftDossierQueryKey = (
   contractAddress: string,
   id: string,
   viewerInfo?: UserInfo
-) => [
+): string[] => [
   'nftDossier',
   contractAddress,
   id,
@@ -21,7 +21,7 @@ const useQueryNFTDossier = (
   id: string,
   viewerInfo?: UserInfo,
   options?: UseQueryOptions<ResultNFTDossier, Error, UINFTDossier>
-) =>
+): UseQueryResult =>
   useQuery(
     nftDossierQueryKey(
       contractAddress,

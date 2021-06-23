@@ -1,10 +1,10 @@
-import { useQuery } from 'react-query'
+import { UseQueryResult, useQuery } from 'react-query'
 
 import { ResultNFTInfo } from '../../interface/nft'
 import { UIPublicMetadata } from '../../interface/nft-ui'
 import { queryChain } from '../../utils/secretjs'
 
-const useQueryNFTInfo = (contractAddress: string, id: string) =>
+const useQueryNFTInfo = (contractAddress: string, id: string): UseQueryResult =>
   useQuery<ResultNFTInfo, Error, UIPublicMetadata>(
     ['nftInfo', contractAddress, id],
     () =>
