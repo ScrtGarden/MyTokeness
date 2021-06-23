@@ -47,9 +47,9 @@ const CreatedToken: FC<Props> = (props) => {
       </Header>
       <Content>
         <Text>
-          You have successfully created a snip20 token. Due to its inherent
-          private properties, you need to create a viewing key to view the
-          token. Would you like to create one now?
+          You have successfully created a privacy token. To view it in your
+          Keplr Wallet, a viewing key is required. Would you like to create one
+          now?
         </Text>
       </Content>
       <Buttons>
