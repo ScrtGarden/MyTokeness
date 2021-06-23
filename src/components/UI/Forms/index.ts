@@ -1,3 +1,4 @@
+import ReactSelect from 'react-select'
 import styled from 'styled-components'
 
 import Icon from '../../Icons'
@@ -293,6 +294,59 @@ const ToggleWrapper = styled.div`
   flex-direction: row;
 `
 
+const StyledSelect = styled(ReactSelect)`
+  ${Field}:not([hidden]) & {
+    margin-top: 10px;
+  }
+
+  .select__control {
+    background: ${(props) => props.theme.forms.input.bg.default};
+    border: 1px solid ${(props) => props.theme.forms.input.border.color.default};
+    min-height: 40px;
+    outline: none;
+    transition: border-color 0.25s ease-in-out;
+
+    :hover {
+      border: 1px solid ${(props) => props.theme.forms.input.border.color.hover};
+    }
+  }
+
+  .select__control--is-focused,
+  .select__control--menu-is-open {
+    border: 1px solid ${(props) => props.theme.forms.input.border.color.focus};
+    box-shadow: ${(props) => props.theme.forms.input.shadow.color.focus} 0px 0px
+      0px 3px;
+    transition: box-shadow 0.1s ease-in-out;
+
+    :hover {
+      border: 1px solid ${(props) => props.theme.forms.input.border.color.focus};
+    }
+  }
+
+  .select__value-container {
+    font-size: ${(props) => props.theme.font.sizes.md};
+    padding: 5px 10px;
+  }
+
+  .select__placeholder {
+    color: ${(props) => props.theme.forms.input.placeholder.color};
+  }
+
+  .select__input {
+    color: ${(props) => props.theme.font.colors.primary};
+  }
+
+  .select__indicator-separator {
+    background-color: ${(props) =>
+      props.theme.forms.input.border.color.default};
+  }
+
+  // menu
+  .select__option {
+    font-size: ${(props) => props.theme.font.sizes.md};
+  }
+`
+
 export {
   Field,
   Hint,
@@ -309,4 +363,5 @@ export {
   Option,
   ToggleField,
   ToggleWrapper,
+  StyledSelect,
 }

@@ -1,8 +1,10 @@
 import { FormEvent, memo } from 'react'
 
+import { NFT_CATEGORIES } from '../../../../../utils/constants'
 import { supplyPattern } from '../../../../../utils/regexPatterns'
 import MessageWithIcon from '../../../Common/MessageWithIcon'
 import { Card, Header, Wrapper } from '../../../UI/Card'
+import { StyledSelect } from '../../../UI/Forms'
 import { Field, Hint, Input, Label, Textarea } from '../../../UI/Forms'
 import ContextStore from '../../Store'
 import AttributeList from '../AttributeList'
@@ -66,6 +68,14 @@ const Public = () => {
             rows={5}
             value={description}
             onChange={(e) => setData({ description: e.currentTarget.value })}
+          />
+        </Field>
+        <Field>
+          <Label>Categories</Label>
+          <StyledSelect
+            classNamePrefix="select"
+            options={NFT_CATEGORIES}
+            isMulti
           />
         </Field>
         <Field>
