@@ -51,12 +51,23 @@ class MyDocument extends Document {
             name="description"
             content="Easily create, manage and explore privacy centric tokens and NFT with MyTokeness."
           />
-          <link rel="icon" type="image/png" href="favicon-16x16.png" />
-          <link rel="icon" type="image/png" href="favicon-32x32.png" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="favicon-16x16.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="favicon-32x32.png"
+          />
           <link
             rel="icon"
             type="image/png"
             href="favicons/favicon-128x128.png"
+            sizes="128x128"
           />
         </Head>
         <body>
