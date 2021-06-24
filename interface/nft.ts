@@ -181,7 +181,7 @@ export interface CreateViewingKey {
  */
 
 export interface QueryContractInfo {
-  contract_info: {}
+  contract_info: Record<string, never>
 }
 
 export interface QueryTokens {
@@ -213,7 +213,7 @@ export interface QueryInventoryApprovals {
 }
 
 export interface QueryContractConfig {
-  contract_config: {}
+  contract_config: Record<string, never>
 }
 
 export interface QueryTransactionHistory {
@@ -221,7 +221,7 @@ export interface QueryTransactionHistory {
 }
 
 export interface QueryMinters {
-  minters: {}
+  minters: Record<string, never>
 }
 
 /**
@@ -259,6 +259,14 @@ export interface HandleReveal {
 
 export interface HandleTransferNFT {
   transfer_nft: TransferNFT
+}
+
+export interface HandleBurnNFT {
+  burn_nft: {
+    token_id: string
+    memo?: string
+    padding?: string
+  }
 }
 
 /**
@@ -319,6 +327,12 @@ export interface ResultMinters {
 
 export interface ResultReveal {
   reveal: {
+    status: Status
+  }
+}
+
+export interface ResultBurnNFT {
+  burn_nft: {
     status: Status
   }
 }
