@@ -30,7 +30,7 @@ const MAX_GAS = {
   },
   NFT: {
     INIT_MSG: '180000',
-    MINT: '210000',
+    MINT: '250000',
     BATCH_MINT: calcBatchMint,
     CREATE_VIEWING_KEY: '120000',
     SET_GLOBAL_APPROVAL: '130000',
@@ -143,10 +143,23 @@ const NFT_CATEGORIES = [
   { value: 'Domain Names', label: 'Domain Names' },
   { value: 'Gift Cards', label: 'Gift Gards' },
   { value: 'Music', label: 'Music' },
+  { value: 'Sports', label: 'Sports' },
   { value: 'Trading Cards', label: 'Trading Cards' },
   { value: 'Utility', label: 'Utility' },
   { value: 'Virtual Worlds', label: 'Virtual Worlds' },
 ]
+
+const NFT_CATEGORIES_ICON_MAP = {
+  Art: { ICON: 'palette', COLOR: '#FFB6B9' }, // red
+  Collectibles: { ICON: 'narwhal-duo', COLOR: '#3282B8' }, // blue
+  'Domain Names': { ICON: 'browser-duo', COLOR: '#E8EAE6' }, // grey
+  'Gift Cards': { ICON: 'gift-card-duo', COLOR: '#9BE3DE' }, // aqua
+  Music: { ICON: 'headphones-duo', COLOR: '#FFBA92' }, // orange
+  Sports: { ICON: 'futbol-ball-duo', COLOR: '#A7D7C5' }, // pale green
+  'Trading Cards': { ICON: 'hat-wizard-duo', COLOR: '#A685E2' }, // purple
+  Utility: { ICON: 'toolbox-duo', COLOR: '#F39189' }, // reddish
+  'Virtual Worlds': { ICON: 'head-side-goggles-duo', COLOR: '#A7E9AF' }, // green
+}
 
 export {
   MAX_GAS,
@@ -157,4 +170,5 @@ export {
   DATE_FORMAT,
   HEAD_TITLE_TEXT,
   NFT_CATEGORIES,
+  NFT_CATEGORIES_ICON_MAP,
 }
