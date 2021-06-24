@@ -15,7 +15,7 @@ type Props = {
 const Sidebar: FC<Props> = ({
   publicMetadata: {
     name,
-    properties: { rarity },
+    properties: { rarity, categories },
     description,
     attributes,
   },
@@ -24,7 +24,7 @@ const Sidebar: FC<Props> = ({
 }) => {
   return (
     <Container>
-      <Header name={name} rarity={rarity} />
+      <Header name={name} rarity={rarity} categories={categories} />
       {(!!description || attributes.length !== 0) && (
         <Details description={description} attributes={attributes} />
       )}
