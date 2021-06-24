@@ -18,7 +18,7 @@ import { Placeholder, ScrollWrapper, StyledEmptyList } from './styles'
 
 const LIMIT = 9
 
-const Assets = () => {
+const Assets = (): JSX.Element => {
   const router = useRouter()
   const { contractAddress } = router.query as CollectionRouterQuery
 
@@ -139,6 +139,7 @@ const Assets = () => {
                   config?.contract_config.sealed_metadata_is_enabled
                 }
                 onClick={() => onClickCard(id)}
+                enabledBurn={config?.contract_config.burn_is_enabled}
               />
             ))
           )}

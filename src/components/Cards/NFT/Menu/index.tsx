@@ -9,6 +9,8 @@ type Props = {
   onClickPrivateContents: () => void
   onClickWhitelist: () => void
   onClickTransfer: () => void
+  showBurn: boolean
+  onClickBurn: () => void
 }
 
 const Menu: FC<Props> = ({
@@ -18,6 +20,8 @@ const Menu: FC<Props> = ({
   onClickPrivateContents,
   onClickWhitelist,
   onClickTransfer,
+  showBurn,
+  onClickBurn,
 }) => (
   <Container>
     {showUnseal && <Item onClick={onClickUnseal}>Unseal</Item>}
@@ -25,7 +29,11 @@ const Menu: FC<Props> = ({
     <Item onClick={onClickPrivateContents}>Private contents setting</Item>
     <Item onClick={onClickWhitelist}>Whitelist</Item>
     <Item onClick={onClickTransfer}>Transfer</Item>
-    {/* {!showUnseal && <Item>View private contents</Item>} */}
+    {showBurn && (
+      <Item isDanger onClick={onClickBurn}>
+        Burn
+      </Item>
+    )}
   </Container>
 )
 

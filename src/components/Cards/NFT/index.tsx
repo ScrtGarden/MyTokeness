@@ -2,6 +2,7 @@ import { FC, memo } from 'react'
 
 import useQueryNFTDossier from '../../../hooks/useQueryNFTDossier'
 import useToggle from '../../../hooks/useToggle'
+import Burn from '../../Modals/BurnNFT'
 import Transfer from '../../Modals/Transfer'
 import UnsealModal from '../../Modals/Unseal'
 import Whitelisting from '../../Modals/Whitelisting'
@@ -24,6 +25,7 @@ type Props = {
   viewingKey: string
   enabledSealedData?: boolean
   onClick: () => void
+  enabledBurn?: boolean
 }
 
 const NFTCard: FC<Props> = ({
@@ -33,6 +35,7 @@ const NFTCard: FC<Props> = ({
   viewingKey,
   enabledSealedData,
   onClick,
+  enabledBurn,
 }) => {
   // component state
   const [showMenu, toggleMenu] = useToggle()
@@ -41,6 +44,7 @@ const NFTCard: FC<Props> = ({
   const [showContentsSettings, toggleContentsSettings] = useToggle()
   const [showWhitelist, toggleWhitelist] = useToggle()
   const [showTransfer, toggleTransfer] = useToggle()
+  const [showBurn, toggleBurn] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(contractAddress, id, {
@@ -80,6 +84,8 @@ const NFTCard: FC<Props> = ({
                 onClickPrivateContents={toggleContentsSettings}
                 onClickWhitelist={toggleWhitelist}
                 onClickTransfer={toggleTransfer}
+                showBurn={!!enabledBurn}
+                onClickBurn={toggleBurn}
               />
             }
             placement="left-end"
@@ -144,6 +150,16 @@ const NFTCard: FC<Props> = ({
       <Modal isOpen={showTransfer}>
         <Transfer
           toggle={toggleTransfer}
+          contractAddress={contractAddress}
+          walletAddress={walletAddress}
+          tokenId={id}
+          name={data.publicMetadata.name}
+          viewingKey={viewingKey}
+        />
+      </Modal>
+      <Modal isOpen={showBurn}>
+        <Burn
+          toggle={toggleBurn}
           contractAddress={contractAddress}
           walletAddress={walletAddress}
           tokenId={id}
