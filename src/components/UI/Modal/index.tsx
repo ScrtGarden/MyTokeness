@@ -17,6 +17,10 @@ interface ButtonsProps {
   readonly single?: boolean
 }
 
+interface ContentProps {
+  readonly spaced?: boolean
+}
+
 type Props = {
   className?: string
 } & ModalProps
@@ -75,10 +79,18 @@ const Title = styled.h1<TitleProps>`
   margin: 0;
 `
 
-const Content = styled.div`
+const Content = styled.div<ContentProps>`
   max-height: 600px;
   overflow: scroll;
   padding: ${(props) => props.theme.space.lg};
+
+  ${(props) =>
+    props.spaced &&
+    `
+    display: flex;
+    flex-direction: column;
+    row-gap: ${props.theme.space.md};
+  `}
 `
 
 const Text = styled.p`
