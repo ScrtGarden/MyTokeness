@@ -6,6 +6,7 @@ import { ResultContractInfo } from '../../../interface/nft'
 import { CONTRACT_CODE_ID } from '../../../utils/constants'
 import { queryChain } from '../../../utils/secretjs'
 import { useStoreActions, useStoreState } from '../../hooks/storeHooks'
+import { collectionInfoQueryKey } from '../../hooks/useQueryCollectionInfo'
 import useToggle from '../../hooks/useToggle'
 import CollectionCard from '../Cards/Collection'
 import AddCollection from '../Modals/AddCollection'
@@ -24,7 +25,7 @@ import {
   StyledTitle,
 } from './styles'
 
-const Collections = () => {
+const Collections = (): JSX.Element => {
   // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
   const addedCollections = useStoreState(
@@ -54,7 +55,7 @@ const Collections = () => {
 
   const collectionQueries = useQueries(
     data?.map(({ address }) => ({
-      queryKey: ['contractInfo', address],
+      queryKey: collectionInfoQueryKey(address),
       queryFn: () =>
         queryChain.queryContractSmart(address, { contract_info: {} }),
       refetchOnWindowFocus: false,
@@ -63,7 +64,7 @@ const Collections = () => {
 
   const addedCollectionQueries = useQueries(
     addedCollections.map(({ address }) => ({
-      queryKey: ['contractInfo', address],
+      queryKey: collectionInfoQueryKey(address),
       queryFn: () =>
         queryChain.queryContractSmart(address, { contract_info: {} }),
       refetchOnWindowFocus: false,
