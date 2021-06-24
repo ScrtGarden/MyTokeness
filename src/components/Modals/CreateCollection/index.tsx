@@ -15,6 +15,7 @@ import { useStoreState } from '../../../hooks/storeHooks'
 import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
 import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
 import useMutationInitContract from '../../../hooks/useMutationInitContract'
+import { collectionInfoQueryKey } from '../../../hooks/useQueryCollectionInfo'
 import { StyledIcon } from '../../UI/Buttons'
 import { CloseButton, Content, Header, Title } from '../../UI/Modal'
 import Form from './Form'
@@ -35,7 +36,7 @@ const CONFIGURATION = {
   unwrappedMetadataIsPrivate: true,
   minterMayUpdateMetadata: false,
   ownerMayUpdateMetadata: false,
-  enableBurn: false,
+  enableBurn: true,
 }
 
 const ERRORS = { name: '', symbol: '' }
@@ -104,24 +105,23 @@ const CreateCollectionModal: FC<Props> = ({ toggle }) => {
       { codeId, initMsg, label, maxGas: MAX_GAS.NFT.INIT_MSG },
       {
         onSuccess: ({ contractAddress }) => {
-          // get data
-          const collectionsKey = ['collections', walletAddress]
-          const collections =
-            queryClient.getQueryData<Contract[] | undefined>(collectionsKey) ||
-            []
-          const updatedCollections = collections.concat([
-            {
-              address: contractAddress,
-              codeId: CONTRACT_CODE_ID.NFT,
-              creator: walletAddress,
-              label,
-            },
-          ])
-
-          // set data
-          queryClient.setQueryData(collectionsKey, updatedCollections)
+          queryClient.setQueryData<Contract[] | undefined>(
+            ['collections', walletAddress],
+            (original) => {
+              if (original) {
+                return original.concat([
+                  {
+                    address: contractAddress,
+                    codeId: CONTRACT_CODE_ID.NFT,
+                    creator: walletAddress,
+                    label,
+                  },
+                ])
+              }
+            }
+          )
           queryClient.setQueryData<ResultContractInfo>(
-            ['contractInfo', contractAddress],
+            collectionInfoQueryKey(contractAddress),
             { contract_info: { name: initMsg.name, symbol: initMsg.symbol } }
           )
 
