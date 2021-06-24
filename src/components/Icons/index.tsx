@@ -5,6 +5,7 @@ import AnalyticsDuo from './AnalyticsDuo'
 import ArrowLeft from './ArrowLeft'
 import BoxDuo from './BoxDuo'
 import BoxOpenDuo from './BoxOpenDuo'
+import BrowserDuo from './BrowserDuo'
 import CaretDown from './CaretDown'
 import CaretUp from './CaretUp'
 import ChevronDown from './ChevronDown'
@@ -24,10 +25,13 @@ import ExclamationCircleDuo from './ExclamationCircleDuo'
 import ExternalLinkDuo from './ExternalLinkDuo'
 import FireDuo from './FireDuo'
 import Flower from './Flower'
+import FutbolBallDuo from './FutbolBallDuo'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
 import HandHoldingUSD from './HandHoldingUSD'
+import HatWizardDuo from './HatWizardDuo'
 import HeadphonesDuo from './HeadphonesDuo'
+import HeadSideGogglesDuo from './HeadSideGogglesDuo'
 import HomeDuo from './HomeDuo'
 import HorizontalRule from './HorizontalRule'
 import IndustryDuo from './IndustryDuo'
@@ -37,6 +41,7 @@ import ListUlDuo from './ListUlDuo'
 import LockKeyholeDuo from './LockKeyholeDuo'
 import LockKeyholeOpenDuo from './LockKeyholeOpenDuo'
 import Minus from './Minus'
+import NarwhalDuo from './NarwhalDuo'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
 import PhotoVideoDuo from './PhotoVideoDuo'
@@ -50,6 +55,7 @@ import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
 import TasksAltDuo from './TasksAltDuo'
 import Times from './Times'
+import ToolboxDuo from './ToolboxDuo'
 import TrashDuo from './TrashDuo'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
@@ -71,6 +77,24 @@ const Icon: FC<Props> = forwardRef((props, _) => {
   let SelectedIcon
 
   switch (name) {
+    case 'futbol-ball-duo':
+      SelectedIcon = FutbolBallDuo
+      break
+    case 'browser-duo':
+      SelectedIcon = BrowserDuo
+      break
+    case 'hat-wizard-duo':
+      SelectedIcon = HatWizardDuo
+      break
+    case 'head-side-goggles-duo':
+      SelectedIcon = HeadSideGogglesDuo
+      break
+    case 'narwhal-duo':
+      SelectedIcon = NarwhalDuo
+      break
+    case 'toolbox-duo':
+      SelectedIcon = ToolboxDuo
+      break
     case 'crown-logo':
       SelectedIcon = CrownLogo
       break
