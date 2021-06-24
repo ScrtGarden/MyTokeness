@@ -1,13 +1,9 @@
 import { ParsedUrlQuery } from 'querystring'
 
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import {
-  QueryContractInfo,
-  ResultContractInfo,
-} from '../../../../interface/nft'
-import useQueryContract from '../../../hooks/useQueryContract'
+import useQueryCollectionInfo from '../../../hooks/useQueryCollectionInfo'
 import { Container } from '../../UI/Containers'
 import Tabs from '../../UI/Tabs'
 import { getLayout as getSiteLayout } from '../SiteLayout'
@@ -31,15 +27,12 @@ const tabs = {
   settings: { label: 'Settings' },
 }
 
-const CollectionLayout = ({ children }: Props) => {
+const CollectionLayout: FC<Props> = ({ children }) => {
   const router = useRouter()
   const { contractAddress, title } = router.query as CollectionRouterQuery
 
   // custom hooks
-  const { data, isLoading } = useQueryContract<
-    QueryContractInfo,
-    ResultContractInfo
-  >(['contractInfo', contractAddress], contractAddress, { contract_info: {} })
+  const { data, isLoading } = useQueryCollectionInfo(contractAddress)
 
   // component state
   const activeTab = useMemo(
@@ -87,7 +80,7 @@ const CollectionLayout = ({ children }: Props) => {
   )
 }
 
-const getLayout = (page: JSX.Element) =>
+const getLayout = (page: JSX.Element): JSX.Element =>
   getSiteLayout(<CollectionLayout>{page}</CollectionLayout>)
 
 export { CollectionLayout as default, getLayout }

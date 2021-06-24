@@ -2,10 +2,9 @@ import { useRouter } from 'next/router'
 
 import {
   QueryContractConfig,
-  QueryContractInfo,
   ResultContractConfig,
-  ResultContractInfo,
 } from '../../../../../interface/nft'
+import useQueryCollectionInfo from '../../../../hooks/useQueryCollectionInfo'
 import useQueryContract from '../../../../hooks/useQueryContract'
 import SkeletonCard from '../../../Cards/Skeleton'
 import EmptyList from '../../../EmptyList'
@@ -16,7 +15,7 @@ import { Text } from '../../../UI/Typography'
 import { Container } from '../styles'
 import { Field } from './styles'
 
-const Overview = () => {
+const Overview = (): JSX.Element => {
   const router = useRouter()
   const { contractAddress } = router.query as CollectionRouterQuery
 
@@ -25,12 +24,7 @@ const Overview = () => {
     data: info,
     isLoading: fetchingInfo,
     isError: infoErr,
-  } = useQueryContract<QueryContractInfo, ResultContractInfo>(
-    ['contractInfo', contractAddress],
-    contractAddress,
-    { contract_info: {} },
-    { refetchOnWindowFocus: false }
-  )
+  } = useQueryCollectionInfo(contractAddress)
 
   const {
     data: config,
