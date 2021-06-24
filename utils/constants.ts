@@ -38,6 +38,7 @@ const MAX_GAS = {
     REVEAL: '130000',
     SET_GLOBAL_APPROVAL_TOKEN: '140000',
     TRANSFER_NFT: '190000',
+    BURN_NFT: '180000',
   },
 }
 
