@@ -15,19 +15,23 @@ export type Props = {
   name: string
   rarity: UIPublicMetadata['properties']['rarity']
   categories: Category[]
+  collectionName: string
 }
 
 const Header: FC<Props> = ({
   name,
   rarity: { number, total },
   categories = [],
+  collectionName,
 }) => {
   const sorted = useMemo(() => categories.sort(), [categories])
 
   return (
     <Container>
       <Title>{name}</Title>
-      <Rarity>{`${number} of ${total}`}</Rarity>
+      <Rarity>{`${number} of ${total}${
+        collectionName ? ` | ${collectionName}` : ''
+      }`}</Rarity>
       {categories.length !== 0 && (
         <Categories>
           {sorted.map((item) => (

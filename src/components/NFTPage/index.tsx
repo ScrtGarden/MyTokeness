@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 
 import { HEAD_TITLE_TEXT } from '../../../utils/constants'
 import { useStoreState } from '../../hooks/storeHooks'
+import useQueryCollectionInfo from '../../hooks/useQueryCollectionInfo'
 import useQueryNFTDossier from '../../hooks/useQueryNFTDossier'
 import CreateViewingKey from './CreateViewingKey'
 import Sidebar from './Sidebar'
@@ -14,6 +15,10 @@ import Visual from './Visual'
 const parseQuery = (value: string) => {
   const ids = value.split(':')
   return { contractAddress: ids[0], tokenId: ids[1] }
+}
+
+const parseName = (name: string) => {
+  return name.includes('collection') ? name : `${name} Collection`
 }
 
 const NFTPage = (): JSX.Element => {
@@ -29,6 +34,9 @@ const NFTPage = (): JSX.Element => {
     state.auth.keyByContractAddress(contractAddress)
   )
 
+  // custom hooks
+  const { data: info, isLoading: fetchingInfo } =
+    useQueryCollectionInfo(contractAddress)
   const { data, error, isLoading } = useQueryNFTDossier(
     contractAddress,
     tokenId,
@@ -36,7 +44,12 @@ const NFTPage = (): JSX.Element => {
     { keepPreviousData: true }
   )
 
-  if (isLoading) {
+  const collectionName = useMemo(
+    () => (info ? parseName(info.contract_info.name) : ''),
+    [info]
+  )
+
+  if (isLoading || fetchingInfo) {
     return (
       <>
         <Head>
@@ -74,6 +87,7 @@ const NFTPage = (): JSX.Element => {
           privateImage={data.privateMetadata?.image}
         />
         <Sidebar
+          collectionName={collectionName}
           publicMetadata={data.publicMetadata}
           privateContent={data.privateMetadata?.properties.content}
           owner={data.owner}

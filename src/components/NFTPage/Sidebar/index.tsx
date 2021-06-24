@@ -10,6 +10,7 @@ type Props = {
   publicMetadata: UIPublicMetadata
   privateContent?: string
   owner: UINFTDossier['owner']
+  collectionName: string
 }
 
 const Sidebar: FC<Props> = ({
@@ -21,18 +22,22 @@ const Sidebar: FC<Props> = ({
   },
   privateContent,
   owner,
-}) => {
-  return (
-    <Container>
-      <Header name={name} rarity={rarity} categories={categories} />
-      {(!!description || attributes.length !== 0) && (
-        <Details description={description} attributes={attributes} />
-      )}
-      {(!!owner || !!privateContent) && (
-        <PermissionData owner={owner} content={privateContent} />
-      )}
-    </Container>
-  )
-}
+  collectionName,
+}) => (
+  <Container>
+    <Header
+      name={name}
+      rarity={rarity}
+      categories={categories}
+      collectionName={collectionName}
+    />
+    {(!!description || attributes.length !== 0) && (
+      <Details description={description} attributes={attributes} />
+    )}
+    {(!!owner || !!privateContent) && (
+      <PermissionData owner={owner} content={privateContent} />
+    )}
+  </Container>
+)
 
 export default memo(Sidebar)
