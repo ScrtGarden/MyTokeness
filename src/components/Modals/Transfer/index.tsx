@@ -12,10 +12,9 @@ import MessageWithIcon from '../../Common/MessageWithIcon'
 import Icon from '../../Icons'
 import { Button } from '../../UI/Buttons'
 import { Field, Input, Label } from '../../UI/Forms'
-import { Buttons, CloseButton, Header, Title } from '../../UI/Modal'
+import { Buttons, CloseButton, Content, Header, Title } from '../../UI/Modal'
 import { Text } from '../../UI/Typography'
 import { tokensUpdater, validate } from './lib'
-import { StyledContent } from './styles'
 
 type Props = {
   toggle: () => void
@@ -95,7 +94,7 @@ const TransferModal: FC<Props> = (props) => {
           <Icon name="times" />
         </CloseButton>
       </Header>
-      <StyledContent>
+      <Content spaced>
         <Text>
           Transfer ownership of, <span>{name}</span>, to:
         </Text>
@@ -118,7 +117,7 @@ const TransferModal: FC<Props> = (props) => {
             onChange={(e) => setMemo(e.currentTarget.value)}
           />
         </Field>
-      </StyledContent>
+      </Content>
       <Buttons>
         <Button onClick={toggle}>Cancel</Button>
         <ButtonWithLoading
