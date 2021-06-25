@@ -1,18 +1,10 @@
-import Tippy from '@tippyjs/react/headless'
+import Tippy, { TippyProps } from '@tippyjs/react/headless'
 import { FC, memo } from 'react'
-import { Placement } from 'tippy.js'
 
 import { Button, Content } from './styles'
 
-type Props = {
-  children?: JSX.Element
-  placement?: Placement
-  offset?: [number, number]
-  content?: JSX.Element | string
-}
-
-const Tooltip: FC<Props> = (props) => {
-  const { children, placement = 'auto', offset = [0, 10], content } = props
+const Tooltip: FC<TippyProps> = (props) => {
+  const { children, content, ...rest } = props
 
   return (
     <Tippy
@@ -21,8 +13,7 @@ const Tooltip: FC<Props> = (props) => {
           {content}
         </Content>
       )}
-      placement={placement}
-      offset={offset}
+      {...rest}
     >
       <Button>{children}</Button>
     </Tippy>

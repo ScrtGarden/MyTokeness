@@ -9,9 +9,9 @@ const Button = styled.button`
 `
 
 const Content = styled.div`
-  background: ${(props) => props.theme.bg};
+  background: ${(props) => props.theme.tooltip.content.bg};
   border-radius: ${(props) => props.theme.border.radii.md};
-  color: #fff;
+  color: ${(props) => props.theme.tooltip.content.color};
   font-size: ${(props) => props.theme.font.sizes.sm};
   font-weight: ${(props) => props.theme.font.weights.semibold};
   padding: 6px 15px;
