@@ -10,13 +10,13 @@ import {
 import parseErrorMsg from '../../../../../../utils/parseErrorMsg'
 import reducer from '../../../../../../utils/reducer'
 import truncateAddress from '../../../../../../utils/truncateAddress'
-import useCopyToClipboard from '../../../../../hooks/useCopyToClipboard'
 import useMutationWhitelist from '../../../../../hooks/useMutationWhitelist'
 import useToggle from '../../../../../hooks/useToggle'
 import {
   ValidationError,
   formatWhitelistAdd as format,
 } from '../../../../CollectionPage/Settings/Privacy/lib'
+import CopyIconButton from '../../../../Common/CopyIconButton'
 import Warning from '../../../../Modals/Warning'
 import { IconButton, StyledIcon } from '../../../../UI/Buttons'
 import Dropdown from '../../../../UI/Dropdowns/Menu'
@@ -70,8 +70,6 @@ const Item: FC<Props> = ({
     { walletAddress, viewingKey },
     contractAddress
   )
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, copy] = useCopyToClipboard(address)
 
   // lifecycle
   useEffect(() => {
@@ -128,9 +126,7 @@ const Item: FC<Props> = ({
         <Cell width={250}>
           <Wrapper>
             <Text bold>{truncateAddress(address)}</Text>
-            <IconButton size="small" onClick={copy}>
-              <StyledIcon name="copy-duo" width={12} height={12} />
-            </IconButton>
+            <CopyIconButton size="small" toCopy={address} />
           </Wrapper>
         </Cell>
         <Cell>

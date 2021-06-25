@@ -8,11 +8,11 @@ import { MAX_GAS } from '../../../../utils/constants'
 import decoder from '../../../../utils/decoder'
 import parseErrorMsg from '../../../../utils/parseErrorMsg'
 import { useStoreActions, useStoreState } from '../../../hooks/storeHooks'
-import useCopyToClipboard from '../../../hooks/useCopyToClipboard'
 import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
 import useMutationExeContract from '../../../hooks/useMutationExeContract'
 import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
 import ButtonWithLoading from '../../Common/ButtonWithLoading'
+import CopyIconButton from '../../Common/CopyIconButton'
 import { CollectionRouterQuery } from '../../Layouts/CollectionLayout'
 import ImportViewingKey from '../../Modals/ImportViewingKey'
 import Warning from '../../Modals/Warning'
@@ -47,8 +47,6 @@ const ViewingKeyCard = () => {
   const { mutateAsync: getAccounts, isLoading: gettingAccounts } =
     useMutationGetAccounts()
   const { mutate, isLoading } = useMutationExeContract<HandleCreateViewingKey>()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, copy] = useCopyToClipboard(viewingKey)
 
   // component state
   const [showWarning, setShowWarning] = useState(false)
@@ -122,9 +120,7 @@ const ViewingKeyCard = () => {
           <InputButtonsWrapper>
             <Input value={viewingKey || ''} disabled onChange={() => null} />
             <IconButtonWrapper>
-              <IconButton disabled={!viewingKey} onClick={copy}>
-                <StyledIcon name="copy-duo" width={14} height={14} />
-              </IconButton>
+              <CopyIconButton toCopy={viewingKey} />
               <IconButton
                 disabled={!viewingKey}
                 onClick={() => setShowWarning(true)}

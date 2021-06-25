@@ -5,8 +5,8 @@ import { QueryMinters, ResultMinters } from '../../../../../interface/nft'
 import { CHAIN_EXPLORER } from '../../../../../utils/constants'
 import truncateAddress from '../../../../../utils/truncateAddress'
 import { useStoreState } from '../../../../hooks/storeHooks'
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard'
 import useQueryContract from '../../../../hooks/useQueryContract'
+import CopyIconButton from '../../../Common/CopyIconButton'
 import {
   Button,
   IconButton,
@@ -47,8 +47,6 @@ const Header: FC<Props> = ({
     contractAddress,
     { minters: {} }
   )
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, copy] = useCopyToClipboard(contractAddress)
 
   // component state
   const isAssets = useMemo(() => activeTab === 'assets', [activeTab])
@@ -84,7 +82,7 @@ const Header: FC<Props> = ({
           isAssets &&
           showButton && (
             <Button isPrimary onClick={onClickCreate} width={143}>
-              Create Collectible
+              Create Asset
             </Button>
           )
         )}
@@ -96,9 +94,7 @@ const Header: FC<Props> = ({
           <>
             <Subtext>{truncateAddress(contractAddress)}</Subtext>
             <IconButtonWrapper>
-              <IconButton onClick={copy} size="small">
-                <StyledIcon name="copy-duo" width={12} height={12} />
-              </IconButton>
+              <CopyIconButton size="small" toCopy={contractAddress} />
               <IconButton onClick={onClickLink} size="small">
                 <StyledIcon name="external-link-duo" width={12} height={12} />
               </IconButton>
