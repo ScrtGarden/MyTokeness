@@ -1,7 +1,12 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
 
-const useCopyToClipboard = (text: string, notifyTimeout = 2500) => {
-  const [copyStatus, setCopyStatus] = useState('inactive')
+type CopyStatus = 'inactive' | 'copied' | 'failed'
+
+const useCopyToClipboard = (
+  text: string,
+  notifyTimeout = 2500
+): [CopyStatus, () => void] => {
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>('inactive')
   const copy = useCallback(
     async (newText?: MouseEvent<HTMLButtonElement> | string) => {
       try {
@@ -26,7 +31,7 @@ const useCopyToClipboard = (text: string, notifyTimeout = 2500) => {
     return () => clearTimeout(timeoutId)
   }, [copyStatus, notifyTimeout])
 
-  return [copyStatus, copy] as const
+  return [copyStatus, copy]
 }
 
 export default useCopyToClipboard
