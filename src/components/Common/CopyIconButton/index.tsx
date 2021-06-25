@@ -1,8 +1,9 @@
 import { FC, memo } from 'react'
 
 import useCopyToClipboard from '../../../hooks/useCopyToClipboard'
-import { IconButton, StyledIcon } from '../../UI/Buttons'
+import { StyledIcon } from '../../UI/Buttons'
 import Tooltip from '../../UI/Tooltip'
+import { StyledButton } from './styles'
 
 type Props = {
   size?: 'small' | 'medium' | 'large'
@@ -18,13 +19,13 @@ const CopyIconButton: FC<Props> = ({ size = 'medium', toCopy = '' }) => {
       placement="top"
       hideOnClick={false}
     >
-      <IconButton size={size} onClick={copy}>
+      <StyledButton as="div" size={size} onClick={copy}>
         <StyledIcon
           name="copy-duo"
           width={size === 'small' ? 12 : 14}
           height={size === 'small' ? 12 : 14}
         />
-      </IconButton>
+      </StyledButton>
     </Tooltip>
   )
 }
