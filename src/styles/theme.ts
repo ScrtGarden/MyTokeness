@@ -313,6 +313,14 @@ const theme = {
         },
       },
     },
+
+    // tooltip
+    tooltip: {
+      content: {
+        bg: '#f5f5f5E6',
+        color: '#0e1115',
+      },
+    },
   },
 
   // light mode
