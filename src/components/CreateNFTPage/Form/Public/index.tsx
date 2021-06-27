@@ -11,6 +11,8 @@ import { CategoryItem } from '../../Store/model'
 import AttributeList from '../AttributeList'
 import FileUploader from '../FileUploader'
 
+const CATEGORY_LIMIT = 3
+
 const Public = () => {
   // context store state
   const name = ContextStore.useStoreState((state) => state.publicMetadata.name)
@@ -50,6 +52,12 @@ const Public = () => {
     }
   }
 
+  const onChangeSelect = (options: CategoryItem[]) => {
+    if (options.length <= CATEGORY_LIMIT) {
+      setCategories(options)
+    }
+  }
+
   return (
     <Card>
       <Header>Public Data</Header>
@@ -79,16 +87,20 @@ const Public = () => {
         </Field>
         <Field>
           <Label>Categories (optional)</Label>
+          <Hint>Select up to 3 categories.</Hint>
           <StyledSelect
             classNamePrefix="select"
             options={NFT_CATEGORIES}
             isMulti
             value={categories}
-            onChange={(value: CategoryItem[]) => setCategories(value)}
+            onChange={onChangeSelect}
+            isOptionDisabled={() => categories.length >= CATEGORY_LIMIT}
+            closeMenuOnSelect={false}
           />
         </Field>
         <Field>
           <Label>Number of copies</Label>
+          <Hint>Max limit of 100.</Hint>
           <Input
             value={supply}
             onChange={onChangeSupply}
