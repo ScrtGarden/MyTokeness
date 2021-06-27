@@ -1,8 +1,8 @@
 // Only alphabetic chars up to 6 chars max.
 const symbolPattern = /^[A-Za-z]{0,6}$/
 
-// Only integers, no leading zero
-const supplyPattern = /^([1-9][0-9]*)$/
+// Only integers, between 1-100, no leading zero
+const supplyPattern = /^[1-9]$|^[1-9][0-9]$|^(100)$/
 
 // Number between 1-18
 const decimalsPattern = /^(1[0-8]|[1-9])$/
