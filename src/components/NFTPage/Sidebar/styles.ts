@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: auto;
   padding: ${(props) => props.theme.space.lg};
   position: relative;
   row-gap: ${(props) => props.theme.space.lg};

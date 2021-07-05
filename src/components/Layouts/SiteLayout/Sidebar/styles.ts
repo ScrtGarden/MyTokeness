@@ -5,7 +5,7 @@ const Container = styled.div`
   background-color: ${(props) => props.theme.fg};
   border-right: 2px solid ${(props) => props.theme.border.color};
   height: calc(100vh - 62px);
-  overflow: scroll;
+  overflow-y: auto;
   padding: ${(props) => props.theme.space.sm} 0;
   position: sticky;
   top: 62px;

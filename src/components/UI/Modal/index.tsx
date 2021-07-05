@@ -81,7 +81,7 @@ const Title = styled.h1<TitleProps>`
 
 const Content = styled.div<ContentProps>`
   max-height: 600px;
-  overflow: scroll;
+  overflow-y: auto;
   padding: ${(props) => props.theme.space.lg};
 
   ${(props) =>
