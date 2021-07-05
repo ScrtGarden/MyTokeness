@@ -52,7 +52,7 @@ const Configuration = () => {
         </ToggleField>
         <Field>
           <ToggleField>
-            <Label disabled>Enable deposit</Label>
+            <Label>Enable deposit</Label>
             <Toggle
               id="enableDeposit"
               checked={enableDeposit}
@@ -62,17 +62,16 @@ const Configuration = () => {
                   data: !enableDeposit,
                 })
               }
-              disabled
             />
           </ToggleField>
-          <Hint disabled>
+          <Hint>
             If you enable this, you will be able to convert from SCRT to the
             token.
           </Hint>
         </Field>
         <Field>
           <ToggleField>
-            <Label disabled>Enable redeem</Label>
+            <Label>Enable redeem</Label>
             <Toggle
               id="enableRedeem"
               checked={enableRedeem}
@@ -82,10 +81,9 @@ const Configuration = () => {
                   data: !enableRedeem,
                 })
               }
-              disabled
             />
           </ToggleField>
-          <Hint disabled>
+          <Hint>
             If you enable this, you will be able to redeem your token for SCRT.
           </Hint>
         </Field>
