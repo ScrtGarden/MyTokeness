@@ -26,7 +26,7 @@ const getGetOfflineSigner = (id: string | undefined) => {
   return window.getOfflineSigner(id)
 }
 
-const getGetEnigmaUtils = (id: string | undefined) => {
+const getEnigmaUtils = (id: string | undefined) => {
   return window.getEnigmaUtils(id)
 }
 
@@ -110,7 +110,7 @@ const createSigningClient = async ({
   const { accounts, signer } = await getAccounts()
 
   try {
-    const utils = getGetEnigmaUtils(process.env.NEXT_PUBLIC_CHAIN_ID)
+    const utils = getEnigmaUtils(process.env.NEXT_PUBLIC_CHAIN_ID)
     return new SigningCosmWasmClient(
       process.env.NEXT_PUBLIC_REST_URL || '',
       accounts[0].address,
@@ -167,4 +167,5 @@ export default {
   createSigningClient,
   getSnip20ViewingKey,
   suggestToken,
+  getEnigmaUtils,
 }
