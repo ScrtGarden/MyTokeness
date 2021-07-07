@@ -37,7 +37,7 @@ const connect = async (): Promise<Response> => {
     throw new Error('Kelpr not installed.')
   }
 
-  if (process.env.NEXT_PUBLIC_EXPERIMENTAL_CHAIN === 'true') {
+  if (process.env.NEXT_PUBLIC_IS_MAINNET === 'false') {
     await keplr.experimentalSuggestChain({
       chainId: process.env.NEXT_PUBLIC_CHAIN_ID as string,
       chainName: 'Local Secret Chain',
