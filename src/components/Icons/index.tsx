@@ -60,6 +60,7 @@ import ToolboxDuo from './ToolboxDuo'
 import TrashDuo from './TrashDuo'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
+import UserDuo from './UserDuo'
 import UsersDuo from './UsersDuo'
 import UserShieldDuo from './UserShieldDuo'
 
@@ -74,6 +75,7 @@ type Props = {
 }
 
 const ICON_MAP = {
+  'user-duo': UserDuo,
   'hands-heart-duo': HandsHeartDuo,
   'futbol-ball-duo': FutbolBallDuo,
   'browser-duo': BrowserDuo,
