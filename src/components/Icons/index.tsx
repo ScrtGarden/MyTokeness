@@ -58,6 +58,7 @@ import TasksAltDuo from './TasksAltDuo'
 import Times from './Times'
 import ToolboxDuo from './ToolboxDuo'
 import TrashDuo from './TrashDuo'
+import TreasureHunt from './TreasureHunt'
 import UserCircleDuo from './UserCircleDuo'
 import UserCrownDuo from './UserCrownDuo'
 import UserDuo from './UserDuo'
@@ -75,6 +76,7 @@ type Props = {
 }
 
 const ICON_MAP = {
+  'treasure-hunt': TreasureHunt,
   'user-duo': UserDuo,
   'hands-heart-duo': HandsHeartDuo,
   'futbol-ball-duo': FutbolBallDuo,
