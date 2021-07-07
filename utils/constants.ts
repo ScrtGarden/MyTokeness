@@ -136,7 +136,7 @@ const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT
 const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
 
 const HEAD_TITLE_TEXT =
-  'MyTokeness | Create, manage and explore tokens on the Secret Network.'
+  'Secret Garden | Create, manage and explore tokens on the Secret Network.'
 
 const NFT_CATEGORIES = [
   { value: 'Art', label: 'Art' },

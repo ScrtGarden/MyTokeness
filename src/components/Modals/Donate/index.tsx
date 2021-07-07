@@ -103,7 +103,7 @@ const Donation: FC<Props> = ({ toggle }) => {
     try {
       const signingClient = await keplr.createSigningClient()
       return await signingClient.sendTokens(
-        process.env.NEXT_PUBLIC_MYTOKENESS_WALLET_ADDRESS as string,
+        process.env.NEXT_PUBLIC_SECRET_GARDEN_WALLET_ADDRESS as string,
         [
           {
             denom: 'uscrt',
@@ -123,7 +123,7 @@ const Donation: FC<Props> = ({ toggle }) => {
     )
     const msg = {
       transfer: {
-        recipient: process.env.NEXT_PUBLIC_MYTOKENESS_WALLET_ADDRESS,
+        recipient: process.env.NEXT_PUBLIC_SECRET_GARDEN_WALLET_ADDRESS,
         amount: amountInSmallestDenom,
       },
     }

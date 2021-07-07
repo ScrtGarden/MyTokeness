@@ -6,7 +6,7 @@ import Burn from '../../src/components/ManagePage/Burn'
 const Page = (): JSX.Element => (
   <>
     <Head>
-      <title>Burn | MyTokeness</title>
+      <title>Burn | Secret Garden</title>
     </Head>
     <Burn />
   </>

@@ -49,7 +49,7 @@ class MyDocument extends Document {
           />
           <meta
             name="description"
-            content="Easily create, manage and explore privacy centric tokens and NFT with MyTokeness."
+            content="Easily create, manage and explore privacy centric tokens and NFT with Secret Garden."
           />
           <link
             rel="icon"

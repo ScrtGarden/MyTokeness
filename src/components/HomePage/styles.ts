@@ -19,12 +19,6 @@ const Title = styled.h2`
   margin-top: 0;
 `
 
-const Images = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: ${(props) => props.theme.space.lg};
-`
-
 const Wrapper = styled.div`
   bottom: ${(props) => props.theme.space.lg};
   display: flex;
@@ -34,4 +28,4 @@ const Wrapper = styled.div`
   row-gap: ${(props) => props.theme.space.xs};
 `
 
-export { Brand, Title, Images, Wrapper }
+export { Brand, Title, Wrapper }

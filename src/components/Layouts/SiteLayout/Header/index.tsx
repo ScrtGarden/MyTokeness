@@ -30,8 +30,8 @@ const Header = (): JSX.Element => {
     <Container>
       <Link href="/" passHref>
         <Wrapper>
-          <Icon name="crown-logo" height={30} width={30} />
-          <Brand>MyTokeness</Brand>
+          <Icon name="flower" height={25} width={25} fill="#5eae91" />
+          <Brand>Secret Garden</Brand>
         </Wrapper>
       </Link>
       {isConnected ? (

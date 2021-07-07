@@ -46,7 +46,7 @@ const model = persist(storeModel, storeConfig)
 const initStore = (initialState = initialStoreState) =>
   createStore(model, {
     initialState,
-    name: 'myTokeness',
+    name: 'SecretGarden',
     // injections: { getStore }, // add this if you want to inject store
   })
 

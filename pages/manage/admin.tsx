@@ -6,7 +6,7 @@ import Admin from '../../src/components/ManagePage/Admin'
 const Page = (): JSX.Element => (
   <>
     <Head>
-      <title>Admin | MyTokeness</title>
+      <title>Admin | Secret Garden</title>
     </Head>
     <Admin />
   </>

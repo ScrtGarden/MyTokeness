@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 import Icon from '../../../../Icons'
 
-const OUTLINE_COLOR = '#f0be726e'
-
 interface InfoPillProps {
   readonly right?: boolean
   readonly left?: boolean
@@ -18,7 +16,7 @@ const Container = styled.div`
 const Circle = styled.div`
   align-items: center;
   background: ${(props) => props.theme.fg};
-  border: 2px solid #f0be72;
+  border: 2px solid ${(props) => props.theme.avatar.icon};
   border-radius: 50%;
   display: flex;
   height: 3.8rem;
@@ -27,14 +25,14 @@ const Circle = styled.div`
 `
 
 const StyledIcon = styled(Icon)`
-  fill: #f0be72;
+  fill: ${(props) => props.theme.avatar.icon};
   height: 50%;
   width: 50%;
 `
 
 const InfoPill = styled.div<InfoPillProps>`
   align-items: center;
-  border: 2px solid ${OUTLINE_COLOR};
+  border: 2px solid ${(props) => props.theme.avatar.border};
   border-radius: 500px;
   display: flex;
   color: #fff;
@@ -65,8 +63,8 @@ const Wrapper = styled.div`
 `
 
 const Outline = styled.div`
-  border-bottom: 2px solid ${OUTLINE_COLOR};
-  border-top: 2px solid ${OUTLINE_COLOR};
+  border-bottom: 2px solid ${(props) => props.theme.avatar.border};
+  border-top: 2px solid ${(props) => props.theme.avatar.border};
   bottom: 0;
   height: 34px;
   position: absolute;

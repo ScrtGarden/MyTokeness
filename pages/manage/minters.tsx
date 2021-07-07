@@ -6,7 +6,7 @@ import Minters from '../../src/components/ManagePage/Minters'
 const Page = (): JSX.Element => (
   <>
     <Head>
-      <title>Minters | MyTokeness</title>
+      <title>Minters | Secret Garden</title>
     </Head>
     <Minters />
   </>

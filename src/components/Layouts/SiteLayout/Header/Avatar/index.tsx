@@ -30,7 +30,7 @@ const Avatar = () => {
       <InfoPill left>{truncateAddress(walletAddress, 7, 3)}</InfoPill>
       <Wrapper>
         <Circle>
-          <StyledIcon name="user-crown-duo" />
+          <StyledIcon name="user-duo" />
         </Circle>
         <Outline />
       </Wrapper>

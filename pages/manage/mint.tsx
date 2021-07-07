@@ -6,7 +6,7 @@ import Mint from '../../src/components/ManagePage/Mint'
 const Page = (): JSX.Element => (
   <>
     <Head>
-      <title>Mint | MyTokeness</title>
+      <title>Mint | Secret Garden</title>
     </Head>
     <Mint />
   </>

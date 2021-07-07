@@ -30,7 +30,7 @@ const Details = () => {
               setState({ key: 'name', data: e.currentTarget.value })
             }
             maxLength={30}
-            placeholder="MyTokeness"
+            placeholder="Secret Garden"
           />
           {errors.name && (
             <MessageWithIcon validation="error" message={errors.name} />
@@ -43,7 +43,7 @@ const Details = () => {
             value={symbol}
             onChange={(e) => setSymbol(e.currentTarget.value)}
             uppercase
-            placeholder="MYTOKN"
+            placeholder="GRDN"
           />
           {errors.symbol && (
             <MessageWithIcon validation="error" message={errors.symbol} />

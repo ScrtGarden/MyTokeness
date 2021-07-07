@@ -7,7 +7,7 @@ import { HEAD_TITLE_TEXT } from '../utils/constants'
 const Page = (): JSX.Element => (
   <>
     <Head>
-      <title>{`Welcome, ${HEAD_TITLE_TEXT}`}</title>
+      <title>{`Welcome to the ${HEAD_TITLE_TEXT}`}</title>
     </Head>
     <Home />
   </>
