@@ -81,7 +81,7 @@ const Header: FC<Props> = ({
         ) : (
           isAssets &&
           showButton && (
-            <Button isPrimary onClick={onClickCreate} width={143}>
+            <Button isPrimary onClick={onClickCreate} width={109}>
               Create Asset
             </Button>
           )
