@@ -22,10 +22,10 @@ const Sidebar: FC = () => {
         {Object.entries(SIDEBAR_TABS.NFT).map(([key, value]) => (
           <Tab key={key} item={value} section="nft" id={key} />
         ))}
-        <Donation onClick={toggleDonation}>
+        {/* <Donation onClick={toggleDonation}>
           <Icon name="hands-heart-duo" height={20} width={20} fill="#C490E4" />
           Give some love
-        </Donation>
+        </Donation> */}
       </Container>
       <StyledModal isOpen={showDonation} onBackgroundClick={toggleDonation}>
         <Donate toggle={toggleDonation} />
