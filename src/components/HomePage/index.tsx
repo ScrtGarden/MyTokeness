@@ -1,7 +1,7 @@
 import Icon from '../Icons'
 import { Container, InnerContainer } from '../UI/Containers'
 import { Text } from '../UI/Typography'
-import { Brand, Title, Wrapper } from './styles'
+import { Brand, StyledIcon, Title, Wrapper } from './styles'
 
 const Home = (): JSX.Element => {
   return (
@@ -12,6 +12,7 @@ const Home = (): JSX.Element => {
         <Text>
           A place to create, manage and explore tokens on the Secret Network.
         </Text>
+        <StyledIcon name="treasure-hunt" width={350} height={350} />
         <Wrapper>
           <Text>
             <span>Powered by</span>
