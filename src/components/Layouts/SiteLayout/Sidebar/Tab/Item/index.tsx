@@ -1,10 +1,11 @@
 import { FC, forwardRef, memo } from 'react'
 
+import { IconName } from '../../../../../Icons'
 import { Container, Label, StyledIcon } from './styles'
 
 type Props = {
   label?: string
-  icon?: string
+  icon?: IconName
   selected?: boolean
 }
 

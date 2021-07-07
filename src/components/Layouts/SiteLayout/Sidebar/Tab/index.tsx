@@ -4,16 +4,17 @@ import { FC, memo, useMemo, useState } from 'react'
 import { useSpring, useTransition } from 'react-spring'
 import useDimensions from 'react-use-dimensions'
 
+import { IconName } from '../../../../Icons'
 import Item from './Item'
 import { Container, Header, Label, Menu, StyledIcon, Wrapper } from './styles'
 
 interface Item {
   label: string
-  icon: string
+  icon: IconName
   route: string
   menu?: {
     label: string
-    icon: string
+    icon: IconName
     route: string
     as?: string
   }[]

@@ -1,11 +1,12 @@
 import { FC, memo } from 'react'
 
 import ButtonWithLoading from '../Common/ButtonWithLoading'
+import { IconName } from '../Icons'
 import { Container, StyledIcon, StyledText } from './styles'
 
 type Props = {
   text?: string
-  icon?: string
+  icon?: IconName
   className?: string
   buttonText?: string
   loading?: boolean

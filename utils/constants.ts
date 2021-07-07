@@ -1,3 +1,19 @@
+import { IconName } from '../src/components/Icons'
+
+interface Item {
+  label: string
+  icon: IconName
+  route: string
+  menu?: Item[]
+  as?: string
+}
+
+interface SidebarTabs {
+  HOME: Item
+  TOKEN: Record<string, Item>
+  NFT: Record<string, Item>
+}
+
 const calcBatchMint = (amount: string): string => {
   switch (amount) {
     case '2':
@@ -47,7 +63,7 @@ const CONTRACT_CODE_ID = {
   NFT: 29578,
 }
 
-const SIDEBAR_TABS = {
+const SIDEBAR_TABS: SidebarTabs = {
   HOME: {
     label: 'Home',
     icon: 'home-duo',
@@ -150,7 +166,10 @@ const NFT_CATEGORIES = [
   { value: 'Virtual Worlds', label: 'Virtual Worlds' },
 ]
 
-const NFT_CATEGORIES_ICON_MAP = {
+const NFT_CATEGORIES_ICON_MAP: Record<
+  string,
+  { ICON: IconName; COLOR: string }
+> = {
   Art: { ICON: 'palette', COLOR: '#FFB6B9' }, // red
   Collectibles: { ICON: 'narwhal-duo', COLOR: '#3282B8' }, // blue
   'Domain Names': { ICON: 'browser-duo', COLOR: '#E8EAE6' }, // grey

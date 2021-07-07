@@ -9,7 +9,7 @@ export type Params<T> = {
   maxGas: string
 }
 
-const instantiateContract = async <T extends Record<string, unknown>>(
+const instantiateContract = async <T extends Record<keyof T, unknown>>(
   data: Params<T>
 ): Promise<InstantiateResult> => {
   const { initMsg, label, codeId, maxGas } = data
@@ -31,7 +31,7 @@ export type ExecuteContractParams<T> = {
   handleMsg: T
 }
 
-const executeContract = async <T extends Record<string, unknown>>(
+const executeContract = async <T extends Record<keyof T, unknown>>(
   params: ExecuteContractParams<T>
 ): Promise<ExecuteResult> => {
   const { handleMsg, contractAddress, maxGas } = params
