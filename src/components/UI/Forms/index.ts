@@ -330,6 +330,11 @@ const StyledSelect = styled(ReactSelect)`
 
   .select__placeholder {
     color: ${(props) => props.theme.forms.input.placeholder.color};
+    margin-left: 3px;
+  }
+
+  .select__single-value {
+    color: ${(props) => props.theme.font.colors.primary};
   }
 
   .select__input {
