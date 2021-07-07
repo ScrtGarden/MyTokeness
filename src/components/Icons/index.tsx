@@ -29,6 +29,7 @@ import FutbolBallDuo from './FutbolBallDuo'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
 import HandHoldingUSD from './HandHoldingUSD'
+import HandsHeartDuo from './HandsHeartDuo'
 import HatWizardDuo from './HatWizardDuo'
 import HeadphonesDuo from './HeadphonesDuo'
 import HeadSideGogglesDuo from './HeadSideGogglesDuo'
@@ -62,205 +63,85 @@ import UserCrownDuo from './UserCrownDuo'
 import UsersDuo from './UsersDuo'
 import UserShieldDuo from './UserShieldDuo'
 
+type IconName = keyof typeof ICON_MAP
+
 type Props = {
-  name?: string
+  name?: IconName
   className?: string
   width?: string | number
   height?: string | number
   fill?: string
 }
 
+const ICON_MAP = {
+  'hands-heart-duo': HandsHeartDuo,
+  'futbol-ball-duo': FutbolBallDuo,
+  'browser-duo': BrowserDuo,
+  'hat-wizard-duo': HatWizardDuo,
+  'head-side-goggles-duo': HeadSideGogglesDuo,
+  'narwhal-duo': NarwhalDuo,
+  'toolbox-duo': ToolboxDuo,
+  'crown-logo': CrownLogo,
+  'secret-network-logo': SecretNetworkLogo,
+  'sad-tear-duo': SadTearDuo,
+  'circle-play-duo': CirclePlayDuo,
+  'headphones-duo': HeadphonesDuo,
+  'lock-keyhole-open-duo': LockKeyholeOpenDuo,
+  'lock-keyhole-duo': LockKeyholeDuo,
+  'shield-duo': ShieldDuo,
+  'user-shield-duo': UserShieldDuo,
+  'ellipsis-v': EllipsisV,
+  'external-link-duo': ExternalLinkDuo,
+  'copy-duo': CopyDuo,
+  'arrow-left': ArrowLeft,
+  'drafting-compass-duo': DraftingCompassDuo,
+  'trash-duo': TrashDuo,
+  'store-duo': StoreDuo,
+  'stamp-duo': StampDuo,
+  'chevron-right': ChevronRight,
+  'list-ul-duo': ListUlDuo,
+  'analytics-duo': AnalyticsDuo,
+  'exchange-duo': ExchangeDuo,
+  plus: Plus,
+  minus: Minus,
+  'users-duo': UsersDuo,
+  'hand-holding-usd': HandHoldingUSD,
+  'tasks-alt-duo': TasksAltDuo,
+  'user-crown-duo': UserCrownDuo,
+  'industry-duo': IndustryDuo,
+  'home-duo': HomeDuo,
+  'receipt-duo': ReceiptDuo,
+  'caret-down': CaretDown,
+  'caret-up': CaretUp,
+  'pencil-paintbrush-duo': PencilPaintbrushDuo,
+  'exclamation-circle-duo': ExclamationCircleDuo,
+  'horizontal-rule': HorizontalRule,
+  'ellipsis-h': EllipsisH,
+  'box-duo': BoxDuo,
+  'box-open-duo': BoxOpenDuo,
+  'key-skeleton': KeySkeleton,
+  'album-collection-duo': AlbumCollectionDuo,
+  'user-circle-duo': UserCircleDuo,
+  'chevron-up': ChevronUp,
+  'chevron-down': ChevronDown,
+  'chevron-left': ChevronLeft,
+  palette: Palette,
+  'gift-card-duo': GiftCardDuo,
+  'exclamation-circle': ExclamationCircle,
+  times: Times,
+  'fire-duo': FireDuo,
+  flower: Flower,
+  'photo-video-duo': PhotoVideoDuo,
+  github: GitHub,
+  'puzzle-piece': PuzzlePiece,
+  keplr: Keplr,
+  dizzy: Dizzy,
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Icon: FC<Props> = forwardRef((props, _) => {
   const { name, className, ...rest } = props
-
-  let SelectedIcon
-
-  switch (name) {
-    case 'futbol-ball-duo':
-      SelectedIcon = FutbolBallDuo
-      break
-    case 'browser-duo':
-      SelectedIcon = BrowserDuo
-      break
-    case 'hat-wizard-duo':
-      SelectedIcon = HatWizardDuo
-      break
-    case 'head-side-goggles-duo':
-      SelectedIcon = HeadSideGogglesDuo
-      break
-    case 'narwhal-duo':
-      SelectedIcon = NarwhalDuo
-      break
-    case 'toolbox-duo':
-      SelectedIcon = ToolboxDuo
-      break
-    case 'crown-logo':
-      SelectedIcon = CrownLogo
-      break
-    case 'secret-network-logo':
-      SelectedIcon = SecretNetworkLogo
-      break
-    case 'sad-tear-duo':
-      SelectedIcon = SadTearDuo
-      break
-    case 'circle-play-duo':
-      SelectedIcon = CirclePlayDuo
-      break
-    case 'headphones-duo':
-      SelectedIcon = HeadphonesDuo
-      break
-    case 'lock-keyhole-open-duo':
-      SelectedIcon = LockKeyholeOpenDuo
-      break
-    case 'lock-keyhole-duo':
-      SelectedIcon = LockKeyholeDuo
-      break
-    case 'shield-duo':
-      SelectedIcon = ShieldDuo
-      break
-    case 'user-shield-duo':
-      SelectedIcon = UserShieldDuo
-      break
-    case 'ellipsis-v':
-      SelectedIcon = EllipsisV
-      break
-    case 'external-link-duo':
-      SelectedIcon = ExternalLinkDuo
-      break
-    case 'copy-duo':
-      SelectedIcon = CopyDuo
-      break
-    case 'arrow-left':
-      SelectedIcon = ArrowLeft
-      break
-    case 'drafting-compass-duo':
-      SelectedIcon = DraftingCompassDuo
-      break
-    case 'trash-duo':
-      SelectedIcon = TrashDuo
-      break
-    case 'store-duo':
-      SelectedIcon = StoreDuo
-      break
-    case 'stamp-duo':
-      SelectedIcon = StampDuo
-      break
-    case 'chevron-right':
-      SelectedIcon = ChevronRight
-      break
-    case 'list-ul-duo':
-      SelectedIcon = ListUlDuo
-      break
-    case 'analytics-duo':
-      SelectedIcon = AnalyticsDuo
-      break
-    case 'exchange-duo':
-      SelectedIcon = ExchangeDuo
-      break
-    case 'plus':
-      SelectedIcon = Plus
-      break
-    case 'minus':
-      SelectedIcon = Minus
-      break
-    case 'users-duo':
-      SelectedIcon = UsersDuo
-      break
-    case 'hand-holding-usd':
-      SelectedIcon = HandHoldingUSD
-      break
-    case 'tasks-alt-duo':
-      SelectedIcon = TasksAltDuo
-      break
-    case 'user-crown-duo':
-      SelectedIcon = UserCrownDuo
-      break
-    case 'industry-duo':
-      SelectedIcon = IndustryDuo
-      break
-    case 'home-duo':
-      SelectedIcon = HomeDuo
-      break
-    case 'receipt-duo':
-      SelectedIcon = ReceiptDuo
-      break
-    case 'caret-down':
-      SelectedIcon = CaretDown
-      break
-    case 'caret-up':
-      SelectedIcon = CaretUp
-      break
-    case 'pencil-paintbrush-duo':
-      SelectedIcon = PencilPaintbrushDuo
-      break
-    case 'exclamation-circle-duo':
-      SelectedIcon = ExclamationCircleDuo
-      break
-    case 'horizontal-rule':
-      SelectedIcon = HorizontalRule
-      break
-    case 'ellipsis-h':
-      SelectedIcon = EllipsisH
-      break
-    case 'box-duo':
-      SelectedIcon = BoxDuo
-      break
-    case 'box-open-duo':
-      SelectedIcon = BoxOpenDuo
-      break
-    case 'key-skeleton':
-      SelectedIcon = KeySkeleton
-      break
-    case 'album-collection-duo':
-      SelectedIcon = AlbumCollectionDuo
-      break
-    case 'user-circle-duo':
-      SelectedIcon = UserCircleDuo
-      break
-    case 'chevron-up':
-      SelectedIcon = ChevronUp
-      break
-    case 'chevron-down':
-      SelectedIcon = ChevronDown
-      break
-    case 'chevron-left':
-      SelectedIcon = ChevronLeft
-      break
-    case 'palette':
-      SelectedIcon = Palette
-      break
-    case 'gift-card-duo':
-      SelectedIcon = GiftCardDuo
-      break
-    case 'exclamation-circle':
-      SelectedIcon = ExclamationCircle
-      break
-    case 'times':
-      SelectedIcon = Times
-      break
-    case 'fire-duo':
-      SelectedIcon = FireDuo
-      break
-    case 'flower':
-      SelectedIcon = Flower
-      break
-    case 'photo-video-duo':
-      SelectedIcon = PhotoVideoDuo
-      break
-    case 'github':
-      SelectedIcon = GitHub
-      break
-    case 'puzzle-piece':
-      SelectedIcon = PuzzlePiece
-      break
-    case 'keplr':
-      SelectedIcon = Keplr
-      break
-    default:
-      SelectedIcon = Dizzy
-      break
-  }
+  const SelectedIcon = ICON_MAP[(name as IconName) || 'dizzy']
 
   return <SelectedIcon className={className} {...rest} />
 })
