@@ -1,5 +1,6 @@
 import { FC, MouseEvent, memo } from 'react'
 
+import { IconName } from '../../Icons'
 import { StyledIcon as Icon } from '../../UI/Buttons'
 import {
   Container,
@@ -13,7 +14,7 @@ import {
 
 type Props = {
   name: string
-  icon: string
+  icon: IconName
   onClick: () => void
   loading?: boolean
   isOwner?: boolean
