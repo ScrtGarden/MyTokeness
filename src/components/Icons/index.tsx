@@ -64,7 +64,7 @@ import UserDuo from './UserDuo'
 import UsersDuo from './UsersDuo'
 import UserShieldDuo from './UserShieldDuo'
 
-type IconName = keyof typeof ICON_MAP
+export type IconName = keyof typeof ICON_MAP
 
 type Props = {
   name?: IconName
