@@ -73,19 +73,20 @@ const theme = {
     },
     palette: {
       red: {
-        600: '#e35b66',
+        400: '#e35b66',
       },
       green: {
-        600: '#5eae91',
-      },
-      teal: {
-        600: '#33ced8',
+        300: '#aecfc2',
+        400: '#5eae91',
       },
       blue: {
-        600: '#499bfc',
+        400: '#499bfc',
       },
       yellow: {
-        600: '#ffb057',
+        400: '#ffb057',
+      },
+      teal: {
+        400: '#02a191',
       },
     },
 
@@ -211,7 +212,7 @@ const theme = {
         },
       },
       symbol: {
-        bg: 'linear-gradient(0deg,#f0be72 0,#f7ca85 100%)',
+        bg: 'linear-gradient(0deg,#87929d 0, #c2c8cc 100%)',
       },
     },
 

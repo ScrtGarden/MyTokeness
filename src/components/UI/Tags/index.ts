@@ -18,7 +18,7 @@ const Tag = styled.div<TagProps>`
   ${(props) =>
     props.color === 'blue' &&
     `
-    background: ${props.theme.palette.blue[600]};
+    background: ${props.theme.palette.blue[400]};
   `}
 `
 

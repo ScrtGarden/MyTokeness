@@ -46,7 +46,7 @@ const Play = styled(Icon)`
 
 const StyledIcon = styled(Icon)`
   bottom: 0;
-  fill: ${(props) => props.theme.palette.teal[600]};
+  fill: ${(props) => props.theme.palette.teal[400]};
   left: 0;
   margin: auto;
   position: absolute;

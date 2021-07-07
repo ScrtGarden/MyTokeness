@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 100%;
 
   ::before {
-    background: ${(props) => props.theme.palette.yellow[600]};
+    background: ${(props) => props.theme.palette.green[400]};
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
     content: '';

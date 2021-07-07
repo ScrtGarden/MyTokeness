@@ -17,8 +17,8 @@ const Container = styled.div`
 const StyledIcon = styled(Icon)<IconProps>`
   fill: ${(props) =>
     props.disabled
-      ? `${props.theme.palette.yellow[600]}60`
-      : props.theme.palette.yellow[600]};
+      ? `${props.theme.palette.yellow[400]}60`
+      : props.theme.palette.yellow[400]};
 `
 
 const Section = styled.div`
