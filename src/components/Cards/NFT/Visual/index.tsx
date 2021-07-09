@@ -41,7 +41,11 @@ const Visual: FC<Props> = ({
 
   if (isLoading) {
     return (
-      <ImageWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <ImageWrapper
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
+      >
         {encryptionKey ? (
           <>
             <Fingerprint size={200} />
@@ -56,7 +60,11 @@ const Visual: FC<Props> = ({
 
   if (!data || !!error) {
     return (
-      <ImageWrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <ImageWrapper
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
+      >
         <EmptyList
           icon="sad-tear-duo"
           text="Oops! Looks like something went wrong."
