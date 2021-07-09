@@ -41,7 +41,7 @@ export interface UIPublicMetadata {
 
 export interface UIPrivateMetadata {
   image?: string
-  properties: { content: string }
+  properties: { content: string; key?: string }
 }
 
 export type UIExpiration = {
