@@ -45,6 +45,7 @@ const NFTCard: FC<Props> = ({
   const [showWhitelist, toggleWhitelist] = useToggle()
   const [showTransfer, toggleTransfer] = useToggle()
   const [showBurn, toggleBurn] = useToggle()
+  const [showPrivateFile, togglePrivateFile] = useToggle()
 
   // custom hooks
   const { data, isLoading, isError } = useQueryNFTDossier(contractAddress, id, {
@@ -63,11 +64,28 @@ const NFTCard: FC<Props> = ({
   return (
     <>
       <Container>
-        <Visual
-          publicImage={data.publicMetadata.image}
-          privateImage={data.privateMetadata?.image}
-          onClick={onClick}
-        />
+        {!showPrivateFile ? (
+          <Visual
+            queryKey="publicFileProps"
+            fileLink={data.publicMetadata.image}
+            id={id}
+            contractAddress={contractAddress}
+            onClick={onClick}
+            onMouseEnter={
+              !!data.privateMetadata ? togglePrivateFile : undefined
+            }
+          />
+        ) : (
+          <Visual
+            queryKey="privateFileProps"
+            fileLink={data.privateMetadata?.image}
+            encryptionKey={data.privateMetadata?.properties.key}
+            id={id}
+            contractAddress={contractAddress}
+            onClick={onClick}
+            onMouseLeave={togglePrivateFile}
+          />
+        )}
         <Wrapper>
           <Details
             title={data.publicMetadata.name}

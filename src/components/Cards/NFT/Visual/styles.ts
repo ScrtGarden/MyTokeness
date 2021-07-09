@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 
+import { Theme } from '../../../../styles/theme'
 import Icon from '../../../Icons'
 
 interface ContainerProps {
   readonly type?: string
 }
 
-const getColor = (theme: any, type?: string) => {
+const getColor = (theme: Theme, type?: string) => {
   if (type === 'video') {
     return '#000'
   } else if (type === 'audio') {
@@ -21,9 +22,12 @@ const ImageWrapper = styled.div.attrs<ContainerProps>(({ type, theme }) => ({
     backgroundColor: getColor(theme, type),
   },
 }))<ContainerProps>`
+  align-items: center;
   aspect-ratio: 1.3;
   background-color: #000;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 100%;
 
@@ -54,4 +58,16 @@ const StyledIcon = styled(Icon)`
   top: 0;
 `
 
-export { ImageWrapper, StyledIcon, Play }
+const DecryptText = styled.div`
+  bottom: 50px;
+  color: ${(props) => props.theme.palette.blue[700]};
+  font-size: ${(props) => props.theme.font.sizes.md};
+  font-weight: ${(props) => props.theme.font.weights};
+  left: 0;
+  position: absolute;
+  right: 0;
+  margin: auto;
+  width: fit-content;
+`
+
+export { ImageWrapper, StyledIcon, Play, DecryptText }

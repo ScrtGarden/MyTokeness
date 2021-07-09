@@ -14,6 +14,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   align-items: center;
+  border-top: 2px solid ${(props) => props.theme.border.color};
   display: flex;
   flex: 1;
   justify-content: space-between;

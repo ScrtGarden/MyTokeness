@@ -12,6 +12,7 @@ interface FormatForHandleMsgParams {
   publicFileLink: string
   privateMetadata: PrivateMetadata
   privateFileLink: string
+  key: string
 }
 
 const formatAttrs = (attrs: Attribute[]): Attribute[] =>
@@ -22,6 +23,7 @@ const formatSingleMint = ({
   publicFileLink,
   privateMetadata,
   privateFileLink,
+  key,
 }: FormatForHandleMsgParams): HandleMintNFT => {
   const publicProperties = {
     rarity: {
@@ -33,6 +35,7 @@ const formatSingleMint = ({
   }
   const privateProperties = {
     content: privateMetadata.content,
+    ...(key && { key }),
   }
   const attributes = formatAttrs(publicMetadata.attributes)
 
@@ -59,11 +62,13 @@ const formatBatchMint = ({
   publicFileLink,
   privateMetadata,
   privateFileLink,
+  key,
 }: FormatForHandleMsgParams): HandleBatchMintNFT => {
   const supply = parseInt(publicMetadata.supply, 10)
   const rarityId = cryptoRandomString({ length: 21 })
   const privateProperties = {
     content: privateMetadata.content,
+    ...(key && { key }),
   }
   const attributes = formatAttrs(publicMetadata.attributes)
   const categories = publicMetadata.categories.map((item) => item.value)

@@ -3,6 +3,7 @@ import { gql } from 'apollo-server-micro'
 export const typeDefs = gql`
   type UploadFileResult {
     ipfsLink: String
+    key: String
   }
 
   type Query {
@@ -10,6 +11,6 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    uploadFile(file: Upload!): UploadFileResult
+    uploadFile(file: Upload!, encrypt: Boolean, test: String): UploadFileResult
   }
 `
