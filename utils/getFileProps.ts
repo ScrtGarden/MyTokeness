@@ -19,13 +19,7 @@ const getFileProps = async (link: string, key?: string): Promise<FileProps> => {
   if (key) {
     try {
       const base64 = await decryptFile(hashLink, key)
-      if (type === 'image') {
-        src = `data:${mimeType};base64,${base64}`
-      } else if (type === 'audio') {
-        src = `data:audio/mpeg;base64,${base64}`
-      } else {
-        src = `data:video/mp4;base64,${base64}`
-      }
+      src = `data:${mimeType};base64,${base64}`
     } catch (error) {
       throw error
     }
