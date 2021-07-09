@@ -1,21 +1,22 @@
 import { gql } from 'graphql-request'
-import { useMutation } from 'react-query'
+import { UseMutationResult, useMutation } from 'react-query'
 
 import { UploadFileResult } from '../../interface/api'
 import { fetcher } from '../../utils/graphqlRequest'
 
 const mutateUploadFile = gql`
-  mutation UploadFile($file: Upload!) {
-    uploadFile(file: $file) {
+  mutation UploadFile($file: Upload!, $encrypt: Boolean) {
+    uploadFile(file: $file, encrypt: $encrypt) {
       ipfsLink
+      key
     }
   }
 `
 
-const useMutationUploadFile = () =>
-  useMutation<UploadFileResult, Error, { file: File }>(
-    (variables) => fetcher(mutateUploadFile, variables),
-    {}
-  )
+const useMutationUploadFile = (): UseMutationResult<
+  UploadFileResult,
+  Error,
+  { file: File; encrypt?: boolean }
+> => useMutation((variables) => fetcher(mutateUploadFile, variables), {})
 
 export default useMutationUploadFile
