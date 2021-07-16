@@ -74,4 +74,9 @@ const Outline = styled.div`
   z-index: -1;
 `
 
-export { Container, Circle, StyledIcon, InfoPill, Wrapper, Outline }
+const Address = styled.div`
+  color: #fff;
+  cursor: pointer;
+`
+
+export { Container, Circle, StyledIcon, InfoPill, Wrapper, Outline, Address }
