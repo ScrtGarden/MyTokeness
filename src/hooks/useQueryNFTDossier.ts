@@ -38,7 +38,6 @@ const useQueryNFTDossier = (
               viewing_key: viewerInfo.viewingKey,
             },
           }),
-          include_expired: false,
         },
       }),
     {
