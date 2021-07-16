@@ -40,9 +40,9 @@ const connect = async (): Promise<Response> => {
   if (process.env.NEXT_PUBLIC_IS_MAINNET === 'false') {
     await keplr.experimentalSuggestChain({
       chainId: process.env.NEXT_PUBLIC_CHAIN_ID as string,
-      chainName: 'Local Secret Chain',
+      chainName: process.env.NEXT_PUBLIC_CHAIN_ID as string,
       rpc: process.env.NEXT_PUBLIC_RPC_URL as string,
-      rest: process.env.NEXT_PUBLIC_REST_URL as string,
+      rest: process.env.NEXT_PUBLIC_LCD_URL as string,
       bip44: {
         coinType: 529,
       },
@@ -112,7 +112,7 @@ const createSigningClient = async ({
   try {
     const utils = getEnigmaUtils(process.env.NEXT_PUBLIC_CHAIN_ID)
     return new SigningCosmWasmClient(
-      process.env.NEXT_PUBLIC_REST_URL || '',
+      process.env.NEXT_PUBLIC_LCD_URL || '',
       accounts[0].address,
       signer,
       utils,
