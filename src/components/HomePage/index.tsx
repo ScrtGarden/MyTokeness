@@ -8,7 +8,7 @@ const Home = (): JSX.Element => {
     <Container>
       <InnerContainer>
         <Title>Welcome to the</Title>
-        <Brand>Secret Garden (Testnet)</Brand>
+        <Brand>Secret Garden</Brand>
         <Text>
           A place to create, manage and explore tokens on the Secret Network.
         </Text>
