@@ -1,42 +1,90 @@
 import Image from 'next/image'
-import { FC, FormEvent, memo, useMemo, useState } from 'react'
+import { FC, FormEvent, memo } from 'react'
 import ReactPlayer from 'react-player'
+import { useQuery } from 'react-query'
 
-import getImageLinkProps from '../../../../../utils/getImageLinkProps'
-import { ImageWrapper, Play, StyledIcon } from './styles'
+import getFileProps from '../../../../../utils/getFileProps'
+import EmptyList from '../../../EmptyList'
+import Fingerprint from '../../../UI/Loaders/Fingerprint'
+import Spinner from '../../../UI/Loaders/Spinner'
+import { DecryptText, ImageWrapper, Play, StyledIcon } from './styles'
 
 type Props = {
-  privateImage?: string
-  publicImage: string
+  queryKey: string
+  fileLink?: string
   onClick: () => void
+  id: string
+  contractAddress: string
+  encryptionKey?: string
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }
 
-const Visual: FC<Props> = ({ publicImage, privateImage, onClick }) => {
-  const publicImageProps = useMemo(
-    () => getImageLinkProps(publicImage),
-    [publicImage]
+const Visual: FC<Props> = ({
+  queryKey,
+  fileLink,
+  encryptionKey,
+  onClick,
+  id,
+  contractAddress,
+  onMouseEnter = () => null,
+  onMouseLeave = () => null,
+}) => {
+  const { data, error, isLoading } = useQuery(
+    [queryKey, contractAddress, id],
+    () => getFileProps(fileLink as string, encryptionKey),
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+    }
   )
-  const privateImageProps = useMemo(
-    () => (privateImage ? getImageLinkProps(privateImage) : undefined),
-    [privateImage]
-  )
-  const [{ type, hashLink }, setImageProps] = useState(publicImageProps)
 
+  if (isLoading) {
+    return (
+      <ImageWrapper
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
+      >
+        {encryptionKey ? (
+          <>
+            <Fingerprint size={200} />
+            <DecryptText>Decrypting...</DecryptText>
+          </>
+        ) : (
+          <Spinner />
+        )}
+      </ImageWrapper>
+    )
+  }
+
+  if (!data || !!error) {
+    return (
+      <ImageWrapper
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
+      >
+        <EmptyList
+          icon="sad-tear-duo"
+          text="Oops! Looks like something went wrong."
+        />
+      </ImageWrapper>
+    )
+  }
+
+  const { type, src } = data
   return (
     <ImageWrapper
       type={type}
-      onMouseEnter={() =>
-        privateImageProps ? setImageProps(privateImageProps) : null
-      }
-      onMouseLeave={() =>
-        !!privateImageProps ? setImageProps(publicImageProps) : null
-      }
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
       {type === 'image' && (
         <Image
           className="next-image"
-          src={`https://ipfs.io/ipfs/${hashLink}`}
+          src={src}
           layout="fill"
           objectFit="cover"
           alt=""
@@ -52,7 +100,7 @@ const Visual: FC<Props> = ({ publicImage, privateImage, onClick }) => {
           <Play name="circle-play-duo" width={50} height={50} />
           <ReactPlayer
             className="react-player"
-            url={`https://ipfs.io/ipfs/${hashLink}`}
+            url={src}
             width="100%"
             height="100%"
             config={{

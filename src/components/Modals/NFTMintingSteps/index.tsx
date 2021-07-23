@@ -55,13 +55,14 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
 
   // custom hooks
   const { mutateAsync: uploadFile } = useMutationUploadFile()
-  const { mutate: mintNFT } =
-    useMutationExeContract<HandleMintNFT | HandleBatchMintNFT>()
+  const { mutate: mintNFT } = useMutationExeContract<
+    HandleMintNFT | HandleBatchMintNFT
+  >()
 
   // component state
   const [status, setStatus] = useReducer<Reducer>(reducer, STATUS)
   const [publicFileLink, setPublicFileLink] = useState('')
-  const [privateFileLink, setPrivateFileLink] = useState('')
+  const [privateFileData, setPrivateFileData] = useState({ link: '', key: '' })
   const isMultiMints = useMemo(
     () => publicMetadata.supply !== '1',
     [publicMetadata.supply]
@@ -85,15 +86,20 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
       setPublicFileLink(publicLink)
 
       let privateLink = ''
+      let key = ''
       if (privateFile) {
-        const privateResult = await uploadFile({ file: privateFile })
+        const privateResult = await uploadFile({
+          file: privateFile,
+          encrypt: true,
+        })
         privateLink = privateResult.uploadFile.ipfsLink
-        setPrivateFileLink(privateLink)
+        key = privateResult.uploadFile.key as string
+        setPrivateFileData({ link: privateLink, key })
       }
 
       setStatus({ 1: 'completed' })
       toast.success(`Uploaded file${isMultiFiles ? 's.' : '.'}`)
-      mint(publicLink, privateLink)
+      mint(publicLink, privateLink, key)
     } catch (error) {
       toast.error(`Uploading file${isMultiFiles ? 's.' : '.'}`)
       setStatus({ 1: 'failed' })
@@ -101,7 +107,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
     }
   }
 
-  const mint = (publicLink: string, privateLink: string) => {
+  const mint = (publicLink: string, privateLink: string, key: string) => {
     setStatus({ 2: 'in-progress' })
 
     const handleMsg = formatForHandleMsg({
@@ -109,6 +115,7 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
       publicFileLink: publicLink,
       privateMetadata,
       privateFileLink: privateLink,
+      key,
     })
 
     mintNFT(
@@ -167,7 +174,9 @@ const NFTMintingSteps: FC<Props> = ({ toggle }) => {
           label={`Create asset${isMultiMints ? 's' : ''}`}
           hint={`Minting asset${isMultiMints ? 's' : ''} to collection.`}
           status={status[2]}
-          onClick={() => mint(publicFileLink, privateFileLink)}
+          onClick={() =>
+            mint(publicFileLink, privateFileData.link, privateFileData.key)
+          }
         />
       </Steps>
     </Container>

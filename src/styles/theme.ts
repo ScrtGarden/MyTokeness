@@ -1,3 +1,5 @@
+export type Theme = typeof theme.dark
+
 const theme = {
   dark: {
     bg: '#0e1115',
@@ -81,6 +83,7 @@ const theme = {
       },
       blue: {
         400: '#499bfc',
+        700: '#144a75',
       },
       yellow: {
         400: '#ffb057',

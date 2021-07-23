@@ -44,6 +44,7 @@ const NFTPage = (): JSX.Element => {
     { keepPreviousData: true }
   )
 
+  // component state
   const collectionName = useMemo(
     () => (info ? parseName(info.contract_info.name) : ''),
     [info]
@@ -82,10 +83,22 @@ const NFTPage = (): JSX.Element => {
       </Head>
       <Container>
         <StyledBack label="Back" />
-        <Visual
-          publicImage={data.publicMetadata.image}
-          privateImage={data.privateMetadata?.image}
-        />
+        {data.privateMetadata ? (
+          <Visual
+            queryKey="privateFileProps"
+            id={tokenId}
+            contractAddress={contractAddress}
+            fileLink={data.privateMetadata.image as string}
+            encryptionKey={data.privateMetadata.properties.key}
+          />
+        ) : (
+          <Visual
+            queryKey="publicFileProps"
+            fileLink={data.publicMetadata.image}
+            id={tokenId}
+            contractAddress={contractAddress}
+          />
+        )}
         <Sidebar
           collectionName={collectionName}
           publicMetadata={data.publicMetadata}

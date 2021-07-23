@@ -6,8 +6,11 @@ import { queryChain } from '../../../../../../utils/secretjs'
 import toBiggestDenomination from '../../../../../../utils/toBiggestDenomination'
 import truncateAddress from '../../../../../../utils/truncateAddress'
 import { useStoreState } from '../../../../../hooks/storeHooks'
+import useCopyToClipboard from '../../../../../hooks/useCopyToClipboard'
 import { Skeleton } from '../../../../UI/Loaders'
+import Tooltip from '../../../../UI/Tooltip'
 import {
+  Address,
   Circle,
   Container,
   InfoPill,
@@ -17,6 +20,7 @@ import {
 } from './styles'
 
 const Avatar = () => {
+  // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
 
   const { data, isLoading } = useQuery(
@@ -25,9 +29,23 @@ const Avatar = () => {
     { enabled: !!walletAddress }
   )
 
+  // custom hooks
+  const [status, copy] = useCopyToClipboard(walletAddress)
+
   return (
     <Container>
-      <InfoPill left>{truncateAddress(walletAddress, 7, 3)}</InfoPill>
+      <InfoPill left>
+        <Tooltip
+          content={status === 'copied' ? 'Copied!' : 'Copy'}
+          hideOnClick={false}
+          placement="bottom-end"
+          offset={[0, 15]}
+        >
+          <Address onClick={copy}>
+            {truncateAddress(walletAddress, 7, 3)}
+          </Address>
+        </Tooltip>
+      </InfoPill>
       <Wrapper>
         <Circle>
           <StyledIcon name="user-duo" />
