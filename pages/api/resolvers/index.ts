@@ -41,8 +41,6 @@ export const resolvers = {
           }),
         })
 
-        console.log(image, key)
-
         return { ipfsLink: image, key }
       } catch (error) {
         console.log('*** uploadFile error ***')
