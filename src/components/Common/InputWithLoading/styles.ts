@@ -8,7 +8,7 @@ const Container = styled.div`
 
 const StyledDots = styled(Dots)`
   bottom: 0;
-  background-image: linear-gradient(to right, #13181c80, #13181c);
+  background-image: linear-gradient(to right, #0e111580, #0e1115);
   border-top-right-radius: ${(props) => props.theme.forms.input.border.radius};
   border-bottom-right-radius: ${(props) =>
     props.theme.forms.input.border.radius};
