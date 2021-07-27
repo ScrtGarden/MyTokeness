@@ -8,7 +8,9 @@ const Home = (): JSX.Element => {
     <Container>
       <InnerContainer>
         <Title>Welcome to the</Title>
-        <Brand>Secret Garden</Brand>
+        <Brand>{`Secret Garden${
+          process.env.NEXT_PUBLIC_IS_MAINNET === 'true' ? '' : ' (testnet)'
+        }`}</Brand>
         <Text>
           A place to create, manage and explore tokens on the Secret Network.
         </Text>
