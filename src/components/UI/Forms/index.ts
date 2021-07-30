@@ -1,5 +1,6 @@
 import ReactSelect from 'react-select'
-import styled from 'styled-components'
+import ReactAsyncSelect from 'react-select/async'
+import styled, { css } from 'styled-components'
 
 import Icon from '../../Icons'
 
@@ -294,7 +295,7 @@ const ToggleWrapper = styled.div`
   flex-direction: row;
 `
 
-const StyledSelect = styled(ReactSelect)`
+const ReactSelectCss = css`
   ${Field}:not([hidden]) & {
     margin-top: 10px;
   }
@@ -352,6 +353,14 @@ const StyledSelect = styled(ReactSelect)`
   }
 `
 
+const StyledSelect = styled(ReactSelect)`
+  ${ReactSelectCss}
+`
+
+const StyledAsyncSelect = styled(ReactAsyncSelect)`
+  ${ReactSelectCss}
+`
+
 export {
   Field,
   Hint,
@@ -369,4 +378,5 @@ export {
   ToggleField,
   ToggleWrapper,
   StyledSelect,
+  StyledAsyncSelect,
 }
