@@ -1,19 +1,19 @@
 import { FC, FormEvent, memo, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { MAX_GAS } from '../../../../../utils/constants'
-import parseErrorMsg from '../../../../../utils/parseErrorMsg'
-import { amountPattern } from '../../../../../utils/regexPatterns'
-import { useStoreState } from '../../../../hooks/storeHooks'
-import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
-import useMutationExeContract from '../../../../hooks/useMutationExeContract'
-import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
-import useQuerySnip20Info from '../../../../hooks/useQuerySnip20Info'
-import ButtonWithLoading from '../../../Common/ButtonWithLoading'
-import MessageWithIcon from '../../../Common/MessageWithIcon'
-import { Card, Header, Wrapper } from '../../../UI/Card'
-import { Field, Input, InputGroup, Label, Symbol } from '../../../UI/Forms'
-import { StyledDots } from '../../../UI/Loaders'
+import { MAX_GAS } from '../../../../utils/constants'
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
+import { amountPattern } from '../../../../utils/regexPatterns'
+import { useStoreState } from '../../../hooks/storeHooks'
+import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
+import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
+import useQuerySnip20Info from '../../../hooks/useQuerySnip20Info'
+import ButtonWithLoading from '../../Common/ButtonWithLoading'
+import MessageWithIcon from '../../Common/MessageWithIcon'
+import { Card, Header, Wrapper } from '../../UI/Card'
+import { Field, Input, InputGroup, Label, Symbol } from '../../UI/Forms'
+import { StyledDots } from '../../UI/Loaders'
 import { format, validate } from './lib'
 
 type Props = {
@@ -40,7 +40,7 @@ const BurnCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
 
   const { data, isLoading: fetchingInfo } = useQuerySnip20Info(
     contractAddress,
-    { enabled: success }
+    { enabled: success && !!contractAddress }
   )
 
   // lifecycles

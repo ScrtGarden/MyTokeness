@@ -6,22 +6,22 @@ import {
   HandleMsgSetMinters,
   QueryMinters,
   ResultMinters,
-} from '../../../../../interface/snip20'
-import { MAX_GAS } from '../../../../../utils/constants'
-import isSecretAddress from '../../../../../utils/isSecretAddress'
-import parseErrorMsg from '../../../../../utils/parseErrorMsg'
-import { useStoreState } from '../../../../hooks/storeHooks'
-import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
-import useMutationExeContract from '../../../../hooks/useMutationExeContract'
-import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
-import useQueryContract from '../../../../hooks/useQueryContract'
-import ButtonWithLoading from '../../../Common/ButtonWithLoading'
-import MessageWithIcon from '../../../Common/MessageWithIcon'
-import { IconButton, StyledIcon } from '../../../UI/Buttons'
-import { Card, Header, Wrapper } from '../../../UI/Card'
-import { Input } from '../../../UI/Forms'
-import { Skeleton } from '../../../UI/Loaders'
-import { Text } from '../../../UI/Typography'
+} from '../../../../interface/snip20'
+import { MAX_GAS } from '../../../../utils/constants'
+import isSecretAddress from '../../../../utils/isSecretAddress'
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
+import { useStoreState } from '../../../hooks/storeHooks'
+import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
+import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
+import useQueryContract from '../../../hooks/useQueryContract'
+import ButtonWithLoading from '../../Common/ButtonWithLoading'
+import MessageWithIcon from '../../Common/MessageWithIcon'
+import { IconButton, StyledIcon } from '../../UI/Buttons'
+import { Card, Header, Wrapper } from '../../UI/Card'
+import { Input } from '../../UI/Forms'
+import { Skeleton } from '../../UI/Loaders'
+import { Text } from '../../UI/Typography'
 import { AddBar, Field } from './styles'
 
 const DUMMY_ARRAY = Array.from(Array(2).keys())
@@ -50,7 +50,7 @@ const MintersCard: FC<Props> = ({ contractAddress, enableButton, success }) => {
     ['minters', contractAddress],
     contractAddress,
     { minters: {} },
-    { enabled: success, refetchOnWindowFocus: false }
+    { enabled: success && !!contractAddress, refetchOnWindowFocus: false }
   )
 
   // component state

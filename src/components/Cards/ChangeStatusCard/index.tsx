@@ -5,18 +5,18 @@ import {
   HandleMsgSetContractStatus,
   QueryContractStatus,
   ResultContractStatus,
-} from '../../../../../interface/snip20'
-import { MAX_GAS } from '../../../../../utils/constants'
-import parseErrorMsg from '../../../../../utils/parseErrorMsg'
-import { useStoreState } from '../../../../hooks/storeHooks'
-import useMutationConnectWallet from '../../../../hooks/useMutationConnectWallet'
-import useMutationExeContract from '../../../../hooks/useMutationExeContract'
-import useMutationGetAccounts from '../../../../hooks/useMutationGetAccounts'
-import useQueryContract from '../../../../hooks/useQueryContract'
-import ButtonWithLoading from '../../../Common/ButtonWithLoading'
-import MessageWithIcon from '../../../Common/MessageWithIcon'
-import { Card, Header, Wrapper } from '../../../UI/Card'
-import { Option, Select } from '../../../UI/Forms'
+} from '../../../../interface/snip20'
+import { MAX_GAS } from '../../../../utils/constants'
+import parseErrorMsg from '../../../../utils/parseErrorMsg'
+import { useStoreState } from '../../../hooks/storeHooks'
+import useMutationConnectWallet from '../../../hooks/useMutationConnectWallet'
+import useMutationExeContract from '../../../hooks/useMutationExeContract'
+import useMutationGetAccounts from '../../../hooks/useMutationGetAccounts'
+import useQueryContract from '../../../hooks/useQueryContract'
+import ButtonWithLoading from '../../Common/ButtonWithLoading'
+import MessageWithIcon from '../../Common/MessageWithIcon'
+import { Card, Header, Wrapper } from '../../UI/Card'
+import { Option, Select } from '../../UI/Forms'
 import { SelectWrapper } from './styles'
 
 const OPTIONS = {
@@ -94,7 +94,6 @@ const ChangeStatusCard: FC<Props> = ({ contractAddress, enableButton }) => {
       {
         onSuccess: () => {
           toast.success('Updated contract status.')
-          setStatus('')
         },
         onError: (error) => {
           toast.error(parseErrorMsg(error))

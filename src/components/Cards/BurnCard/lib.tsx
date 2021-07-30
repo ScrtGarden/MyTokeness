@@ -1,8 +1,8 @@
-import { HandleMsgBurn } from '../../../../../interface/snip20'
-import addPadding from '../../../../../utils/addPadding'
-import toSmallestDenomination from '../../../../../utils/toSmallestDenomination'
+import { HandleMsgBurn } from '../../../../interface/snip20'
+import addPadding from '../../../../utils/addPadding'
+import toSmallestDenomination from '../../../../utils/toSmallestDenomination'
 
-const validate = (amount: string) => {
+const validate = (amount: string): { hasErrors: boolean; amount: string } => {
   const errors = {
     hasErrors: false,
     amount: '',
