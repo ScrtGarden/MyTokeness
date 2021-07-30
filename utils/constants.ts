@@ -1,11 +1,12 @@
 import { IconName } from '../src/components/Icons'
 
-interface Item {
+export interface Item {
   label: string
   icon: IconName
   route: string
   menu?: Item[]
   as?: string
+  external?: boolean
 }
 
 interface SidebarTabs {
@@ -105,6 +106,12 @@ const SIDEBAR_TABS: SidebarTabs = {
           as: undefined,
         },
       ],
+    },
+    auction: {
+      label: 'Auction',
+      icon: 'gavel-duo',
+      route: 'https://tulip.scrtgarden.com',
+      external: true,
     },
     // track: {
     //   label: 'Track',
