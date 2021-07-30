@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { FC, useEffect, useMemo, useState } from 'react'
 
@@ -85,58 +86,68 @@ const ManageLayout: FC = () => {
   }, [debouncedAddy])
 
   return (
-    <Container>
-      <InnerContainer>
-        <PageTitle>
-          {tab === 'mint' && 'Mint'}
-          {tab === 'burn' && 'Burn'}
-          {tab === 'minters' && 'Minters'}
-          {tab === 'admin' && 'Admin'}
-        </PageTitle>
-        <Content single>
-          <Snip20Selector
-            value={contractAddress}
-            debouncedValue={debouncedAddy}
-            onChange={setContractAddress}
-            loading={isLoading}
-            error={error}
-          />
-          {tab === 'mint' && (
-            <MintCard
-              contractAddress={contractAddress}
-              success={isSuccess}
-              enableButton={enableButton}
+    <>
+      <Head>
+        <title>
+          {tab === 'mint' ? 'Mint' : ''}
+          {tab === 'burn' ? 'Burn' : ''}
+          {tab === 'minters' ? 'Minters' : ''}
+          {tab === 'admin' ? 'Admin' : ''}&nbsp;| Secret Garden
+        </title>
+      </Head>
+      <Container>
+        <InnerContainer>
+          <PageTitle>
+            {tab === 'mint' && 'Mint'}
+            {tab === 'burn' && 'Burn'}
+            {tab === 'minters' && 'Minters'}
+            {tab === 'admin' && 'Admin'}
+          </PageTitle>
+          <Content single>
+            <Snip20Selector
+              value={contractAddress}
+              debouncedValue={debouncedAddy}
+              onChange={setContractAddress}
+              loading={isLoading}
+              error={error}
             />
-          )}
-          {tab === 'burn' && (
-            <BurnCard
-              contractAddress={contractAddress}
-              success={isSuccess}
-              enableButton={enableButton}
-            />
-          )}
-          {tab === 'minters' && (
-            <MintersCard
-              contractAddress={contractAddress}
-              success={isSuccess}
-              enableButton={enableButton}
-            />
-          )}
-          {tab === 'admin' && (
-            <>
-              <ChangeAdminCard
+            {tab === 'mint' && (
+              <MintCard
                 contractAddress={contractAddress}
+                success={isSuccess}
                 enableButton={enableButton}
               />
-              <ChangeStatusCard
+            )}
+            {tab === 'burn' && (
+              <BurnCard
                 contractAddress={contractAddress}
+                success={isSuccess}
                 enableButton={enableButton}
               />
-            </>
-          )}
-        </Content>
-      </InnerContainer>
-    </Container>
+            )}
+            {tab === 'minters' && (
+              <MintersCard
+                contractAddress={contractAddress}
+                success={isSuccess}
+                enableButton={enableButton}
+              />
+            )}
+            {tab === 'admin' && (
+              <>
+                <ChangeAdminCard
+                  contractAddress={contractAddress}
+                  enableButton={enableButton}
+                />
+                <ChangeStatusCard
+                  contractAddress={contractAddress}
+                  enableButton={enableButton}
+                />
+              </>
+            )}
+          </Content>
+        </InnerContainer>
+      </Container>
+    </>
   )
 }
 

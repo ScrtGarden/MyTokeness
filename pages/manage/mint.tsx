@@ -1,14 +1,6 @@
-import Head from 'next/head'
-
 import { getLayout } from '../../src/components/Layouts/ManageLayout'
 
-const Page = (): JSX.Element => (
-  <>
-    <Head>
-      <title>Mint | Secret Garden</title>
-    </Head>
-  </>
-)
+const Page = (): JSX.Element => <></>
 
 Page.getLayout = getLayout
 
