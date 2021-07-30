@@ -26,6 +26,7 @@ import ExternalLinkDuo from './ExternalLinkDuo'
 import FireDuo from './FireDuo'
 import Flower from './Flower'
 import FutbolBallDuo from './FutbolBallDuo'
+import GavelDuo from './GavelDuo'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
 import HandHoldingUSD from './HandHoldingUSD'
@@ -76,6 +77,7 @@ type Props = {
 }
 
 const ICON_MAP = {
+  'gavel-duo': GavelDuo,
   'treasure-hunt': TreasureHunt,
   'user-duo': UserDuo,
   'hands-heart-duo': HandsHeartDuo,
