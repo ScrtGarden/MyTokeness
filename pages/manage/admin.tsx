@@ -1,14 +1,12 @@
 import Head from 'next/head'
 
-import { getLayout } from '../../src/components/Layouts/SiteLayout'
-import Admin from '../../src/components/ManagePage/Admin'
+import { getLayout } from '../../src/components/Layouts/ManageLayout'
 
 const Page = (): JSX.Element => (
   <>
     <Head>
       <title>Admin | Secret Garden</title>
     </Head>
-    <Admin />
   </>
 )
 
