@@ -4,24 +4,12 @@ import { FC, memo, useMemo, useState } from 'react'
 import { useSpring, useTransition } from 'react-spring'
 import useDimensions from 'react-use-dimensions'
 
-import { IconName } from '../../../../Icons'
+import { Item as IItem } from '../../../../../../utils/constants'
 import Item from './Item'
 import { Container, Header, Label, Menu, StyledIcon, Wrapper } from './styles'
 
-interface Item {
-  label: string
-  icon: IconName
-  route: string
-  menu?: {
-    label: string
-    icon: IconName
-    route: string
-    as?: string
-  }[]
-}
-
 type Props = {
-  item: Item
+  item: IItem
   section?: string
   id?: string
 }
@@ -38,7 +26,7 @@ const matchRoute = (path: string, section?: string, id?: string) => {
 
 const Tab: FC<Props> = (props) => {
   const { item, section, id } = props
-  const { icon, label, menu, route } = item
+  const { icon, label, menu, route, external } = item
 
   const router = useRouter()
   const selected = useMemo(
@@ -62,7 +50,15 @@ const Tab: FC<Props> = (props) => {
   })
 
   const onClickHeader = () => {
-    !menu ? router.push(route, undefined, { shallow: true }) : setOpen(!open)
+    if (menu) {
+      setOpen(!open)
+    } else {
+      if (external) {
+        window.open(route, '_blank')
+      } else {
+        router.push(route, undefined, { shallow: true })
+      }
+    }
   }
 
   return (
@@ -75,6 +71,7 @@ const Tab: FC<Props> = (props) => {
         {menu && (
           <StyledIcon small="true" name={open ? 'caret-up' : 'caret-down'} />
         )}
+        {external && <StyledIcon name="external-link-duo" small="true" />}
       </Header>
       {menu &&
         transitions(
