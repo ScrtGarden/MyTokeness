@@ -63,7 +63,7 @@ const Transactions = () => {
           <Snip20Selector
             value={contractAddress}
             debouncedValue={debouncedAddy}
-            onChange={(e) => setContractAddress(e.currentTarget.value)}
+            onChange={setContractAddress}
             loading={isLoading || gettingKey}
             error={error}
           />
