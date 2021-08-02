@@ -1,7 +1,7 @@
-import { FC, memo } from 'react'
+import { memo } from 'react'
 import { Column, useTable } from 'react-table'
 
-import { RichTx } from '../../../../interface/snip20'
+import EmptyList from '../../EmptyList'
 import {
   Body,
   Cell,
@@ -12,12 +12,15 @@ import {
   Table as StyledTable,
 } from '../../UI/Table'
 
-type Props = {
-  data?: RichTx[]
-  columns: Column<RichTx>[]
+type Props<T extends Record<any, any>> = {
+  data: T[]
+  columns: Column<T>[]
 }
 
-const Table: FC<Props> = ({ data = [], columns }) => {
+const Table = <T extends Record<any, any>>({
+  data = [],
+  columns,
+}: Props<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -44,18 +47,29 @@ const Table: FC<Props> = ({ data = [], columns }) => {
         ))}
       </Head>
       <Body {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row)
-          return (
-            // eslint-disable-next-line react/jsx-key
-            <Row {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                // eslint-disable-next-line react/jsx-key
-                <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-              ))}
-            </Row>
-          )
-        })}
+        {rows.length !== 0 ? (
+          rows.map((row) => {
+            prepareRow(row)
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <Row {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
+                ))}
+              </Row>
+            )
+          })
+        ) : (
+          <Row>
+            <Cell colSpan={3}>
+              <EmptyList
+                icon="exchange-duo"
+                text="Looks like no tranfers have been made."
+              />
+            </Cell>
+          </Row>
+        )}
       </Body>
     </StyledTable>
   )

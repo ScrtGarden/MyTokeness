@@ -1,89 +1,142 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useQueryClient } from 'react-query'
+import { format } from 'date-fns'
+import { FC, useMemo, useState } from 'react'
+import { Column } from 'react-table'
 
 import {
   QueryTransferHistory,
   ResultTransferHistory,
+  Tx,
 } from '../../../../interface/snip20'
-import { useStoreState } from '../../../hooks/storeHooks'
-import useDebounce from '../../../hooks/useDebounce'
+import { DATE_FORMAT } from '../../../../utils/constants'
+import getTotalPages from '../../../../utils/getTotalPages'
 import useQueryContract from '../../../hooks/useQueryContract'
-import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
-import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
-import Snip20Selector from '../../Cards/Snip20Selector'
-import { Container, InnerContainer } from '../../UI/Containers'
-import { PageTitle } from '../../UI/Typography'
+import useUpdateEffect from '../../../hooks/useUpdateEffect'
+import SkeletonTable from '../../Common/SkeletonTable'
+import Pagination from '../../UI/Pagination'
+import { CustomCell } from '../../UI/Table'
+import { Container, StyledEmptyList } from '../styles'
+import Table from '../Table'
+import TransferCell from '../Table/TransferCell'
 
-// import Table from './Table'
+type Props = {
+  contractAddress: string
+  walletAddress: string
+  viewingKey?: string
+  loading?: boolean
+  decimals?: number
+}
 
-const Transfers = () => {
-  const queryClient = useQueryClient()
+const PAGE_SIZE = 10
 
-  // store state
-  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
-
+const Transfers: FC<Props> = ({
+  contractAddress,
+  walletAddress,
+  viewingKey,
+  loading,
+  decimals = 0,
+}) => {
   // component state
-  const [contractAddress, setContractAddress] = useState(
-    queryClient.getQueryData('selectedContractAddress') || ''
-  )
-  const debouncedAddy = useDebounce(contractAddress, 300)
-  const [error, setError] = useState('')
+  const [page, setPage] = useState(1)
 
-  // custom hooks
-  const { isLoading, isSuccess } = useQuerySnip20Config(debouncedAddy, {
-    onSuccess: () => {
-      queryClient.setQueryData('selectedContractAddress', debouncedAddy)
-    },
-    onError: () => {
-      setError('Unable to fetch token information.')
-    },
-  })
-  const enabled = useMemo(
-    () => !!(walletAddress && contractAddress && isSuccess),
-    [walletAddress, contractAddress, isSuccess]
-  )
-  const { data: viewingKey, isLoading: gettingKey } = useQuerySnip20ViewingKey(
-    { walletAddress, contractAddress: debouncedAddy },
-    {
-      enabled,
-      onError: () => {
-        setError("Can't find viewing key from Keplr Wallet.")
-      },
-    }
-  )
-
-  const {} = useQueryContract<QueryTransferHistory, ResultTransferHistory>(
-    ['transferHistory', walletAddress, contractAddress],
+  const { data, error, isLoading } = useQueryContract<
+    QueryTransferHistory,
+    ResultTransferHistory
+  >(
+    ['transferHistory', walletAddress, contractAddress, page - 1],
     contractAddress,
     {
       transfer_history: {
         address: walletAddress,
         key: viewingKey as string,
-        page: 0,
-        page_size: 10,
+        page: page - 1,
+        page_size: PAGE_SIZE,
       },
     },
-    { enabled: !!viewingKey, refetchOnWindowFocus: false }
+    {
+      enabled: !!viewingKey,
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
+    }
   )
 
-  // lifecycle
-  useEffect(() => {
-    setError('')
-  }, [debouncedAddy, viewingKey])
+  useUpdateEffect(() => {
+    setPage(1)
+  }, [contractAddress])
+
+  const totalPages = useMemo(
+    () =>
+      data && data.transfer_history.total
+        ? getTotalPages(data.transfer_history.total, PAGE_SIZE)
+        : -1,
+    [data]
+  )
+
+  const columns: Column<Tx>[] = useMemo(
+    () => [
+      {
+        Header: 'Id',
+        accessor: 'id',
+        width: 30,
+        Cell: ({ value }) => (
+          <CustomCell bold center>
+            {value}
+          </CustomCell>
+        ),
+      },
+      {
+        Header: () => <CustomCell left>Transfers</CustomCell>,
+        accessor: 'sender',
+        Cell: ({ row: { original: item } }) => (
+          <TransferCell
+            from={item.from}
+            receiver={item.receiver}
+            coin={item.coins}
+            walletAddress={walletAddress}
+            decimals={decimals}
+          />
+        ),
+      },
+      {
+        Header: () => <CustomCell left>Date</CustomCell>,
+        accessor: 'block_time',
+        width: 50,
+        Cell: ({ value }) => (
+          <CustomCell left>
+            {value ? format(value * 1000, DATE_FORMAT) : '--'}
+          </CustomCell>
+        ),
+      },
+    ],
+    [walletAddress, decimals]
+  )
+
+  if (isLoading || loading) {
+    return (
+      <Container>
+        <SkeletonTable rows={5} />
+      </Container>
+    )
+  }
+
+  if (!data || !!error) {
+    return (
+      <StyledEmptyList
+        icon="sad-tear-duo"
+        text="Ooops! Looks like something went wrong. Please try again later."
+      />
+    )
+  }
 
   return (
     <Container>
-      <InnerContainer>
-        <PageTitle>Transfers</PageTitle>
-        <Snip20Selector
-          value={contractAddress}
-          debouncedValue={debouncedAddy}
-          onChange={setContractAddress}
-          loading={isLoading || gettingKey}
-          error={error}
+      {totalPages !== 0 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onChange={setPage}
         />
-        {/* <Table columns={columns} data={data} /> */}
-      </InnerContainer>
+      )}
+      <Table data={data.transfer_history.txs} columns={columns} />
     </Container>
   )
 }
