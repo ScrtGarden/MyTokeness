@@ -51,7 +51,9 @@ const Pagination: FC<Props> = ({ totalPages, currentPage, onChange }) => {
         <Icon name="chevron-left" />
       </Button>
 
-      {totalPages < 6 ? (
+      {totalPages === -1 ? (
+        <Button selected={true}>{currentPage}</Button>
+      ) : totalPages < 6 ? (
         PAGES.map((number) => (
           <Button
             key={number}
@@ -103,7 +105,13 @@ const Pagination: FC<Props> = ({ totalPages, currentPage, onChange }) => {
 
       <Button
         hide={currentPage === totalPages}
-        onClick={() => onChange(Math.min(totalPages, currentPage + 1))}
+        onClick={() =>
+          onChange(
+            totalPages === -1
+              ? currentPage + 1
+              : Math.min(totalPages, currentPage + 1)
+          )
+        }
       >
         <Icon name="chevron-right" />
       </Button>
