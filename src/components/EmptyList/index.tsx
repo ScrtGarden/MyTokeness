@@ -9,6 +9,7 @@ type Props = {
   icon?: IconName
   className?: string
   buttonText?: string
+  buttonWidth?: number
   loading?: boolean
   onClick?: () => void
 }
@@ -19,6 +20,7 @@ const EmptyList: FC<Props> = ({
   className,
   buttonText = '',
   loading,
+  buttonWidth,
   onClick = () => null,
 }) => (
   <Container className={className}>
@@ -30,6 +32,7 @@ const EmptyList: FC<Props> = ({
         text={buttonText}
         onClick={onClick}
         isPrimary
+        width={buttonWidth}
       />
     )}
   </Container>
