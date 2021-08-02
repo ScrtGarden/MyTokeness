@@ -57,6 +57,7 @@ const Snip20Selector: FC<Props> = ({
           </Label>
           {showCustom ? (
             <InputWithLoading
+              placeholder="secret1gz5awqg4tdl93nqqyjw62ngxmwjns26c3urf46"
               value={value}
               onChange={(e) => onChange(e.currentTarget.value)}
               loading={loading}
