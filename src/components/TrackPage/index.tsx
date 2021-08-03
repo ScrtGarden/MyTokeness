@@ -3,18 +3,26 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import parseErrorMsg from '../../../utils/parseErrorMsg'
+import { TRACK_TOKENS } from '../../../utils/tokens'
 import { useStoreState } from '../../hooks/storeHooks'
 import useDebounce from '../../hooks/useDebounce'
 import useMutationSuggestToken from '../../hooks/useMutationSuggestToken'
 import useQuerySnip20Info from '../../hooks/useQuerySnip20Info'
 import useQuerySnip20ViewingKey from '../../hooks/useQuerySnip20ViewingKey'
 import Snip20Selector from '../Cards/Snip20Selector'
+import SkeletonTable from '../Common/SkeletonTable'
 import { Container, Content, InnerContainer } from '../UI/Containers'
-import Spinner from '../UI/Loaders/Spinner'
 import { PageTitle } from '../UI/Typography'
-import { StyledEmptyList } from './styles'
+import { StyledEmptyList, Container as Wrapper } from './styles'
 import Transactions from './Transactions'
 import Transfers from './Transfers'
+
+const OPTIONS = TRACK_TOKENS[
+  process.env.NEXT_PUBLIC_IS_MAINNET === 'true' ? 'MAINNET' : 'TESTNET'
+].map((item) => ({
+  value: item.address,
+  label: `${item.symbol} - ${item.name}`,
+}))
 
 const TrackPage: FC = () => {
   const router = useRouter()
@@ -89,8 +97,15 @@ const TrackPage: FC = () => {
             onChange={setContractAddress}
             loading={false}
             error={error}
+            extraOptions={OPTIONS}
+            label="Tokens"
+            switchText="or select token"
           />
-          {isLoading && <Spinner />}
+          {isLoading && (
+            <Wrapper>
+              <SkeletonTable rows={5} />
+            </Wrapper>
+          )}
 
           {!isLoading && !debouncedAddy && (
             <StyledEmptyList
