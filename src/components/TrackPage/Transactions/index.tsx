@@ -1,83 +1,151 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useQueryClient } from 'react-query'
+import { format } from 'date-fns'
+import { FC, memo, useMemo, useState } from 'react'
+import { Column } from 'react-table'
 
-import { useStoreState } from '../../../hooks/storeHooks'
-import useDebounce from '../../../hooks/useDebounce'
-import useQuerySnip20Config from '../../../hooks/useQuerySnip20Config'
-import useQuerySnip20ViewingKey from '../../../hooks/useQuerySnip20ViewingKey'
-import Snip20Selector from '../../Cards/Snip20Selector'
-import { Container, InnerContainer } from '../../UI/Containers'
-import { PageTitle } from '../../UI/Typography'
-import { Content } from '../styles'
-import History from './History'
+import {
+  QueryTransactionHistory,
+  ResultTransactionHistory,
+  RichTx,
+} from '../../../../interface/snip20'
+import { DATE_FORMAT } from '../../../../utils/constants'
+import getTotalPages from '../../../../utils/getTotalPages'
+import useQueryContract from '../../../hooks/useQueryContract'
+import useUpdateEffect from '../../../hooks/useUpdateEffect'
+import SkeletonTable from '../../Common/SkeletonTable'
+import Pagination from '../../UI/Pagination'
+import { CustomCell } from '../../UI/Table'
+import { Container, StyledEmptyList } from '../styles'
+import Table from '../Table'
+import ActionCell from '../Table/ActionCell'
 
-const Transactions = () => {
-  const queryClient = useQueryClient()
+type Props = {
+  contractAddress: string
+  walletAddress: string
+  viewingKey?: string
+  loading?: boolean
+  decimals?: number
+}
 
-  // store state
-  const walletAddress = useStoreState((state) => state.auth.connectedAddress)
+const PAGE_SIZE = 10
 
+const History: FC<Props> = ({
+  contractAddress,
+  walletAddress,
+  viewingKey,
+  loading,
+  decimals = 0,
+}) => {
   // component state
-  const [contractAddress, setContractAddress] = useState(
-    queryClient.getQueryData('selectedContractAddress') || ''
-  )
-  const debouncedAddy = useDebounce(contractAddress, 300)
-  const [error, setError] = useState('')
+  const [page, setPage] = useState(1)
 
-  // custom hook - query snip20 config's
-  const { isLoading, isSuccess } = useQuerySnip20Config(debouncedAddy, {
-    onSuccess: () => {
-      queryClient.setQueryData('selectedContractAddress', debouncedAddy)
-    },
-    onError: () => {
-      setError('Unable to fetch token information.')
-    },
-  })
-
-  // custom hook - only query viewing key if connected to keplr and snip20
-  // config is valid
-  const enabled = useMemo(
-    () => !!(walletAddress && contractAddress && isSuccess),
-    [walletAddress, contractAddress, isSuccess]
-  )
-  const { data: viewingKey, isLoading: gettingKey } = useQuerySnip20ViewingKey(
-    { walletAddress, contractAddress: debouncedAddy },
+  // custom hook - only query transaction history if viewing key is valid
+  const { data, isLoading, error } = useQueryContract<
+    QueryTransactionHistory,
+    ResultTransactionHistory
+  >(
+    ['transactionHistory', walletAddress, contractAddress, page - 1],
+    contractAddress,
     {
-      enabled,
-      onError: () => {
-        setError("Can't find viewing key from Keplr Wallet.")
+      transaction_history: {
+        address: walletAddress,
+        key: viewingKey as string,
+        page: page - 1,
+        page_size: PAGE_SIZE,
       },
+    },
+    {
+      enabled: !!viewingKey,
+      refetchOnWindowFocus: false,
+      retry: false,
+      keepPreviousData: true,
     }
   )
 
-  // lifecycle
-  useEffect(() => {
-    setError('')
-  }, [debouncedAddy, viewingKey])
+  useUpdateEffect(() => {
+    setPage(1)
+  }, [contractAddress])
+
+  const totalPages = useMemo(
+    () =>
+      data && data.transaction_history.total
+        ? getTotalPages(data.transaction_history.total, PAGE_SIZE)
+        : -1,
+    [data]
+  )
+
+  const columns: Column<RichTx>[] = useMemo(
+    () => [
+      {
+        Header: 'ID',
+        accessor: 'id',
+        width: 40,
+        Cell: ({ value }) => (
+          <CustomCell bold center>
+            {value}
+          </CustomCell>
+        ),
+      },
+      {
+        Header: () => <CustomCell left>Action</CustomCell>,
+        accessor: 'action',
+        Cell: ({ row: { original } }) => (
+          <ActionCell tx={original} decimals={decimals} />
+        ),
+      },
+      {
+        Header: () => <CustomCell left>Memo</CustomCell>,
+        accessor: 'memo',
+        Cell: ({ value }) => <CustomCell left>{value || '--'}</CustomCell>,
+      },
+      {
+        Header: () => <CustomCell left>Date</CustomCell>,
+        accessor: 'block_time',
+        width: 90,
+        Cell: ({ value }) => (
+          <CustomCell left>
+            {value ? format(value * 1000, DATE_FORMAT) : '--'}
+          </CustomCell>
+        ),
+      },
+    ],
+    [decimals]
+  )
+
+  if (isLoading || loading) {
+    return (
+      <Container>
+        <SkeletonTable rows={5} />
+      </Container>
+    )
+  }
+
+  if (!data || !!error) {
+    return (
+      <StyledEmptyList
+        icon="sad-tear-duo"
+        text="Ooops! Looks like something went wrong. Please try again later."
+      />
+    )
+  }
 
   return (
     <Container>
-      <InnerContainer>
-        <PageTitle>Transactions</PageTitle>
-        <Content>
-          <Snip20Selector
-            value={contractAddress}
-            debouncedValue={debouncedAddy}
-            onChange={(e) => setContractAddress(e.currentTarget.value)}
-            loading={isLoading || gettingKey}
-            error={error}
-          />
-          <History
-            contractAddress={debouncedAddy}
-            walletAddress={walletAddress}
-            viewingKey={viewingKey}
-            success={isSuccess && !!viewingKey}
-            loading={isLoading || gettingKey}
-          />
-        </Content>
-      </InnerContainer>
+      {totalPages !== 0 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onChange={setPage}
+        />
+      )}
+      <Table
+        columns={columns}
+        data={data.transaction_history.txs}
+        emptyListIcon="list-ul-duo"
+        emptyListText="Look like there's no transactions made here."
+        colSpan={4}
+      />
     </Container>
   )
 }
 
-export default Transactions
+export default memo(History)

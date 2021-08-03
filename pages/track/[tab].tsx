@@ -1,7 +1,7 @@
 import { getLayout } from '../../src/components/Layouts/SiteLayout'
-import Transfers from '../../src/components/TrackPage/Transfers'
+import Track from '../../src/components/TrackPage'
 
-const Page = () => <Transfers />
+const Page = (): JSX.Element => <Track />
 
 Page.getLayout = getLayout
 

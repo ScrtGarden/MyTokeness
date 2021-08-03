@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react'
 
-type CopyStatus = 'inactive' | 'copied' | 'failed'
+export type CopyStatus = 'inactive' | 'copied' | 'failed'
 
 const useCopyToClipboard = (
   text: string,

@@ -49,12 +49,15 @@ export interface TransferHistory {
   page_size?: number
 }
 
-export interface LegacyTx {
+export interface Tx {
   id: number
   from: string
   sender: string
   receiver: string
   coins: Coin
+  memo?: string
+  block_time?: number
+  block_height?: number
 }
 
 export interface TransactionHistory {
@@ -62,15 +65,6 @@ export interface TransactionHistory {
   key: string
   page?: number
   page_size?: number
-}
-
-export interface Tx {
-  id: number
-  action: TxAction
-  coins: Coin
-  memo?: string
-  block_time?: number
-  block_height?: number
 }
 
 export interface TxAction {
@@ -120,15 +114,15 @@ export interface RichTx {
  */
 
 export interface QueryTokenConfig {
-  token_config: {}
+  token_config: Record<string, never>
 }
 
 export interface QueryTokenInfo {
-  token_info: {}
+  token_info: Record<string, never>
 }
 
 export interface QueryMinters {
-  minters: {}
+  minters: Record<string, never>
 }
 
 export interface QueryTransferHistory {
@@ -140,7 +134,7 @@ export interface QueryTransactionHistory {
 }
 
 export interface QueryContractStatus {
-  contract_status: {}
+  contract_status: Record<string, never>
 }
 
 /**
@@ -163,14 +157,15 @@ export interface ResultMinters {
 
 export interface ResultTransferHistory {
   transfer_history: {
-    txs: LegacyTx[]
+    txs: Tx[]
+    total?: number
   }
 }
 
 export interface ResultTransactionHistory {
   transaction_history: {
     txs: RichTx[]
-    total: number
+    total?: number
   }
 }
 

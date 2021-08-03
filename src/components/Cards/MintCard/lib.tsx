@@ -1,9 +1,15 @@
-import { HandleMsgMint } from '../../../../../interface/snip20'
-import addPadding from '../../../../../utils/addPadding'
-import isSecretAddress from '../../../../../utils/isSecretAddress'
-import toSmallestDenomination from '../../../../../utils/toSmallestDenomination'
+import { HandleMsgMint } from '../../../../interface/snip20'
+import addPadding from '../../../../utils/addPadding'
+import isSecretAddress from '../../../../utils/isSecretAddress'
+import toSmallestDenomination from '../../../../utils/toSmallestDenomination'
 
-const validate = (recipient: string, amount: string) => {
+interface ValidateResult {
+  hasErrors: boolean
+  recipient: string
+  amount: string
+}
+
+const validate = (recipient: string, amount: string): ValidateResult => {
   const errors = {
     hasErrors: false,
     recipient: '',

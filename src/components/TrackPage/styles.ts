@@ -1,11 +1,16 @@
 import styled from 'styled-components'
 
-const Content = styled.div`
-  align-items: center;
+import EmptyList from '../EmptyList'
+
+const Container = styled.div`
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  row-gap: ${(props) => props.theme.space.xl};
+  row-gap: ${(props) => props.theme.space.md};
+`
+
+const StyledEmptyList = styled(EmptyList)`
   width: 100%;
 `
 
-export { Content }
+export { Container, StyledEmptyList }

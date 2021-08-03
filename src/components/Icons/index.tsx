@@ -13,6 +13,7 @@ import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
 import CirclePlayDuo from './CirclePlayDuo'
+import CoinDuo from './CoinDuo'
 import CopyDuo from './CopyDuo'
 import CrownLogo from './CrownLogo'
 import Dizzy from './Dizzy'
@@ -26,6 +27,7 @@ import ExternalLinkDuo from './ExternalLinkDuo'
 import FireDuo from './FireDuo'
 import Flower from './Flower'
 import FutbolBallDuo from './FutbolBallDuo'
+import GavelDuo from './GavelDuo'
 import GiftCardDuo from './GiftCardDuo'
 import GitHub from './GitHub'
 import HandHoldingUSD from './HandHoldingUSD'
@@ -52,6 +54,8 @@ import ReceiptDuo from './ReceiptDuo'
 import SadTearDuo from './SadTearDuo'
 import SecretNetworkLogo from './SecretNetworkLogo'
 import ShieldDuo from './ShieldDuo'
+import SignInDuo from './SignInDuo'
+import SignOutDuo from './SignOutDuo'
 import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
 import TasksAltDuo from './TasksAltDuo'
@@ -64,6 +68,7 @@ import UserCrownDuo from './UserCrownDuo'
 import UserDuo from './UserDuo'
 import UsersDuo from './UsersDuo'
 import UserShieldDuo from './UserShieldDuo'
+import WalletDuo from './WalletDuo'
 
 export type IconName = keyof typeof ICON_MAP
 
@@ -76,6 +81,11 @@ type Props = {
 }
 
 const ICON_MAP = {
+  'coin-duo': CoinDuo,
+  'wallet-duo': WalletDuo,
+  'sign-in-duo': SignInDuo,
+  'sign-out-duo': SignOutDuo,
+  'gavel-duo': GavelDuo,
   'treasure-hunt': TreasureHunt,
   'user-duo': UserDuo,
   'hands-heart-duo': HandsHeartDuo,

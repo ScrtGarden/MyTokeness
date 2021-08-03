@@ -1,12 +1,13 @@
 import commaNumber from 'comma-number'
 import { FC, memo, useMemo } from 'react'
 
-import { Tx } from '../../../../../interface/snip20'
+import { RichTx } from '../../../../../interface/snip20'
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
+import AddressWithCopy from '../../../Common/AddressWithCopyV2'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {
-  tx: Tx
+  tx: RichTx
   decimals?: number
 }
 
@@ -32,11 +33,14 @@ const ActionCell: FC<Props> = ({ tx, decimals }) => {
           </Field>
           <Field>
             <Label>Minter:</Label>
-            <Text>{action.mint.minter}</Text>
+            <AddressWithCopy address={action.mint.minter} placement="right" />
           </Field>
           <Field>
             <Label>Recipient:</Label>
-            <Text>{action.mint.recipient}</Text>
+            <AddressWithCopy
+              address={action.mint.recipient}
+              placement="right"
+            />
           </Field>
         </>
       )}
@@ -50,12 +54,12 @@ const ActionCell: FC<Props> = ({ tx, decimals }) => {
           </Field>
           <Field>
             <Label>From:</Label>
-            <Text>{action.burn.owner}</Text>
+            <AddressWithCopy address={action.burn.owner} placement="right" />
           </Field>
           {action.burn.burner && (
             <Field>
               <Label>Burner:</Label>
-              <Text>{action.burn.burner}</Text>
+              <AddressWithCopy address={action.burn.burner} placement="right" />
             </Field>
           )}
         </>
@@ -70,11 +74,14 @@ const ActionCell: FC<Props> = ({ tx, decimals }) => {
           </Field>
           <Field>
             <Label>From:</Label>
-            <Text>{action.transfer.from}</Text>
+            <AddressWithCopy address={action.transfer.from} placement="right" />
           </Field>
           <Field>
             <Label>To:</Label>
-            <Text>{action.transfer.recipient}</Text>
+            <AddressWithCopy
+              address={action.transfer.recipient}
+              placement="right"
+            />
           </Field>
         </>
       )}

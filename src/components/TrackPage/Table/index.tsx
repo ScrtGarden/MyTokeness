@@ -1,7 +1,8 @@
-import { FC, memo } from 'react'
+import { memo } from 'react'
 import { Column, useTable } from 'react-table'
 
-import { RichTx } from '../../../../interface/snip20'
+import EmptyList from '../../EmptyList'
+import { IconName } from '../../Icons'
 import {
   Body,
   Cell,
@@ -12,12 +13,21 @@ import {
   Table as StyledTable,
 } from '../../UI/Table'
 
-type Props = {
-  data?: RichTx[]
-  columns: Column<RichTx>[]
+type Props<T extends Record<any, any>> = {
+  data: T[]
+  columns: Column<T>[]
+  emptyListIcon: IconName
+  emptyListText: string
+  colSpan: number
 }
 
-const Table: FC<Props> = ({ data = [], columns }) => {
+const Table = <T extends Record<any, any>>({
+  data = [],
+  columns,
+  emptyListIcon,
+  emptyListText,
+  colSpan,
+}: Props<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -44,18 +54,26 @@ const Table: FC<Props> = ({ data = [], columns }) => {
         ))}
       </Head>
       <Body {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row)
-          return (
-            // eslint-disable-next-line react/jsx-key
-            <Row {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                // eslint-disable-next-line react/jsx-key
-                <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-              ))}
-            </Row>
-          )
-        })}
+        {rows.length !== 0 ? (
+          rows.map((row) => {
+            prepareRow(row)
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <Row {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
+                ))}
+              </Row>
+            )
+          })
+        ) : (
+          <Row>
+            <Cell colSpan={colSpan}>
+              <EmptyList icon={emptyListIcon} text={emptyListText} />
+            </Cell>
+          </Row>
+        )}
       </Body>
     </StyledTable>
   )
