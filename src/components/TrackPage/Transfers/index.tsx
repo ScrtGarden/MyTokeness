@@ -142,7 +142,13 @@ const Transfers: FC<Props> = ({
           onChange={setPage}
         />
       )}
-      <Table data={data.transfer_history.txs} columns={columns} />
+      <Table
+        data={data.transfer_history.txs}
+        columns={columns}
+        emptyListIcon="exchange-duo"
+        emptyListText="Look like there's no transfers made here."
+        colSpan={3}
+      />
     </Container>
   )
 }

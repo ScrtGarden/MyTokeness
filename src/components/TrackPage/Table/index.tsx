@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { Column, useTable } from 'react-table'
 
 import EmptyList from '../../EmptyList'
+import { IconName } from '../../Icons'
 import {
   Body,
   Cell,
@@ -15,11 +16,17 @@ import {
 type Props<T extends Record<any, any>> = {
   data: T[]
   columns: Column<T>[]
+  emptyListIcon: IconName
+  emptyListText: string
+  colSpan: number
 }
 
 const Table = <T extends Record<any, any>>({
   data = [],
   columns,
+  emptyListIcon,
+  emptyListText,
+  colSpan,
 }: Props<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -62,11 +69,8 @@ const Table = <T extends Record<any, any>>({
           })
         ) : (
           <Row>
-            <Cell colSpan={3}>
-              <EmptyList
-                icon="exchange-duo"
-                text="Looks like no tranfers have been made."
-              />
+            <Cell colSpan={colSpan}>
+              <EmptyList icon={emptyListIcon} text={emptyListText} />
             </Cell>
           </Row>
         )}

@@ -137,7 +137,13 @@ const History: FC<Props> = ({
           onChange={setPage}
         />
       )}
-      <Table columns={columns} data={data.transaction_history.txs} />
+      <Table
+        columns={columns}
+        data={data.transaction_history.txs}
+        emptyListIcon="list-ul-duo"
+        emptyListText="Look like there's no transactions made here."
+        colSpan={4}
+      />
     </Container>
   )
 }
