@@ -1,3 +1,4 @@
+import commaNuber from 'comma-number'
 import { FC, memo, useMemo } from 'react'
 import { Coin } from 'secretjs/types/types'
 
@@ -22,7 +23,7 @@ const TransferCell: FC<Props> = ({
 }) => {
   const isDeposit = useMemo(() => from !== walletAddress, [from, walletAddress])
   const trueAmount = useMemo(
-    () => toBiggestDenomination(coin.amount, decimals),
+    () => commaNuber(toBiggestDenomination(coin.amount, decimals)),
     [coin, decimals]
   )
 
