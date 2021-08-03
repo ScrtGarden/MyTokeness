@@ -13,6 +13,7 @@ import { Container, Content, InnerContainer } from '../UI/Containers'
 import Spinner from '../UI/Loaders/Spinner'
 import { PageTitle } from '../UI/Typography'
 import { StyledEmptyList } from './styles'
+import Transactions from './Transactions'
 import Transfers from './Transfers'
 
 const TrackPage: FC = () => {
@@ -118,6 +119,19 @@ const TrackPage: FC = () => {
               loading={isLoading || gettingInfo}
             />
           )}
+
+          {!isLoading &&
+            debouncedAddy &&
+            viewingKey &&
+            tab === 'transactions' && (
+              <Transactions
+                contractAddress={debouncedAddy}
+                walletAddress={walletAddress}
+                viewingKey={viewingKey}
+                decimals={tokenInfo?.token_info.decimals}
+                loading={isLoading || gettingInfo}
+              />
+            )}
         </Content>
       </InnerContainer>
     </Container>
