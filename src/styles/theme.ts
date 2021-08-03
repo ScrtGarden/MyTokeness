@@ -28,6 +28,7 @@ const theme = {
         disabled: '#404a50',
         error: '#e35b66',
         warn: '#e35b66',
+        inversePrimary: '#0e1115',
       },
       weights: {
         thin: 100,
