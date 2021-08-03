@@ -165,7 +165,7 @@ export interface ResultTransferHistory {
 export interface ResultTransactionHistory {
   transaction_history: {
     txs: RichTx[]
-    total: number
+    total?: number
   }
 }
 
