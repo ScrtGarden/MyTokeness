@@ -1,12 +1,12 @@
 import commaNumber from 'comma-number'
 import { FC, memo, useMemo } from 'react'
 
-import { Tx } from '../../../../../interface/snip20'
+import { RichTx } from '../../../../../interface/snip20'
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
 import { Container, Field, Label, Text, Title } from './styles'
 
 type Props = {
-  tx: Tx
+  tx: RichTx
   decimals?: number
 }
 
