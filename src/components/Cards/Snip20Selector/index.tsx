@@ -15,6 +15,9 @@ type Props = {
   onChange?: (value: string) => void
   loading?: boolean
   error?: string
+  extraOptions?: { value: string; label: string }[]
+  label?: string
+  switchText?: string
 }
 
 const Snip20Selector: FC<Props> = ({
@@ -22,6 +25,9 @@ const Snip20Selector: FC<Props> = ({
   onChange = () => null,
   loading,
   error,
+  extraOptions = [],
+  label = 'Your created tokens',
+  switchText = 'or select your created tokens',
 }) => {
   // store state
   const walletAddress = useStoreState((state) => state.auth.connectedAddress)
@@ -34,12 +40,14 @@ const Snip20Selector: FC<Props> = ({
   const options = useMemo(
     () =>
       data
-        ? data.map((item) => ({
-            value: item.address,
-            label: `$${item.symbol} - ${item.name}`,
-          }))
+        ? data
+            .map((item) => ({
+              value: item.address,
+              label: `${item.symbol} - ${item.name}`,
+            }))
+            .concat(extraOptions)
         : [],
-    [data]
+    [data, extraOptions]
   )
 
   const onSwitchaRoo = () => {
@@ -52,9 +60,7 @@ const Snip20Selector: FC<Props> = ({
       <Header>Token</Header>
       <Wrapper>
         <Field>
-          <Label>
-            {showCustom ? 'Contract address' : 'Your created tokens'}
-          </Label>
+          <Label>{showCustom ? 'Contract address' : label}</Label>
           {showCustom ? (
             <InputWithLoading
               placeholder="secret1gz5awqg4tdl93nqqyjw62ngxmwjns26c3urf46"
@@ -74,9 +80,7 @@ const Snip20Selector: FC<Props> = ({
             />
           )}
           <StyledHint onClick={onSwitchaRoo}>
-            {showCustom
-              ? 'or choose your created tokens'
-              : 'or add custom contract address'}
+            {showCustom ? switchText : 'or add custom contract address'}
           </StyledHint>
           {error && <MessageWithIcon validation="error" message={error} />}
         </Field>
