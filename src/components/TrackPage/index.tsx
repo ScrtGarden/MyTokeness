@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -85,71 +86,83 @@ const TrackPage: FC = () => {
   }
 
   return (
-    <Container>
-      <InnerContainer>
-        <PageTitle>
-          {tab === 'transfers' ? 'Transfers' : 'Transactions'}
-        </PageTitle>
-        <Content single>
-          <Snip20Selector
-            value={contractAddress}
-            debouncedValue={debouncedAddy}
-            onChange={setContractAddress}
-            loading={false}
-            error={error}
-            extraOptions={OPTIONS}
-            label="Tokens"
-            switchText="or select token"
-          />
-          {isLoading && (
-            <Wrapper>
-              <SkeletonTable rows={5} />
-            </Wrapper>
-          )}
-
-          {!isLoading && !debouncedAddy && (
-            <StyledEmptyList
-              icon="coin-duo"
-              text="To get started, please choose a token."
+    <>
+      <Head>
+        <title>
+          {tab === 'transfers' ? 'Transfers' : ''}
+          {tab === 'transactions' ? 'Transactions' : ''}
+          &nbsp;| Secret Garden
+        </title>
+      </Head>
+      <Container>
+        <InnerContainer>
+          <PageTitle>
+            {tab === 'transfers' ? 'Transfers' : 'Transactions'}
+          </PageTitle>
+          <Content single>
+            <Snip20Selector
+              value={contractAddress}
+              debouncedValue={debouncedAddy}
+              onChange={setContractAddress}
+              loading={false}
+              error={error}
+              extraOptions={OPTIONS}
+              label="Tokens"
+              switchText="or select token"
             />
-          )}
+            {isLoading && (
+              <Wrapper>
+                <SkeletonTable rows={5} />
+              </Wrapper>
+            )}
 
-          {!isLoading && debouncedAddy && !viewingKey && (
-            <StyledEmptyList
-              icon="key-skeleton"
-              text="We need a viewing key to fetch your transfers."
-              buttonText="Get viewing key"
-              onClick={onClickGetKey}
-              loading={gettingKey}
-              buttonWidth={131}
-            />
-          )}
-
-          {!isLoading && debouncedAddy && viewingKey && tab === 'transfers' && (
-            <Transfers
-              contractAddress={debouncedAddy}
-              walletAddress={walletAddress}
-              viewingKey={viewingKey}
-              decimals={tokenInfo?.token_info.decimals}
-              loading={isLoading || gettingInfo}
-            />
-          )}
-
-          {!isLoading &&
-            debouncedAddy &&
-            viewingKey &&
-            tab === 'transactions' && (
-              <Transactions
-                contractAddress={debouncedAddy}
-                walletAddress={walletAddress}
-                viewingKey={viewingKey}
-                decimals={tokenInfo?.token_info.decimals}
-                loading={isLoading || gettingInfo}
+            {!isLoading && !debouncedAddy && (
+              <StyledEmptyList
+                icon="coin-duo"
+                text="To get started, please choose a token."
               />
             )}
-        </Content>
-      </InnerContainer>
-    </Container>
+
+            {!isLoading && debouncedAddy && !viewingKey && (
+              <StyledEmptyList
+                icon="key-skeleton"
+                text="We need a viewing key to fetch your transfers."
+                buttonText="Get viewing key"
+                onClick={onClickGetKey}
+                loading={gettingKey}
+                buttonWidth={131}
+              />
+            )}
+
+            {!isLoading &&
+              debouncedAddy &&
+              viewingKey &&
+              tab === 'transfers' && (
+                <Transfers
+                  contractAddress={debouncedAddy}
+                  walletAddress={walletAddress}
+                  viewingKey={viewingKey}
+                  decimals={tokenInfo?.token_info.decimals}
+                  loading={isLoading || gettingInfo}
+                />
+              )}
+
+            {!isLoading &&
+              debouncedAddy &&
+              viewingKey &&
+              tab === 'transactions' && (
+                <Transactions
+                  contractAddress={debouncedAddy}
+                  walletAddress={walletAddress}
+                  viewingKey={viewingKey}
+                  decimals={tokenInfo?.token_info.decimals}
+                  loading={isLoading || gettingInfo}
+                />
+              )}
+          </Content>
+        </InnerContainer>
+      </Container>
+    </>
   )
 }
 
