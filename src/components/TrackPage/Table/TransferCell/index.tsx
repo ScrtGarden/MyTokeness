@@ -3,7 +3,8 @@ import { FC, memo, useMemo } from 'react'
 import { Coin } from 'secretjs/types/types'
 
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
-import AddressWithCopy from '../../../Common/AddressWithCopyV2'
+import truncateAddress from '../../../../../utils/truncateAddress'
+import { Text } from '../../../UI/Typography'
 import { Amount, Container, StyledIcon, Wrapper } from './styles'
 
 type Props = {
@@ -31,14 +32,11 @@ const TransferCell: FC<Props> = ({
     <Container>
       <Wrapper>
         <StyledIcon name="wallet-duo" height={25} width={25} />
-        <AddressWithCopy
-          address={isDeposit ? from : receiver}
-          placement="right"
-        />
+        <Text primary>{truncateAddress(isDeposit ? from : receiver)}</Text>
       </Wrapper>
       <Amount deposit={isDeposit ? 'true' : 'false'}>
         {isDeposit ? '+' : '-'}
-        {`${trueAmount} ${coin.denom}`}
+        {` ${trueAmount} ${coin.denom}`}
       </Amount>
     </Container>
   )
