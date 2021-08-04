@@ -163,6 +163,7 @@ const FILE_UPLOADER = {
 const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
 
 const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
+const DETAILED_DATE_FORMAT = 'yyyy MMMM d, iiii, h:mm aa'
 
 const HEAD_TITLE_TEXT =
   'Secret Garden | Create, manage and explore tokens on the Secret Network.'
@@ -213,4 +214,5 @@ export {
   NFT_CATEGORIES,
   NFT_CATEGORIES_ICON_MAP,
   DAPP_CONTRACT_ADDRESSES,
+  DETAILED_DATE_FORMAT,
 }
