@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { Column, useTable } from 'react-table'
 
 import EmptyList from '../../EmptyList'
@@ -12,6 +12,8 @@ import {
   Row,
   Table as StyledTable,
 } from '../../UI/Table'
+import { StyledRow } from './styles'
+import TransferDetails from './TransferDetails'
 
 type Props<T extends Record<any, any>> = {
   data: T[]
@@ -33,6 +35,13 @@ const Table = <T extends Record<any, any>>({
       columns,
       data,
     })
+
+  const [selectedItem, setSelectedItem] = useState<number | null>(null)
+
+  console.log({ data })
+
+  const onClickRow = (id: number) =>
+    setSelectedItem(selectedItem === id ? null : id)
 
   return (
     <StyledTable {...getTableProps()}>
@@ -57,14 +66,31 @@ const Table = <T extends Record<any, any>>({
         {rows.length !== 0 ? (
           rows.map((row) => {
             prepareRow(row)
+            const selected = selectedItem === row.original.id
             return (
-              // eslint-disable-next-line react/jsx-key
-              <Row {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-                ))}
-              </Row>
+              <>
+                <StyledRow
+                  {...row.getRowProps()}
+                  onClick={() => onClickRow(row.original.id)}
+                  noborder={selected}
+                  foreground={selected}
+                  pointer
+                >
+                  {row.cells.map((cell) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
+                  ))}
+                </StyledRow>
+                {selected && (
+                  <StyledRow
+                    foreground
+                    pointer
+                    onClick={() => onClickRow(row.original.id)}
+                  >
+                    <TransferDetails data={row.original as any} />
+                  </StyledRow>
+                )}
+              </>
             )
           })
         ) : (
