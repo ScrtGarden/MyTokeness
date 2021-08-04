@@ -96,12 +96,6 @@ const Transfers: FC<Props> = ({
           />
         ),
       },
-      // {
-      //   Header: () => <CustomCell left>Memo</CustomCell>,
-      //   accessor: 'memo',
-      //   width: 80,
-      //   Cell: ({ value }) => <CustomCell left>{value || '--'}</CustomCell>,
-      // },
       {
         Header: () => <CustomCell left>Date</CustomCell>,
         accessor: 'block_time',
