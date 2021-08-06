@@ -6,6 +6,7 @@ interface PageTitleProps {
 
 interface TextProps {
   readonly primary?: boolean
+  readonly caps?: boolean
 }
 
 const PageTitle = styled.h1<PageTitleProps>`
@@ -23,6 +24,7 @@ const Text = styled.p<TextProps>`
   font-size: ${(props) => props.theme.font.sizes.md};
   line-height: ${(props) => props.theme.font.lineHeights.md};
   margin: 0;
+  ${(props) => props.caps && 'text-transform: uppercase'};
 
   span {
     color: ${(props) => props.theme.font.colors.primary};
