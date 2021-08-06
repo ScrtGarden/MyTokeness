@@ -84,7 +84,7 @@ const Transfers: FC<Props> = ({
         ),
       },
       {
-        Header: () => <CustomCell left>Transfers</CustomCell>,
+        Header: () => <CustomCell left>Transfer</CustomCell>,
         accessor: 'sender',
         Cell: ({ row: { original: item } }) => (
           <TransferCell
