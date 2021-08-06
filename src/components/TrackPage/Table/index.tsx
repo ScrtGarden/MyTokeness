@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { Fragment, memo, useState } from 'react'
 import { Column, useTable } from 'react-table'
 
 import EmptyList from '../../EmptyList'
@@ -12,8 +12,9 @@ import {
   Row,
   Table as StyledTable,
 } from '../../UI/Table'
+import TransactionDetails from './Details/transaction'
+import TransferDetails from './Details/transfer'
 import { StyledRow } from './styles'
-import TransferDetails from './TransferDetails'
 
 type Props<T extends Record<any, any>> = {
   data: T[]
@@ -21,6 +22,7 @@ type Props<T extends Record<any, any>> = {
   emptyListIcon: IconName
   emptyListText: string
   colSpan: number
+  type?: 'transfer' | 'transaction'
 }
 
 const Table = <T extends Record<any, any>>({
@@ -29,6 +31,7 @@ const Table = <T extends Record<any, any>>({
   emptyListIcon,
   emptyListText,
   colSpan,
+  type = 'transfer',
 }: Props<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -68,7 +71,7 @@ const Table = <T extends Record<any, any>>({
             prepareRow(row)
             const selected = selectedItem === row.original.id
             return (
-              <>
+              <Fragment key={row.getRowProps().key}>
                 <StyledRow
                   {...row.getRowProps()}
                   onClick={() => onClickRow(row.original.id)}
@@ -87,10 +90,14 @@ const Table = <T extends Record<any, any>>({
                     pointer
                     onClick={() => onClickRow(row.original.id)}
                   >
-                    <TransferDetails data={row.original as any} />
+                    {type === 'transfer' ? (
+                      <TransferDetails data={row.original as any} />
+                    ) : (
+                      <TransactionDetails data={row.original as any} />
+                    )}
                   </StyledRow>
                 )}
-              </>
+              </Fragment>
             )
           })
         ) : (
