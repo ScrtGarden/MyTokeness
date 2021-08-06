@@ -41,8 +41,6 @@ const Table = <T extends Record<any, any>>({
 
   const [selectedItem, setSelectedItem] = useState<number | null>(null)
 
-  console.log({ data })
-
   const onClickRow = (id: number) =>
     setSelectedItem(selectedItem === id ? null : id)
 
