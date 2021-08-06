@@ -22,7 +22,14 @@ const TransferCell: FC<Props> = ({
   decimals,
   walletAddress,
 }) => {
-  const isDeposit = useMemo(() => from !== walletAddress, [from, walletAddress])
+  const isDeposit = useMemo(() => {
+    if (from !== walletAddress && receiver !== walletAddress) {
+      return null
+    } else {
+      return receiver === walletAddress
+    }
+  }, [from, receiver, walletAddress])
+
   const trueAmount = useMemo(
     () => commaNuber(toBiggestDenomination(coin.amount, decimals)),
     [coin, decimals]
@@ -32,10 +39,24 @@ const TransferCell: FC<Props> = ({
     <Container>
       <Wrapper>
         <StyledIcon name="wallet-duo" height={25} width={25} />
-        <Text primary>{truncateAddress(isDeposit ? from : receiver)}</Text>
+        <Text primary>
+          {isDeposit === null &&
+            `${truncateAddress(from, 7, 6)} -> ${truncateAddress(
+              receiver,
+              7,
+              6
+            )}`}
+          {isDeposit === true && truncateAddress(from)}
+          {isDeposit === false && truncateAddress(receiver)}
+        </Text>
       </Wrapper>
-      <Amount deposit={isDeposit ? 'true' : 'false'}>
-        {isDeposit ? '+' : '-'}
+      <Amount
+        deposit={
+          isDeposit === null ? 'null' : isDeposit === true ? 'true' : 'false'
+        }
+      >
+        {isDeposit === true && '+'}
+        {isDeposit === false && '-'}
         {` ${trueAmount} ${coin.denom}`}
       </Amount>
     </Container>

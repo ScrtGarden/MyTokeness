@@ -4,7 +4,7 @@ import { IconName } from '../../Icons'
 interface ParseTransactionResult {
   type: string
   icon: IconName
-  isDeposit: boolean
+  isDeposit: boolean | null
   address: string
   from?: string
   sender?: string
@@ -20,11 +20,12 @@ const parseTransaction = (
 ): ParseTransactionResult => {
   if (action.transfer) {
     const { from, recipient } = action.transfer
+    const isOnlySender = from !== walletAddress && recipient !== walletAddress
     const isDeposit = recipient === walletAddress
     return {
       type: 'transfer',
       icon: 'wallet-duo',
-      isDeposit,
+      isDeposit: isOnlySender ? null : isDeposit,
       address: isDeposit ? from : recipient,
       ...action.transfer,
     }

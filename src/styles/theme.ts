@@ -92,6 +92,9 @@ const theme = {
       teal: {
         400: '#02a191',
       },
+      grey: {
+        400: '#c2c8cc',
+      },
     },
 
     // buttons

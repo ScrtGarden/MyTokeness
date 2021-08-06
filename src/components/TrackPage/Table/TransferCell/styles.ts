@@ -7,7 +7,7 @@ interface IconProps {
 }
 
 interface AmountProps {
-  readonly deposit: 'true' | 'false'
+  readonly deposit: 'true' | 'false' | 'null'
 }
 
 const Container = styled.div`
@@ -35,7 +35,13 @@ const Label = styled.p`
 
 const Amount = styled.p<AmountProps>`
   color: ${(props) =>
-    props.theme.palette[props.deposit === 'true' ? 'green' : 'red'][400]};
+    props.theme.palette[
+      props.deposit === 'null'
+        ? 'grey'
+        : props.deposit === 'true'
+        ? 'green'
+        : 'red'
+    ][400]};
   margin: 0;
 `
 

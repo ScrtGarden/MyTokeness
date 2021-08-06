@@ -24,7 +24,7 @@ const TransactionCell: FC<Props> = ({ tx, decimals, walletAddress }) => {
     () => commaNumber(toBiggestDenomination(amount, decimals)),
     [decimals, amount]
   )
-  const { isDeposit, icon, address } = useMemo(
+  const { isDeposit, icon, address, from, recipient } = useMemo(
     () => parseTransaction(action, walletAddress),
     [action, walletAddress]
   )
@@ -33,10 +33,24 @@ const TransactionCell: FC<Props> = ({ tx, decimals, walletAddress }) => {
     <Container>
       <Wrapper>
         <StyledIcon name={icon} height={25} width={25} />
-        <Text primary>{truncateAddress(address)}</Text>
+        <Text primary>
+          {isDeposit === null &&
+            `${truncateAddress(from || '', 7, 6)} -> ${truncateAddress(
+              recipient || '',
+              7,
+              6
+            )}`}
+          {(isDeposit === true || isDeposit === false) &&
+            truncateAddress(address)}
+        </Text>
       </Wrapper>
-      <Amount deposit={isDeposit ? 'true' : 'false'}>
-        {isDeposit ? '+' : '-'}
+      <Amount
+        deposit={
+          isDeposit === null ? 'null' : isDeposit === true ? 'true' : 'false'
+        }
+      >
+        {isDeposit === true && '+'}
+        {isDeposit === false && '-'}
         {` ${parsedAmount} ${denom}`}
       </Amount>
     </Container>
