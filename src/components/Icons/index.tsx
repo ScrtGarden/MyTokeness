@@ -48,17 +48,20 @@ import NarwhalDuo from './NarwhalDuo'
 import Palette from './Palette'
 import PencilPaintbrushDuo from './PencilPaintbrushDuo'
 import PhotoVideoDuo from './PhotoVideoDuo'
+import PiggyBankDuo from './PiggyBankDuo'
 import Plus from './Plus'
 import PuzzlePiece from './PuzzlePiece'
 import ReceiptDuo from './ReceiptDuo'
 import SadTearDuo from './SadTearDuo'
 import SecretNetworkLogo from './SecretNetworkLogo'
+import SecretSwapLogo from './SecretSwapLogo'
 import ShieldDuo from './ShieldDuo'
 import SignInDuo from './SignInDuo'
 import SignOutDuo from './SignOutDuo'
 import StampDuo from './StampDuo'
 import StoreDuo from './StoreDuo'
 import TasksAltDuo from './TasksAltDuo'
+import TicketDuo from './TicketDuo'
 import Times from './Times'
 import ToolboxDuo from './ToolboxDuo'
 import TrashDuo from './TrashDuo'
@@ -81,6 +84,9 @@ type Props = {
 }
 
 const ICON_MAP = {
+  'piggy-bank-duo': PiggyBankDuo,
+  'ticket-duo': TicketDuo,
+  'secret-swap-logo': SecretSwapLogo,
   'coin-duo': CoinDuo,
   'wallet-duo': WalletDuo,
   'sign-in-duo': SignInDuo,
