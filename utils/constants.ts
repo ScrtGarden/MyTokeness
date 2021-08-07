@@ -15,12 +15,6 @@ interface SidebarTabs {
   NFT: Record<string, Item>
 }
 
-interface Dapp {
-  icon: IconName
-  name: string
-  description: string
-}
-
 const calcBatchMint = (amount: string): string => {
   switch (amount) {
     case '2':
@@ -195,14 +189,6 @@ const NFT_CATEGORIES_ICON_MAP: Record<
   'Virtual Worlds': { ICON: 'head-side-goggles-duo', COLOR: '#A7E9AF' }, // green
 }
 
-const DAPP_CONTRACT_ADDRESSES: Record<string, Dapp> = {
-  secret1z2p2d9kzz0swjgm2ht6ra7t7l9vhnxzjg4qazn: {
-    icon: 'wallet-duo',
-    name: 'Secret Wallet Account',
-    description: '',
-  },
-}
-
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
@@ -213,6 +199,5 @@ export {
   HEAD_TITLE_TEXT,
   NFT_CATEGORIES,
   NFT_CATEGORIES_ICON_MAP,
-  DAPP_CONTRACT_ADDRESSES,
   DETAILED_DATE_FORMAT,
 }
