@@ -7,6 +7,7 @@ interface PageTitleProps {
 interface TextProps {
   readonly primary?: boolean
   readonly caps?: boolean
+  readonly size?: 'small' | 'medium' | 'large'
 }
 
 const PageTitle = styled.h1<PageTitleProps>`
@@ -22,6 +23,10 @@ const Text = styled.p<TextProps>`
   color: ${(props) =>
     props.theme.font.colors[props.primary ? 'primary' : 'secondary']};
   font-size: ${(props) => props.theme.font.sizes.md};
+  ${(props) =>
+    props.size === 'small' && `font-size: ${props.theme.font.sizes.sm}`};
+  ${(props) =>
+    props.size === 'large' && `font-size: ${props.theme.font.sizes.lg}`};
   line-height: ${(props) => props.theme.font.lineHeights.md};
   margin: 0;
   ${(props) => props.caps && 'text-transform: uppercase'};
