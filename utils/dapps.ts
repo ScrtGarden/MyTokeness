@@ -509,6 +509,11 @@ const MAINNET_DAPPS: Record<string, Dapp> = {
     name: 'SecretSwap',
     description: 'REWARDS SEFI-SEFI',
   },
+  secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr: {
+    icon: 'secret-swap-logo',
+    name: 'SecretSwap',
+    description: 'REWARDS SEFI-SEFI v2',
+  },
   secret1q6y7wz6pev80aadyjsejk5xr2yj4mkrj40zrvn: {
     icon: 'secret-swap-logo',
     name: 'SecretSwap',
