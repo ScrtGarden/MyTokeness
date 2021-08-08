@@ -76,6 +76,8 @@ const Table = <T extends Record<any, any>>({
                   noborder={selected}
                   foreground={selected}
                   pointer
+                  fixedheight
+                  hover={!selected}
                 >
                   {row.cells.map((cell) => (
                     // eslint-disable-next-line react/jsx-key

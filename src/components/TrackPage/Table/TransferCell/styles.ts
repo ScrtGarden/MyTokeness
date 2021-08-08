@@ -45,4 +45,10 @@ const Amount = styled.p<AmountProps>`
   margin: 0;
 `
 
-export { Container, StyledIcon, Label, Wrapper, Amount }
+const NameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: ${(props) => props.theme.space.xxs};
+`
+
+export { Container, StyledIcon, Label, Wrapper, Amount, NameWrapper }

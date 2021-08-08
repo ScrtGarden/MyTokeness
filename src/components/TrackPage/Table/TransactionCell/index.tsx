@@ -3,10 +3,15 @@ import { FC, memo, useMemo } from 'react'
 
 import { RichTx } from '../../../../../interface/snip20'
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
-import truncateAddress from '../../../../../utils/truncateAddress'
 import { Text } from '../../../UI/Typography'
 import { parseTransaction } from '../lib'
-import { Amount, Container, StyledIcon, Wrapper } from '../TransferCell/styles'
+import {
+  Amount,
+  Container,
+  NameWrapper,
+  StyledIcon,
+  Wrapper,
+} from '../TransferCell/styles'
 
 type Props = {
   tx: RichTx
@@ -24,7 +29,7 @@ const TransactionCell: FC<Props> = ({ tx, decimals, walletAddress }) => {
     () => commaNumber(toBiggestDenomination(amount, decimals)),
     [decimals, amount]
   )
-  const { isDeposit, icon, address, from, recipient } = useMemo(
+  const { isDeposit, icon, name, description } = useMemo(
     () => parseTransaction(action, walletAddress),
     [action, walletAddress]
   )
@@ -33,16 +38,10 @@ const TransactionCell: FC<Props> = ({ tx, decimals, walletAddress }) => {
     <Container>
       <Wrapper>
         <StyledIcon name={icon} height={25} width={25} />
-        <Text primary>
-          {isDeposit === null &&
-            `${truncateAddress(from || '', 7, 6)} -> ${truncateAddress(
-              recipient || '',
-              7,
-              6
-            )}`}
-          {(isDeposit === true || isDeposit === false) &&
-            truncateAddress(address)}
-        </Text>
+        <NameWrapper>
+          <Text primary>{name}</Text>
+          <Text size="small">{description}</Text>
+        </NameWrapper>
       </Wrapper>
       <Amount
         deposit={

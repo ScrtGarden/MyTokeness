@@ -1,11 +1,11 @@
-import commaNuber from 'comma-number'
+import commaNumber from 'comma-number'
 import { FC, memo, useMemo } from 'react'
 import { Coin } from 'secretjs/types/types'
 
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
-import truncateAddress from '../../../../../utils/truncateAddress'
 import { Text } from '../../../UI/Typography'
-import { Amount, Container, StyledIcon, Wrapper } from './styles'
+import { parseTransfer } from '../lib'
+import { Amount, Container, NameWrapper, StyledIcon, Wrapper } from './styles'
 
 type Props = {
   from: string
@@ -22,33 +22,24 @@ const TransferCell: FC<Props> = ({
   decimals,
   walletAddress,
 }) => {
-  const isDeposit = useMemo(() => {
-    if (from !== walletAddress && receiver !== walletAddress) {
-      return null
-    } else {
-      return receiver === walletAddress
-    }
-  }, [from, receiver, walletAddress])
+  const { isDeposit, icon, name, description } = useMemo(
+    () => parseTransfer(from, receiver, walletAddress),
+    [from, receiver, walletAddress]
+  )
 
   const trueAmount = useMemo(
-    () => commaNuber(toBiggestDenomination(coin.amount, decimals)),
+    () => commaNumber(toBiggestDenomination(coin.amount, decimals)),
     [coin, decimals]
   )
 
   return (
     <Container>
       <Wrapper>
-        <StyledIcon name="wallet-duo" height={25} width={25} />
-        <Text primary>
-          {isDeposit === null &&
-            `${truncateAddress(from, 7, 6)} -> ${truncateAddress(
-              receiver,
-              7,
-              6
-            )}`}
-          {isDeposit === true && truncateAddress(from)}
-          {isDeposit === false && truncateAddress(receiver)}
-        </Text>
+        <StyledIcon name={icon} height={25} width={25} />
+        <NameWrapper>
+          <Text primary>{name}</Text>
+          <Text size="small">{description}</Text>
+        </NameWrapper>
       </Wrapper>
       <Amount
         deposit={
