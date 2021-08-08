@@ -15,12 +15,6 @@ interface SidebarTabs {
   NFT: Record<string, Item>
 }
 
-interface Dapp {
-  icon: IconName
-  name: string
-  description: string
-}
-
 const calcBatchMint = (amount: string): string => {
   switch (amount) {
     case '2':
@@ -163,6 +157,7 @@ const FILE_UPLOADER = {
 const CHAIN_EXPLORER = `https://secretnodes.com/secret/chains/${process.env.NEXT_PUBLIC_CHAIN_ID}`
 
 const DATE_FORMAT = 'yyyy MMMM d, h:mm aa'
+const DETAILED_DATE_FORMAT = 'yyyy MMMM d, iiii, h:mm aa'
 
 const HEAD_TITLE_TEXT =
   'Secret Garden | Create, manage and explore tokens on the Secret Network.'
@@ -194,14 +189,6 @@ const NFT_CATEGORIES_ICON_MAP: Record<
   'Virtual Worlds': { ICON: 'head-side-goggles-duo', COLOR: '#A7E9AF' }, // green
 }
 
-const DAPP_CONTRACT_ADDRESSES: Record<string, Dapp> = {
-  secret1z2p2d9kzz0swjgm2ht6ra7t7l9vhnxzjg4qazn: {
-    icon: 'wallet-duo',
-    name: 'Secret Wallet Account',
-    description: '',
-  },
-}
-
 export {
   MAX_GAS,
   CONTRACT_CODE_ID,
@@ -212,5 +199,5 @@ export {
   HEAD_TITLE_TEXT,
   NFT_CATEGORIES,
   NFT_CATEGORIES_ICON_MAP,
-  DAPP_CONTRACT_ADDRESSES,
+  DETAILED_DATE_FORMAT,
 }

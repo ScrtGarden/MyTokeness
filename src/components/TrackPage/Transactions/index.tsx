@@ -16,7 +16,7 @@ import Pagination from '../../UI/Pagination'
 import { CustomCell } from '../../UI/Table'
 import { Container, StyledEmptyList } from '../styles'
 import Table from '../Table'
-import ActionCell from '../Table/ActionCell'
+import TransactionCell from '../Table/TransactionCell'
 
 type Props = {
   contractAddress: string
@@ -78,7 +78,7 @@ const History: FC<Props> = ({
       {
         Header: 'ID',
         accessor: 'id',
-        width: 40,
+        width: 20,
         Cell: ({ value }) => (
           <CustomCell bold center>
             {value}
@@ -86,21 +86,20 @@ const History: FC<Props> = ({
         ),
       },
       {
-        Header: () => <CustomCell left>Action</CustomCell>,
+        Header: () => <CustomCell left>Transaction</CustomCell>,
         accessor: 'action',
         Cell: ({ row: { original } }) => (
-          <ActionCell tx={original} decimals={decimals} />
+          <TransactionCell
+            tx={original}
+            decimals={decimals}
+            walletAddress={walletAddress}
+          />
         ),
-      },
-      {
-        Header: () => <CustomCell left>Memo</CustomCell>,
-        accessor: 'memo',
-        Cell: ({ value }) => <CustomCell left>{value || '--'}</CustomCell>,
       },
       {
         Header: () => <CustomCell left>Date</CustomCell>,
         accessor: 'block_time',
-        width: 90,
+        width: 50,
         Cell: ({ value }) => (
           <CustomCell left>
             {value ? format(value * 1000, DATE_FORMAT) : '--'}
@@ -108,7 +107,7 @@ const History: FC<Props> = ({
         ),
       },
     ],
-    [decimals]
+    [decimals, walletAddress]
   )
 
   if (isLoading || loading) {
@@ -143,6 +142,7 @@ const History: FC<Props> = ({
         emptyListIcon="list-ul-duo"
         emptyListText="Look like there's no transactions made here."
         colSpan={4}
+        type="transaction"
       />
     </Container>
   )

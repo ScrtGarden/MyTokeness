@@ -1,35 +1,37 @@
 import commaNumber from 'comma-number'
 import { FC, memo, useMemo } from 'react'
-import { Coin } from 'secretjs/types/types'
 
+import { RichTx } from '../../../../../interface/snip20'
 import toBiggestDenomination from '../../../../../utils/toBiggestDenomination'
 import { Text } from '../../../UI/Typography'
-import { parseTransfer } from '../lib'
-import { Amount, Container, NameWrapper, StyledIcon, Wrapper } from './styles'
+import { parseTransaction } from '../lib'
+import {
+  Amount,
+  Container,
+  NameWrapper,
+  StyledIcon,
+  Wrapper,
+} from '../TransferCell/styles'
 
 type Props = {
-  from: string
-  receiver: string
-  coin: Coin
-  decimals: number
+  tx: RichTx
+  decimals?: number
   walletAddress: string
 }
 
-const TransferCell: FC<Props> = ({
-  from,
-  receiver,
-  coin,
-  decimals,
-  walletAddress,
-}) => {
-  const { isDeposit, icon, name, description } = useMemo(
-    () => parseTransfer(from, receiver, walletAddress),
-    [from, receiver, walletAddress]
-  )
+const TransactionCell: FC<Props> = ({ tx, decimals, walletAddress }) => {
+  const {
+    action,
+    coins: { amount, denom },
+  } = tx
 
-  const trueAmount = useMemo(
-    () => commaNumber(toBiggestDenomination(coin.amount, decimals)),
-    [coin, decimals]
+  const parsedAmount = useMemo(
+    () => commaNumber(toBiggestDenomination(amount, decimals)),
+    [decimals, amount]
+  )
+  const { isDeposit, icon, name, description } = useMemo(
+    () => parseTransaction(action, walletAddress),
+    [action, walletAddress]
   )
 
   return (
@@ -48,10 +50,10 @@ const TransferCell: FC<Props> = ({
       >
         {isDeposit === true && '+'}
         {isDeposit === false && '-'}
-        {` ${trueAmount} ${coin.denom}`}
+        {` ${parsedAmount} ${denom}`}
       </Amount>
     </Container>
   )
 }
 
-export default memo(TransferCell)
+export default memo(TransactionCell)

@@ -7,7 +7,7 @@ interface IconProps {
 }
 
 interface AmountProps {
-  readonly deposit: 'true' | 'false'
+  readonly deposit: 'true' | 'false' | 'null'
 }
 
 const Container = styled.div`
@@ -35,8 +35,20 @@ const Label = styled.p`
 
 const Amount = styled.p<AmountProps>`
   color: ${(props) =>
-    props.theme.palette[props.deposit === 'true' ? 'green' : 'red'][400]};
+    props.theme.palette[
+      props.deposit === 'null'
+        ? 'grey'
+        : props.deposit === 'true'
+        ? 'green'
+        : 'red'
+    ][400]};
   margin: 0;
 `
 
-export { Container, StyledIcon, Label, Wrapper, Amount }
+const NameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: ${(props) => props.theme.space.xxs};
+`
+
+export { Container, StyledIcon, Label, Wrapper, Amount, NameWrapper }

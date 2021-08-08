@@ -1,5 +1,5 @@
 import { TippyProps } from '@tippyjs/react'
-import { FC, memo, useMemo } from 'react'
+import { FC, MouseEvent, memo, useMemo } from 'react'
 
 import truncateAddress from '../../../../utils/truncateAddress'
 import useCopyToClipboard, {
@@ -34,6 +34,11 @@ const AddressWithCopy: FC<Props> = ({ address, placement = 'auto' }) => {
   const truncated = useMemo(() => truncateAddress(address), [address])
   const [status, copy] = useCopyToClipboard(address)
 
+  const onCopy = (e: MouseEvent<HTMLParagraphElement>) => {
+    e.stopPropagation()
+    copy()
+  }
+
   return (
     <Container>
       <Tooltip
@@ -42,7 +47,7 @@ const AddressWithCopy: FC<Props> = ({ address, placement = 'auto' }) => {
         placement={placement}
         hideOnClick={false}
       >
-        <Address onClick={copy}>{truncated}</Address>
+        <Address onClick={onCopy}>{truncated}</Address>
       </Tooltip>
     </Container>
   )

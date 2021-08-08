@@ -4,6 +4,12 @@ interface PageTitleProps {
   readonly center?: boolean
 }
 
+interface TextProps {
+  readonly primary?: boolean
+  readonly caps?: boolean
+  readonly size?: 'small' | 'medium' | 'large'
+}
+
 const PageTitle = styled.h1<PageTitleProps>`
   color: ${(props) => props.theme.font.colors.primary};
   font-size: 4rem;
@@ -13,11 +19,17 @@ const PageTitle = styled.h1<PageTitleProps>`
   ${(props) => props.center && 'text-align: center'};
 `
 
-const Text = styled.p`
-  color: ${(props) => props.theme.font.colors.secondary};
+const Text = styled.p<TextProps>`
+  color: ${(props) =>
+    props.theme.font.colors[props.primary ? 'primary' : 'secondary']};
   font-size: ${(props) => props.theme.font.sizes.md};
+  ${(props) =>
+    props.size === 'small' && `font-size: ${props.theme.font.sizes.sm}`};
+  ${(props) =>
+    props.size === 'large' && `font-size: ${props.theme.font.sizes.lg}`};
   line-height: ${(props) => props.theme.font.lineHeights.md};
   margin: 0;
+  ${(props) => props.caps && 'text-transform: uppercase'};
 
   span {
     color: ${(props) => props.theme.font.colors.primary};

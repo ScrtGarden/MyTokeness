@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { Fragment, memo, useState } from 'react'
 import { Column, useTable } from 'react-table'
 
 import EmptyList from '../../EmptyList'
@@ -12,6 +12,9 @@ import {
   Row,
   Table as StyledTable,
 } from '../../UI/Table'
+import TransactionDetails from './Details/transaction'
+import TransferDetails from './Details/transfer'
+import { StyledRow } from './styles'
 
 type Props<T extends Record<any, any>> = {
   data: T[]
@@ -19,6 +22,7 @@ type Props<T extends Record<any, any>> = {
   emptyListIcon: IconName
   emptyListText: string
   colSpan: number
+  type?: 'transfer' | 'transaction'
 }
 
 const Table = <T extends Record<any, any>>({
@@ -27,12 +31,18 @@ const Table = <T extends Record<any, any>>({
   emptyListIcon,
   emptyListText,
   colSpan,
+  type = 'transfer',
 }: Props<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
       data,
     })
+
+  const [selectedItem, setSelectedItem] = useState<number | null>(null)
+
+  const onClickRow = (id: number) =>
+    setSelectedItem(selectedItem === id ? null : id)
 
   return (
     <StyledTable {...getTableProps()}>
@@ -57,14 +67,37 @@ const Table = <T extends Record<any, any>>({
         {rows.length !== 0 ? (
           rows.map((row) => {
             prepareRow(row)
+            const selected = selectedItem === row.original.id
             return (
-              // eslint-disable-next-line react/jsx-key
-              <Row {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
-                ))}
-              </Row>
+              <Fragment key={row.getRowProps().key}>
+                <StyledRow
+                  {...row.getRowProps()}
+                  onClick={() => onClickRow(row.original.id)}
+                  noborder={selected}
+                  foreground={selected}
+                  pointer
+                  fixedheight
+                  hover={!selected}
+                >
+                  {row.cells.map((cell) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>
+                  ))}
+                </StyledRow>
+                {selected && (
+                  <StyledRow
+                    foreground
+                    pointer
+                    onClick={() => onClickRow(row.original.id)}
+                  >
+                    {type === 'transfer' ? (
+                      <TransferDetails data={row.original as any} />
+                    ) : (
+                      <TransactionDetails data={row.original as any} />
+                    )}
+                  </StyledRow>
+                )}
+              </Fragment>
             )
           })
         ) : (
