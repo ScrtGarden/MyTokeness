@@ -1,6 +1,6 @@
 import Big from 'big.js'
 
-const toSmallestDenomination = (amount: string, decimals: number = 0) => {
+const toSmallestDenomination = (amount: string, decimals = 0): string => {
   if (!amount) {
     return '0'
   }

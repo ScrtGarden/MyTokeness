@@ -1,7 +1,4 @@
-const toBiggestDenomination = (
-  amount: string = '0',
-  decimals: number = 0
-): string => {
+const toBiggestDenomination = (amount = '0', decimals = 0): string => {
   if (amount === '0' && decimals === 0) {
     return '0'
   }
