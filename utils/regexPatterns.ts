@@ -20,6 +20,9 @@ const getErrorMsgPattern = /{"generic_err"\s*(.*?)\s*}}/g
 // Get hash link
 const hashLinkPattern = /(?<=ipfs:\/\/).+/
 
+// Numbers between 0-100 with 2 decimals
+const percentagePattern = /^(100|\d?\d(?:\.\d{0,2})?)$/
+
 export {
   symbolPattern,
   decimalsPattern,
@@ -28,4 +31,5 @@ export {
   hashLinkPattern,
   blockheightPattern,
   supplyPattern,
+  percentagePattern,
 }
