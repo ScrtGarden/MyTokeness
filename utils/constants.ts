@@ -62,7 +62,7 @@ const MAX_GAS = {
 const CONTRACT_CODE_ID =
   process.env.NEXT_PUBLIC_IS_MAINNET === 'true'
     ? { SNIP20: 77, NFT: 78 }
-    : { SNIP20: 30012, NFT: 30010 }
+    : { SNIP20: 30689, NFT: 30010 }
 
 const SIDEBAR_TABS: SidebarTabs = {
   HOME: {
